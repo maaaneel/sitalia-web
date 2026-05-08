@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barberia El Rincon</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f9f7f4;
+  --bg2:#ffffff;
+  --text:#1c1c1c;
+  --text2:#7a7268;
+  --text3:#a09a92;
+  --accent:#c9a84c;
+  --border:#e8e3db;
+  --card:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+.label{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--text3)}
+.divider{width:28px;height:1px;background:var(--accent);margin:16px 0}
+.container{max-width:1080px;margin:0 auto;padding:0 32px}
+section{padding:80px 0}
+hr{border:none;border-top:1px solid var(--border)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(249,247,244,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1080px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:15px;font-weight:400;letter-spacing:.03em}
+.nav-logo span{font-weight:300;color:var(--text2)}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:12px;color:var(--text2);letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{border:1px solid var(--text);font-size:11px;font-weight:500;letter-spacing:.1em;padding:9px 20px;cursor:pointer;background:transparent;color:var(--text);transition:all .2s;font-family:inherit}
+.nav-cta:hover{background:var(--text);color:var(--bg)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text);font-size:20px}
+@media(max-width:720px){
+  .nav-links{display:none;position:absolute;top:58px;left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 32px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:58px;background:var(--bg);position:relative;overflow:hidden}.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.08;z-index:0;pointer-events:none}.hero-grid{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.hero-eyebrow-line{width:24px;height:1px;background:var(--accent)}
+.hero-title{font-size:clamp(36px,5vw,58px);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--text);margin-bottom:8px}
+.hero-title em{font-style:italic;color:var(--text2)}
+.hero-sub{font-size:15px;color:var(--text2);line-height:1.75;max-width:380px;margin-bottom:32px;margin-top:16px}
+.hero-btns{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.btn-primary{background:var(--text);color:var(--bg);font-size:11px;font-weight:500;letter-spacing:.1em;padding:13px 28px;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{font-size:12px;color:var(--text3);cursor:pointer;transition:color .2s;background:none;border:none;font-family:inherit}
+.btn-ghost:hover{color:var(--text)}
+.hero-stats{display:flex;flex-direction:column;gap:0;border:1px solid var(--border)}
+.stat-item{padding:28px 32px;border-bottom:1px solid var(--border)}
+.stat-item:last-child{border-bottom:none}
+.stat-num{font-size:32px;font-weight:300;color:var(--text);line-height:1}
+.stat-label{font-size:10px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
+
+/* SERVICIOS */
+#servicios{background:var(--bg2)}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px}
+.section-title{font-size:clamp(24px,3vw,34px);font-weight:300;letter-spacing:-.01em}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+@media(max-width:720px){.svc-grid{grid-template-columns:1fr}}
+.svc-card{background:var(--bg2);padding:32px 28px;transition:background .2s;cursor:pointer;position:relative}
+.svc-card:hover{background:var(--bg)}
+.svc-card.featured{background:var(--text);color:var(--bg)}
+.svc-card.featured:hover{background:#2a2a2a}
+.svc-tag{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;height:18px;display:flex;align-items:center}
+.svc-tag.empty{visibility:hidden}
+.svc-name{font-size:16px;font-weight:400;margin-bottom:10px}
+.svc-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:28px}
+.svc-card.featured .svc-desc{color:#888}
+.svc-footer{display:flex;justify-content:space-between;align-items:center}
+.svc-price{font-size:22px;font-weight:300}
+.svc-time{font-size:11px;color:var(--text3);letter-spacing:.06em}
+.svc-card.featured .svc-time{color:#666}
+.svc-btn{font-size:11px;letter-spacing:.08em;padding:7px 14px;border:1px solid currentColor;background:none;cursor:pointer;font-family:inherit;color:inherit;transition:all .2s}
+.svc-card:not(.featured) .svc-btn:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* EQUIPO */
+#equipo{background:var(--bg)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:40px}
+@media(max-width:720px){.team-grid{grid-template-columns:1fr}}
+.team-card{background:var(--bg);padding:32px 28px}
+.team-photo{width:72px;height:72px;border-radius:50%;overflow:hidden;margin-bottom:20px;background:var(--border)}.team-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.team-name{font-size:15px;font-weight:400;margin-bottom:4px}
+.team-role{font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.team-bio{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px}
+.team-link{font-size:11px;color:var(--text3);letter-spacing:.06em;transition:color .2s}
+.team-link:hover{color:var(--text)}
+
+/* GALERIA */
+#galeria{background:var(--bg2)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:160px;gap:1px;background:var(--border);margin-top:40px}
+@media(max-width:720px){.gallery-grid{grid-template-columns:1fr 1fr}}
+.gallery-item{background:var(--bg);overflow:hidden;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center}
+.gallery-item:first-child{grid-row:span 2}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay{position:absolute;inset:0;background:rgba(28,28,28,.4);display:flex;align-items:flex-end;padding:16px;opacity:0;transition:opacity .3s}
+.gallery-label{font-size:11px;color:#fff;letter-spacing:.08em;text-transform:uppercase}
+.gallery-placeholder{width:100%;height:100%;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:32px;font-weight:200}
+
+/* RESENAS */
+#resenas{background:var(--bg)}
+.rating-row{display:flex;align-items:baseline;gap:16px;margin-bottom:40px;margin-top:8px}
+.rating-big{font-size:40px;font-weight:300;color:var(--text)}
+.rating-stars{color:var(--accent);font-size:14px;letter-spacing:.1em}
+.rating-count{font-size:12px;color:var(--text3)}
+.reviews-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
+@media(max-width:720px){.reviews-grid{grid-template-columns:1fr}}
+.review-card{background:var(--bg);padding:28px}
+.review-stars{color:var(--accent);font-size:11px;letter-spacing:.12em;margin-bottom:14px}
+.review-text{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:16px;font-style:italic}
+.review-author{font-size:11px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
+.review-date{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* UBICACION */
+#horarios{background:var(--bg2)}
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:40px}
+@media(max-width:720px){.location-grid{grid-template-columns:1fr}}
+.location-map{background:var(--bg);min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px}
+.location-info{background:var(--bg);padding:40px 36px;display:flex;flex-direction:column;gap:0}
+.info-block{padding:20px 0;border-bottom:1px solid var(--border)}
+.info-block:last-child{border-bottom:none}
+.info-label{font-size:10px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+.info-val{font-size:14px;color:var(--text)}
+.schedule-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
+.schedule-row:last-child{border-bottom:none}
+.schedule-day{color:var(--text2)}
+.schedule-closed{color:#c4b5a0}
+
+/* RESERVAS */
+#contacto{background:var(--bg)}
+.booking-wrap{max-width:600px;margin:40px auto 0}
+.booking-steps{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);margin-bottom:0}
+.bk-step{padding:14px 8px;text-align:center;font-size:11px;letter-spacing:.06em;color:var(--text3);cursor:pointer;border-right:1px solid var(--border);background:none;border-top:none;border-bottom:none;border-left:none;font-family:inherit;transition:all .2s}
+.bk-step:last-child{border-right:none}
+.bk-step.active{color:var(--text);font-weight:500;box-shadow:inset 0 -2px 0 var(--text)}
+.bk-step.done{color:var(--accent)}
+.bk-panel{display:none;border:1px solid var(--border);border-top:none;padding:28px}
+.bk-panel.active{display:block}
+.bk-panel-label{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:20px}
+.bk-svc{display:flex;justify-content:space-between;align-items:center;padding:16px;border:1px solid var(--border);cursor:pointer;margin-bottom:8px;transition:all .2s;background:transparent}
+.bk-svc:hover{border-color:var(--text)}
+.bk-svc.selected{border-color:var(--text);background:var(--text);color:var(--bg)}
+.bk-svc-name{font-size:14px;font-weight:400}
+.bk-svc-dur{font-size:11px;color:var(--text3);margin-top:2px}
+.bk-svc.selected .bk-svc-dur{color:#888}
+.bk-svc-price{font-size:18px;font-weight:300}
+.bk-btn{background:var(--text);color:var(--bg);font-size:11px;font-weight:500;letter-spacing:.1em;padding:14px;border:none;cursor:pointer;width:100%;margin-top:20px;font-family:inherit;transition:opacity .2s}
+.bk-btn:hover{opacity:.85}
+.bk-btn:disabled{background:var(--border);color:var(--text3);cursor:not-allowed}
+.bk-back{background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;width:100%;padding:10px;font-family:inherit;margin-top:8px;transition:color .2s}
+.bk-back:hover{color:var(--text)}
+.bk-cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.bk-cal-nav{background:none;border:1px solid var(--border);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--text2);transition:all .2s}
+.bk-cal-nav:hover{border-color:var(--text);color:var(--text)}
+.bk-cal-month{font-size:14px;font-weight:400}
+.bk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.bk-cal-dow{text-align:center;font-size:10px;color:var(--text3);padding:6px 0;letter-spacing:.06em}
+.bk-cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.bk-cal-day.past,.bk-cal-day.closed{color:var(--border);cursor:not-allowed}
+.bk-cal-day.avail:hover{border-color:var(--text);color:var(--text)}
+.bk-cal-day.sel{background:var(--text);color:var(--bg);border-color:var(--text)}
+.bk-cal-day.today{border-color:var(--border)}
+.bk-slots-info{font-size:12px;color:var(--text2);padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:16px}
+.bk-slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.bk-slot{border:1px solid var(--border);padding:12px 6px;text-align:center;cursor:pointer;transition:all .2s}
+.bk-slot:hover{border-color:var(--text)}
+.bk-slot.sel{background:var(--text);color:var(--bg);border-color:var(--text)}
+.bk-slot.booked{background:var(--bg);border-color:var(--border);color:var(--border);cursor:not-allowed}
+.bk-slot-time{font-size:13px;font-weight:400}
+.bk-slot-end{font-size:10px;color:var(--text3);margin-top:2px}
+.bk-slot.sel .bk-slot-end{color:#888}
+.bk-confirm-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.bk-confirm-row:last-child{border-bottom:none}
+.bk-confirm-label{font-size:11px;color:var(--text3);letter-spacing:.06em}
+.bk-confirm-val{font-size:13px;font-weight:500}
+.bk-wa-btn{background:#1a9e4a;color:#fff;font-size:11px;font-weight:500;letter-spacing:.1em;padding:15px;border:none;cursor:pointer;width:100%;margin-top:20px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s}
+.bk-wa-btn:hover{opacity:.9}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:720px){.footer-grid{grid-template-columns:1fr}}
+.footer-logo{font-size:16px;font-weight:400;margin-bottom:10px}
+.footer-logo span{font-weight:300;color:var(--text2)}
+.footer-tagline{font-size:13px;color:var(--text3);line-height:1.7;margin-bottom:20px}
+.footer-col-title{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-contact li{font-size:13px;color:var(--text3);margin-bottom:10px;list-style:none;display:flex;gap:8px}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-bottom p,.footer-bottom a{font-size:11px;color:var(--text3)}
+.footer-bottom a:hover{color:var(--text)}
+
+/* WhatsApp */
+.wa-float{position:fixed;bottom:24px;right:24px;width:50px;height:50px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:999;box-shadow:0 4px 14px rgba(37,211,102,.3);transition:transform .2s}
+.wa-float:hover{transform:scale(1.08)}
+
+/* Demo banner */
+.demo-banner{background:var(--text);color:var(--bg);text-align:center;padding:9px;font-size:11px;font-weight:500;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">DEMO — Edita app/config.ts para personalizar</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Barberia <span>El Rincon</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#servicios">Servicios</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#resenas">Resenas</a>
+      <a href="#contacto">Reservar</a>
+    </div>
+    <button class="nav-cta" onclick="location.href='#contacto'">RESERVAR</button>
+    <button class="nav-toggle" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <img src="images/pel-hero.jpg" class="hero-bg-img" alt="">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Barcelona &middot; Eixample &middot; Est. 1998</span>
+        </div>
+        <h1 class="hero-title">El arte del<br><em>buen corte</em></h1>
+        <p class="hero-sub">Barberia tradicional en el corazon de Barcelona. Cortes clasicos, afeitados con navaja y el mejor ambiente del barrio.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="location.href='#contacto'">RESERVAR CITA</button>
+          <button class="btn-ghost" onclick="location.href='#servicios'">Ver servicios &#8594;</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">25</div>
+          <div class="stat-label">Anos de experiencia</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Clientes al mes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5.0</div>
+          <div class="stat-label">Valoracion media</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="label" style="margin-bottom:10px">Servicios</div>
+        <h2 class="section-title">Lo que ofrecemos</h2>
+      </div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="svc-tag empty">-</div>
+        <div class="svc-name">Corte de pelo</div>
+        <div class="svc-desc">Corte clasico o moderno adaptado a tu estilo personal.</div>
+        <div class="svc-footer">
+          <span class="svc-price">18&#8364;</span>
+          <span class="svc-time">30 MIN</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-tag empty">-</div>
+        <div class="svc-name">Arreglo de barba</div>
+        <div class="svc-desc">Perfilado y acabado perfecto de tu barba.</div>
+        <div class="svc-footer">
+          <span class="svc-price">12&#8364;</span>
+          <span class="svc-time">20 MIN</span>
+        </div>
+      </div>
+      <div class="svc-card featured">
+        <div class="svc-tag">Mas popular</div>
+        <div class="svc-name">Corte + Barba</div>
+        <div class="svc-desc">El pack completo para salir impecable.</div>
+        <div class="svc-footer">
+          <span class="svc-price">25&#8364;</span>
+          <span class="svc-time">45 MIN</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-tag empty">-</div>
+        <div class="svc-name">Afeitado con navaja</div>
+        <div class="svc-desc">Afeitado tradicional con toalla caliente.</div>
+        <div class="svc-footer">
+          <span class="svc-price">20&#8364;</span>
+          <span class="svc-time">40 MIN</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-tag empty">-</div>
+        <div class="svc-name">Corte nino</div>
+        <div class="svc-desc">Corte para los mas pequenos con paciencia.</div>
+        <div class="svc-footer">
+          <span class="svc-price">12&#8364;</span>
+          <span class="svc-time">25 MIN</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-tag empty">-</div>
+        <div class="svc-name">Tratamiento capilar</div>
+        <div class="svc-desc">Hidratacion y cuidado profundo del cabello.</div>
+        <div class="svc-footer">
+          <span class="svc-price">15&#8364;</span>
+          <span class="svc-time">20 MIN</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="container">
+    <div class="label" style="margin-bottom:10px">Equipo</div>
+    <h2 class="section-title">Nuestros profesionales</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"><img src="images/pel-team-diego.jpg" alt="Pepe Martinez"></div>
+        <div class="team-name">Pepe Martinez</div>
+        <div class="team-role">Fundador &amp; Master Barber</div>
+        <p class="team-bio">25 anos de experiencia. Especialista en cortes clasicos y afeitado con navaja.</p>
+        <a href="#contacto" class="team-link">Reservar cita &#8594;</a>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="images/pel-team-marta.jpg" alt="Carlos Ruiz"></div>
+        <div class="team-name">Carlos Ruiz</div>
+        <div class="team-role">Barber</div>
+        <p class="team-bio">Especializado en estilos modernos y degradados. Campeon provincial 2022.</p>
+        <a href="#contacto" class="team-link">Reservar cita &#8594;</a>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="images/pel-team-alex.jpg" alt="Marc Sanchez"></div>
+        <div class="team-name">Marc Sanchez</div>
+        <div class="team-role">Barber &amp; Colorista</div>
+        <p class="team-bio">Experto en coloracion y tecnicas de decoloracion para hombre.</p>
+        <a href="#contacto" class="team-link">Reservar cita &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="label" style="margin-bottom:10px">Galeria</div>
+        <h2 class="section-title">Nuestro trabajo</h2>
+      </div>
+      <a href="https://instagram.com" style="font-size:12px;color:var(--text3)">Ver Instagram &#8594;</a>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><div class="gallery-item-img" style="background:#f0ece6"><img src="images/pel-gallery-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Corte clasico"></div><div class="gallery-overlay"><span class="gallery-label">Corte clasico</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img" style="background:#ede8e2"><img src="images/pel-gallery-2.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Degradado"></div><div class="gallery-overlay"><span class="gallery-label">Degradado</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img" style="background:#e8e3dc"><img src="images/pel-gallery-3.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Barba"></div><div class="gallery-overlay"><span class="gallery-label">Barba</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img" style="background:#f2ede8"><img src="images/pel-gallery-4.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Afeitado"></div><div class="gallery-overlay"><span class="gallery-label">Afeitado</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img" style="background:#ece7e0"><img src="images/pel-gallery-5.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Moderno"></div><div class="gallery-overlay"><span class="gallery-label">Moderno</span></div></div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- RESENAS -->
+<section id="resenas">
+  <div class="container">
+    <div class="label" style="margin-bottom:10px">Opiniones</div>
+    <div class="rating-row">
+      <span class="rating-big">5.0</span>
+      <div>
+        <div class="rating-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <div class="rating-count">188 resenas en Google</div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="review-text">"El mejor sitio de Barcelona para un corte clasico. Pepe lleva cortandome el pelo 10 anos y siempre sale perfecto."</p>
+        <div class="review-author">Javier M.</div>
+        <div class="review-date">hace 2 semanas</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="review-text">"Ambiente increible, buen precio y trabajo de calidad. El afeitado con navaja es una experiencia que hay que probar."</p>
+        <div class="review-author">Alejandro R.</div>
+        <div class="review-date">hace 1 mes</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="review-text">"Carlos es un artista con el degradado. Llevo meses viniendo y siempre quedo mas que satisfecho."</p>
+        <div class="review-author">David L.</div>
+        <div class="review-date">hace 3 semanas</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="review-text">"Profesionalidad al 100%. Reserve por WhatsApp y fue todo rapidisimo. Muy recomendable."</p>
+        <div class="review-author">Tomas G.</div>
+        <div class="review-date">hace 1 semana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- UBICACION -->
+<section id="horarios">
+  <div class="container">
+    <div class="label" style="margin-bottom:10px">Ubicacion</div>
+    <h2 class="section-title">Donde estamos</h2>
+    <div class="location-grid">
+      <div class="location-map">
+        <div style="font-size:32px;color:var(--text3)">&#128205;</div>
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:400;margin-bottom:6px">Barberia El Rincon</div>
+          <div style="font-size:13px;color:var(--text2)">Calle Mayor 23, Eixample, Barcelona</div>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-primary" style="display:inline-block;font-size:11px;font-weight:500;letter-spacing:.1em;padding:11px 22px;background:var(--text);color:var(--bg)">VER EN MAPS</a>
+      </div>
+      <div class="location-info">
+        <div class="info-block">
+          <div class="info-label">Horarios</div>
+          <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-closed">Cerrado</span></div>
+          <div class="schedule-row"><span class="schedule-day">Martes - Viernes</span><span>10:00 - 20:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sabado</span><span>10:00 - 18:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 612 345 678</div>
+          <div class="info-val">hola@barberiaelrincon.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- RESERVAS -->
+<section id="contacto">
+  <div class="container">
+    <div style="max-width:600px">
+      <div class="label" style="margin-bottom:10px">Reservas</div>
+      <h2 class="section-title">Reserva tu cita</h2>
+      <p style="font-size:14px;color:var(--text2);margin-top:10px">Elige servicio, dia y hora. Te confirmamos por WhatsApp en menos de 1 hora.</p>
+    </div>
+    <div class="booking-wrap">
+      <div class="booking-steps">
+        <button class="bk-step active" data-s="1" onclick="bkTo(1)">1 Servicio</button>
+        <button class="bk-step" data-s="2" onclick="bkTo(2)">2 Fecha</button>
+        <button class="bk-step" data-s="3" onclick="bkTo(3)">3 Hora</button>
+        <button class="bk-step" data-s="4" onclick="bkTo(4)">4 Confirmar</button>
+      </div>
+
+      <!-- P1 -->
+      <div class="bk-panel active" id="bp1">
+        <div class="bk-panel-label">Selecciona el servicio</div>
+        <div id="bk-svcs"></div>
+        <button class="bk-btn" id="bkbtn1" disabled onclick="bkTo(2)">SIGUIENTE: ELEGIR FECHA</button>
+      </div>
+
+      <!-- P2 -->
+      <div class="bk-panel" id="bp2">
+        <div class="bk-panel-label">Selecciona el dia</div>
+        <div class="bk-cal-hdr">
+          <button class="bk-cal-nav" onclick="bkMon(-1)">&#8249;</button>
+          <span class="bk-cal-month" id="bk-month"></span>
+          <button class="bk-cal-nav" onclick="bkMon(1)">&#8250;</button>
+        </div>
+        <div class="bk-cal-grid" id="bk-dow"></div>
+        <div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div>
+        <button class="bk-btn" id="bkbtn2" disabled onclick="bkTo(3)">SIGUIENTE: VER HORARIOS</button>
+        <button class="bk-back" onclick="bkTo(1)">&#8592; Volver</button>
+      </div>
+
+      <!-- P3 -->
+      <div class="bk-panel" id="bp3">
+        <div class="bk-panel-label">Selecciona la hora</div>
+        <div class="bk-slots-info" id="bk-sinfo"></div>
+        <div class="bk-slots-grid" id="bk-slots"></div>
+        <button class="bk-btn" id="bkbtn3" disabled onclick="bkTo(4)">SIGUIENTE: CONFIRMAR</button>
+        <button class="bk-back" onclick="bkTo(2)">&#8592; Volver</button>
+      </div>
+
+      <!-- P4 -->
+      <div class="bk-panel" id="bp4">
+        <div class="bk-panel-label">Confirma tu reserva</div>
+        <div id="bk-confirm"></div>
+        <button class="bk-wa-btn" onclick="bkWA()">
+          <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+          CONFIRMAR POR WHATSAPP
+        </button>
+        <button class="bk-back" onclick="bkTo(3)">&#8592; Cambiar hora</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Barberia <span>El Rincon</span></div>
+        <p class="footer-tagline">Cortes con caracter desde 1998.<br>Barcelona, Eixample.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegacion</div>
+        <div class="footer-links">
+          <a href="#servicios">Servicios</a>
+          <a href="#equipo">Equipo</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#resenas">Resenas</a>
+          <a href="#contacto">Reservar</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Calle Mayor 23, Eixample, Barcelona</li>
+          <li>+34 612 345 678</li>
+          <li>hola@barberiaelrincon.es</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 Barberia El Rincon</p>
+      <div style="display:flex;gap:16px"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#contacto" class="wa-float" title="WhatsApp">&#128172;</a>
+
+<script>
+var SVCS=[
+  {n:"Corte de pelo",     d:30, p:"18"},
+  {n:"Arreglo de barba",  d:20, p:"12"},
+  {n:"Corte + Barba",     d:45, p:"25", pop:true},
+  {n:"Afeitado navaja",   d:40, p:"20"},
+  {n:"Corte nino",        d:25, p:"12"},
+  {n:"Tratamiento capilar",d:20,p:"15"}
+];
+// Horario por dia (0=Lun..6=Dom): [apertura_min, cierre_min] o null=cerrado
+var SCHED=[null,[600,1200],[600,1200],[600,1200],[600,1200],[600,1080],null];
+// Indices de slots "ocupados" (simulados para el demo)
+var BOOKED_IDX=[0,2,5,7,11,13,16,19];
+var MONTHS=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+var DOWS=["Lu","Ma","Mi","Ju","Vi","Sa","Do"];
+var sel={svc:2, date:null, slot:null, st:"", se:""}; // svc:2 = Corte+Barba preseleccionado
+
+// ── Inicializar lista de servicios ──────────────────────────────
+(function initSvcs(){
+  var wrap=document.getElementById("bk-svcs");
+  SVCS.forEach(function(s,i){
+    var el=document.createElement("div");
+    el.className="bk-svc"+(i===sel.svc?" selected":"");
+    el.innerHTML=
+      "<div>"+
+        "<div class='bk-svc-name'>"+s.n+(s.pop?" <span style='font-size:10px;color:var(--accent);letter-spacing:.06em'>POPULAR</span>":"")+"</div>"+
+        "<div class='bk-svc-dur'>"+s.d+" min</div>"+
+      "</div>"+
+      "<div class='bk-svc-price'>"+s.p+"&#8364;</div>";
+    el.onclick=function(){
+      document.querySelectorAll(".bk-svc").forEach(function(x){x.classList.remove("selected");});
+      el.classList.add("selected");
+      sel.svc=i;
+      sel.date=null; sel.slot=null; sel.st=""; sel.se="";
+      document.getElementById("bkbtn1").disabled=false;
+    };
+    wrap.appendChild(el);
+  });
+  document.getElementById("bkbtn1").disabled=false;
+})();
+
+// ── Navegacion entre pasos ──────────────────────────────────────
+function bkTo(n){
+  // Guardia: no saltar hacia adelante si faltan datos
+  if(n>1 && sel.svc===null) return;
+  if(n>2 && !sel.date) return;
+  if(n>3 && (sel.slot===null || sel.st==="")) return;
+
+  [1,2,3,4].forEach(function(i){
+    document.getElementById("bp"+i).classList.toggle("active", i===n);
+    var btn=document.querySelector(".bk-step[data-s='"+i+"']");
+    if(!btn) return;
+    btn.classList.remove("active","done");
+    if(i===n)       btn.classList.add("active");
+    else if(i<n)    btn.classList.add("done");
+  });
+
+  if(n===2){ renderCal(); }
+  if(n===3){ renderSlots(); }
+  if(n===4){ renderConfirm(); }
+}
+
+// ── Calendario ──────────────────────────────────────────────────
+var calD=(function(){var d=new Date();d.setDate(1);return d;})();
+
+function bkMon(dir){ calD.setMonth(calD.getMonth()+dir); renderCal(); }
+
+function renderCal(){
+  // Cabecera dias
+  var dowWrap=document.getElementById("bk-dow");
+  dowWrap.innerHTML=DOWS.map(function(d){
+    return "<div class='bk-cal-dow'>"+d+"</div>";
+  }).join("");
+
+  document.getElementById("bk-month").textContent=MONTHS[calD.getMonth()]+" "+calD.getFullYear();
+
+  var grid=document.getElementById("bk-cal");
+  grid.innerHTML="";
+
+  var today=new Date(); today.setHours(0,0,0,0);
+  var firstDay=new Date(calD.getFullYear(), calD.getMonth(), 1);
+  var lastDay =new Date(calD.getFullYear(), calD.getMonth()+1, 0);
+
+  // Offset lunes=0
+  var off=firstDay.getDay()-1; if(off<0) off=6;
+  for(var e=0;e<off;e++){
+    var empty=document.createElement("div");
+    empty.className="bk-cal-day";
+    grid.appendChild(empty);
+  }
+
+  for(var d=1; d<=lastDay.getDate(); d++){
+    (function(day){
+      var dt=new Date(calD.getFullYear(), calD.getMonth(), day);
+      var dowIdx=dt.getDay()===0 ? 6 : dt.getDay()-1;
+      var isPast  =dt<today;
+      var isClosed=SCHED[dowIdx]===null;
+      var isToday =dt.getTime()===today.getTime();
+      var isSel   =sel.date && dt.toDateString()===sel.date.toDateString();
+
+      var el=document.createElement("div");
+      var cls="bk-cal-day";
+      if(isSel)         cls+=" sel";
+      else if(isPast)   cls+=" past";
+      else if(isClosed) cls+=" closed";
+      else              cls+=" avail";
+      if(isToday && !isSel) cls+=" today";
+      el.className=cls;
+      el.textContent=day;
+
+      if(!isPast && !isClosed){
+        el.onclick=function(){
+          document.querySelectorAll(".bk-cal-day").forEach(function(x){x.classList.remove("sel");});
+          el.classList.add("sel");
+          sel.date=dt;
+          sel.slot=null; sel.st=""; sel.se="";
+          document.getElementById("bkbtn2").disabled=false;
+          document.getElementById("bkbtn3").disabled=true; // reset paso 3
+        };
+      }
+      grid.appendChild(el);
+    })(d);
+  }
+}
+
+// ── Slots de hora ───────────────────────────────────────────────
+function fmt(mins){
+  var h=Math.floor(mins/60);
+  var m=mins%60;
+  return h+":"+(m<10?"0":"")+m;
+}
+
+function renderSlots(){
+  if(!sel.date || sel.svc===null) return;
+  var svc=SVCS[sel.svc];
+  var dowIdx=sel.date.getDay()===0 ? 6 : sel.date.getDay()-1;
+  var range=SCHED[dowIdx];
+  if(!range) return;
+
+  // Generar todos los slots posibles
+  var slots=[];
+  for(var t=range[0]; t+svc.d<=range[1]; t+=svc.d){
+    slots.push(t);
+  }
+
+  // Marcar ocupados de forma determinista
+  var bookedSet=new Set(BOOKED_IDX.filter(function(i){ return i<slots.length; }));
+
+  var dateStr=sel.date.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
+  document.getElementById("bk-sinfo").innerHTML=
+    "<strong>"+svc.n+"</strong> &middot; "+svc.d+" min &middot; "+dateStr;
+
+  var grid=document.getElementById("bk-slots");
+  grid.innerHTML="";
+
+  slots.forEach(function(t,i){
+    var te=t+svc.d;
+    var isBooked=bookedSet.has(i);
+    var isSel=(sel.slot===i);
+
+    var el=document.createElement("div");
+    el.className="bk-slot"+(isBooked?" booked":isSel?" sel":"");
+
+    if(isBooked){
+      el.innerHTML="<div style='color:var(--border);font-size:18px;line-height:1'>&#8212;</div>";
+    } else {
+      el.innerHTML=
+        "<div class='bk-slot-time'>"+fmt(t)+"</div>"+
+        "<div class='bk-slot-end'>"+fmt(te)+"</div>";
+      el.onclick=function(){
+        document.querySelectorAll(".bk-slot").forEach(function(x){x.classList.remove("sel");});
+        el.classList.add("sel");
+        sel.slot=i; sel.st=fmt(t); sel.se=fmt(te);
+        document.getElementById("bkbtn3").disabled=false;
+      };
+    }
+    grid.appendChild(el);
+  });
+}
+
+// ── Confirmacion ────────────────────────────────────────────────
+function renderConfirm(){
+  if(sel.svc===null || !sel.date || sel.st==="") return;
+  var svc=SVCS[sel.svc];
+  var dateStr=sel.date.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  document.getElementById("bk-confirm").innerHTML=
+    row("SERVICIO", svc.n)+
+    row("DURACION", svc.d+" min")+
+    row("PRECIO",   svc.p+"&#8364;")+
+    row("FECHA",    dateStr)+
+    row("HORA",     sel.st+" &mdash; "+sel.se);
+}
+function row(label,val){
+  return "<div class='bk-confirm-row'>"+
+    "<span class='bk-confirm-label'>"+label+"</span>"+
+    "<span class='bk-confirm-val'>"+val+"</span>"+
+  "</div>";
+}
+
+// ── Enviar a WhatsApp ───────────────────────────────────────────
+function bkWA(){
+  if(sel.svc===null || !sel.date || sel.st==="") return;
+  var svc=SVCS[sel.svc];
+  var dateStr=sel.date.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
+  var lines=[
+    "Hola, quiero reservar una cita:",
+    "Servicio: "+svc.n+" ("+svc.p+"EUR)",
+    "Fecha: "+dateStr,
+    "Hora: "+sel.st+" - "+sel.se,
+    "",
+    "Podeis confirmarlo? Gracias."
+  ];
+  var msg=lines.join("\n");
+  window.open("https://wa.me/34612345678?text="+encodeURIComponent(msg),"_blank");
+}
+</script>
+</body>
+</html>

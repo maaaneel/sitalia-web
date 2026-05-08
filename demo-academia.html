@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Academia Talento | Extraescolares y Actividades · Sevilla</title>
+<meta name="description" content="Academia de extraescolares en Sevilla. Idiomas, música, deporte, arte y refuerzo escolar. Inscripción online. Grupos reducidos y profesores especializados."/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fafaf8;
+  --bg-warm:#fff8f0;
+  --bg-card:#ffffff;
+  --text:#1e1c1a;
+  --text-muted:#6b6560;
+  --text-soft:#9e9994;
+  --accent:#d4621a;
+  --accent-hover:#b85516;
+  --accent-pale:#fdf0e8;
+  --accent-light:#e8935a;
+  --blue:#2563a8;
+  --blue-pale:#e8f0fb;
+  --green:#1e8a5e;
+  --green-pale:#e8f5ef;
+  --purple:#6b3fa0;
+  --purple-pale:#f0ebf8;
+  --border:#e4ddd6;
+  --border-light:#ede8e2;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{width:30px;height:30px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.nav-logo-text{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-0.01em}
+.nav-logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;border-radius:4px}
+.nav-cta:hover{background:var(--accent-hover)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* HERO */
+.hero{background:var(--bg-warm);min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px;align-items:stretch}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 5% 80px 8%}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-pale);border:1px solid var(--accent-light);padding:6px 14px;border-radius:20px;margin-bottom:22px;width:fit-content}
+.hero-pill-icon{font-size:14px}
+.hero-pill-text{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero-title{font-size:clamp(36px,4.5vw,62px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:20px}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-desc{font-size:15px;color:var(--text-muted);max-width:420px;line-height:1.75;margin-bottom:36px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.btn-primary{background:var(--accent);color:#fff;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:15px 28px;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border-radius:4px}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:14px 27px;border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border-radius:4px}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px}
+.hero-chip{background:var(--bg-card);border:1px solid var(--border);padding:7px 14px;border-radius:20px;font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.hero-visual{background:var(--accent);position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:center}
+.hero-visual-inner{width:100%;padding:48px 40px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+.hero-stat-big{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:20px 24px;display:flex;align-items:center;gap:16px}
+.hero-stat-big-num{font-size:36px;font-weight:800;color:#fff;line-height:1;letter-spacing:-0.03em}
+.hero-stat-big-info{}
+.hero-stat-big-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.9);letter-spacing:0.04em}
+.hero-stat-big-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{min-height:260px}.hero-content{padding:60px 6%}}
+
+/* SECTIONS */
+section{padding:96px 6%}
+.section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:"";width:18px;height:2px;background:var(--accent);border-radius:1px}
+.section-title{font-size:clamp(26px,3.2vw,44px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px}
+.section-sub{font-size:15px;color:var(--text-muted);max-width:520px;line-height:1.7}
+.section-head{margin-bottom:56px}
+
+/* ACTIVIDADES */
+#actividades{background:var(--bg)}
+.act-tabs{display:flex;gap:0;margin-bottom:40px;border-bottom:1px solid var(--border);overflow-x:auto}
+.act-tab{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;padding:13px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text-muted);background:none;border-top:none;border-left:none;border-right:none;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.act-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.act-tab:hover{color:var(--text)}
+.act-panel{display:none}
+.act-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.act-card{background:var(--bg-card);border:1px solid var(--border);padding:28px;transition:all 0.2s;cursor:default;position:relative;overflow:hidden}
+.act-card:hover{border-color:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(212,98,26,0.08)}
+.act-card-color{position:absolute;top:0;left:0;right:0;height:3px}
+.act-icon{font-size:26px;margin-bottom:14px;display:block}
+.act-name{font-size:14px;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em}
+.act-desc{font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:14px}
+.act-meta{display:flex;flex-wrap:wrap;gap:6px}
+.act-meta-pill{font-size:10px;letter-spacing:0.06em;padding:3px 10px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:4px}
+.act-meta-pill.ages{background:var(--accent-pale);color:var(--accent)}
+.act-meta-pill.group{background:var(--blue-pale);color:var(--blue)}
+.act-meta-pill.price{background:var(--green-pale);color:var(--green)}
+
+/* HORARIOS */
+#horarios{background:var(--bg-warm)}
+.horarios-wrap{overflow-x:auto}
+.horarios-table{width:100%;border-collapse:collapse;min-width:640px}
+.horarios-table th{background:var(--accent);color:#fff;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:14px 16px;text-align:center;font-weight:700}
+.horarios-table th:first-child{text-align:left;min-width:140px}
+.horarios-table td{padding:12px 16px;border-bottom:1px solid var(--border-light);font-size:12px;text-align:center;color:var(--text-muted);border-right:1px solid var(--border-light)}
+.horarios-table td:first-child{text-align:left;font-weight:600;color:var(--text);font-size:13px}
+.horarios-table tr:last-child td{border-bottom:none}
+.horarios-table tr:hover td{background:var(--accent-pale)}
+.h-pill{display:inline-block;background:var(--accent-pale);color:var(--accent);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.04em}
+.h-pill.blue{background:var(--blue-pale);color:var(--blue)}
+.h-pill.green{background:var(--green-pale);color:var(--green)}
+.h-pill.purple{background:var(--purple-pale);color:var(--purple)}
+
+/* INSCRIPCIÓN */
+#inscripcion{background:var(--bg)}
+.insc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);max-width:860px;margin:0 auto}
+.insc-form{background:var(--bg-card);padding:44px}
+.insc-info{background:var(--bg-warm);padding:44px;border-left:1px solid var(--border)}
+.form-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;display:block}
+.form-input,.form-select{width:100%;background:var(--bg);border:1px solid var(--border);padding:12px 14px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color 0.2s;border-radius:4px;margin-bottom:16px;appearance:none}
+.form-input:focus,.form-select:focus{border-color:var(--accent)}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-btn{width:100%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:15px;border:none;cursor:pointer;transition:background 0.2s;border-radius:4px;margin-top:4px}
+.form-btn:hover{background:var(--accent-hover)}
+.form-success{text-align:center;padding:40px 0}
+.form-success-icon{font-size:48px;margin-bottom:14px}
+.form-success-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.form-success-text{font-size:13px;color:var(--text-muted);line-height:1.65}
+.info-step{display:flex;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border-light)}
+.info-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.info-step-num{width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.info-step-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.info-step-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+@media(max-width:700px){.insc-grid{grid-template-columns:1fr}.form-grid-2{grid-template-columns:1fr}.insc-form,.insc-info{padding:28px 22px}}
+
+/* EQUIPO */
+#equipo{background:var(--bg-warm)}
+.equipo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
+.equipo-card{background:var(--bg-card);border:1px solid var(--border);overflow:hidden;transition:all 0.2s}
+.equipo-card:hover{border-color:var(--accent-light);box-shadow:0 6px 24px rgba(212,98,26,0.07)}
+.equipo-avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0}.equipo-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.equipo-initials{width:60px;height:60px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+.equipo-info{padding:20px}
+.equipo-name{font-size:13px;font-weight:700;margin-bottom:3px}
+.equipo-role{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.equipo-bio{font-size:11px;color:var(--text-muted);line-height:1.6}
+
+/* LOCATION */
+#ubicacion{background:var(--bg);padding:0}
+.ub-grid{display:grid;grid-template-columns:1fr 1fr}
+.ub-map{background:#1a1a2e;min-height:360px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.ub-map-pin{font-size:40px;opacity:0.35}
+.ub-map-addr{color:rgba(255,255,255,0.25);font-size:11px;letter-spacing:0.1em;text-align:center;max-width:180px;line-height:1.6;text-transform:uppercase}
+.ub-info{background:var(--bg-card);padding:44px;border:1px solid var(--border)}
+.ub-block{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border-light)}
+.ub-block:last-child{margin:0;padding:0;border:none}
+.ub-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.ub-text{font-size:13px;color:var(--text-muted);line-height:1.7}
+.ub-hor-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border-light)}
+.ub-hor-row:last-child{border-bottom:none}
+.ub-hor-day{color:var(--text-muted)}
+.ub-hor-time{font-weight:600}
+.ub-hor-time.closed{color:#c0392b;font-weight:400}
+@media(max-width:768px){.ub-grid{grid-template-columns:1fr}.ub-map{min-height:200px}}
+
+/* FOOTER */
+footer{background:#151210;border-top:1px solid rgba(255,255,255,0.05);padding:48px 6% 24px}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px;margin-bottom:36px}
+.footer-logo{font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.01em}
+.footer-logo span{color:var(--accent-light)}
+.footer-desc{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.7;max-width:250px}
+.footer-col-title{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--accent-light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:10px;color:rgba(255,255,255,0.18)}
+.footer-legal{display:flex;gap:14px}
+.footer-legal a{font-size:10px;color:rgba(255,255,255,0.18);text-decoration:none}
+.footer-legal a:hover{color:rgba(255,255,255,0.4)}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr}}
+
+/* WA */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:50px;height:50px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,0.35);text-decoration:none;transition:all 0.2s;animation:pulse-wa 3s ease-in-out infinite}
+.wa-float:hover{transform:scale(1.08);background:#1eb957}
+.wa-float svg{width:25px;height:25px;fill:#fff}
+@keyframes pulse-wa{0%,100%{box-shadow:0 4px 18px rgba(37,211,102,0.35)}50%{box-shadow:0 4px 26px rgba(37,211,102,0.6)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">🎓</div>
+    <div class="nav-logo-text">Academia <span>Talento</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#actividades">Actividades</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#ubicacion">Centro</a></li>
+  </ul>
+  <a href="#inscripcion" class="nav-cta">Inscríbete</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;position:relative"><img src="images/aca-hero.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.08;z-index:0;pointer-events:none" alt="">
+  <div class="hero-content" style="position:relative;z-index:1">
+    <div class="hero-pill"><span class="hero-pill-icon">🌟</span><span class="hero-pill-text">Sevilla · Desde 2010</span></div>
+    <h1 class="hero-title">Donde los<br/>niños <em>crecen</em><br/>aprendiendo.</h1>
+    <p class="hero-desc">Actividades extraescolares de calidad para niños y jóvenes de 3 a 18 años. Grupos reducidos, profesores vocacionales y un ambiente donde cada niño brilla a su manera.</p>
+    <div class="hero-actions">
+      <a href="#inscripcion" class="btn-primary">Inscríbete ahora</a>
+      <a href="#actividades" class="btn-outline">Ver actividades</a>
+    </div>
+    <div class="hero-chips">
+      <div class="hero-chip">👶 3–18 años</div>
+      <div class="hero-chip">👥 Grupos de 6–10</div>
+      <div class="hero-chip">✅ Trial gratuito</div>
+      <div class="hero-chip">🏅 15 años activos</div>
+    </div>
+  </div>
+  <div class="hero-visual" style="position:relative;z-index:1">
+    <div class="hero-visual-inner">
+      <div class="hero-stat-big">
+        <div class="hero-stat-big-num">+600</div>
+        <div class="hero-stat-big-info"><div class="hero-stat-big-label">Alumnos activos</div><div class="hero-stat-big-sub">Este curso 2024–25</div></div>
+      </div>
+      <div class="hero-stat-big">
+        <div class="hero-stat-big-num">18</div>
+        <div class="hero-stat-big-info"><div class="hero-stat-big-label">Actividades diferentes</div><div class="hero-stat-big-sub">Idiomas · Deporte · Arte · Música</div></div>
+      </div>
+      <div class="hero-stat-big">
+        <div class="hero-stat-big-num">6:1</div>
+        <div class="hero-stat-big-info"><div class="hero-stat-big-label">Ratio alumno–monitor</div><div class="hero-stat-big-sub">Atención personalizada real</div></div>
+      </div>
+      <div class="hero-stat-big">
+        <div class="hero-stat-big-num">97%</div>
+        <div class="hero-stat-big-info"><div class="hero-stat-big-label">Familias que repiten</div><div class="hero-stat-big-sub">Según encuesta anual</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVIDADES -->
+<section id="actividades">
+  <div class="section-head">
+    <div class="section-label">Nuestro catálogo</div>
+    <h2 class="section-title">Actividades</h2>
+    <p class="section-sub">Escoge entre 18 actividades agrupadas por áreas. Todas con prueba gratuita de una semana sin compromiso.</p>
+  </div>
+  <div class="act-tabs">
+    <button class="act-tab active" onclick="showAct('idiomas',this)">🌍 Idiomas</button>
+    <button class="act-tab" onclick="showAct('musica',this)">🎵 Música</button>
+    <button class="act-tab" onclick="showAct('deporte',this)">⚽ Deporte</button>
+    <button class="act-tab" onclick="showAct('arte',this)">🎨 Arte y Creatividad</button>
+    <button class="act-tab" onclick="showAct('refuerzo',this)">📚 Refuerzo</button>
+  </div>
+
+  <div id="act-idiomas" class="act-panel active">
+    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon">🇬🇧</span><div class="act-name">Inglés — Todos los niveles</div><div class="act-desc">Método comunicativo Cambridge. Preparación de exámenes KET, PET y FCE. Grupos por nivel, no por edad.</div><div class="act-meta"><span class="act-meta-pill ages">4–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:#c0392b"></div><span class="act-icon">🥖</span><div class="act-name">Francés</div><div class="act-desc">Francés por inmersión. Conversación, gramática y cultura francesa. Preparación DELF según nivel.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:#e74c3c"></div><span class="act-icon">🇨🇳</span><div class="act-name">Chino Mandarín</div><div class="act-desc">El idioma del futuro desde pequeños. Método visual con pictogramas. Pinyin y carácteres básicos.</div><div class="act-meta"><span class="act-meta-pill ages">7–16 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">60€/mes</span></div></div>
+  </div>
+  <div id="act-musica" class="act-panel">
+    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon">🎹</span><div class="act-name">Piano</div><div class="act-desc">Clases individuales con método Suzuki y lectura musical. Desde primeras notas hasta nivel intermedio. Exámenes de conservatorio.</div><div class="act-meta"><span class="act-meta-pill ages">4–16 años</span><span class="act-meta-pill group">Individual</span><span class="act-meta-pill price">70€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon">🎸</span><div class="act-name">Guitarra</div><div class="act-desc">Guitarra clásica, española y eléctrica. Grupos de 2–3 alumnos del mismo nivel. Teoría musical incluida.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Grupos 2–3</span><span class="act-meta-pill price">60€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon">🎤</span><div class="act-name">Canto y Voz</div><div class="act-desc">Técnica vocal, proyección y repertorio. Desde canto coral hasta solos. Actuación en el festival anual.</div><div class="act-meta"><span class="act-meta-pill ages">7–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
+  </div>
+  <div id="act-deporte" class="act-panel">
+    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon">⚽</span><div class="act-name">Fútbol</div><div class="act-desc">Técnica, táctica y trabajo en equipo. Torneos interacademia trimestrales. Categorías por edad.</div><div class="act-meta"><span class="act-meta-pill ages">4–16 años</span><span class="act-meta-pill group">Grupos 10–12</span><span class="act-meta-pill price">45€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon">🏊</span><div class="act-name">Natación</div><div class="act-desc">Desde bebés y debutantes hasta perfeccionamiento. Piscina cubierta temperada a 28°C en el propio centro.</div><div class="act-meta"><span class="act-meta-pill ages">2–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">50€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon">🤸</span><div class="act-name">Gimnasia Rítmica</div><div class="act-desc">Coordinación, flexibilidad y ritmo. Con aro, pelota, cuerda y cinta. Exhibición anual de fin de curso.</div><div class="act-meta"><span class="act-meta-pill ages">4–14 años</span><span class="act-meta-pill group">Grupos 8–10</span><span class="act-meta-pill price">48€/mes</span></div></div>
+  </div>
+  <div id="act-arte" class="act-panel">
+    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon">🎨</span><div class="act-name">Dibujo y Pintura</div><div class="act-desc">Técnicas de acuarela, acrílico, carboncillo y lápiz. Cada trimestre un proyecto artístico diferente. Exposición anual.</div><div class="act-meta"><span class="act-meta-pill ages">4–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">48€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon">🎭</span><div class="act-name">Teatro</div><div class="act-desc">Expresión corporal, voz, memorización y trabajo en equipo. Obra de teatro al final de cada curso.</div><div class="act-meta"><span class="act-meta-pill ages">5–16 años</span><span class="act-meta-pill group">Grupos 8–12</span><span class="act-meta-pill price">45€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon">💻</span><div class="act-name">Programación y Robótica</div><div class="act-desc">Scratch, Python básico y robótica con Arduino. Proyectos reales y presentación en feria de tecnología.</div><div class="act-meta"><span class="act-meta-pill ages">7–16 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">60€/mes</span></div></div>
+  </div>
+  <div id="act-refuerzo" class="act-panel">
+    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon">📐</span><div class="act-name">Refuerzo de Matemáticas</div><div class="act-desc">Resolución de dudas, consolidación de conceptos y preparación de exámenes. Grupos muy reducidos para máxima atención.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Máx. 4 alumnos</span><span class="act-meta-pill price">65€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon">📖</span><div class="act-name">Refuerzo Lengua y Lectura</div><div class="act-desc">Comprensión lectora, expresión escrita y ortografía. Técnicas de estudio para mejorar el rendimiento global.</div><div class="act-meta"><span class="act-meta-pill ages">6–16 años</span><span class="act-meta-pill group">Máx. 4 alumnos</span><span class="act-meta-pill price">65€/mes</span></div></div>
+    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon">🧠</span><div class="act-name">Técnicas de Estudio</div><div class="act-desc">Organización, planificación, mapas mentales y métodos de memorización. Para alumnos de primaria y secundaria.</div><div class="act-meta"><span class="act-meta-pill ages">9–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
+  </div>
+</section>
+
+<!-- HORARIOS -->
+<section id="horarios">
+  <div class="section-head">
+    <div class="section-label">Organización semanal</div>
+    <h2 class="section-title">Horarios</h2>
+    <p class="section-sub">Actividades de lunes a sábado en horario de tarde. Consulta disponibilidad por grupo y nivel.</p>
+  </div>
+  <div class="horarios-wrap">
+    <table class="horarios-table">
+      <thead>
+        <tr><th>Actividad</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Inglés (Primaria)</td><td><span class="h-pill blue">17:00</span></td><td>—</td><td><span class="h-pill blue">17:00</span></td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Inglés (Secundaria)</td><td>—</td><td><span class="h-pill blue">18:00</span></td><td>—</td><td><span class="h-pill blue">18:00</span></td><td>—</td><td>—</td></tr>
+        <tr><td>Piano</td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td>—</td></tr>
+        <tr><td>Guitarra</td><td>—</td><td><span class="h-pill purple">17:30</span></td><td>—</td><td><span class="h-pill purple">17:30</span></td><td>—</td><td><span class="h-pill purple">10:00</span></td></tr>
+        <tr><td>Fútbol</td><td>—</td><td><span class="h-pill green">17:00</span></td><td>—</td><td><span class="h-pill green">17:00</span></td><td>—</td><td><span class="h-pill green">10:00</span></td></tr>
+        <tr><td>Natación</td><td><span class="h-pill green">16:30</span></td><td>—</td><td><span class="h-pill green">16:30</span></td><td>—</td><td><span class="h-pill green">16:30</span></td><td><span class="h-pill green">11:00</span></td></tr>
+        <tr><td>Dibujo y Pintura</td><td>—</td><td>—</td><td><span class="h-pill">17:00</span></td><td>—</td><td>—</td><td><span class="h-pill">10:30</span></td></tr>
+        <tr><td>Programación</td><td>—</td><td><span class="h-pill blue">18:30</span></td><td>—</td><td><span class="h-pill blue">18:30</span></td><td>—</td><td>—</td></tr>
+        <tr><td>Refuerzo (Mat. / Lengua)</td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- INSCRIPCIÓN -->
+<section id="inscripcion">
+  <div class="section-head" style="text-align:center;max-width:520px;margin:0 auto 48px">
+    <div class="section-label" style="justify-content:center;display:flex">Sin burocracia</div>
+    <h2 class="section-title">Inscríbete</h2>
+    <p class="section-sub" style="margin:0 auto">Primera semana de prueba gratuita. Sin permanencia el primer trimestre.</p>
+  </div>
+  <div class="insc-grid">
+    <div class="insc-form">
+      <div id="form-success" style="display:none" class="form-success">
+        <div class="form-success-icon">🎉</div>
+        <div class="form-success-title">¡Solicitud enviada!</div>
+        <div class="form-success-text">Te hemos abierto WhatsApp con los datos. Contactamos en menos de 24h para confirmar plaza y semana de prueba.</div>
+      </div>
+      <div id="form-fields">
+        <div class="form-grid-2">
+          <div><span class="form-label">Nombre del alumno *</span><input type="text" class="form-input" id="f-alumno" placeholder="Nombre y apellidos" required/></div>
+          <div><span class="form-label">Edad *</span><input type="number" class="form-input" id="f-edad" placeholder="Ej: 8" min="3" max="18" required/></div>
+        </div>
+        <span class="form-label">Actividad de interés *</span>
+        <select class="form-select" id="f-actividad">
+          <option value="">Selecciona una actividad...</option>
+          <option>Inglés</option><option>Francés</option><option>Chino Mandarín</option>
+          <option>Piano</option><option>Guitarra</option><option>Canto</option>
+          <option>Fútbol</option><option>Natación</option><option>Gimnasia Rítmica</option>
+          <option>Dibujo y Pintura</option><option>Teatro</option><option>Programación</option>
+          <option>Refuerzo Matemáticas</option><option>Refuerzo Lengua</option>
+          <option>Técnicas de Estudio</option>
+        </select>
+        <span class="form-label">Teléfono del padre / madre *</span>
+        <input type="tel" class="form-input" id="f-tel" placeholder="+34 600 000 000" required/>
+        <span class="form-label">¿Cómo nos conocisteis?</span>
+        <select class="form-select" id="f-como">
+          <option value="">Selecciona...</option>
+          <option>Google</option><option>Instagram / Redes</option>
+          <option>Recomendación de otro padre</option><option>Colegio</option><option>Otro</option>
+        </select>
+        <button class="form-btn" onclick="submitInsc()">SOLICITAR PLAZA Y SEMANA DE PRUEBA</button>
+      </div>
+    </div>
+    <div class="insc-info">
+      <p style="font-size:13px;font-weight:700;margin-bottom:24px">¿Cómo funciona la inscripción?</p>
+      <div class="info-step">
+        <div class="info-step-num">1</div>
+        <div><div class="info-step-title">Rellena el formulario</div><div class="info-step-desc">Nos dices el nombre, edad y actividad. En 24h te confirmamos plaza disponible.</div></div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">2</div>
+        <div><div class="info-step-title">Semana de prueba gratuita</div><div class="info-step-desc">El alumno asiste una semana completa sin coste. Si no le convence, sin ningún compromiso.</div></div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">3</div>
+        <div><div class="info-step-title">Formalización</div><div class="info-step-desc">Si decide quedarse, firmamos el contrato y activamos la domiciliación bancaria del mes.</div></div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">4</div>
+        <div><div class="info-step-title">¡A aprender!</div><div class="info-step-desc">Seguimiento mensual de progreso y comunicación directa con los padres por WhatsApp.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="section-head">
+    <div class="section-label">Nuestros profesores</div>
+    <h2 class="section-title">El equipo</h2>
+    <p class="section-sub">Profesores titulados, con experiencia en educación y, sobre todo, vocación real por enseñar.</p>
+  </div>
+  <div class="equipo-grid">
+    <div class="equipo-card"><div class="equipo-avatar"><img src="images/aca-team-sara.jpg" alt="Sara Ramos" style="width:100%;height:100%;object-fit:cover;display:block"></div><div class="equipo-info"><div class="equipo-name">Sara Ramos</div><div class="equipo-role">Directora · Inglés</div><div class="equipo-bio">Licenciada en Filología Inglesa. CELTA. 12 años enseñando. Nativa bilingüe (mamá española, papá británico).</div></div></div>
+    <div class="equipo-card"><div class="equipo-avatar"><img src="images/aca-team-marcos.jpg" alt="Marcos Lopez" style="width:100%;height:100%;object-fit:cover;display:block"></div><div class="equipo-info"><div class="equipo-name">Marcos López</div><div class="equipo-role">Piano · Guitarra</div><div class="equipo-bio">Grado superior de Conservatorio. 10 años de docencia. Especialista en metodología Suzuki para menores.</div></div></div>
+    <div class="equipo-card"><div class="equipo-avatar"><img src="images/aca-team-paula.jpg" alt="Paula Garcia" style="width:100%;height:100%;object-fit:cover;display:block"></div><div class="equipo-info"><div class="equipo-name">Paula García</div><div class="equipo-role">Deporte · Natación</div><div class="equipo-bio">TAFAD y Grado en CCAFD. Monitora nacional de natación. Especialista en iniciación deportiva temprana.</div></div></div>
+    <div class="equipo-card"><div class="equipo-avatar"><img src="images/aca-team-diego.jpg" alt="Diego Martin" style="width:100%;height:100%;object-fit:cover;display:block"></div><div class="equipo-info"><div class="equipo-name">Diego Martín</div><div class="equipo-role">Programación · Robótica</div><div class="equipo-bio">Ingeniero informático. Formador en el Programa de Competencias Digitales del Ministerio. STEM lover.</div></div></div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion" style="padding:0">
+  <div class="ub-grid">
+    <div class="ub-map">
+      <div class="ub-map-pin">📍</div>
+      <div class="ub-map-addr">Calle San Fernando 18<br/>41004 Sevilla</div>
+    </div>
+    <div class="ub-info">
+      <div class="ub-block">
+        <div class="ub-label">Dónde estamos</div>
+        <div class="ub-text">Calle San Fernando 18 · 41004 Sevilla (Centro). A 5 min del Parque de María Luisa. Bus: líneas 3, 5 y 34. Parking Puerta de Jerez a 200m.<br/><br/><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1px solid var(--accent)">Cómo llegar →</a></div>
+      </div>
+      <div class="ub-block">
+        <div class="ub-label">Horario de atención</div>
+        <div class="ub-hor-row"><span class="ub-hor-day">Lunes – Viernes</span><span class="ub-hor-time">15:30 – 21:00</span></div>
+        <div class="ub-hor-row"><span class="ub-hor-day">Sábado</span><span class="ub-hor-time">09:30 – 14:00</span></div>
+        <div class="ub-hor-row"><span class="ub-hor-day">Domingo</span><span class="ub-hor-time closed">Cerrado</span></div>
+      </div>
+      <div class="ub-block">
+        <div class="ub-label">Contacto directo</div>
+        <div class="ub-text"><strong style="font-size:18px"><a href="tel:+34954123456" style="color:var(--text);text-decoration:none">+34 954 123 456</a></strong><br/><span style="margin-top:4px;display:block">info@academitalento.es</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Academia <span>Talento</span></div>
+      <div class="footer-desc">Extraescolares de calidad para niños y jóvenes en Sevilla. Grupos reducidos, profesores vocacionales y 15 años de experiencia.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Actividades</div>
+      <ul class="footer-links">
+        <li><a href="#actividades">Idiomas</a></li>
+        <li><a href="#actividades">Música</a></li>
+        <li><a href="#actividades">Deporte</a></li>
+        <li><a href="#actividades">Arte y Creatividad</a></li>
+        <li><a href="#actividades">Refuerzo Escolar</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Academia</div>
+      <ul class="footer-links">
+        <li><a href="#equipo">Nuestro equipo</a></li>
+        <li><a href="#horarios">Horarios</a></li>
+        <li><a href="#inscripcion">Inscripción</a></li>
+        <li><a href="#ubicacion">Dónde estamos</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Academia Talento S.L. · Todos los derechos reservados</div>
+    <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/34954123456?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20vuestras%20actividades%20extraescolares." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+</a>
+
+<script>
+function showAct(id, btn) {
+  document.querySelectorAll('.act-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.act-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('act-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function submitInsc() {
+  var alumno = document.getElementById('f-alumno').value.trim();
+  var edad   = document.getElementById('f-edad').value.trim();
+  var act    = document.getElementById('f-actividad').value;
+  var tel    = document.getElementById('f-tel').value.trim();
+  if (!alumno || !edad || !tel) { alert('Rellena nombre, edad y teléfono.'); return; }
+  var como = document.getElementById('f-como').value;
+  var lines = [
+    'Hola, quiero solicitar una plaza en Academia Talento:',
+    '',
+    'Alumno: ' + alumno + ' (' + edad + ' años)',
+    'Actividad: ' + (act || 'Por confirmar'),
+    'Teléfono: ' + tel
+  ];
+  if (como) lines.push('Cómo nos conocisteis: ' + como);
+  lines.push('', 'Nos gustaría hacer la semana de prueba gratuita. Gracias!');
+  window.open('https://wa.me/34954123456?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+</body>
+</html>

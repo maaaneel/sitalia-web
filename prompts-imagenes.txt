@@ -1,0 +1,210 @@
+PROMPTS DE IMÁGENES — DEMOS WEB MICRO-AGENCIA
+==============================================
+Genera las imágenes EN ESTE ORDEN EXACTO.
+Guárdalas todas en la misma carpeta sin cambiar el nombre (dejar el nombre automático).
+Yo me encargo de renombrarlas después al nombre destino indicado.
+
+Estilo general para todas: fotorrealista, fotografía profesional, alta calidad, iluminación natural o controlada, sin texto ni logos sobreimpresos.
+
+=====================================================
+BLOQUE 1 — PELUQUERÍA / BARBERÍA (9 imágenes)
+=====================================================
+
+IMAGEN 01 — Destino: pel-hero.jpg
+Aspect ratio: horizontal (16:9)
+Professional barbershop interior, dark and moody aesthetic, exposed brick wall, vintage barber chairs in black leather and chrome, warm Edison bulb lighting, barbering tools neatly arranged, dark wood shelves with grooming products, empty stylish space, cinematic atmosphere, modern luxury barbershop, no people.
+
+IMAGEN 02 — Destino: pel-team-diego.jpg
+Aspect ratio: square (1:1)
+Portrait photo of a professional male hairstylist, late 30s, Spanish look, confident smile, wearing a black apron over a dark shirt, standing in a modern barbershop, arms crossed, shallow depth of field, professional headshot style, natural studio lighting.
+
+IMAGEN 03 — Destino: pel-team-marta.jpg
+Aspect ratio: square (1:1)
+Portrait photo of a professional female hairstylist, early 30s, Spanish look, warm smile, wearing a stylish black apron, modern hair salon background slightly blurred, holding scissors, professional headshot style, soft natural light.
+
+IMAGEN 04 — Destino: pel-team-alex.jpg
+Aspect ratio: square (1:1)
+Portrait photo of a young male barber, mid-20s, Spanish look, friendly expression, well-groomed beard himself, wearing a black barber apron, barbershop background, professional headshot, soft studio lighting.
+
+IMAGEN 05 — Destino: pel-gallery-1.jpg
+Aspect ratio: square (1:1)
+Close-up professional photography of a perfect men's fade haircut, freshly cut, clean temple fade, sharp line-up, detailed barbershop craft photography, dramatic side lighting highlighting texture, dark background.
+
+IMAGEN 06 — Destino: pel-gallery-2.jpg
+Aspect ratio: square (1:1)
+Stylish barbershop interior atmosphere, warm amber lighting, two barber chairs, mirror with lights, grooming products on shelf, dark wood and black accents, cozy luxurious vibe, nobody visible.
+
+IMAGEN 07 — Destino: pel-gallery-3.jpg
+Aspect ratio: square (1:1)
+Professional photo of a barber cutting a client's hair, skilled hands holding scissors, close up on the scissor-over-comb technique, dark barbershop background, artistic craft photography.
+
+IMAGEN 08 — Destino: pel-gallery-4.jpg
+Aspect ratio: square (1:1)
+Professional photo of a stylish women's hair color transformation, rich balayage highlights, healthy shiny hair, model with eyes closed, beauty salon lighting, luxury hair photography.
+
+IMAGEN 09 — Destino: pel-gallery-5.jpg
+Aspect ratio: square (1:1)
+Close-up professional photo of a perfectly groomed man's beard after barbershop treatment, sharp edges, well-shaped full beard, skin-fade blend, dramatic side lighting, dark background.
+
+=====================================================
+BLOQUE 2 — RESTAURANTE (6 imágenes)
+=====================================================
+
+IMAGEN 10 — Destino: res-hero.jpg
+Aspect ratio: horizontal (16:9)
+Warm and inviting restaurant interior in Madrid, intimate dining room with warm amber lighting, brick walls, wooden tables with white tablecloths, candles, wine glasses, cozy Mediterranean atmosphere, evening service, no people, cinematic wide angle.
+
+IMAGEN 11 — Destino: res-gallery-1.jpg
+Aspect ratio: square (1:1)
+Overhead flat-lay shot of a beautifully plated Spanish octopus dish (pulpo a la gallega), on a dark slate plate, rustic wooden table, garnished with paprika and olive oil drizzle, professional food photography, warm natural light, styled.
+
+IMAGEN 12 — Destino: res-gallery-2.jpg
+Aspect ratio: square (1:1)
+Elegant restaurant dining room detail, close up of a set table with wine glasses, linen napkin, cutlery and a small candle, warm bokeh background, luxury dining atmosphere.
+
+IMAGEN 13 — Destino: res-gallery-3.jpg
+Aspect ratio: square (1:1)
+Professional food photography of crispy Spanish ham croquettes (croquetas de jamón), golden brown, on a white ceramic plate with a small garnish, side angle, dramatic light from the left, restaurant style.
+
+IMAGEN 14 — Destino: res-gallery-4.jpg
+Aspect ratio: square (1:1)
+Professional food photography of a burnt Basque cheesecake (tarta de queso), creamy texture, caramelized top, on a dark plate with red berry coulis, dark background, moody restaurant dessert photography.
+
+IMAGEN 15 — Destino: res-gallery-5.jpg
+Aspect ratio: square (1:1)
+Two glasses of red wine on a wooden restaurant table, warm candlelight in the background, rustic Spanish wine bar atmosphere, shallow depth of field, romantic warm tones.
+
+=====================================================
+BLOQUE 3 — FISIOTERAPIA (5 imágenes)
+=====================================================
+
+IMAGEN 16 — Destino: fis-hero.jpg
+Aspect ratio: horizontal (16:9)
+Modern clean physiotherapy clinic interior, white and light green tones, professional treatment table in center, good natural light from large windows, medical equipment visible, plants, calm professional atmosphere, nobody present, wide angle.
+
+IMAGEN 17 — Destino: fis-team-laura.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a female physiotherapist, early 40s, Spanish look, friendly confident smile, wearing a light green clinical uniform, modern clinic background slightly blurred, arms crossed, professional headshot lighting.
+
+IMAGEN 18 — Destino: fis-team-jordi.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a male physiotherapist, mid-30s, Spanish look, wearing a white clinical top, slight smile, clean modern clinic background, professional headshot, natural studio lighting.
+
+IMAGEN 19 — Destino: fis-team-clara.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a female physiotherapist, early 30s, Spanish look, warm friendly expression, wearing light green clinical uniform, hair up, modern clinic background, professional headshot lighting.
+
+IMAGEN 20 — Destino: fis-team-andreu.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a male physiotherapist, late 20s, Spanish look, smiling, wearing a white clinical top, hands in pockets, modern clinic background blurred, professional headshot, clean lighting.
+
+=====================================================
+BLOQUE 4 — PSICÓLOGA (2 imágenes)
+=====================================================
+
+IMAGEN 21 — Destino: psi-profile.jpg
+Aspect ratio: vertical (3:4)
+Professional portrait of a female psychologist, late 30s, Spanish look, warm empathetic smile, wearing smart casual professional clothes (dark blouse), sitting in a cozy therapy office, bookshelves visible in background, soft natural window light, professional but approachable look, editorial photography style.
+
+IMAGEN 22 — Destino: psi-sobre.jpg
+Aspect ratio: vertical (3:4)
+A warm and elegant psychology consultation room, two comfortable armchairs facing each other, soft warm lighting, plants, bookshelves with books, neutral tones beige and white, small side table with a box of tissues, calm safe space feeling, nobody present, wide angle shot.
+
+=====================================================
+BLOQUE 5 — ABOGADOS (4 imágenes)
+=====================================================
+
+IMAGEN 23 — Destino: abo-team-antonio.jpg
+Aspect ratio: square (1:1)
+Professional corporate portrait of a male lawyer, late 50s, Spanish look, authoritative expression with a warm smile, wearing a dark navy suit and tie, law office background with bookshelves and law books, professional headshot, dramatic studio lighting.
+
+IMAGEN 24 — Destino: abo-team-carmen.jpg
+Aspect ratio: square (1:1)
+Professional corporate portrait of a female lawyer, mid-40s, Spanish look, confident professional expression, wearing a dark blazer, modern law office background, professional headshot, clean corporate lighting.
+
+IMAGEN 25 — Destino: abo-team-javier.jpg
+Aspect ratio: square (1:1)
+Professional corporate portrait of a male lawyer, mid-40s, Spanish look, serious yet approachable expression, wearing a dark suit, law firm office background, professional headshot, studio lighting.
+
+IMAGEN 26 — Destino: abo-team-laura.jpg
+Aspect ratio: square (1:1)
+Professional corporate portrait of a female lawyer, early 30s, Spanish look, friendly professional smile, wearing a dark blazer, modern law office background, professional headshot, clean studio lighting.
+
+=====================================================
+BLOQUE 6 — ACADEMIA (5 imágenes)
+=====================================================
+
+IMAGEN 27 — Destino: aca-hero.jpg
+Aspect ratio: horizontal (16:9)
+Bright and colorful modern education center for kids and teenagers, open space with tables, colorful chairs, whiteboards, plants, bookshelves, natural daylight, positive energetic atmosphere, empty classroom, wide angle photography.
+
+IMAGEN 28 — Destino: aca-team-sara.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a female English teacher, early 30s, Spanish look, warm enthusiastic smile, casual professional attire, colorful classroom background slightly blurred, approachable friendly expression, natural light portrait.
+
+IMAGEN 29 — Destino: aca-team-marcos.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a male music teacher, late 30s, Spanish look, passionate expression, wearing casual professional clothes, with a guitar visible in the background slightly blurred, natural light headshot, warm tone.
+
+IMAGEN 30 — Destino: aca-team-paula.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a female sports coach, early 30s, Spanish look, energetic confident smile, wearing athletic professional wear, sports facility background slightly blurred, natural light headshot.
+
+IMAGEN 31 — Destino: aca-team-diego.jpg
+Aspect ratio: square (1:1)
+Professional portrait of a male computer science and robotics teacher, late 20s, Spanish look, enthusiastic smile, wearing casual tech professional clothes, laptop or computer equipment visible in background, natural light headshot.
+
+=====================================================
+BLOQUE 7 — PÁDEL (3 imágenes)
+=====================================================
+
+IMAGEN 32 — Destino: pad-hero.jpg
+Aspect ratio: horizontal (16:9)
+Aerial or wide angle dramatic photo of padel tennis courts at night with powerful LED lighting, 4 courts visible, modern sports facility, dark sky background, dynamic sport atmosphere, nobody playing, impressive lighting design.
+
+IMAGEN 33 — Destino: pad-courts-indoor.jpg
+Aspect ratio: horizontal (16:9)
+Modern indoor padel courts inside a large sports hall, crystal glass walls, professional flooring, bright overhead LED lighting, clean modern facility, nobody present, wide angle photography.
+
+IMAGEN 34 — Destino: pad-courts-outdoor.jpg
+Aspect ratio: horizontal (16:9)
+Outdoor padel courts at dusk with LED floodlights turned on, synthetic turf surface, modern net, clear evening sky, palm trees visible in background (Valencia setting), inviting sport atmosphere, nobody present.
+
+=====================================================
+RESUMEN: 34 imágenes en total
+=====================================================
+01  pel-hero.jpg          | Hero barbería
+02  pel-team-diego.jpg    | Equipo peluquería - Diego
+03  pel-team-marta.jpg    | Equipo peluquería - Marta
+04  pel-team-alex.jpg     | Equipo peluquería - Álex
+05  pel-gallery-1.jpg     | Galería - fade haircut
+06  pel-gallery-2.jpg     | Galería - interior barbería
+07  pel-gallery-3.jpg     | Galería - corte tijera
+08  pel-gallery-4.jpg     | Galería - coloración
+09  pel-gallery-5.jpg     | Galería - barba
+10  res-hero.jpg          | Hero restaurante
+11  res-gallery-1.jpg     | Galería - pulpo
+12  res-gallery-2.jpg     | Galería - mesa
+13  res-gallery-3.jpg     | Galería - croquetas
+14  res-gallery-4.jpg     | Galería - tarta queso
+15  res-gallery-5.jpg     | Galería - vinos
+16  fis-hero.jpg          | Hero fisioterapia
+17  fis-team-laura.jpg    | Equipo fisio - Laura
+18  fis-team-jordi.jpg    | Equipo fisio - Jordi
+19  fis-team-clara.jpg    | Equipo fisio - Clara
+20  fis-team-andreu.jpg   | Equipo fisio - Andreu
+21  psi-profile.jpg       | Psicóloga - foto perfil
+22  psi-sobre.jpg         | Psicóloga - consulta
+23  abo-team-antonio.jpg  | Equipo abogados - Antonio
+24  abo-team-carmen.jpg   | Equipo abogados - Carmen
+25  abo-team-javier.jpg   | Equipo abogados - Javier
+26  abo-team-laura.jpg    | Equipo abogados - Laura
+27  aca-hero.jpg          | Hero academia
+28  aca-team-sara.jpg     | Equipo academia - Sara
+29  aca-team-marcos.jpg   | Equipo academia - Marcos
+30  aca-team-paula.jpg    | Equipo academia - Paula
+31  aca-team-diego.jpg    | Equipo academia - Diego
+32  pad-hero.jpg          | Hero pádel
+33  pad-courts-indoor.jpg | Pistas cubiertas
+34  pad-courts-outdoor.jpg| Pistas exteriores noche
+=====================================================

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Casa Lola | Cocina de Mercado · Madrid</title>
+<meta name="description" content="Restaurante de cocina de mercado en el corazón de Madrid. Ingredientes frescos, recetas de temporada y vinos naturales. Reserva tu mesa online."/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#faf8f5;
+  --bg-dark:#f2ede7;
+  --bg-card:#ffffff;
+  --text:#1c1c1c;
+  --text-muted:#6b6560;
+  --accent:#8b2635;
+  --accent-hover:#6e1e2a;
+  --accent-warm:#c4763a;
+  --border:#e0d8cf;
+  --border-light:#ede8e2;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,248,245,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:0.03em;color:var(--text)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent-hover)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px;background:var(--bg)}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 5% 80px 8%}
+.hero-tag{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:"";width:32px;height:1px;background:var(--accent)}
+.hero-title{font-size:clamp(42px,5vw,72px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px}
+.hero-title em{font-style:italic;font-weight:300;color:var(--accent)}
+.hero-desc{font-size:16px;color:var(--text-muted);max-width:420px;line-height:1.7;margin-bottom:40px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:15px 31px;border:1px solid var(--text);cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-image{background:#1c1c1c;position:relative;overflow:hidden;min-height:500px}
+.hero-image-bg{width:100%;height:100%;object-fit:cover;opacity:0.85}
+.hero-stats{position:absolute;bottom:0;left:0;right:0;background:rgba(10,10,10,0.85);display:grid;grid-template-columns:repeat(3,1fr)}
+.hero-stat{padding:20px 16px;border-right:1px solid rgba(255,255,255,0.1);text-align:center}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.02em}
+.hero-stat-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:3px}
+.hero-image-placeholder{display:none !important;width:100%;height:100%;background:linear-gradient(135deg,#2a1a1a 0%,#3d2020 40%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:40px}
+.hero-image-placeholder svg{opacity:0.15;width:80px;height:80px}
+.hero-image-placeholder p{color:rgba(255,255,255,0.2);font-size:11px;letter-spacing:0.1em;text-transform:uppercase}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-image{min-height:320px}.hero-content{padding:60px 6%}}
+
+/* SECTION BASE */
+section{padding:96px 5%}
+.section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:"";width:24px;height:1px;background:var(--accent)}
+.section-title{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--text-muted);max-width:520px;line-height:1.7}
+.section-head{margin-bottom:64px}
+
+/* MENU / CARTA */
+#carta{background:var(--bg)}
+.menu-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:48px;overflow-x:auto}
+.menu-tab{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:14px 28px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text-muted);background:none;border-top:none;border-left:none;border-right:none;transition:all 0.2s;white-space:nowrap}
+.menu-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.menu-tab:hover{color:var(--text)}
+.menu-panel{display:none}
+.menu-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;border:1px solid var(--border)}
+.menu-item{background:var(--bg-card);padding:24px 28px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:1px solid var(--border-light);transition:background 0.15s}
+.menu-item:hover{background:var(--bg-dark)}
+.menu-item-info{flex:1}
+.menu-item-name{font-size:14px;font-weight:600;margin-bottom:5px;letter-spacing:0.01em}
+.menu-item-desc{font-size:12px;color:var(--text-muted);line-height:1.5}
+.menu-item-tag{display:inline-block;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:#fff;padding:2px 8px;margin-top:6px}
+.menu-item-price{font-size:15px;font-weight:700;color:var(--accent);white-space:nowrap;padding-top:2px}
+
+/* MENU DEL DIA */
+#menudia{background:var(--bg-dark)}
+.menudia-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.menudia-card{background:var(--bg-card);border:1px solid var(--border);padding:40px}
+.menudia-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.menudia-day{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)}
+.menudia-price{font-size:28px;font-weight:800;color:var(--accent);letter-spacing:-0.02em}
+.menudia-price-label{font-size:10px;color:var(--text-muted);text-align:right}
+.menudia-course{margin-bottom:24px}
+.menudia-course-title{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+.menudia-dish{font-size:13px;padding:6px 0;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:8px}
+.menudia-dish::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.menudia-note{font-size:11px;color:var(--text-muted);margin-top:20px;font-style:italic}
+.menudia-info{display:flex;flex-direction:column;gap:28px;justify-content:center}
+.menudia-info-card{border:1px solid var(--border);padding:28px}
+.menudia-info-icon{font-size:24px;margin-bottom:12px}
+.menudia-info-title{font-size:13px;font-weight:700;margin-bottom:6px}
+.menudia-info-text{font-size:12px;color:var(--text-muted);line-height:1.6}
+@media(max-width:768px){.menudia-grid{grid-template-columns:1fr}}
+
+/* RESERVAS */
+#reservas{background:var(--bg)}
+.res-container{max-width:760px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);padding:48px}
+.res-steps{display:flex;gap:0;margin-bottom:40px;border-bottom:1px solid var(--border)}
+.res-step{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:12px 0;margin-right:32px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text-muted);background:none;border-top:none;border-left:none;border-right:none;transition:all 0.2s;white-space:nowrap;position:relative}
+.res-step.active{color:var(--accent);border-bottom-color:var(--accent)}
+.res-step.done{color:var(--text)}
+.res-panel{display:none}
+.res-panel.active{display:block}
+.res-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;display:block}
+.res-select,.res-input{width:100%;background:var(--bg);border:1px solid var(--border);padding:14px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color 0.2s;appearance:none;border-radius:0}
+.res-select:focus,.res-input:focus{border-color:var(--accent)}
+.res-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.res-field{margin-bottom:24px}
+.res-slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-top:4px}
+.res-slot{padding:12px 8px;border:1px solid var(--border);font-size:12px;letter-spacing:0.08em;font-weight:600;cursor:pointer;text-align:center;background:var(--bg-card);transition:all 0.15s;color:var(--text)}
+.res-slot:hover{border-color:var(--accent);color:var(--accent)}
+.res-slot.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+.res-slot.booked{background:var(--bg-dark);color:var(--border);cursor:not-allowed;border-color:var(--border-light)}
+.res-btn{background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;margin-top:8px;transition:background 0.2s;width:100%}
+.res-btn:hover:not(:disabled){background:var(--accent-hover)}
+.res-btn:disabled{opacity:0.35;cursor:not-allowed}
+.res-back{background:none;border:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:12px 0;text-decoration:underline;text-underline-offset:3px;margin-top:8px}
+.res-confirm-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-light);font-size:13px}
+.res-confirm-row:last-child{border-bottom:none}
+.res-confirm-label{color:var(--text-muted)}
+.res-confirm-value{font-weight:600}
+.res-wa-btn{background:#25d366;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:18px 32px;border:none;cursor:pointer;width:100%;margin-top:24px;transition:background 0.2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.res-wa-btn:hover{background:#1eb957}
+.res-success{text-align:center;padding:48px 0}
+.res-success-icon{font-size:48px;margin-bottom:16px}
+.res-success-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.res-success-text{font-size:13px;color:var(--text-muted);margin-bottom:24px}
+.res-retry{background:none;border:1px solid var(--border);padding:10px 24px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--text-muted);transition:all 0.2s}
+.res-retry:hover{border-color:var(--text);color:var(--text)}
+@media(max-width:600px){.res-container{padding:28px 20px}.res-grid-2{grid-template-columns:1fr}}
+
+/* GALERIA */
+#galeria{background:var(--bg-dark)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto;gap:2px}
+.gallery-item{background:#2a1a1a;overflow:hidden;position:relative;cursor:pointer}
+.gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:1}
+.gallery-item:nth-child(n+2){aspect-ratio:1}
+.gallery-placeholder{width:100%;height:100%;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;opacity:0.3}
+.gallery-placeholder svg{width:32px;height:32px;color:#fff}
+.gallery-placeholder span{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#fff}
+.gallery-item:hover .gallery-placeholder{opacity:0.5}
+@media(max-width:600px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-item:nth-child(1){grid-column:span 2}}
+
+/* REVIEWS */
+#resenas{background:var(--bg)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;border:1px solid var(--border)}
+.review-card{background:var(--bg-card);padding:32px;border-right:1px solid var(--border-light);transition:background 0.15s}
+.review-card:hover{background:var(--bg-dark)}
+.review-stars{display:flex;gap:3px;margin-bottom:16px}
+.review-star{color:var(--accent-warm);font-size:14px}
+.review-text{font-size:13px;line-height:1.7;color:var(--text);margin-bottom:20px;font-style:italic}
+.review-author{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.review-meta{font-size:10px;color:var(--text-muted);margin-top:2px;letter-spacing:0.05em}
+.reviews-summary{display:flex;align-items:center;gap:32px;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.reviews-score{font-size:64px;font-weight:800;line-height:1;color:var(--text);letter-spacing:-0.03em}
+.reviews-detail{display:flex;flex-direction:column;gap:4px}
+.reviews-stars-big{display:flex;gap:4px;margin-bottom:8px}
+.reviews-stars-big span{color:var(--accent-warm);font-size:18px}
+.reviews-count{font-size:12px;color:var(--text-muted);letter-spacing:0.05em}
+.reviews-platform{font-size:10px;color:var(--text-muted);margin-top:4px;letter-spacing:0.08em;text-transform:uppercase}
+
+/* LOCATION */
+#ubicacion{background:var(--bg-dark)}
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.map-placeholder{background:#1c1c1c;min-height:400px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.map-placeholder::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,38,53,0.08) 0%,transparent 60%)}
+.map-pin{font-size:48px;opacity:0.5}
+.map-address{color:rgba(255,255,255,0.4);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;max-width:200px;line-height:1.6}
+.location-info{background:var(--bg-card);padding:48px;border:1px solid var(--border)}
+.location-block{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border-light)}
+.location-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.location-block-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.schedule-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border-light)}
+.schedule-row:last-child{border-bottom:none}
+.schedule-day{color:var(--text-muted)}
+.schedule-time{font-weight:600}
+.schedule-time.closed{color:#c0392b;font-weight:400}
+@media(max-width:768px){.location-grid{grid-template-columns:1fr}.map-placeholder{min-height:240px}}
+
+/* CONTACT */
+#contacto{background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:900px;margin:0 auto}
+.contact-form{background:var(--bg-card);border:1px solid var(--border);padding:40px}
+.contact-input{width:100%;background:var(--bg);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color 0.2s;border-radius:0;margin-bottom:16px}
+.contact-input:focus{border-color:var(--accent)}
+.contact-btn{background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;width:100%;transition:background 0.2s}
+.contact-btn:hover{background:var(--accent-hover)}
+.contact-info{display:flex;flex-direction:column;gap:28px}
+.contact-info-item{border-left:2px solid var(--accent);padding-left:20px}
+.contact-info-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.contact-info-value{font-size:14px;font-weight:600;color:var(--text)}
+.contact-info-value a{color:var(--text);text-decoration:none}
+.contact-info-value a:hover{color:var(--accent)}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;gap:32px}}
+
+/* FOOTER */
+footer{background:#0f0a0a;border-top:1px solid rgba(255,255,255,0.06);padding:56px 5% 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand-name{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.footer-brand-name span{color:var(--accent)}
+.footer-brand-desc{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.7;max-width:280px;margin-bottom:20px}
+.footer-social{display:flex;gap:10px}
+.footer-social-btn{width:34px;height:34px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.footer-social-btn:hover{border-color:var(--accent)}
+.footer-social-btn svg{width:14px;height:14px;fill:rgba(255,255,255,0.4)}
+.footer-social-btn:hover svg{fill:var(--accent)}
+.footer-col-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:20px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s;letter-spacing:0.03em}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:0.04em}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:11px;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:0.04em}
+.footer-legal a:hover{color:rgba(255,255,255,0.5)}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr}}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:52px;height:52px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,0.4);text-decoration:none;transition:all 0.2s}
+.wa-float:hover{transform:scale(1.08);background:#1eb957}
+.wa-float svg{width:26px;height:26px;fill:#fff}
+@keyframes pulse-wa{0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.7)}}
+.wa-float{animation:pulse-wa 2.5s ease-in-out infinite}
+
+/* UTILS */
+.divider{width:40px;height:2px;background:var(--accent);margin:24px 0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Casa <span>Lola</span></div>
+  <ul class="nav-links">
+    <li><a href="#carta">Carta</a></li>
+    <li><a href="#menudia">Menú del día</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+  </ul>
+  <a href="#reservas" class="nav-cta">Reservar mesa</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-content">
+    <div class="hero-tag">Cocina de mercado · Madrid</div>
+    <h1 class="hero-title">Sabor<br/>de <em>temporada,</em><br/>alma local.</h1>
+    <p class="hero-desc">Ingredientes frescos de productores locales, recetas con historia y una carta de vinos naturales cuidada con mimo. En el corazón de Malasaña desde 2009.</p>
+    <div class="hero-actions">
+      <a href="#reservas" class="btn-primary">Reservar mesa</a>
+      <a href="#carta" class="btn-outline">Ver carta</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="images/res-hero.jpg" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0" alt="Interior restaurante">
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">15</div><div class="hero-stat-label">Años abiertos</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4.9</div><div class="hero-stat-label">Google Reviews</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Km. 0</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section id="carta">
+  <div class="section-head">
+    <div class="section-label">Nuestra propuesta</div>
+    <h2 class="section-title">La Carta</h2>
+    <p class="section-sub">Una selección honesta de platos de temporada. La carta cambia con el mercado, siempre fiel a los productos de la huerta y el mar.</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showTab('entrantes',this)">Entrantes</button>
+    <button class="menu-tab" onclick="showTab('principales',this)">Principales</button>
+    <button class="menu-tab" onclick="showTab('postres',this)">Postres</button>
+    <button class="menu-tab" onclick="showTab('vinos',this)">Vinos</button>
+  </div>
+  <div id="tab-entrantes" class="menu-panel active">
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Croquetas de jamón ibérico</div><div class="menu-item-desc">Bechamel cremosa, jamón DO Jabugo, fritura artesanal. 6 uds.</div><div class="menu-item-tag">⭐ Firma</div></div><div class="menu-item-price">12€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Ensalada de temporada</div><div class="menu-item-desc">Lechugas variadas, tomate cherry, granada, vinagreta de miel y mostaza antigua.</div></div><div class="menu-item-price">9€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tabla de ibéricos</div><div class="menu-item-desc">Selección de embutidos ibéricos de bellota, pan de cristal con tomate. Para 2 personas.</div></div><div class="menu-item-price">18€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Pulpo a la brasa</div><div class="menu-item-desc">Pulpo gallego, patata rota con pimentón de la Vera, aceite de oliva virgen extra.</div><div class="menu-item-tag">🔥 Popular</div></div><div class="menu-item-price">16€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Gazpacho andaluz</div><div class="menu-item-desc">Tomate de huerta, pepino, pimiento y pan. Servido frío con guarnición. (Temporada)</div></div><div class="menu-item-price">7€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Boquerones en vinagre</div><div class="menu-item-desc">Boquerones frescos marinados en casa, ajo laminado, perejil, AOVE.</div></div><div class="menu-item-price">8€</div></div>
+  </div>
+  <div id="tab-principales" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Carrilleras de ternera al vino tinto</div><div class="menu-item-desc">Guisadas 8 horas, reducción de Rioja, puré de patata trufado, cebolleta confitada.</div><div class="menu-item-tag">⭐ Firma</div></div><div class="menu-item-price">22€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Lubina a la plancha</div><div class="menu-item-desc">Lubina salvaje del Cantábrico, verduras de temporada, salsa verde de almejas.</div></div><div class="menu-item-price">26€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Secreto ibérico a la brasa</div><div class="menu-item-desc">Secreto DO Jabugo, patatas bravas caseras, alioli de ajo negro.</div><div class="menu-item-tag">🔥 Popular</div></div><div class="menu-item-price">20€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Risotto de setas y trufa</div><div class="menu-item-desc">Arroz carnaroli, mix de setas silvestres, parmesano añejo, aceite de trufa negra.</div></div><div class="menu-item-price">18€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Bacalao al pil pil</div><div class="menu-item-desc">Lomo de bacalao desalado, salsa pil pil tradicional, guindilla al aceite.</div></div><div class="menu-item-price">21€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Pasta al huevo con trufa</div><div class="menu-item-desc">Pappardelle fresca, mantequilla, parmesano, ralladura generosa de trufa negra.</div></div><div class="menu-item-price">19€</div></div>
+  </div>
+  <div id="tab-postres" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tarta de queso al horno</div><div class="menu-item-desc">Nuestra receta propia, textura cremosa, base crujiente, mermelada de frutos rojos.</div><div class="menu-item-tag">⭐ Firma</div></div><div class="menu-item-price">7€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Coulant de chocolate</div><div class="menu-item-desc">Chocolate 70% Valrhona, corazón fundente, helado de vainilla de Madagascar.</div></div><div class="menu-item-price">8€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Arroz con leche</div><div class="menu-item-desc">Receta de la abuela, canela, limón, caramelizado al momento.</div></div><div class="menu-item-price">6€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Selección de quesos</div><div class="menu-item-desc">3 quesos artesanos de España, membrillo, nueces, pan de higos.</div></div><div class="menu-item-price">12€</div></div>
+  </div>
+  <div id="tab-vinos" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vino de la casa — Blanco</div><div class="menu-item-desc">Verdejo Rueda. Fresco, afrutado, mineral. Perfecto con pescados y entrantes.</div></div><div class="menu-item-price">Copa 4€ · Botella 16€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vino de la casa — Tinto</div><div class="menu-item-desc">Tempranillo Ribera del Duero. Cuerpo medio, taninos suaves, largo en boca.</div></div><div class="menu-item-price">Copa 5€ · Botella 18€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Cava Brut Nature</div><div class="menu-item-desc">Penedès, elaboración tradicional. Seco, elegante, burbujas finas.</div><div class="menu-item-tag">🍾 Celebración</div></div><div class="menu-item-price">Botella 22€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Rioja Reserva 2019</div><div class="menu-item-desc">Tempranillo 100%, crianza 18 meses en roble francés. Para las carnes.</div></div><div class="menu-item-price">Botella 32€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Albariño Rías Baixas</div><div class="menu-item-desc">Fresco y aromático. Maridaje perfecto con nuestros pescados y mariscos.</div></div><div class="menu-item-price">Copa 6€ · Botella 24€</div></div>
+    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vino natural — Orange Wine</div><div class="menu-item-desc">Macabeo con maceración de pieles. Naranja intenso, tánico, único.</div><div class="menu-item-tag">🌿 Natural</div></div><div class="menu-item-price">Copa 7€ · Botella 28€</div></div>
+  </div>
+</section>
+
+<!-- MENÚ DEL DÍA -->
+<section id="menudia">
+  <div class="section-head">
+    <div class="section-label">De lunes a viernes</div>
+    <h2 class="section-title">Menú del día</h2>
+    <p class="section-sub">13:30 a 16:00h. Primero, segundo, postre o café, pan y bebida incluida.</p>
+  </div>
+  <div class="menudia-grid">
+    <div class="menudia-card">
+      <div class="menudia-card-header">
+        <div><div class="menudia-day">Esta semana</div><div style="font-size:13px;color:var(--text-muted);margin-top:4px">Lunes a viernes · 13:30–16:00h</div></div>
+        <div><div class="menudia-price">14.50€</div><div class="menudia-price-label">IVA incluido</div></div>
+      </div>
+      <div class="menudia-course">
+        <div class="menudia-course-title">Primeros (a elegir)</div>
+        <div class="menudia-dish">Ensalada verde con vinagreta de miel</div>
+        <div class="menudia-dish">Crema de calabaza con pipas tostadas</div>
+        <div class="menudia-dish">Macarrones con tomate y albahaca fresca</div>
+      </div>
+      <div class="menudia-course">
+        <div class="menudia-course-title">Segundos (a elegir)</div>
+        <div class="menudia-dish">Merluza al horno con patatas</div>
+        <div class="menudia-dish">Pollo asado con verduras de temporada</div>
+        <div class="menudia-dish">Lentejas estofadas con chorizo (miércoles)</div>
+      </div>
+      <div class="menudia-course">
+        <div class="menudia-course-title">Postre o café</div>
+        <div class="menudia-dish">Flan de huevo casero</div>
+        <div class="menudia-dish">Yogur natural con miel</div>
+        <div class="menudia-dish">Café o infusión</div>
+      </div>
+      <div class="menudia-note">Pan de masa madre y bebida incluida. Consulta alérgenos en sala.</div>
+    </div>
+    <div class="menudia-info">
+      <div class="menudia-info-card">
+        <div class="menudia-info-icon">🕐</div>
+        <div class="menudia-info-title">Horario del menú</div>
+        <div class="menudia-info-text">Servimos el menú del día de lunes a viernes de 13:30 a 16:00h. Los sábados ofrecemos menú de fin de semana (consultar precio).</div>
+      </div>
+      <div class="menudia-info-card">
+        <div class="menudia-info-icon">🥗</div>
+        <div class="menudia-info-title">Opción vegetariana</div>
+        <div class="menudia-info-text">Siempre disponemos de alternativas vegetarianas y sin gluten. Indícalo al reservar o al llegar.</div>
+      </div>
+      <div class="menudia-info-card">
+        <div class="menudia-info-icon">👥</div>
+        <div class="menudia-info-title">Grupos y empresas</div>
+        <div class="menudia-info-text">Menús cerrados para grupos +8 personas. Perfectos para comidas de empresa. Pídenos presupuesto sin compromiso.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section id="reservas">
+  <div class="section-head" style="text-align:center;max-width:560px;margin:0 auto 48px">
+    <div class="section-label" style="justify-content:center">Sin esperas</div>
+    <h2 class="section-title">Reserva tu mesa</h2>
+    <p class="section-sub" style="margin:0 auto">Elige fecha, hora y número de comensales. Confirmamos al momento por WhatsApp.</p>
+  </div>
+  <div class="res-container">
+    <div id="res-success" style="display:none" class="res-success">
+      <div class="res-success-icon">🍽️</div>
+      <div class="res-success-title">¡Reserva enviada!</div>
+      <div class="res-success-text">Te hemos abierto WhatsApp con los detalles de tu reserva. Confirmamos en menos de 1 hora.</div>
+      <button class="res-retry" onclick="resetRes()">Hacer otra reserva</button>
+    </div>
+    <div id="res-wizard">
+      <div class="res-steps">
+        <button class="res-step active" id="rstab1" onclick="resTo(1)">1 · Fecha</button>
+        <button class="res-step" id="rstab2" onclick="resTo(2)">2 · Hora</button>
+        <button class="res-step" id="rstab3" onclick="resTo(3)">3 · Confirmar</button>
+      </div>
+      <!-- PASO 1: fecha + personas -->
+      <div class="res-panel active" id="rspanel1">
+        <div class="res-grid-2">
+          <div>
+            <span class="res-label">Fecha</span>
+            <input type="date" class="res-input" id="res-date" onchange="resDateChange()"/>
+          </div>
+          <div>
+            <span class="res-label">Personas</span>
+            <select class="res-select" id="res-pax" onchange="resPaxChange()">
+              <option value="">Nº comensales</option>
+              <option value="1">1 persona</option>
+              <option value="2">2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+              <option value="6">6 personas</option>
+              <option value="7">7 personas</option>
+              <option value="8">8+ personas (consultar)</option>
+            </select>
+          </div>
+        </div>
+        <button class="res-btn" id="resbtn1" disabled onclick="resTo(2)">SIGUIENTE: ELEGIR HORA</button>
+      </div>
+      <!-- PASO 2: hora -->
+      <div class="res-panel" id="rspanel2">
+        <span class="res-label">Selecciona un horario disponible</span>
+        <div id="res-slots-grid" class="res-slots-grid"></div>
+        <br/>
+        <button class="res-btn" id="resbtn2" disabled onclick="resTo(3)">SIGUIENTE: CONFIRMAR</button>
+        <button class="res-back" onclick="resTo(1)">&#8592; Cambiar fecha</button>
+      </div>
+      <!-- PASO 3: datos + confirmar -->
+      <div class="res-panel" id="rspanel3">
+        <div class="res-grid-2">
+          <div>
+            <span class="res-label">Tu nombre</span>
+            <input type="text" class="res-input" id="res-name" placeholder="Ej: María García" oninput="resCheckData()"/>
+          </div>
+          <div>
+            <span class="res-label">Teléfono</span>
+            <input type="tel" class="res-input" id="res-phone" placeholder="+34 600 000 000" oninput="resCheckData()"/>
+          </div>
+        </div>
+        <div class="res-field">
+          <span class="res-label">Resumen de tu reserva</span>
+          <div id="res-summary" style="border:1px solid var(--border);padding:16px 20px;background:var(--bg)"></div>
+        </div>
+        <button class="res-wa-btn" id="resbtn3" disabled onclick="resWA()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+          CONFIRMAR RESERVA POR WHATSAPP
+        </button>
+        <button class="res-back" onclick="resTo(2)">&#8592; Cambiar horario</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria" style="padding-top:96px;padding-bottom:0">
+  <div style="padding:0 5% 48px">
+    <div class="section-label">Momentos y platos</div>
+    <h2 class="section-title">Galería</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="images/res-gallery-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Plato estrella"></div>
+    <div class="gallery-item"><img src="images/res-gallery-2.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Ambiente"></div>
+    <div class="gallery-item"><img src="images/res-gallery-3.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Entrante"></div>
+    <div class="gallery-item"><img src="images/res-gallery-4.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Postre"></div>
+    <div class="gallery-item"><img src="images/res-gallery-5.jpg" style="width:100%;height:100%;object-fit:cover;display:block" alt="Vinos"></div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section id="resenas">
+  <div class="reviews-summary">
+    <div class="reviews-score">4.9</div>
+    <div class="reviews-detail">
+      <div class="reviews-stars-big"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="reviews-count">Basado en 218 reseñas verificadas</div>
+      <div class="reviews-platform">Google · TripAdvisor</div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars"><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span></div><p class="review-text">"Las croquetas de jamón son las mejores que he probado en Madrid. Ya hemos vuelto tres veces y siempre impecable. El trato es cercano y la calidad no falla."</p><div class="review-author">Ana M.</div><div class="review-meta">Madrid · hace 2 semanas · Google</div></div>
+    <div class="review-card"><div class="review-stars"><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span></div><p class="review-text">"Menú del día imbatible. Cantidad, calidad y precio difícil de encontrar en la zona. El pulpo estaba en su punto y el coulant de chocolate, increíble."</p><div class="review-author">Carlos R.</div><div class="review-meta">Malasaña · hace 1 mes · Google</div></div>
+    <div class="review-card"><div class="review-stars"><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span></div><p class="review-text">"Vinimos para una cena de empresa y fue todo perfecto. Rápidos respondiendo por WhatsApp, muy atentos con las alergias y la comida, espectacular."</p><div class="review-author">Patricia G.</div><div class="review-meta">Madrid · hace 3 semanas · TripAdvisor</div></div>
+    <div class="review-card"><div class="review-stars"><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span></div><p class="review-text">"Llevan 15 años y se nota que aman lo que hacen. La carta de vinos naturales es una sorpresa muy agradable. Reserva imprescindible para fines de semana."</p><div class="review-author">Javier S.</div><div class="review-meta">Madrid · hace 2 meses · Google</div></div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion" style="padding:0">
+  <div class="location-grid">
+    <div class="map-placeholder">
+      <div class="map-pin">📍</div>
+      <div class="map-address">Calle de Manuela Malasaña 12<br/>28004 Madrid</div>
+    </div>
+    <div class="location-info">
+      <div class="location-block">
+        <div class="location-block-label">Cómo llegar</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px">Calle de Manuela Malasaña 12, 28004 Madrid. Metro: Tribunal (L10) o Bilbao (L4, L5). Parking público a 200m.</p>
+        <a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;font-weight:600;border-bottom:1px solid var(--accent)">Abrir en Google Maps →</a>
+      </div>
+      <div class="location-block">
+        <div class="location-block-label">Horario</div>
+        <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-time closed">Cerrado</span></div>
+        <div class="schedule-row"><span class="schedule-day">Martes – Viernes</span><span class="schedule-time">13:30–16:30 · 20:00–23:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Sábado</span><span class="schedule-time">13:30–17:00 · 20:00–00:00</span></div>
+        <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-time">13:30–17:00</span></div>
+      </div>
+      <div class="location-block">
+        <div class="location-block-label">Contacto directo</div>
+        <p style="font-size:20px;font-weight:700;margin-bottom:6px"><a href="tel:+34912345678" style="color:var(--text);text-decoration:none">+34 912 345 678</a></p>
+        <p style="font-size:13px;color:var(--text-muted)">reservas@casalola.es</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" style="padding-top:96px;padding-bottom:96px">
+  <div style="text-align:center;margin-bottom:64px">
+    <div class="section-label" style="justify-content:center">Grupos y eventos</div>
+    <h2 class="section-title">¿Organizas algo especial?</h2>
+    <p class="section-sub" style="margin:0 auto;max-width:480px">Bodas, cumpleaños, cenas de empresa o celebraciones privadas. Cuéntanos qué necesitas.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-form">
+      <form onsubmit="contactSubmit(event)">
+        <span class="res-label">Nombre y empresa</span>
+        <input type="text" class="contact-input" placeholder="María García / Empresa S.L." required/>
+        <span class="res-label">Email de contacto</span>
+        <input type="email" class="contact-input" placeholder="maria@empresa.com" required/>
+        <span class="res-label">Nº de personas y fecha aproximada</span>
+        <input type="text" class="contact-input" placeholder="Ej: 20 personas, última semana de junio"/>
+        <span class="res-label">Cuéntanos tu evento</span>
+        <textarea class="contact-input" rows="3" placeholder="Tipo de celebración, menú especial, necesidades..." style="resize:none;margin-bottom:20px"></textarea>
+        <button type="submit" class="contact-btn">ENVIAR CONSULTA POR WHATSAPP</button>
+      </form>
+    </div>
+    <div class="contact-info">
+      <div class="contact-info-item">
+        <div class="contact-info-label">Teléfono</div>
+        <div class="contact-info-value"><a href="tel:+34912345678">+34 912 345 678</a></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Email</div>
+        <div class="contact-info-value"><a href="mailto:reservas@casalola.es">reservas@casalola.es</a></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">WhatsApp</div>
+        <div class="contact-info-value"><a href="https://wa.me/34912345678">+34 912 345 678</a></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Capacidad máxima</div>
+        <div class="contact-info-value">60 personas · sala privada para 20</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Casa <span>Lola</span></div>
+      <div class="footer-brand-desc">Cocina de mercado en el corazón de Malasaña. Ingredientes frescos, recetas con historia y una carta de vinos naturales desde 2009.</div>
+      <div class="footer-social">
+        <div class="footer-social-btn"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+        <div class="footer-social-btn"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navegación</div>
+      <ul class="footer-links">
+        <li><a href="#carta">La carta</a></li>
+        <li><a href="#menudia">Menú del día</a></li>
+        <li><a href="#reservas">Reservar mesa</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#resenas">Reseñas</a></li>
+        <li><a href="#ubicacion">Cómo llegar</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Información</div>
+      <ul class="footer-links">
+        <li><a href="#">Alérgenos</a></li>
+        <li><a href="#">Eventos privados</a></li>
+        <li><a href="#">Menú grupos</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Casa Lola · Todos los derechos reservados</div>
+    <div class="footer-legal">
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+      <a href="#">Aviso legal</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/34912345678?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20mesa." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+</a>
+
+<script>
+// ---- CARTA TABS ----
+function showTab(id, btn) {
+  var panels = document.querySelectorAll('.menu-panel');
+  var tabs = document.querySelectorAll('.menu-tab');
+  panels.forEach(function(p){ p.classList.remove('active'); });
+  tabs.forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ---- RESERVAS ----
+var RES_SLOTS_COMIDA = ['13:30','14:00','14:30','15:00','15:30'];
+var RES_SLOTS_CENA   = ['20:00','20:30','21:00','21:30','22:00','22:30'];
+var RES_BOOKED_C = [1, 3];
+var RES_BOOKED_N = [0, 2, 4];
+
+var res = { date: null, pax: null, slot: null, name: '', phone: '' };
+
+function resDateChange() {
+  var d = document.getElementById('res-date').value;
+  res.date = d || null;
+  res.slot = null;
+  document.getElementById('resbtn2') && (document.getElementById('resbtn2').disabled = true);
+  checkResBtn1();
+}
+function resPaxChange() {
+  var p = document.getElementById('res-pax').value;
+  res.pax = p || null;
+  checkResBtn1();
+}
+function checkResBtn1() {
+  document.getElementById('resbtn1').disabled = !(res.date && res.pax);
+}
+
+function resTo(n) {
+  if (n > 1 && !(res.date && res.pax)) return;
+  if (n > 2 && !res.slot) return;
+  document.querySelectorAll('.res-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.res-step').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('rspanel' + n).classList.add('active');
+  document.getElementById('rstab' + n).classList.add('active');
+  if (n === 2) renderResSlots();
+  if (n === 3) renderResSummary();
+}
+
+function renderResSlots() {
+  var dateStr = res.date;
+  var d = dateStr ? new Date(dateStr + 'T12:00:00') : null;
+  var dow = d ? d.getDay() : -1;
+  var grid = document.getElementById('res-slots-grid');
+  grid.innerHTML = '';
+
+  if (dow === 0) {
+    // domingo solo comida
+    renderSlotGroup(grid, RES_SLOTS_COMIDA, RES_BOOKED_C, 'Comida');
+  } else if (dow === 1) {
+    // lunes cerrado
+    grid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:16px 0">El restaurante está cerrado los lunes. Por favor, elige otra fecha.</p>';
+    return;
+  } else {
+    renderSlotGroup(grid, RES_SLOTS_COMIDA, RES_BOOKED_C, 'Comida');
+    renderSlotGroup(grid, RES_SLOTS_CENA, RES_BOOKED_N, 'Cena');
+  }
+}
+
+function renderSlotGroup(grid, slots, booked, label) {
+  var title = document.createElement('div');
+  title.style.cssText = 'grid-column:1/-1;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);padding:12px 0 4px;border-top:1px solid var(--border-light);margin-top:8px';
+  title.textContent = label;
+  grid.appendChild(title);
+  slots.forEach(function(slot, i) {
+    var btn = document.createElement('button');
+    btn.className = 'res-slot' + (booked.indexOf(i) > -1 ? ' booked' : '');
+    btn.textContent = slot;
+    btn.disabled = booked.indexOf(i) > -1;
+    btn.onclick = function() {
+      if (btn.classList.contains('booked')) return;
+      document.querySelectorAll('.res-slot').forEach(function(s){ s.classList.remove('selected'); });
+      btn.classList.add('selected');
+      res.slot = slot;
+      document.getElementById('resbtn2').disabled = false;
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function renderResSummary() {
+  var d = new Date(res.date + 'T12:00:00');
+  var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var dateStr = days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear();
+  var paxLabel = res.pax === '8' ? '8+ personas (consultar)' : res.pax + (res.pax === '1' ? ' persona' : ' personas');
+  var html = '';
+  html += '<div class="res-confirm-row"><span class="res-confirm-label">Fecha</span><span class="res-confirm-value">' + dateStr + '</span></div>';
+  html += '<div class="res-confirm-row"><span class="res-confirm-label">Hora</span><span class="res-confirm-value">' + res.slot + 'h</span></div>';
+  html += '<div class="res-confirm-row"><span class="res-confirm-label">Personas</span><span class="res-confirm-value">' + paxLabel + '</span></div>';
+  document.getElementById('res-summary').innerHTML = html;
+  resCheckData();
+}
+
+function resCheckData() {
+  var name = document.getElementById('res-name') ? document.getElementById('res-name').value.trim() : '';
+  var phone = document.getElementById('res-phone') ? document.getElementById('res-phone').value.trim() : '';
+  res.name = name;
+  res.phone = phone;
+  var btn = document.getElementById('resbtn3');
+  if (btn) btn.disabled = !(name && phone);
+}
+
+function resWA() {
+  var d = new Date(res.date + 'T12:00:00');
+  var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var dateStr = days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()];
+  var paxLabel = res.pax === '8' ? '8+ personas' : res.pax + (res.pax === '1' ? ' persona' : ' personas');
+  var lines = [
+    'Hola, quiero reservar una mesa en Casa Lola:',
+    '',
+    'Fecha: ' + dateStr,
+    'Hora: ' + res.slot + 'h',
+    'Personas: ' + paxLabel,
+    'Nombre: ' + res.name,
+    'Teléfono: ' + res.phone,
+    '',
+    'Podéis confirmar disponibilidad? Gracias!'
+  ];
+  var msg = lines.join('\n');
+  window.open('https://wa.me/34912345678?text=' + encodeURIComponent(msg), '_blank');
+  document.getElementById('res-wizard').style.display = 'none';
+  document.getElementById('res-success').style.display = 'block';
+}
+
+function resetRes() {
+  res = { date: null, pax: null, slot: null, name: '', phone: '' };
+  document.getElementById('res-date').value = '';
+  document.getElementById('res-pax').value = '';
+  document.getElementById('resbtn1').disabled = true;
+  document.getElementById('res-wizard').style.display = 'block';
+  document.getElementById('res-success').style.display = 'none';
+  resTo(1);
+}
+
+// ---- CONTACT FORM ----
+function contactSubmit(e) {
+  e.preventDefault();
+  var form = e.target;
+  var fields = form.querySelectorAll('input, textarea');
+  var lines = ['Hola, me gustaría consultar sobre un evento privado:', ''];
+  fields.forEach(function(f, i) {
+    if (f.value.trim()) {
+      var labels = ['Nombre/Empresa','Email','Personas y fecha','Detalles del evento'];
+      lines.push((labels[i] || 'Dato') + ': ' + f.value.trim());
+    }
+  });
+  lines.push('', 'Gracias!');
+  var msg = lines.join('\n');
+  window.open('https://wa.me/34912345678?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// Set min date for reservation
+(function(){
+  var input = document.getElementById('res-date');
+  if (input) {
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = String(today.getMonth() + 1).padStart(2, '0');
+    var d = String(today.getDate()).padStart(2, '0');
+    input.min = y + '-' + m + '-' + d;
+  }
+})();
+</script>
+</body>
+</html>

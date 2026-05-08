@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitalia — Webs para negocios locales</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;
+  --bg2:#f7f8fa;
+  --bg3:#f0f2f5;
+  --text:#111827;
+  --text2:#4b5563;
+  --text3:#9ca3af;
+  --accent:#2563eb;
+  --accent-pale:#eff6ff;
+  --accent-dark:#1d4ed8;
+  --border:#e5e7eb;
+  --card:#ffffff;
+  --radius:12px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.container{padding:0 20px}}
+
+/* ——— NAV ——— */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-0.02em;color:var(--text)}
+.logo-mark{width:32px;height:32px;flex-shrink:0}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:14px;color:var(--text2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;font-size:13px;font-weight:500;padding:10px 22px;border-radius:8px;transition:background .2s;border:none;cursor:pointer;font-family:inherit}
+.nav-cta:hover{background:var(--accent-dark)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--text);font-size:22px;padding:4px}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;padding:20px 32px;gap:16px;border-bottom:1px solid var(--border);align-items:flex-start}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+}
+
+/* ——— HERO ——— */
+#hero{padding:140px 0 96px;background:var(--bg)}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:48px}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-pale);color:var(--accent);font-size:12px;font-weight:500;letter-spacing:.06em;padding:6px 14px;border-radius:100px;margin-bottom:24px}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+h1.hero-title{font-size:clamp(36px,4.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:var(--text);margin-bottom:20px}
+h1.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:17px;color:var(--text2);line-height:1.75;max-width:460px;margin-bottom:36px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn-primary{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:14px 28px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.3)}
+.btn-ghost{font-size:14px;color:var(--text2);border:1.5px solid var(--border);padding:13px 24px;border-radius:8px;background:none;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-ghost:hover{border-color:var(--text);color:var(--text)}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.hero-stat{background:var(--bg);padding:24px 20px;text-align:center}
+.hero-stat-num{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.hero-stat-label{font-size:12px;color:var(--text3);margin-top:4px}
+.hero-preview{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.hero-preview-bar{background:#fff;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.hero-preview-dots{display:flex;gap:5px}
+.hero-preview-dot{width:10px;height:10px;border-radius:50%}
+.hero-preview-url{flex:1;background:var(--bg2);border-radius:4px;padding:5px 12px;font-size:11px;color:var(--text3);margin:0 8px}
+.hero-preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px}
+.hero-preview-card{background:#fff;border-radius:8px;padding:14px;border:1px solid var(--border)}
+.hero-preview-card-tag{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.hero-preview-card-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
+.hero-preview-card-sub{font-size:10px;color:var(--text3);line-height:1.5}
+.hero-preview-cta{margin:0 16px 16px;background:var(--accent);color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:12px;font-weight:600}
+
+/* ——— SECTION BASE ——— */
+section{padding:80px 0}
+.section-eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-size:clamp(28px,3.5vw,40px);font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:16px}
+.section-sub{font-size:16px;color:var(--text2);line-height:1.75;max-width:560px}
+.section-head{text-align:center;margin-bottom:56px}
+.section-head .section-sub{margin:0 auto}
+
+/* ——— NICHOS ——— */
+#nichos{background:var(--bg2)}
+.nichos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.nichos-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.nichos-grid{grid-template-columns:1fr}}
+.nicho-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .25s;position:relative;overflow:hidden}
+.nicho-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--nicho-color,var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nicho-card:hover{border-color:var(--nicho-color,var(--accent));box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px)}
+.nicho-card:hover::before{transform:scaleX(1)}
+.nicho-icon{font-size:28px;margin-bottom:14px;display:block}
+.nicho-name{font-size:17px;font-weight:700;color:var(--text);margin-bottom:8px}
+.nicho-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:18px}
+.nicho-features{list-style:none;margin-bottom:20px;display:flex;flex-direction:column;gap:5px}
+.nicho-features li{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px}
+.nicho-features li::before{content:"✓";color:var(--nicho-color,var(--accent));font-weight:700;font-size:11px;flex-shrink:0}
+.nicho-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--nicho-color,var(--accent));letter-spacing:.04em;transition:gap .2s}
+.nicho-link:hover{gap:10px}
+
+/* ——— PROCESO ——— */
+#proceso{background:var(--bg)}
+.proceso-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px}
+@media(max-width:768px){.proceso-grid{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto}}
+.paso-card{position:relative;padding:32px 28px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+.paso-num{font-size:48px;font-weight:800;color:var(--bg3);letter-spacing:-0.03em;line-height:1;margin-bottom:16px}
+.paso-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px}
+.paso-desc{font-size:14px;color:var(--text2);line-height:1.7}
+.paso-arrow{display:none;position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--text3);z-index:1}
+@media(min-width:769px){.paso-arrow{display:block}}
+
+/* ——— POR QUÉ SITALIA ——— */
+#por-que{background:var(--text)}
+.por-que-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:900px){.por-que-inner{grid-template-columns:1fr;gap:48px}}
+.por-que-left .section-eyebrow{color:#93c5fd}
+.por-que-left .section-title{color:#fff}
+.por-que-left .section-sub{color:#9ca3af;max-width:100%}
+.diferencias{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);overflow:hidden;margin-top:32px}
+.diferencia-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.08)}
+.diferencia-row:last-child{border-bottom:none}
+.dif-cell{padding:16px 20px;font-size:13px}
+.dif-header{background:rgba(255,255,255,.05);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.dif-bad{color:#6b7280;display:flex;align-items:center;gap:8px}
+.dif-bad::before{content:"✗";color:#ef4444;font-weight:700;flex-shrink:0}
+.dif-good{color:#e5e7eb;display:flex;align-items:center;gap:8px}
+.dif-good::before{content:"✓";color:#34d399;font-weight:700;flex-shrink:0}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px 24px}
+.stat-box-num{font-size:36px;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.stat-box-label{font-size:13px;color:#9ca3af;margin-top:4px}
+
+/* ——— PRECIOS ——— */
+#precios{background:var(--bg2)}
+.precios-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
+@media(max-width:640px){.precios-grid{grid-template-columns:1fr}}
+.precio-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px 32px;position:relative}
+.precio-card.featured{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
+.precio-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;padding:4px 14px;border-radius:100px;white-space:nowrap}
+.precio-name{font-size:13px;font-weight:600;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.precio-range{font-size:36px;font-weight:800;color:var(--text);letter-spacing:-0.02em;margin-bottom:4px}
+.precio-period{font-size:13px;color:var(--text3);margin-bottom:28px}
+.precio-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.precio-features li{font-size:14px;color:var(--text2);display:flex;align-items:flex-start;gap:10px}
+.precio-features li::before{content:"✓";color:var(--accent);font-weight:700;margin-top:2px;flex-shrink:0}
+.precio-cta{width:100%;padding:13px;border-radius:8px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;border:none}
+.precio-cta.outline{background:none;border:1.5px solid var(--border);color:var(--text)}
+.precio-cta.outline:hover{border-color:var(--text)}
+.precio-cta.filled{background:var(--accent);color:#fff}
+.precio-cta.filled:hover{background:var(--accent-dark)}
+
+/* ——— CONTACTO ——— */
+#contacto{background:var(--bg)}
+.contacto-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+@media(max-width:900px){.contacto-inner{grid-template-columns:1fr;gap:48px}}
+.contacto-info-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.contacto-info-icon{width:40px;height:40px;background:var(--accent-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.contacto-info-label{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.contacto-info-val{font-size:15px;color:var(--text);font-weight:500}
+.form-group{margin-bottom:18px}
+.form-label{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;display:block}
+.form-input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;transition:border-color .2s;outline:none}
+.form-input:focus{border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.wa-btn{width:100%;padding:14px;background:#25d366;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;margin-top:8px}
+.wa-btn:hover{background:#1fb855}
+
+/* ——— FOOTER ——— */
+footer{background:var(--text);padding:48px 0 32px}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr;gap:32px}}
+.footer-brand .logo{margin-bottom:12px}
+.footer-tagline{font-size:13px;color:#6b7280;line-height:1.6;max-width:280px}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6b7280;margin-bottom:14px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:13px;color:#9ca3af;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-logo .logo{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:12px;color:#6b7280}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:12px;color:#6b7280;transition:color .2s}
+.footer-legal a:hover{color:#9ca3af}
+
+/* ——— MOBILE ——— */
+@media(max-width:640px){
+  #hero{padding:100px 0 60px}
+  section{padding:60px 0}
+  .hero-btns{flex-direction:column;align-items:flex-start}
+  .btn-primary,.btn-ghost{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#2563EB"/>
+        <rect x="7" y="7" width="7" height="7" rx="2" fill="white"/>
+        <rect x="18" y="7" width="7" height="7" rx="2" fill="white" opacity="0.6"/>
+        <rect x="7" y="18" width="7" height="7" rx="2" fill="white" opacity="0.6"/>
+        <rect x="18" y="18" width="7" height="7" rx="2" fill="white"/>
+      </svg>
+      sitalia
+    </a>
+    <div class="nav-links" id="navlinks">
+      <a href="#nichos">Nichos</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#precios">Precios</a>
+      <a href="#contacto">Contacto</a>
+      <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar demo</button>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge"><div class="hero-badge-dot"></div>Especialistas en pequeños negocios locales</div>
+        <h1 class="hero-title">Webs que consiguen <em>clientes reales</em> para tu negocio</h1>
+        <p class="hero-sub">Tu web profesional lista en 7 días desde 199€. Reservas online, WhatsApp, SEO local y soporte incluido por solo 39€/mes. Tú te centras en tu negocio, nosotros en tu presencia digital.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+            Solicitar demo gratuita
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn-ghost" onclick="document.getElementById('nichos').scrollIntoView({behavior:'smooth'})">Ver ejemplos</button>
+        </div>
+        <div class="hero-stats" style="margin-top:40px">
+          <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Sectores</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">7 días</div><div class="hero-stat-label">Lanzamiento</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">desde 39€</div><div class="hero-stat-label">Al mes todo incluido</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="hero-preview">
+          <div class="hero-preview-bar">
+            <div class="hero-preview-dots">
+              <div class="hero-preview-dot" style="background:#ef4444"></div>
+              <div class="hero-preview-dot" style="background:#f59e0b"></div>
+              <div class="hero-preview-dot" style="background:#10b981"></div>
+            </div>
+            <div class="hero-preview-url">sitalia.es / tu-negocio</div>
+          </div>
+          <div class="hero-preview-grid">
+            <div class="hero-preview-card">
+              <div class="hero-preview-card-tag">Reservas</div>
+              <div class="hero-preview-card-title">Agenda online 24h</div>
+              <div class="hero-preview-card-sub">Tus clientes reservan mientras duermes</div>
+            </div>
+            <div class="hero-preview-card">
+              <div class="hero-preview-card-tag">SEO Local</div>
+              <div class="hero-preview-card-title">Top en Google Maps</div>
+              <div class="hero-preview-card-sub">Aparece cuando te buscan cerca</div>
+            </div>
+            <div class="hero-preview-card">
+              <div class="hero-preview-card-tag">WhatsApp</div>
+              <div class="hero-preview-card-title">Contacto directo</div>
+              <div class="hero-preview-card-sub">Un clic y ya están hablando contigo</div>
+            </div>
+            <div class="hero-preview-card">
+              <div class="hero-preview-card-tag">Analítica</div>
+              <div class="hero-preview-card-title">Métricas reales</div>
+              <div class="hero-preview-card-sub">Sabes cuántos visitan y cuántos llaman</div>
+            </div>
+          </div>
+          <div class="hero-preview-cta">Ver demo interactiva →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NICHOS -->
+<section id="nichos">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Sectores</div>
+      <h2 class="section-title">Una web perfecta para cada negocio</h2>
+      <p class="section-sub">Cada sector tiene sus necesidades. Nuestras plantillas están diseñadas específicamente para cada tipo de negocio local.</p>
+    </div>
+    <div class="nichos-grid">
+
+      <div class="nicho-card" style="--nicho-color:#c9a84c">
+        <span class="nicho-icon">✂️</span>
+        <div class="nicho-name">Peluquerías y barberías</div>
+        <p class="nicho-desc">Reservas online, catálogo de servicios, perfiles del equipo y galería de trabajos.</p>
+        <ul class="nicho-features">
+          <li>Reservas con gestión de agenda</li>
+          <li>Listado de servicios y precios</li>
+          <li>Galería de trabajos</li>
+          <li>Integración WhatsApp</li>
+        </ul>
+        <a href="demo-peluqueria.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#8b2635">
+        <span class="nicho-icon">🍽️</span>
+        <div class="nicho-name">Restaurantes y bares</div>
+        <p class="nicho-desc">Carta digital, reservas de mesa, menú del día y galería de platos.</p>
+        <ul class="nicho-features">
+          <li>Carta digital con pestañas</li>
+          <li>Sistema de reservas de mesa</li>
+          <li>Menú del día actualizable</li>
+          <li>Galería de platos y ambiente</li>
+        </ul>
+        <a href="demo-restaurante.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#2d6a4f">
+        <span class="nicho-icon">🏥</span>
+        <div class="nicho-name">Clínicas de fisioterapia</div>
+        <p class="nicho-desc">Reserva de tratamientos, presentación del equipo, bonos y testimonios.</p>
+        <ul class="nicho-features">
+          <li>Reservas por tratamiento y fisio</li>
+          <li>Bonos de sesiones</li>
+          <li>Equipo profesional</li>
+          <li>Testimonios verificados</li>
+        </ul>
+        <a href="demo-fisioterapia.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#4f6f8f">
+        <span class="nicho-icon">🧠</span>
+        <div class="nicho-name">Psicólogos</div>
+        <p class="nicho-desc">Imagen de confianza, especialidades, modalidades presencial y online.</p>
+        <ul class="nicho-features">
+          <li>Perfil profesional y formación</li>
+          <li>Especialidades detalladas</li>
+          <li>Solicitud de cita discreta</li>
+          <li>FAQ y preguntas frecuentes</li>
+        </ul>
+        <a href="demo-psicologo.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#1b3a5c">
+        <span class="nicho-icon">⚖️</span>
+        <div class="nicho-name">Bufetes de abogados</div>
+        <p class="nicho-desc">Imagen corporativa, áreas legales, captación de leads y consulta gratuita.</p>
+        <ul class="nicho-features">
+          <li>Áreas de práctica legal</li>
+          <li>Formulario de captación de leads</li>
+          <li>Equipo de letrados</li>
+          <li>Primera consulta gratuita</li>
+        </ul>
+        <a href="demo-abogados.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#d4621a">
+        <span class="nicho-icon">🎓</span>
+        <div class="nicho-name">Academias y extraescolares</div>
+        <p class="nicho-desc">Actividades, horarios, inscripciones online y equipo docente.</p>
+        <ul class="nicho-features">
+          <li>Actividades con pestañas por tipo</li>
+          <li>Tabla de horarios semanal</li>
+          <li>Formulario de inscripción</li>
+          <li>Equipo de profesores</li>
+        </ul>
+        <a href="demo-academia.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#1a5fa8">
+        <span class="nicho-icon">🎾</span>
+        <div class="nicho-name">Clubs de pádel</div>
+        <p class="nicho-desc">Reserva de pistas en tiempo real, cuotas de socio, clases y torneos.</p>
+        <ul class="nicho-features">
+          <li>Estado de pistas en tiempo real</li>
+          <li>Reserva en 3 pasos</li>
+          <li>Planes de socio</li>
+          <li>Clases y torneos</li>
+        </ul>
+        <a href="demo-padel.html" target="_blank" class="nicho-link">Ver demo →</a>
+      </div>
+
+      <div class="nicho-card" style="--nicho-color:#7c3aed;border-style:dashed;background:var(--bg2)">
+        <span class="nicho-icon">💡</span>
+        <div class="nicho-name">¿Tu sector no está aquí?</div>
+        <p class="nicho-desc">Trabajamos con cualquier tipo de negocio local. Cuéntanos tu caso y te preparamos una propuesta.</p>
+        <ul class="nicho-features">
+          <li>Análisis de tu negocio</li>
+          <li>Demo personalizada en 48h</li>
+          <li>Presupuesto sin compromiso</li>
+        </ul>
+        <a href="#contacto" class="nicho-link" style="--nicho-color:#7c3aed">Contactar →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Cómo funciona</div>
+      <h2 class="section-title">Tu web lista en 7 días</h2>
+      <p class="section-sub">Un proceso ágil y transparente, sin sorpresas. Tú te centras en tu negocio, nosotros en tu web.</p>
+    </div>
+    <div class="proceso-grid">
+      <div class="paso-card">
+        <div class="paso-num">01</div>
+        <div class="paso-title">Auditoría gratuita</div>
+        <p class="paso-desc">Analizamos tu negocio, tu competencia local y tu presencia digital actual. Te damos un informe honesto con lo que necesitas mejorar.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">02</div>
+        <div class="paso-title">Demo en 48 horas</div>
+        <p class="paso-desc">Preparamos una demo funcional con el diseño, contenido y funcionalidades adaptadas a tu negocio. La ves antes de comprometerte con nada.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">03</div>
+        <div class="paso-title">Lanzamiento y soporte</div>
+        <p class="paso-desc">Publicamos tu web, configuramos el SEO local, conectamos WhatsApp y te formamos para que puedas actualizarla tú mismo cuando quieras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ SITALIA -->
+<section id="por-que">
+  <div class="container">
+    <div class="por-que-inner">
+      <div class="por-que-left">
+        <div class="section-eyebrow">Por qué elegirnos</div>
+        <h2 class="section-title" style="color:#fff;font-size:clamp(26px,3vw,36px)">No somos una agencia tradicional</h2>
+        <p class="section-sub">Las agencias clásicas cobran por horas y tardan meses. Nosotros usamos sistemas especializados por sector que nos permiten entregar más rápido, más barato y con mejor resultado.</p>
+        <div class="diferencias">
+          <div class="diferencia-row">
+            <div class="dif-cell dif-header">Agencia tradicional</div>
+            <div class="dif-cell dif-header">Sitalia</div>
+          </div>
+          <div class="diferencia-row">
+            <div class="dif-cell dif-bad">2–3 meses de desarrollo</div>
+            <div class="dif-cell dif-good">Lista en 7 días</div>
+          </div>
+          <div class="diferencia-row">
+            <div class="dif-cell dif-bad">3.000€–15.000€</div>
+            <div class="dif-cell dif-good">Desde 199€ + 39€/mes</div>
+          </div>
+          <div class="diferencia-row">
+            <div class="dif-cell dif-bad">Diseño genérico</div>
+            <div class="dif-cell dif-good">Específico para tu sector</div>
+          </div>
+          <div class="diferencia-row">
+            <div class="dif-cell dif-bad">Sin reservas ni funcionalidades</div>
+            <div class="dif-cell dif-good">Reservas, WhatsApp, SEO incluidos</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-box-num">7</div>
+            <div class="stat-box-label">Sectores especializados con plantilla propia</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num">48h</div>
+            <div class="stat-box-label">Para tener tu demo personalizada lista</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num">100%</div>
+            <div class="stat-box-label">Webs responsive y optimizadas para móvil</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num">39€</div>
+            <div class="stat-box-label">Al mes todo incluido, sin permanencia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section id="precios">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Precios</div>
+      <h2 class="section-title">Precio asequible para cualquier negocio</h2>
+      <p class="section-sub">Sin sorpresas ni letra pequeña. Pensado para pequeños negocios que quieren presencia digital sin complicaciones ni grandes inversiones.</p>
+    </div>
+    <div class="precios-grid">
+      <div class="precio-card">
+        <div class="precio-name">Puesta en marcha</div>
+        <div class="precio-range">desde 199€</div>
+        <div class="precio-period">pago único · tu web lista en 7 días</div>
+        <ul class="precio-features">
+          <li>Diseño personalizado para tu sector</li>
+          <li>Sistema de reservas o captación de leads</li>
+          <li>Integración WhatsApp</li>
+          <li>SEO local configurado</li>
+          <li>Versión móvil perfecta</li>
+          <li>Formación para gestionar tu contenido</li>
+        </ul>
+        <button class="precio-cta outline" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar presupuesto</button>
+      </div>
+      <div class="precio-card featured">
+        <div class="precio-badge">Recomendado</div>
+        <div class="precio-name">Todo incluido mensual</div>
+        <div class="precio-range">desde 39€</div>
+        <div class="precio-period">al mes · sin permanencia · cancela cuando quieras</div>
+        <ul class="precio-features">
+          <li>Hosting y dominio incluidos</li>
+          <li>Actualizaciones de contenido</li>
+          <li>Soporte técnico prioritario</li>
+          <li>Backups automáticos diarios</li>
+          <li>Mejoras mensuales continuas</li>
+          <li>Informe mensual de visitas</li>
+        </ul>
+        <button class="precio-cta filled" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Empezar ahora</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="contacto-inner">
+      <div>
+        <div class="section-eyebrow">Contacto</div>
+        <h2 class="section-title">Hablemos de tu negocio</h2>
+        <p class="section-sub" style="margin-bottom:40px">Cuéntanos en qué sector estás y qué necesitas. Te preparamos una demo gratuita sin compromiso.</p>
+        <div class="contacto-info-item">
+          <div class="contacto-info-icon">✉️</div>
+          <div>
+            <div class="contacto-info-label">Email</div>
+            <div class="contacto-info-val">hola@sitalia.es</div>
+          </div>
+        </div>
+        <div class="contacto-info-item">
+          <div class="contacto-info-icon">💬</div>
+          <div>
+            <div class="contacto-info-label">WhatsApp</div>
+            <div class="contacto-info-val">Respuesta en menos de 24h</div>
+          </div>
+        </div>
+        <div class="contacto-info-item">
+          <div class="contacto-info-icon">⚡</div>
+          <div>
+            <div class="contacto-info-label">Demo gratuita</div>
+            <div class="contacto-info-val">Lista en 48 horas</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nombre</label>
+              <input id="cf-nombre" class="form-input" type="text" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Teléfono</label>
+              <input id="cf-tel" class="form-input" type="tel" placeholder="+34 600 000 000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo de negocio</label>
+            <select id="cf-tipo" class="form-input form-select">
+              <option value="">Selecciona tu sector</option>
+              <option>Peluquería / Barbería</option>
+              <option>Restaurante / Bar</option>
+              <option>Clínica de fisioterapia</option>
+              <option>Psicólogo / Terapeuta</option>
+              <option>Bufete de abogados</option>
+              <option>Academia / Extraescolares</option>
+              <option>Club de pádel</option>
+              <option>Otro tipo de negocio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué necesitas? <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+            <textarea id="cf-msg" class="form-input" rows="3" placeholder="Web nueva, mejorar la que tengo, añadir reservas online..."></textarea>
+          </div>
+          <button class="wa-btn" onclick="enviarWA()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Enviar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo footer-logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="#2563EB"/>
+            <rect x="7" y="7" width="7" height="7" rx="2" fill="white"/>
+            <rect x="18" y="7" width="7" height="7" rx="2" fill="white" opacity="0.6"/>
+            <rect x="7" y="18" width="7" height="7" rx="2" fill="white" opacity="0.6"/>
+            <rect x="18" y="18" width="7" height="7" rx="2" fill="white"/>
+          </svg>
+          sitalia
+        </a>
+        <p class="footer-tagline" style="margin-top:12px">Webs profesionales para negocios locales. Resultados reales desde el primer mes.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Sectores</div>
+        <ul class="footer-links">
+          <li><a href="demo-peluqueria.html" target="_blank">Peluquerías</a></li>
+          <li><a href="demo-restaurante.html" target="_blank">Restaurantes</a></li>
+          <li><a href="demo-fisioterapia.html" target="_blank">Fisioterapia</a></li>
+          <li><a href="demo-psicologo.html" target="_blank">Psicólogos</a></li>
+          <li><a href="demo-abogados.html" target="_blank">Abogados</a></li>
+          <li><a href="demo-academia.html" target="_blank">Academias</a></li>
+          <li><a href="demo-padel.html" target="_blank">Pádel</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <ul class="footer-links">
+          <li><a href="#proceso">Cómo funciona</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="mailto:hola@sitalia.es">hola@sitalia.es</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Sitalia. Todos los derechos reservados.</div>
+      <div class="footer-legal">
+        <a href="#">Privacidad</a>
+        <a href="#">Aviso legal</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function enviarWA(){
+  var nombre = document.getElementById("cf-nombre").value.trim();
+  var tel = document.getElementById("cf-tel").value.trim();
+  var tipo = document.getElementById("cf-tipo").value;
+  var msg = document.getElementById("cf-msg").value.trim();
+  if(!nombre || !tel || !tipo){alert("Por favor rellena nombre, teléfono y tipo de negocio.");return;}
+  var lines = [
+    "Hola, me interesa una demo gratuita de Sitalia.",
+    "",
+    "Nombre: " + nombre,
+    "Teléfono: " + tel,
+    "Sector: " + tipo
+  ];
+  if(msg) lines.push("Mensaje: " + msg);
+  var texto = encodeURIComponent(lines.join("\n"));
+  window.open("https://wa.me/34600000000?text=" + texto, "_blank");
+}
+</script>
+
+</body>
+</html>
