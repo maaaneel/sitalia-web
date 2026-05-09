@@ -303,19 +303,13 @@
     // initBooking() se llama desde cada demo con su configuración específica
   });
 
+
   /* ── Exports globales ──────────────────────────────────── */
   window.Sitalia = {
     initBooking: initBooking,
     bkTo:        bkTo,
     bkMon:       bkMon,
     bkWA:        bkWA,
-    // Acceso al estado interno del widget de reservas
-    getBkState:  function() { return bk; },
-    setBkConfig: function(cfg) { Object.assign(bkConfig, cfg); }
-  };
-
-})();
-so al estado interno del widget de reservas
     getBkState:  function() { return bk; },
     setBkConfig: function(cfg) { Object.assign(bkConfig, cfg); }
   };
