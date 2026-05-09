@@ -570,6 +570,16 @@ footer{background:var(--text);padding:48px 0 32px}
               <input id="cf-nombre" class="form-input" type="text" placeholder="Tu nombre">
             </div>
             <div class="form-group">
+              <label class="form-label">Apellido</label>
+              <input id="cf-apellido" class="form-input" type="text" placeholder="Tu apellido">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input id="cf-email" class="form-input" type="email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
               <label class="form-label">Teléfono</label>
               <input id="cf-tel" class="form-input" type="tel" placeholder="+34 600 000 000">
             </div>
@@ -660,13 +670,15 @@ footer{background:var(--text);padding:48px 0 32px}
 // ─── Enviar formulario: guarda en Supabase + envía email de notificación
 // Las credenciales NO están aquí — viven en variables de entorno de Vercel.
 async function enviarContacto() {
-  var nombre = document.getElementById('cf-nombre').value.trim();
-  var tel    = document.getElementById('cf-tel').value.trim();
-  var tipo   = document.getElementById('cf-tipo').value;
-  var msg    = document.getElementById('cf-msg').value.trim();
+  var nombre   = document.getElementById('cf-nombre').value.trim();
+  var apellido = document.getElementById('cf-apellido').value.trim();
+  var email    = document.getElementById('cf-email').value.trim();
+  var tel      = document.getElementById('cf-tel').value.trim();
+  var tipo     = document.getElementById('cf-tipo').value;
+  var msg      = document.getElementById('cf-msg').value.trim();
 
-  if (!nombre || !tel || !tipo) {
-    alert('Por favor rellena nombre, teléfono y tipo de negocio.');
+  if (!nombre || !apellido || !email || !tipo) {
+    alert('Por favor rellena nombre, apellido, email y tipo de negocio.');
     return;
   }
 
@@ -680,17 +692,17 @@ async function enviarContacto() {
     var resp = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: nombre, telefono: tel, tipo_negocio: tipo, mensaje: msg })
+      body: JSON.stringify({ nombre: nombre, apellido: apellido, email: email, telefono: tel, tipo_negocio: tipo, mensaje: msg })
     });
     if (resp.ok) {
-      // Mostrar mensaje de éxito y ocultar botón
       btn.style.display = 'none';
       okBox.style.display = 'block';
-      // Limpiar formulario
-      document.getElementById('cf-nombre').value = '';
-      document.getElementById('cf-tel').value = '';
-      document.getElementById('cf-tipo').value = '';
-      document.getElementById('cf-msg').value = '';
+      document.getElementById('cf-nombre').value   = '';
+      document.getElementById('cf-apellido').value = '';
+      document.getElementById('cf-email').value    = '';
+      document.getElementById('cf-tel').value      = '';
+      document.getElementById('cf-tipo').value     = '';
+      document.getElementById('cf-msg').value      = '';
     } else {
       throw new Error('server error');
     }
