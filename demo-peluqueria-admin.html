@@ -803,14 +803,23 @@ function saveWorker() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
-  }).then(function(r){ return r.json(); }).then(function(d) {
-    if (d.ok) {
-      hideWorkerForm();
-      loadWorkers();
-    } else {
-      alert('Error: ' + (d.error || ''));
-    }
-  }).catch(function(){ alert('Error de conexión'); });
+  }).then(function(r) {
+    // Leer como texto primero para detectar respuestas HTML (función no desplegada)
+    return r.text().then(function(txt) {
+      try {
+        var d = JSON.parse(txt);
+        if (d.ok) {
+          hideWorkerForm();
+          loadWorkers();
+        } else {
+          alert('Error del servidor: ' + (d.error || 'error desconocido'));
+        }
+      } catch(e) {
+        // El servidor devolvió HTML en vez de JSON — probablemente la función no está desplegada
+        alert('Error: el servidor devolvió una respuesta inesperada (HTTP ' + r.status + ').\n\nPosibles causas:\n1. api/trabajadores.js no está subido a GitHub\n2. Vercel no ha redesplegado aún\n\nRespuesta del servidor:\n' + txt.slice(0, 200));
+      }
+    });
+  }).catch(function(e){ alert('Error de red: ' + e.message); });
 }
 
 function deleteWorker(id, nombre) {

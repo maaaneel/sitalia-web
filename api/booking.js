@@ -1,6 +1,6 @@
 // api/booking.js
-// GET  /api/booking?negocio=peluqueria&fecha=2025-05-15
-//      → devuelve los minutos de inicio de los slots ya reservados
+// GET  /api/booking?negocio=peluqueria&fecha=2025-05-15[&rango_ini=540&rango_fin=1200&duracion=30]
+//      → devuelve los slots bloqueados (fully booked o sin trabajador disponible)
 // POST /api/booking
 //      → crea una reserva + envía emails de confirmación
 
@@ -10,11 +10,19 @@ const { Resend }       = require('resend');
 function sb() {
   return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 }
-
 function fmt(mins) {
   const h = Math.floor(mins / 60);
   const m = mins % 60;
   return h + ':' + (m < 10 ? '0' : '') + m;
+}
+
+// Cuántos trabajadores activos están disponibles a la hora t del día dow (0=Lun, 6=Dom)
+function workersAt(workers, dow, t) {
+  return workers.filter(w => {
+    const day = (w.horario || []).find(h => h.dow === dow);
+    if (!day || day.inicio === null || day.fin === null) return false;
+    return t >= day.inicio && t < day.fin;
+  }).length;
 }
 
 module.exports = async function handler(req, res) {
@@ -23,32 +31,88 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // ── GET: disponibilidad ─────────────────────────────────────────────────
+  // ── GET: disponibilidad con capacidad por trabajadores ──────────────────
   if (req.method === 'GET') {
-    const { negocio, fecha } = req.query;
-    if (!negocio || !fecha) {
-      return res.status(400).json({ error: 'Faltan parámetros' });
-    }
-    const { data, error } = await sb()
+    const { negocio, fecha, rango_ini, rango_fin, duracion } = req.query;
+    if (!negocio || !fecha) return res.status(400).json({ error: 'Faltan parámetros' });
+
+    // Reservas confirmadas del día
+    const { data: bookings, error: bErr } = await sb()
       .from('reservas')
       .select('hora_inicio, duracion_min')
       .eq('negocio', negocio)
       .eq('fecha', fecha)
       .eq('estado', 'confirmada');
 
-    if (error) return res.status(500).json({ error: error.message });
-    return res.status(200).json({ reservados: data.map(r => r.hora_inicio) });
+    if (bErr) return res.status(500).json({ error: bErr.message });
+
+    // Trabajadores activos
+    const { data: workers } = await sb()
+      .from('trabajadores')
+      .select('horario')
+      .eq('negocio', negocio)
+      .eq('activo', true);
+
+    const hasWorkers = workers && workers.length > 0;
+
+    // Conteo de reservas por hora_inicio
+    const bookingCounts = {};
+    (bookings || []).forEach(b => {
+      bookingCounts[b.hora_inicio] = (bookingCounts[b.hora_inicio] || 0) + 1;
+    });
+
+    // ── Sin trabajadores configurados: comportamiento clásico (1 reserva = bloqueado)
+    if (!hasWorkers) {
+      return res.status(200).json({ hasWorkers: false, reservados: Object.keys(bookingCounts).map(Number) });
+    }
+
+    // ── Con rango+duracion: recorrer todos los slots del rango y verificar disponibilidad
+    if (rango_ini && rango_fin && duracion) {
+      const ini     = parseInt(rango_ini);
+      const fin     = parseInt(rango_fin);
+      const dur     = parseInt(duracion);
+      const dateObj = new Date(fecha + 'T12:00:00');
+      const jsDay   = dateObj.getDay();
+      const dow     = jsDay === 0 ? 6 : jsDay - 1; // Mon=0, Sun=6
+
+      const reservados = [];
+      for (let t = ini; t + dur <= fin; t += dur) {
+        const cap    = workersAt(workers, dow, t);
+        const booked = bookingCounts[t] || 0;
+        // Bloqueado si no hay trabajador disponible O todos ocupados
+        if (cap === 0 || booked >= cap) reservados.push(t);
+      }
+      return res.status(200).json({ hasWorkers: true, reservados });
+    }
+
+    // ── Con trabajadores pero sin parámetros de rango: aplicar capacidad solo a horas con reservas
+    const dateObj = new Date(fecha + 'T12:00:00');
+    const jsDay   = dateObj.getDay();
+    const dow     = jsDay === 0 ? 6 : jsDay - 1;
+
+    const reservados = Object.keys(bookingCounts)
+      .map(Number)
+      .filter(t => {
+        const cap = workersAt(workers, dow, t);
+        return cap === 0 || bookingCounts[t] >= cap;
+      });
+
+    return res.status(200).json({ hasWorkers: true, reservados });
   }
 
   // ── POST: crear reserva ─────────────────────────────────────────────────
   if (req.method === 'POST') {
-    const { negocio, servicio, duracion_min, precio, fecha, hora_inicio, hora_fin, nombre, telefono, email } = req.body || {};
+    const {
+      negocio, servicio, duracion_min, precio,
+      fecha, hora_inicio, hora_fin,
+      nombre, telefono, email
+    } = req.body || {};
 
-    if (!negocio || !servicio || !fecha || !hora_inicio || !nombre || !email) {
+    if (!negocio || !servicio || !fecha || hora_inicio === undefined || !nombre || !email) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    // Comprobar que el slot sigue libre
+    // Comprobar slot disponible considerando capacidad de trabajadores
     const { data: existing } = await sb()
       .from('reservas')
       .select('id')
@@ -58,33 +122,56 @@ module.exports = async function handler(req, res) {
       .eq('estado', 'confirmada');
 
     if (existing && existing.length > 0) {
-      return res.status(409).json({ error: 'Este horario ya no está disponible. Por favor elige otro.' });
+      const { data: workers } = await sb()
+        .from('trabajadores')
+        .select('horario')
+        .eq('negocio', negocio)
+        .eq('activo', true);
+
+      let cap = 1; // Por defecto 1 si no hay trabajadores configurados
+      if (workers && workers.length > 0) {
+        const dateObj = new Date(fecha + 'T12:00:00');
+        const jsDay   = dateObj.getDay();
+        const dow     = jsDay === 0 ? 6 : jsDay - 1;
+        cap = workersAt(workers, dow, hora_inicio);
+      }
+
+      if (existing.length >= cap) {
+        return res.status(409).json({ error: 'Este horario ya no está disponible. Por favor elige otro.' });
+      }
     }
 
     // Insertar reserva
     const { data: reserva, error } = await sb()
       .from('reservas')
-      .insert({ negocio, servicio, duracion_min, precio, fecha, hora_inicio, hora_fin, nombre, telefono: telefono || null, email, estado: 'confirmada' })
+      .insert({
+        negocio, servicio, duracion_min, precio,
+        fecha, hora_inicio, hora_fin,
+        nombre, telefono: telefono || null, email,
+        estado: 'confirmada'
+      })
       .select()
       .single();
 
     if (error) return res.status(500).json({ error: error.message });
 
-    // Emails
+    // Emails de confirmación
     try {
       const resend  = new Resend(process.env.RESEND_API_KEY);
-      const fechaES = new Date(fecha + 'T12:00:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      const fechaES = new Date(fecha + 'T12:00:00').toLocaleDateString('es-ES', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      });
 
       // Email al cliente
       await resend.emails.send({
         from:    'Barberia El Rincón <reservas@sitalia.es>',
         to:      email,
-        subject: `✂️ Reserva confirmada — ${fmt(hora_inicio)} el ${fechaES}`,
+        subject: `Reserva confirmada — ${fmt(hora_inicio)} el ${fechaES}`,
         html: `
           <div style="font-family:sans-serif;max-width:520px;margin:0 auto;color:#111">
             <div style="background:#111;padding:28px;border-radius:12px 12px 0 0;text-align:center">
               <h1 style="color:#fff;margin:0;font-size:22px;letter-spacing:-.02em">Barberia El Rincón</h1>
-              <p style="color:rgba(255,255,255,.6);margin:6px 0 0;font-size:13px">Tu reserva está confirmada ✓</p>
+              <p style="color:rgba(255,255,255,.6);margin:6px 0 0;font-size:13px">Tu reserva está confirmada</p>
             </div>
             <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;padding:32px">
               <p style="margin-top:0">Hola <strong>${nombre}</strong>, aquí tienes los detalles de tu cita:</p>
@@ -108,7 +195,7 @@ module.exports = async function handler(req, res) {
         from:    'Sitalia Reservas <notificaciones@sitalia.es>',
         to:      'hola@sitalia.es',
         replyTo: email,
-        subject: `✂️ Nueva reserva: ${nombre} — ${fmt(hora_inicio)} el ${fechaES}`,
+        subject: `Nueva reserva: ${nombre} — ${fmt(hora_inicio)} el ${fechaES}`,
         html: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;color:#111">
             <h2 style="color:#111;margin-bottom:4px">Nueva reserva recibida</h2>
