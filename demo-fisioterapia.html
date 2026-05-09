@@ -1,238 +1,210 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FisioActiva | Clínica de Fisioterapia · Barcelona</title>
-<meta name="description" content="Clínica de fisioterapia en Barcelona. Tratamientos personalizados, equipo especializado, reserva online en segundos. Recupera tu bienestar."/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FisioActiva | Clínica de Fisioterapia Barcelona</title>
+<link rel="stylesheet" href="shared.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#f7f9f7;
-  --bg-dark:#eef3ee;
-  --bg-card:#ffffff;
-  --text:#1a2e1a;
-  --text-muted:#5a7060;
-  --accent:#2d6a4f;
-  --accent-hover:#245c43;
-  --accent-light:#52b788;
-  --accent-pale:#d8f3dc;
-  --border:#d8e8da;
-  --border-light:#e8f0e8;
+:root {
+  --bg:#f7f9f7; --bg-dark:#eef3ee; --bg-card:#ffffff;
+  --text:#1a2e1a; --text-muted:#5a7060; --text-soft:#8a9e8a;
+  --accent:#2d6a4f; --accent-hover:#245c43; --accent-light:#52b788;
+  --accent-pale:#d8f3dc; --accent-mid:#c2d0df;
+  --border:#d8e8da; --border-light:#e8f0e8;
+  --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --bg-rgb: 247,249,247;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+/* Nav override */
+nav { height:64px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; }
+.nav-inner { display:contents; }
+.nav-logo { font-size:18px; font-weight:700; display:flex; align-items:center; gap:8px; }
+.nav-logo-mark { width:28px; height:28px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; }
+.nav-logo-mark svg { width:16px; height:16px; fill:#fff; }
+.nav-logo span { color:var(--accent); }
+.nav-links { list-style:none; display:flex; gap:28px; }
+.nav-links a { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); transition:color .2s; }
+.nav-links a:hover { color:var(--accent); }
+.nav-cta { background:var(--accent); color:#fff; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; padding:10px 22px; border:none; cursor:pointer; border-radius:4px; transition:background .2s; }
+.nav-cta:hover { background:var(--accent-hover); color:#fff; }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,249,247,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%}
-.nav-logo{font-size:18px;font-weight:700;letter-spacing:0.02em;color:var(--text);display:flex;align-items:center;gap:8px}
-.nav-logo-mark{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center}
-.nav-logo-mark svg{width:16px;height:16px;fill:#fff}
-.nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
-.nav-links a:hover{color:var(--accent)}
-.nav-cta{background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;border-radius:4px}
-.nav-cta:hover{background:var(--accent-hover)}
-@media(max-width:768px){.nav-links{display:none}}
+/* Hero */
+.hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:64px; }
+.hero-content { display:flex; flex-direction:column; justify-content:center; padding:80px 5% 80px 8%; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--accent-pale); border:1px solid var(--accent-light); padding:6px 14px; border-radius:20px; margin-bottom:24px; width:fit-content; }
+.hero-badge-dot { width:7px; height:7px; background:var(--accent-light); border-radius:50%; }
+.hero-badge-text { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+.hero-title { font-size:clamp(38px,4.5vw,64px); font-weight:800; line-height:1.08; letter-spacing:-.02em; margin-bottom:20px; }
+.hero-title em { font-style:normal; color:var(--accent); }
+.hero-desc { font-size:15px; color:var(--text-muted); max-width:420px; line-height:1.75; margin-bottom:36px; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px; }
+.btn-primary { background:var(--accent); color:#fff; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; padding:14px 28px; border:none; cursor:pointer; border-radius:4px; transition:all .2s; display:inline-block; }
+.btn-primary:hover { background:var(--accent-hover); transform:translateY(-1px); }
+.btn-outline { background:transparent; color:var(--text); font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; padding:13px 27px; border:1px solid var(--border); cursor:pointer; border-radius:4px; transition:all .2s; display:inline-block; }
+.btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+.hero-trust { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.hero-trust-item { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--text-muted); }
+.hero-trust-icon { width:18px; height:18px; background:var(--accent-pale); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; }
+.hero-visual { background:var(--bg-dark); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.hero-visual-inner { width:100%; height:100%; overflow:hidden; min-height:500px; }
+.hero-visual-inner img { width:100%; height:100%; object-fit:cover; }
+.hero-stats-float { position:absolute; bottom:32px; left:32px; right:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.hero-stat-card { background:rgba(255,255,255,.92); backdrop-filter:blur(8px); padding:16px 12px; text-align:center; border:1px solid var(--border); }
+.hero-stat-num { font-size:20px; font-weight:800; color:var(--accent); letter-spacing:-.02em; }
+.hero-stat-label { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+@media(max-width:900px) { .hero { grid-template-columns:1fr; } .hero-visual { min-height:300px; } .hero-content { padding:60px 6%; } }
 
-/* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px}
-.hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 5% 80px 8%}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-pale);border:1px solid var(--accent-light);padding:6px 14px;border-radius:20px;margin-bottom:24px;width:fit-content}
-.hero-badge-dot{width:7px;height:7px;background:var(--accent-light);border-radius:50%}
-.hero-badge-text{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.hero-title{font-size:clamp(38px,4.5vw,64px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px;color:var(--text)}
-.hero-title em{font-style:normal;color:var(--accent)}
-.hero-desc{font-size:15px;color:var(--text-muted);max-width:420px;line-height:1.75;margin-bottom:36px}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
-.btn-primary{background:var(--accent);color:#fff;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:15px 30px;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border-radius:4px}
-.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
-.btn-outline{background:transparent;color:var(--text);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:14px 29px;border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border-radius:4px}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
-.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.hero-trust-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted)}
-.hero-trust-icon{width:18px;height:18px;background:var(--accent-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px}
-.hero-visual{background:var(--bg-dark);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.hero-visual-inner{width:100%;height:100%;overflow:hidden;min-height:500px;border-radius:4px;position:relative}
-.hero-visual-placeholder{text-align:center}
-.hero-visual-placeholder svg{width:80px;height:80px;opacity:0.12;color:var(--accent)}
-.hero-stats-float{position:absolute;bottom:32px;left:32px;right:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.hero-stat-card{background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);padding:16px 12px;text-align:center;border:1px solid var(--border)}
-.hero-stat-card:first-child{border-radius:4px 0 0 4px}
-.hero-stat-card:last-child{border-radius:0 4px 4px 0}
-.hero-stat-num{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-0.02em}
-.hero-stat-label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-top:2px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{min-height:260px}.hero-content{padding:60px 6%}}
+/* Sections */
+section { padding:96px 5%; }
+.section-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.section-title { font-size:clamp(28px,4vw,46px); font-weight:800; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; }
+.section-sub { font-size:15px; color:var(--text-muted); max-width:520px; line-height:1.7; }
+.section-head { margin-bottom:56px; }
 
-/* SECTIONS */
-section{padding:96px 5%}
-.section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.section-label::before{content:"";width:20px;height:2px;background:var(--accent);border-radius:1px}
-.section-title{font-size:clamp(26px,3.5vw,44px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px}
-.section-sub{font-size:15px;color:var(--text-muted);max-width:500px;line-height:1.7}
-.section-head{margin-bottom:60px}
+/* Treatments */
+.treatments-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:2px; border:1px solid var(--border); }
+.treatment-card { background:var(--bg-card); padding:32px; border-right:1px solid var(--border-light); border-bottom:1px solid var(--border-light); position:relative; transition:all .2s; }
+.treatment-card:hover { background:var(--bg-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,106,79,.1); z-index:1; }
+.treatment-card.featured { border-top:3px solid var(--accent); }
+.treatment-badge { position:absolute; top:16px; right:16px; background:var(--accent); color:#fff; font-size:9px; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border-radius:2px; }
+.treatment-icon { width:44px; height:44px; background:var(--accent-pale); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; font-size:20px; }
+.treatment-name { font-size:15px; font-weight:700; margin-bottom:8px; }
+.treatment-desc { font-size:12px; color:var(--text-muted); line-height:1.65; margin-bottom:16px; }
+.treatment-meta { display:flex; align-items:center; justify-content:space-between; padding-top:16px; border-top:1px solid var(--border-light); }
+.treatment-duration { font-size:11px; color:var(--text-muted); }
+.treatment-price { font-size:16px; font-weight:700; color:var(--accent); }
 
-/* TRATAMIENTOS */
-#tratamientos{background:var(--bg)}
-.treatments-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;border:1px solid var(--border)}
-.treatment-card{background:var(--bg-card);padding:32px;border-right:1px solid var(--border-light);border-bottom:1px solid var(--border-light);position:relative;transition:all 0.2s;cursor:pointer}
-.treatment-card:hover{background:var(--bg-dark);transform:translateY(-2px);z-index:1;box-shadow:0 8px 32px rgba(45,106,79,0.08)}
-.treatment-card.featured{border-top:3px solid var(--accent)}
-.treatment-icon{width:44px;height:44px;background:var(--accent-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
-.treatment-name{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em}
-.treatment-desc{font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:16px}
-.treatment-meta{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border-light)}
-.treatment-duration{font-size:11px;color:var(--text-muted);letter-spacing:0.05em;display:flex;align-items:center;gap:5px}
-.treatment-price{font-size:16px;font-weight:700;color:var(--accent)}
-.treatment-badge{position:absolute;top:16px;right:16px;background:var(--accent);color:#fff;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+/* Bonos */
+#bonos { background:var(--bg-dark); }
+.bonos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:24px; }
+.bono-card { background:var(--bg-card); border:1px solid var(--border); padding:32px; text-align:center; position:relative; transition:all .2s; border-radius:4px; }
+.bono-card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,106,79,.1); }
+.bono-card.popular { border-color:var(--accent); border-width:2px; }
+.bono-popular-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:4px 14px; border-radius:2px; white-space:nowrap; }
+.bono-sessions { font-size:42px; font-weight:800; color:var(--accent); line-height:1; letter-spacing:-.03em; }
+.bono-sessions-label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:20px; margin-top:4px; }
+.bono-price { font-size:28px; font-weight:700; color:var(--text); letter-spacing:-.02em; margin-bottom:4px; }
+.bono-price-per { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+.bono-savings { display:inline-block; background:var(--accent-pale); color:var(--accent); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 12px; border-radius:2px; margin-bottom:20px; }
+.bono-features { text-align:left; margin-bottom:24px; display:flex; flex-direction:column; gap:8px; }
+.bono-features li { font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:7px; }
+.bono-features li::before { content:"✓"; color:var(--accent); font-weight:700; }
+.bono-btn { width:100%; background:var(--accent); color:#fff; border:none; padding:13px; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; border-radius:4px; transition:background .2s; }
+.bono-btn:hover { background:var(--accent-hover); }
+.bono-btn.outline { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+.bono-btn.outline:hover { background:var(--accent); color:#fff; }
 
-/* BONOS */
-#bonos{background:var(--bg-dark)}
-.bonos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px}
-.bono-card{background:var(--bg-card);border:1px solid var(--border);padding:32px;text-align:center;position:relative;transition:all 0.2s}
-.bono-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 32px rgba(45,106,79,0.1)}
-.bono-card.popular{border-color:var(--accent);border-width:2px}
-.bono-popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 14px;border-radius:2px;white-space:nowrap}
-.bono-sessions{font-size:42px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:-0.03em}
-.bono-sessions-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;margin-top:4px}
-.bono-price{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:4px}
-.bono-price-per{font-size:12px;color:var(--text-muted);margin-bottom:20px}
-.bono-savings{display:inline-block;background:var(--accent-pale);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:20px}
-.bono-features{list-style:none;text-align:left;margin-bottom:24px;display:flex;flex-direction:column;gap:8px}
-.bono-features li{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:7px}
-.bono-features li::before{content:"✓";color:var(--accent);font-weight:700;font-size:12px;flex-shrink:0}
-.bono-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:13px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background 0.2s}
-.bono-btn:hover{background:var(--accent-hover)}
-.bono-btn.outline{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-.bono-btn.outline:hover{background:var(--accent);color:#fff}
+/* Team fisio */
+.team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:24px; }
+.team-card { background:var(--bg-card); border:1px solid var(--border); padding:28px; border-radius:4px; transition:all .2s; }
+.team-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+.team-avatar { width:72px; height:72px; border-radius:50%; overflow:hidden; margin-bottom:18px; background:var(--border); }
+.team-avatar img { width:100%; height:100%; object-fit:cover; }
+.team-name { font-size:16px; font-weight:700; margin-bottom:3px; }
+.team-role { font-size:11px; color:var(--accent); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; }
+.team-bio { font-size:12px; color:var(--text-muted); line-height:1.65; margin-bottom:14px; }
+.team-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.team-tag { font-size:10px; background:var(--accent-pale); color:var(--accent); padding:3px 10px; border-radius:20px; }
 
-/* EQUIPO */
-#equipo{background:var(--bg)}
-.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px}
-.team-card{background:var(--bg-card);border:1px solid var(--border);overflow:hidden;transition:all 0.2s}
-.team-card:hover{border-color:var(--accent);box-shadow:0 8px 32px rgba(45,106,79,0.08)}
-.team-avatar{background:var(--accent-pale);height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.team-initials{width:72px;height:72px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;letter-spacing:0.02em}
-.team-info{padding:24px}
-.team-name{font-size:14px;font-weight:700;margin-bottom:4px}
-.team-role{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-.team-bio{font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px}
-.team-tags{display:flex;flex-wrap:wrap;gap:5px}
-.team-tag{background:var(--accent-pale);color:var(--accent);font-size:9px;letter-spacing:0.07em;text-transform:uppercase;padding:3px 9px;border-radius:2px;font-weight:600}
+/* Testimonios */
+.testimonios-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
+.testimonio-card { background:var(--bg-card); border:1px solid var(--border); padding:28px; border-radius:4px; transition:all .2s; }
+.testimonio-card:hover { border-color:var(--accent); }
+.testimonio-stars { display:flex; gap:2px; margin-bottom:12px; }
+.testimonio-star { color:var(--accent); font-size:14px; }
+.testimonio-text { font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:16px; font-style:italic; }
+.testimonio-author { font-size:13px; font-weight:700; }
+.testimonio-meta { font-size:11px; color:var(--text-soft); margin-top:2px; margin-bottom:8px; }
+.testimonio-treatment { font-size:10px; background:var(--accent-pale); color:var(--accent); padding:3px 10px; border-radius:20px; letter-spacing:.05em; }
 
-/* TESTIMONIOS */
-#testimonios{background:var(--bg-dark)}
-.testimonios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;border:1px solid var(--border)}
-.testimonio-card{background:var(--bg-card);padding:32px;border-bottom:1px solid var(--border-light);transition:background 0.15s}
-.testimonio-card:hover{background:var(--bg)}
-.testimonio-stars{display:flex;gap:3px;margin-bottom:14px}
-.testimonio-star{color:var(--accent-light);font-size:14px}
-.testimonio-text{font-size:13px;line-height:1.75;color:var(--text);margin-bottom:18px;font-style:italic}
-.testimonio-author{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px}
-.testimonio-meta{font-size:10px;color:var(--text-muted);letter-spacing:0.04em}
-.testimonio-treatment{display:inline-block;background:var(--accent-pale);color:var(--accent);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;margin-top:8px;border-radius:2px}
+/* Reservas fisio */
+#reservas { background:var(--bg-dark); }
+.res-wrap { max-width:700px; margin:0 auto; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+.res-header { display:flex; align-items:center; gap:16px; padding:24px 32px; background:var(--accent); color:#fff; }
+.res-header-icon { font-size:28px; }
+.res-header-title { font-size:15px; font-weight:700; }
+.res-header-sub { font-size:12px; opacity:.8; }
+.res-body { padding:32px; }
+.res-steps { display:flex; gap:0; margin-bottom:32px; border-bottom:1px solid var(--border); }
+.res-step { font-size:10px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; padding:12px 0; margin-right:28px; cursor:pointer; border-bottom:2px solid transparent; color:var(--text-muted); background:none; border-top:none; border-left:none; border-right:none; transition:all .2s; }
+.res-step.active { color:var(--accent); border-bottom-color:var(--accent); }
+.res-panel { display:none; }
+.res-panel.active { display:block; }
+.res-field { margin-bottom:20px; }
+.res-label { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; display:block; }
+.res-select, .res-input { width:100%; background:var(--bg); border:1px solid var(--border); padding:12px 16px; font-size:13px; color:var(--text); outline:none; font-family:inherit; transition:border-color .2s; appearance:none; border-radius:4px; }
+.res-select:focus, .res-input:focus { border-color:var(--accent); }
+.res-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+@media(max-width:500px) { .res-grid-2 { grid-template-columns:1fr; } }
+.res-slots-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(80px,1fr)); gap:8px; margin-top:4px; }
+.res-slot { padding:10px 8px; border:1px solid var(--border); font-size:12px; font-weight:600; cursor:pointer; text-align:center; background:var(--bg-card); transition:all .15s; border-radius:3px; }
+.res-slot:hover { border-color:var(--accent); color:var(--accent); }
+.res-slot.selected { background:var(--accent); color:#fff; border-color:var(--accent); }
+.res-slot.booked { background:var(--bg-dark); color:var(--border); cursor:not-allowed; }
+.res-btn { background:var(--accent); color:#fff; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:15px 32px; border:none; cursor:pointer; margin-top:8px; transition:background .2s; width:100%; border-radius:4px; }
+.res-btn:hover:not(:disabled) { background:var(--accent-hover); }
+.res-btn:disabled { opacity:.35; cursor:not-allowed; }
+.res-back { background:none; border:none; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); cursor:pointer; padding:10px 0; text-decoration:underline; text-underline-offset:3px; margin-top:8px; }
+.res-confirm-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border-light); font-size:13px; }
+.res-confirm-label { color:var(--text-muted); font-size:11px; }
+.res-wa-btn { background:#1a9e4a; color:#fff; font-size:11px; font-weight:700; letter-spacing:.12em; padding:16px; border:none; cursor:pointer; width:100%; margin-top:16px; display:flex; align-items:center; justify-content:center; gap:10px; border-radius:4px; transition:opacity .2s; }
+.res-wa-btn:hover { opacity:.9; }
+.res-success { text-align:center; padding:40px 20px; }
+.res-success-icon { font-size:36px; margin-bottom:14px; }
+.res-success-title { font-size:20px; font-weight:700; margin-bottom:10px; }
+.res-success-text { font-size:13px; color:var(--text-muted); margin-bottom:20px; }
+.res-retry { background:none; border:1px solid var(--border); font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:10px 20px; cursor:pointer; border-radius:3px; transition:all .2s; }
+.res-retry:hover { border-color:var(--accent); }
+.res-svc-selected { display:flex; justify-content:space-between; background:var(--accent-pale); border:1px solid var(--accent-light); padding:12px 16px; border-radius:4px; margin-bottom:20px; }
+.res-svc-selected-name { font-size:13px; font-weight:600; color:var(--accent); }
+.res-svc-selected-meta { font-size:12px; color:var(--text-muted); }
 
-/* RESERVAS */
-#reservas{background:var(--bg)}
-.res-wrap{max-width:720px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.res-header{background:var(--accent);padding:28px 40px;display:flex;align-items:center;gap:16px}
-.res-header-icon{width:42px;height:42px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.res-header-text{color:#fff}
-.res-header-title{font-size:16px;font-weight:700;margin-bottom:2px}
-.res-header-sub{font-size:12px;opacity:0.75}
-.res-body{padding:36px 40px}
-.res-steps{display:flex;gap:0;margin-bottom:36px;border-bottom:1px solid var(--border)}
-.res-step{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:12px 0;margin-right:28px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text-muted);background:none;border-top:none;border-left:none;border-right:none;transition:all 0.2s;white-space:nowrap}
-.res-step.active{color:var(--accent);border-bottom-color:var(--accent)}
-.res-panel{display:none}
-.res-panel.active{display:block}
-.res-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;display:block}
-.res-select{width:100%;background:var(--bg);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color 0.2s;appearance:none;border-radius:4px}
-.res-select:focus{border-color:var(--accent)}
-.res-input{width:100%;background:var(--bg);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color 0.2s;border-radius:4px}
-.res-input:focus{border-color:var(--accent)}
-.res-field{margin-bottom:22px}
-.res-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
-.res-slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:4px}
-.res-slot{padding:11px 6px;border:1px solid var(--border);font-size:12px;letter-spacing:0.06em;font-weight:600;cursor:pointer;text-align:center;background:var(--bg-card);transition:all 0.15s;color:var(--text);border-radius:4px}
-.res-slot:hover{border-color:var(--accent);color:var(--accent)}
-.res-slot.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
-.res-slot.booked{background:var(--bg-dark);color:var(--border);cursor:not-allowed;border-color:var(--border-light)}
-.res-btn{background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:15px 28px;border:none;cursor:pointer;margin-top:6px;transition:background 0.2s;width:100%;border-radius:4px}
-.res-btn:hover:not(:disabled){background:var(--accent-hover)}
-.res-btn:disabled{opacity:0.35;cursor:not-allowed}
-.res-back{background:none;border:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:12px 0;text-decoration:underline;text-underline-offset:3px;margin-top:8px;display:block}
-.res-confirm-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border-light);font-size:13px}
-.res-confirm-row:last-child{border-bottom:none}
-.res-confirm-label{color:var(--text-muted)}
-.res-confirm-value{font-weight:600}
-.res-wa-btn{background:#25d366;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:17px 28px;border:none;cursor:pointer;width:100%;margin-top:22px;transition:background 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:4px}
-.res-wa-btn:hover:not(:disabled){background:#1eb957}
-.res-wa-btn:disabled{opacity:0.35;cursor:not-allowed}
-.res-success{text-align:center;padding:48px 20px}
-.res-success-icon{font-size:52px;margin-bottom:16px}
-.res-success-title{font-size:20px;font-weight:700;margin-bottom:8px}
-.res-success-text{font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.6}
-.res-retry{background:none;border:1px solid var(--border);padding:10px 24px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--text-muted);transition:all 0.2s;border-radius:4px}
-.res-retry:hover{border-color:var(--accent);color:var(--accent)}
-.res-svc-selected{background:var(--accent-pale);border:1px solid var(--accent-light);padding:12px 16px;border-radius:4px;margin-bottom:20px;display:flex;justify-content:space-between;font-size:13px}
-.res-svc-selected-name{font-weight:600;color:var(--accent)}
-.res-svc-selected-meta{color:var(--text-muted);font-size:12px}
-@media(max-width:600px){.res-body{padding:24px 20px}.res-grid-2{grid-template-columns:1fr}.res-header{padding:20px 24px}}
+/* Ubicación */
+.loc-grid { display:grid; grid-template-columns:1fr 1fr; }
+@media(max-width:720px) { .loc-grid { grid-template-columns:1fr; } }
+.loc-map { background:#1a2e1a; min-height:400px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:40px; }
+.loc-map-pin { font-size:40px; opacity:.4; }
+.loc-map-addr { color:rgba(255,255,255,.3); font-size:13px; text-align:center; line-height:1.6; }
+.loc-info { padding:64px 5%; background:var(--bg); display:flex; flex-direction:column; gap:32px; }
+.loc-block-label { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px; }
+.sched-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border-light); font-size:13px; }
+.sched-day { color:var(--text-muted); }
+.closed { color:var(--text-soft); }
 
-/* UBICACIÓN */
-#ubicacion{background:var(--bg-dark);padding:0}
-.loc-grid{display:grid;grid-template-columns:1fr 1fr}
-.loc-map{background:#1c2b1c;min-height:400px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;position:relative}
-.loc-map-pin{font-size:48px;opacity:0.4}
-.loc-map-addr{color:rgba(255,255,255,0.35);font-size:12px;letter-spacing:0.1em;text-align:center;max-width:200px;line-height:1.6;text-transform:uppercase}
-.loc-info{background:var(--bg-card);padding:48px;border:1px solid var(--border)}
-.loc-block{margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--border-light)}
-.loc-block:last-child{margin:0;padding:0;border:none}
-.loc-block-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
-.sched-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border-light)}
-.sched-row:last-child{border-bottom:none}
-.sched-day{color:var(--text-muted)}
-.sched-time{font-weight:600}
-.sched-time.closed{color:#c0392b;font-weight:400}
-@media(max-width:768px){.loc-grid{grid-template-columns:1fr}.loc-map{min-height:220px}}
-
-/* FOOTER */
-footer{background:#0d1a0d;border-top:1px solid rgba(255,255,255,0.06);padding:52px 5% 28px}
-.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-brand{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.footer-brand-mark{width:22px;height:22px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center}
-.footer-brand-mark svg{width:12px;height:12px;fill:#fff}
-.footer-desc{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.7;max-width:260px;margin-bottom:16px}
-.footer-col-title{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:18px}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px}
-.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s}
-.footer-links a:hover{color:var(--accent-light)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.footer-copy{font-size:11px;color:rgba(255,255,255,0.2)}
-.footer-legal{display:flex;gap:18px}
-.footer-legal a{font-size:11px;color:rgba(255,255,255,0.2);text-decoration:none}
-.footer-legal a:hover{color:rgba(255,255,255,0.45)}
-@media(max-width:768px){.footer-inner{grid-template-columns:1fr}}
-
-/* WHATSAPP FLOAT */
-.wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:52px;height:52px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:all 0.2s}
-.wa-float:hover{transform:scale(1.08);background:#1eb957}
-.wa-float svg{width:26px;height:26px;fill:#fff}
-@keyframes pulse-wa{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,0.65)}}
-.wa-float{animation:pulse-wa 2.5s ease-in-out infinite}
+/* Footer fisio */
+footer { background:var(--text); padding:56px 5% 28px; }
+.footer-inner { display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+@media(max-width:720px) { .footer-inner { grid-template-columns:1fr; } }
+.footer-brand { font-size:18px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.footer-brand-mark { width:24px; height:24px; background:var(--accent); border-radius:4px; display:flex; align-items:center; justify-content:center; }
+.footer-brand-mark svg { width:14px; height:14px; fill:#fff; }
+.footer-desc { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; }
+.footer-col-title { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:16px; }
+.footer-links { display:flex; flex-direction:column; gap:10px; }
+.footer-links a { font-size:13px; color:rgba(255,255,255,.5); transition:color .2s; }
+.footer-links a:hover { color:#fff; }
+.footer-bottom { border-top:1px solid rgba(255,255,255,.1); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+.footer-copy { font-size:11px; color:rgba(255,255,255,.3); }
+.footer-legal { display:flex; gap:16px; }
+.footer-legal a { font-size:11px; color:rgba(255,255,255,.3); transition:color .2s; }
+.footer-legal a:hover { color:#fff; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<div class="demo-banner">DEMO — FisioActiva · Sitalia.es</div>
+
+<a href="/" class="back-to-sitalia">
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+  Sitalia
+</a>
+
 <nav>
   <div class="nav-logo">
     <div class="nav-logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
     Fisio<span>Activa</span>
   </div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navlinks">
     <li><a href="#tratamientos">Tratamientos</a></li>
     <li><a href="#bonos">Bonos</a></li>
     <li><a href="#equipo">Equipo</a></li>
@@ -240,16 +212,13 @@ footer{background:#0d1a0d;border-top:1px solid rgba(255,255,255,0.06);padding:52
     <li><a href="#ubicacion">Clínica</a></li>
   </ul>
   <a href="#reservas" class="nav-cta">Reservar sesión</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
 </nav>
 
-<!-- HERO -->
 <section class="hero" style="padding:0">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      <span class="hero-badge-text">Colegiados · Barcelona</span>
-    </div>
-    <h1 class="hero-title">Tu cuerpo<br/>merece la <em>mejor</em><br/>recuperación.</h1>
+  <div class="hero-content reveal">
+    <div class="hero-badge"><div class="hero-badge-dot"></div><span class="hero-badge-text">Colegiados · Barcelona</span></div>
+    <h1 class="hero-title">Tu cuerpo<br>merece la <em>mejor</em><br>recuperación.</h1>
     <p class="hero-desc">Fisioterapia basada en evidencia. Tratamientos personalizados para lesiones deportivas, dolor crónico y rehabilitación postoperatoria.</p>
     <div class="hero-actions">
       <a href="#reservas" class="btn-primary">Reservar primera sesión</a>
@@ -262,9 +231,7 @@ footer{background:#0d1a0d;border-top:1px solid rgba(255,255,255,0.06);padding:52
     </div>
   </div>
   <div class="hero-visual">
-    <div class="hero-visual-inner">
-      <img src="images/fis-hero.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px" alt="Clínica de fisioterapia">
-    </div>
+    <div class="hero-visual-inner"><img src="images/fis-hero.jpg" alt="Clínica fisioterapia"></div>
     <div class="hero-stats-float">
       <div class="hero-stat-card"><div class="hero-stat-num">+2400</div><div class="hero-stat-label">Pacientes</div></div>
       <div class="hero-stat-card"><div class="hero-stat-num">8 años</div><div class="hero-stat-label">Experiencia</div></div>
@@ -273,201 +240,99 @@ footer{background:#0d1a0d;border-top:1px solid rgba(255,255,255,0.06);padding:52
   </div>
 </section>
 
-<!-- TRATAMIENTOS -->
 <section id="tratamientos">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div class="section-label">Lo que tratamos</div>
     <h2 class="section-title">Nuestros tratamientos</h2>
-    <p class="section-sub">Soluciones específicas para cada tipo de lesión o dolor. Todos nuestros tratamientos incluyen valoración inicial y plan de recuperación personalizado.</p>
+    <p class="section-sub">Soluciones específicas para cada tipo de lesión. Todos incluyen valoración inicial y plan personalizado.</p>
   </div>
   <div class="treatments-grid">
-    <div class="treatment-card featured">
-      <div class="treatment-badge">Más solicitado</div>
-      <div class="treatment-icon">🦴</div>
-      <div class="treatment-name">Fisioterapia Musculoesquelética</div>
-      <div class="treatment-desc">Tratamiento de lesiones de músculos, tendones, ligamentos y articulaciones. Contracturas, esguinces, hernias discales, tendinitis y dolor crónico.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 45–60 min</span><span class="treatment-price">45€/sesión</span></div>
-    </div>
-    <div class="treatment-card">
-      <div class="treatment-icon">🏃</div>
-      <div class="treatment-name">Fisioterapia Deportiva</div>
-      <div class="treatment-desc">Recuperación de lesiones deportivas, readaptación al esfuerzo y prevención de recaídas. Trabajamos con deportistas amateur y profesionales.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 60 min</span><span class="treatment-price">55€/sesión</span></div>
-    </div>
-    <div class="treatment-card">
-      <div class="treatment-icon">⚡</div>
-      <div class="treatment-name">Electroterapia y Ultrasonidos</div>
-      <div class="treatment-desc">Técnicas de electroterapia (TENS, EMS), ultrasonidos terapéuticos y magnetoterapia para acelerar la recuperación y reducir el dolor.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 30 min</span><span class="treatment-price">35€/sesión</span></div>
-    </div>
-    <div class="treatment-card">
-      <div class="treatment-icon">🤰</div>
-      <div class="treatment-name">Fisioterapia de Suelo Pélvico</div>
-      <div class="treatment-desc">Tratamiento de disfunciones del suelo pélvico: incontinencia, prolapsos, dolor pélvico, rehabilitación post-parto. Especialista femenina disponible.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 50 min</span><span class="treatment-price">55€/sesión</span></div>
-    </div>
-    <div class="treatment-card">
-      <div class="treatment-icon">🧠</div>
-      <div class="treatment-name">Fisioterapia Neurológica</div>
-      <div class="treatment-desc">Rehabilitación neurológica para pacientes con ictus, esclerosis múltiple, Parkinson, lesiones medulares y otras patologías del sistema nervioso.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 60 min</span><span class="treatment-price">60€/sesión</span></div>
-    </div>
-    <div class="treatment-card">
-      <div class="treatment-icon">💆</div>
-      <div class="treatment-name">Masaje Terapéutico</div>
-      <div class="treatment-desc">Masaje de tejido profundo, descontracturante, drenaje linfático y masaje deportivo. Ideal para complementar el tratamiento fisioterápico.</div>
-      <div class="treatment-meta"><span class="treatment-duration">⏱ 45 min</span><span class="treatment-price">40€/sesión</span></div>
-    </div>
+    <div class="treatment-card featured reveal reveal-delay-1"><div class="treatment-badge">Más solicitado</div><div class="treatment-icon">🦴</div><div class="treatment-name">Fisioterapia Musculoesquelética</div><div class="treatment-desc">Contracturas, esguinces, hernias discales, tendinitis y dolor crónico.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 45–60 min</span><span class="treatment-price">45€</span></div></div>
+    <div class="treatment-card reveal reveal-delay-2"><div class="treatment-icon">🏃</div><div class="treatment-name">Fisioterapia Deportiva</div><div class="treatment-desc">Recuperación de lesiones, readaptación y prevención. Deportistas amateur y profesionales.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 60 min</span><span class="treatment-price">55€</span></div></div>
+    <div class="treatment-card reveal reveal-delay-3"><div class="treatment-icon">⚡</div><div class="treatment-name">Electroterapia y Ultrasonidos</div><div class="treatment-desc">TENS, EMS, ultrasonidos y magnetoterapia para acelerar la recuperación.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 30 min</span><span class="treatment-price">35€</span></div></div>
+    <div class="treatment-card reveal"><div class="treatment-icon">🤰</div><div class="treatment-name">Suelo Pélvico</div><div class="treatment-desc">Incontinencia, prolapsos, dolor pélvico, rehabilitación post-parto.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 50 min</span><span class="treatment-price">55€</span></div></div>
+    <div class="treatment-card reveal reveal-delay-1"><div class="treatment-icon">🧠</div><div class="treatment-name">Fisioterapia Neurológica</div><div class="treatment-desc">Rehabilitación para ictus, esclerosis múltiple, Parkinson, lesiones medulares.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 60 min</span><span class="treatment-price">60€</span></div></div>
+    <div class="treatment-card reveal reveal-delay-2"><div class="treatment-icon">💆</div><div class="treatment-name">Masaje Terapéutico</div><div class="treatment-desc">Tejido profundo, descontracturante, drenaje linfático y masaje deportivo.</div><div class="treatment-meta"><span class="treatment-duration">⏱ 45 min</span><span class="treatment-price">40€</span></div></div>
   </div>
 </section>
 
-<!-- BONOS -->
 <section id="bonos">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div class="section-label">Ahorra con bonos</div>
     <h2 class="section-title">Bonos de sesiones</h2>
-    <p class="section-sub">Para tratamientos continuados, nuestros bonos te permiten ahorrar hasta un 20% respecto al precio por sesión.</p>
+    <p class="section-sub">Ahorra hasta un 20% respecto al precio por sesión.</p>
   </div>
   <div class="bonos-grid">
-    <div class="bono-card">
-      <div class="bono-sessions">5</div>
-      <div class="bono-sessions-label">Sesiones</div>
-      <div class="bono-price">200€</div>
-      <div class="bono-price-per">40€ por sesión</div>
+    <div class="bono-card reveal reveal-delay-1">
+      <div class="bono-sessions">5</div><div class="bono-sessions-label">Sesiones</div>
+      <div class="bono-price">200€</div><div class="bono-price-per">40€ por sesión</div>
       <div class="bono-savings">Ahorras 25€</div>
-      <ul class="bono-features">
-        <li>Válido 3 meses</li>
-        <li>Cualquier tratamiento</li>
-        <li>Transferible</li>
-      </ul>
-      <button class="bono-btn outline" onclick="window.open('https://wa.me/34931234567?text=Hola%2C%20quiero%20el%20bono%20de%205%20sesiones')">Contratar bono</button>
+      <ul class="bono-features"><li>Válido 3 meses</li><li>Cualquier tratamiento</li><li>Transferible</li></ul>
+      <button class="bono-btn outline" onclick="window.open('https://wa.me/34931234567?text=Hola%2C+quiero+el+bono+de+5+sesiones')">Contratar bono</button>
     </div>
-    <div class="bono-card popular">
+    <div class="bono-card popular reveal reveal-delay-2">
       <div class="bono-popular-badge">⭐ Más popular</div>
-      <div class="bono-sessions">10</div>
-      <div class="bono-sessions-label">Sesiones</div>
-      <div class="bono-price">380€</div>
-      <div class="bono-price-per">38€ por sesión</div>
+      <div class="bono-sessions">10</div><div class="bono-sessions-label">Sesiones</div>
+      <div class="bono-price">380€</div><div class="bono-price-per">38€ por sesión</div>
       <div class="bono-savings">Ahorras 70€</div>
-      <ul class="bono-features">
-        <li>Válido 6 meses</li>
-        <li>Cualquier tratamiento</li>
-        <li>Transferible</li>
-        <li>Plan de seguimiento incluido</li>
-      </ul>
-      <button class="bono-btn" onclick="window.open('https://wa.me/34931234567?text=Hola%2C%20quiero%20el%20bono%20de%2010%20sesiones')">Contratar bono</button>
+      <ul class="bono-features"><li>Válido 6 meses</li><li>Cualquier tratamiento</li><li>Transferible</li><li>Plan de seguimiento incluido</li></ul>
+      <button class="bono-btn" onclick="window.open('https://wa.me/34931234567?text=Hola%2C+quiero+el+bono+de+10+sesiones')">Contratar bono</button>
     </div>
-    <div class="bono-card">
-      <div class="bono-sessions">20</div>
-      <div class="bono-sessions-label">Sesiones</div>
-      <div class="bono-price">720€</div>
-      <div class="bono-price-per">36€ por sesión</div>
+    <div class="bono-card reveal reveal-delay-3">
+      <div class="bono-sessions">20</div><div class="bono-sessions-label">Sesiones</div>
+      <div class="bono-price">720€</div><div class="bono-price-per">36€ por sesión</div>
       <div class="bono-savings">Ahorras 180€</div>
-      <ul class="bono-features">
-        <li>Válido 12 meses</li>
-        <li>Cualquier tratamiento</li>
-        <li>Transferible</li>
-        <li>Plan de seguimiento incluido</li>
-        <li>Valoración inicial gratuita</li>
-      </ul>
-      <button class="bono-btn outline" onclick="window.open('https://wa.me/34931234567?text=Hola%2C%20quiero%20el%20bono%20de%2020%20sesiones')">Contratar bono</button>
+      <ul class="bono-features"><li>Válido 12 meses</li><li>Cualquier tratamiento</li><li>Transferible</li><li>Plan de seguimiento</li><li>Valoración inicial gratuita</li></ul>
+      <button class="bono-btn outline" onclick="window.open('https://wa.me/34931234567?text=Hola%2C+quiero+el+bono+de+20+sesiones')">Contratar bono</button>
     </div>
   </div>
 </section>
 
-<!-- EQUIPO -->
 <section id="equipo">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div class="section-label">Profesionales colegiados</div>
     <h2 class="section-title">Nuestro equipo</h2>
-    <p class="section-sub">Fisioterapeutas colegiados con formación continua y especialización en diferentes áreas de la fisioterapia.</p>
+    <p class="section-sub">Fisioterapeutas colegiados con formación continua y especialización.</p>
   </div>
   <div class="team-grid">
-    <div class="team-card">
-      <div class="team-avatar"><img src="images/fis-team-laura.jpg" alt="Laura Moya"></div>
-      <div class="team-info">
-        <div class="team-name">Laura Martínez</div>
-        <div class="team-role">Directora · Fisioterapeuta</div>
-        <div class="team-bio">12 años de experiencia. Especialista en fisioterapia musculoesquelética y deportiva. Ex-fisio del equipo de atletismo de la RFEA.</div>
-        <div class="team-tags"><span class="team-tag">Deportiva</span><span class="team-tag">Musculoesquelética</span></div>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar"><img src="images/fis-team-jordi.jpg" alt="Jordi Roca"></div>
-      <div class="team-info">
-        <div class="team-name">Jordi Roca</div>
-        <div class="team-role">Fisioterapeuta</div>
-        <div class="team-bio">8 años de experiencia. Especialista en neurología y rehabilitación postoperatoria. Máster en Fisioterapia Neurológica (UAB).</div>
-        <div class="team-tags"><span class="team-tag">Neurológica</span><span class="team-tag">Postoperatoria</span></div>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar"><img src="images/fis-team-clara.jpg" alt="Clara Soler"></div>
-      <div class="team-info">
-        <div class="team-name">Clara Soler</div>
-        <div class="team-role">Fisioterapeuta</div>
-        <div class="team-bio">Especialista en suelo pélvico y fisioterapia obstétrica. Formación en AEPISO y miembro de la SEGO. Sesiones privadas con total discreción.</div>
-        <div class="team-tags"><span class="team-tag">Suelo Pélvico</span><span class="team-tag">Obstétrica</span></div>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar"><img src="images/fis-team-andreu.jpg" alt="Andreu Garcia"></div>
-      <div class="team-info">
-        <div class="team-name">Andreu Gómez</div>
-        <div class="team-role">Fisioterapeuta</div>
-        <div class="team-bio">Especialista en electroterapia y técnicas instrumentales (IASTM, EPI). Formado en dry needling y punción seca avanzada.</div>
-        <div class="team-tags"><span class="team-tag">Electroterapia</span><span class="team-tag">Dry Needling</span></div>
-      </div>
-    </div>
+    <div class="team-card reveal reveal-delay-1"><div class="team-avatar"><img src="images/fis-team-laura.jpg" alt="Laura"></div><div class="team-name">Laura Martínez</div><div class="team-role">Directora · Fisioterapeuta</div><div class="team-bio">12 años de experiencia. Especialista en musculoesquelética y deportiva. Ex-fisio RFEA.</div><div class="team-tags"><span class="team-tag">Deportiva</span><span class="team-tag">Musculoesquelética</span></div></div>
+    <div class="team-card reveal reveal-delay-2"><div class="team-avatar"><img src="images/fis-team-jordi.jpg" alt="Jordi"></div><div class="team-name">Jordi Roca</div><div class="team-role">Fisioterapeuta</div><div class="team-bio">Especialista en neurología y rehabilitación postoperatoria. Máster en Fisio Neurológica (UAB).</div><div class="team-tags"><span class="team-tag">Neurológica</span><span class="team-tag">Postoperatoria</span></div></div>
+    <div class="team-card reveal reveal-delay-3"><div class="team-avatar"><img src="images/fis-team-clara.jpg" alt="Clara"></div><div class="team-name">Clara Soler</div><div class="team-role">Fisioterapeuta</div><div class="team-bio">Especialista en suelo pélvico y fisioterapia obstétrica. Miembro AEPISO y SEGO.</div><div class="team-tags"><span class="team-tag">Suelo Pélvico</span><span class="team-tag">Obstétrica</span></div></div>
+    <div class="team-card reveal reveal-delay-4"><div class="team-avatar"><img src="images/fis-team-andreu.jpg" alt="Andreu"></div><div class="team-name">Andreu Gómez</div><div class="team-role">Fisioterapeuta</div><div class="team-bio">Especialista en electroterapia e IASTM. Dry needling y punción seca avanzada.</div><div class="team-tags"><span class="team-tag">Electroterapia</span><span class="team-tag">Dry Needling</span></div></div>
   </div>
 </section>
 
-<!-- TESTIMONIOS -->
-<section id="testimonios">
-  <div class="section-head">
+<section id="testimonios" style="background:var(--bg-dark)">
+  <div class="section-head reveal">
     <div class="section-label">Lo que dicen nuestros pacientes</div>
     <h2 class="section-title">Testimonios</h2>
   </div>
   <div class="testimonios-grid">
-    <div class="testimonio-card"><div class="testimonio-stars"><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span></div><p class="testimonio-text">"Llevaba meses con una tendinitis en el hombro que no cedía. En 6 sesiones con Laura recuperé la movilidad completa. Ojalá hubiese venido antes."</p><div class="testimonio-author">Marcos V.</div><div class="testimonio-meta">Google · hace 3 semanas</div><span class="testimonio-treatment">Fisioterapia Deportiva</span></div>
-    <div class="testimonio-card"><div class="testimonio-stars"><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span></div><p class="testimonio-text">"Clara es increíble. Después del parto tenía muchos problemas con el suelo pélvico. Con ella me sentí en todo momento cómoda y los resultados fueron fantásticos."</p><div class="testimonio-author">Neus P.</div><div class="testimonio-meta">Google · hace 1 mes</div><span class="testimonio-treatment">Suelo Pélvico</span></div>
-    <div class="testimonio-card"><div class="testimonio-stars"><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span></div><p class="testimonio-text">"Me operaron de la rodilla en febrero y gracias a Jordi y su protocolo de rehabilitación volví a correr en 4 meses. El seguimiento fuera de las sesiones es un plus."</p><div class="testimonio-author">Sergi F.</div><div class="testimonio-meta">Google · hace 2 meses</div><span class="testimonio-treatment">Rehabilitación Postoperatoria</span></div>
-    <div class="testimonio-card"><div class="testimonio-stars"><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span><span class="testimonio-star">★</span></div><p class="testimonio-text">"Llevo con hernia lumbar L4-L5 muchos años. Con el bono de 10 sesiones y los ejercicios que me mandaron a casa, el dolor bajó un 80%. Totalmente recomendable."</p><div class="testimonio-author">Rosa M.</div><div class="testimonio-meta">Google · hace 3 semanas</div><span class="testimonio-treatment">Musculoesquelética</span></div>
+    <div class="testimonio-card reveal reveal-delay-1"><div class="testimonio-stars">★★★★★</div><p class="testimonio-text">"Llevaba meses con una tendinitis en el hombro. En 6 sesiones con Laura recuperé la movilidad completa."</p><div class="testimonio-author">Marcos V.</div><div class="testimonio-meta">Google · hace 3 semanas</div><span class="testimonio-treatment">Fisioterapia Deportiva</span></div>
+    <div class="testimonio-card reveal reveal-delay-2"><div class="testimonio-stars">★★★★★</div><p class="testimonio-text">"Clara es increíble. Después del parto me sentí en todo momento cómoda y los resultados fueron fantásticos."</p><div class="testimonio-author">Neus P.</div><div class="testimonio-meta">Google · hace 1 mes</div><span class="testimonio-treatment">Suelo Pélvico</span></div>
+    <div class="testimonio-card reveal reveal-delay-3"><div class="testimonio-stars">★★★★★</div><p class="testimonio-text">"Me operaron de la rodilla y gracias a Jordi volví a correr en 4 meses. El seguimiento fuera de sesiones es un plus."</p><div class="testimonio-author">Sergi F.</div><div class="testimonio-meta">Google · hace 2 meses</div><span class="testimonio-treatment">Rehabilitación Postoperatoria</span></div>
+    <div class="testimonio-card reveal reveal-delay-4"><div class="testimonio-stars">★★★★★</div><p class="testimonio-text">"Con la hernia lumbar L4-L5 el dolor bajó un 80% en el bono de 10 sesiones. Totalmente recomendable."</p><div class="testimonio-author">Rosa M.</div><div class="testimonio-meta">Google · hace 3 semanas</div><span class="testimonio-treatment">Musculoesquelética</span></div>
   </div>
 </section>
 
-<!-- RESERVAS -->
 <section id="reservas">
-  <div class="section-head" style="text-align:center;max-width:540px;margin:0 auto 48px">
-    <div class="section-label" style="justify-content:center">Sin listas de espera</div>
+  <div class="section-head reveal" style="text-align:center;max-width:540px;margin:0 auto 48px">
+    <div class="section-label">Sin listas de espera</div>
     <h2 class="section-title">Reserva tu sesión</h2>
-    <p class="section-sub" style="margin:0 auto">Elige tu tratamiento, fecha y hora. Confirmamos por WhatsApp en menos de 1 hora.</p>
+    <p class="section-sub" style="margin:0 auto">Primera consulta gratuita. Sin compromiso.</p>
   </div>
-  <div class="res-wrap">
-    <div class="res-header">
-      <div class="res-header-icon">🗓</div>
-      <div class="res-header-text">
-        <div class="res-header-title">Reserva online</div>
-        <div class="res-header-sub">Primera consulta gratuita · Sin compromiso</div>
-      </div>
-    </div>
+  <div class="res-wrap reveal">
+    <div class="res-header"><div class="res-header-icon">🗓</div><div class="res-header-text"><div class="res-header-title">Reserva online</div><div class="res-header-sub">Primera consulta gratuita · Sin compromiso</div></div></div>
     <div class="res-body">
-      <div id="res-success" style="display:none" class="res-success">
-        <div class="res-success-icon">✅</div>
-        <div class="res-success-title">¡Reserva enviada!</div>
-        <div class="res-success-text">Te hemos abierto WhatsApp con los datos de tu cita. Nuestro equipo confirma disponibilidad en menos de 1 hora.</div>
-        <button class="res-retry" onclick="resetRes()">Hacer otra reserva</button>
-      </div>
+      <div id="res-success" style="display:none" class="res-success"><div class="res-success-icon">✅</div><div class="res-success-title">¡Reserva enviada!</div><div class="res-success-text">Nuestro equipo confirma disponibilidad en menos de 1 hora.</div><button class="res-retry" onclick="resetRes()">Hacer otra reserva</button></div>
       <div id="res-wizard">
         <div class="res-steps">
           <button class="res-step active" id="rstab1" onclick="resTo(1)">1 · Tratamiento</button>
           <button class="res-step" id="rstab2" onclick="resTo(2)">2 · Fecha y hora</button>
           <button class="res-step" id="rstab3" onclick="resTo(3)">3 · Confirmar</button>
         </div>
-        <!-- Paso 1: tratamiento -->
         <div class="res-panel active" id="rspanel1">
-          <div class="res-field">
-            <span class="res-label">¿Qué tratamiento necesitas?</span>
+          <div class="res-field"><span class="res-label">¿Qué tratamiento necesitas?</span>
             <select class="res-select" id="res-svc" onchange="resSvcChange()">
               <option value="">Selecciona un tratamiento...</option>
               <option value="0">Fisioterapia Musculoesquelética — 45-60 min — 45€</option>
@@ -481,297 +346,94 @@ footer{background:#0d1a0d;border-top:1px solid rgba(255,255,255,0.06);padding:52
           </div>
           <button class="res-btn" id="resbtn1" disabled onclick="resTo(2)">SIGUIENTE: ELEGIR FECHA Y HORA</button>
         </div>
-        <!-- Paso 2: fecha + slots -->
         <div class="res-panel" id="rspanel2">
           <div id="res-svc-chip"></div>
           <div class="res-grid-2">
-            <div>
-              <span class="res-label">Fecha</span>
-              <input type="date" class="res-input" id="res-date" onchange="resDateChange()"/>
-            </div>
-            <div>
-              <span class="res-label">Fisioterapeuta (opcional)</span>
+            <div><span class="res-label">Fecha</span><input type="date" class="res-input" id="res-date" onchange="resDateChange()"></div>
+            <div><span class="res-label">Fisioterapeuta (opcional)</span>
               <select class="res-select" id="res-physio">
                 <option value="">Sin preferencia</option>
-                <option value="Laura Martínez">Laura Martínez</option>
-                <option value="Jordi Roca">Jordi Roca</option>
-                <option value="Clara Soler">Clara Soler</option>
-                <option value="Andreu Gómez">Andreu Gómez</option>
+                <option>Laura Martínez</option><option>Jordi Roca</option><option>Clara Soler</option><option>Andreu Gómez</option>
               </select>
             </div>
           </div>
           <span class="res-label">Horarios disponibles</span>
-          <div id="res-slots-grid" class="res-slots-grid"><p style="font-size:13px;color:var(--text-muted);padding:12px 0">Selecciona una fecha para ver los horarios disponibles.</p></div>
-          <br/>
+          <div id="res-slots-grid" class="res-slots-grid"><p style="font-size:13px;color:var(--text-muted);padding:12px 0">Selecciona una fecha para ver horarios.</p></div><br>
           <button class="res-btn" id="resbtn2" disabled onclick="resTo(3)">SIGUIENTE: CONFIRMAR DATOS</button>
-          <button class="res-back" onclick="resTo(1)">&#8592; Cambiar tratamiento</button>
+          <button class="res-back" onclick="resTo(1)">← Cambiar tratamiento</button>
         </div>
-        <!-- Paso 3: datos personales -->
         <div class="res-panel" id="rspanel3">
           <div class="res-grid-2">
-            <div>
-              <span class="res-label">Tu nombre *</span>
-              <input type="text" class="res-input" id="res-name" placeholder="Ej: Ana García" oninput="resCheckData()"/>
-            </div>
-            <div>
-              <span class="res-label">Teléfono *</span>
-              <input type="tel" class="res-input" id="res-phone" placeholder="+34 600 000 000" oninput="resCheckData()"/>
-            </div>
+            <div><span class="res-label">Tu nombre *</span><input type="text" class="res-input" id="res-name" placeholder="Ej: Ana García" oninput="resCheckData()"></div>
+            <div><span class="res-label">Teléfono *</span><input type="tel" class="res-input" id="res-phone" placeholder="+34 600 000 000" oninput="resCheckData()"></div>
           </div>
-          <div class="res-field">
-            <span class="res-label">Motivo / síntomas (opcional)</span>
-            <input type="text" class="res-input" id="res-notes" placeholder="Ej: dolor lumbar desde hace 3 semanas"/>
-          </div>
-          <div class="res-field">
-            <span class="res-label">Resumen de tu cita</span>
-            <div id="res-summary" style="border:1px solid var(--border);padding:14px 18px;background:var(--bg);border-radius:4px"></div>
-          </div>
+          <div class="res-field"><span class="res-label">Motivo / síntomas (opcional)</span><input type="text" class="res-input" id="res-notes" placeholder="Ej: dolor lumbar desde hace 3 semanas"></div>
+          <div class="res-field"><span class="res-label">Resumen de tu cita</span><div id="res-summary" style="border:1px solid var(--border);padding:14px 18px;background:var(--bg);border-radius:4px"></div></div>
           <button class="res-wa-btn" id="resbtn3" disabled onclick="resWA()">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
             CONFIRMAR CITA POR WHATSAPP
           </button>
-          <button class="res-back" onclick="resTo(2)">&#8592; Cambiar fecha u hora</button>
+          <button class="res-back" onclick="resTo(2)">← Cambiar fecha u hora</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- UBICACIÓN -->
 <section id="ubicacion" style="padding:0">
   <div class="loc-grid">
-    <div class="loc-map">
-      <div class="loc-map-pin">📍</div>
-      <div class="loc-map-addr">Carrer de Provença 248<br/>08008 Barcelona</div>
-    </div>
-    <div class="loc-info">
-      <div class="loc-block">
-        <div class="loc-block-label">Cómo llegar</div>
-        <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px">Carrer de Provença 248, 08008 Barcelona (Eixample). Metro: Diagonal (L3, L5) a 3 min a pie. Parking en Av. Diagonal.</p>
-        <a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1px solid var(--accent)">Ver en Google Maps →</a>
+    <div class="loc-map"><div class="loc-map-pin">📍</div><div class="loc-map-addr">Carrer de Provença 248<br>08008 Barcelona</div></div>
+    <div class="loc-info reveal">
+      <div><div class="loc-block-label">Cómo llegar</div><p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px">Carrer de Provença 248, Barcelona (Eixample). Metro: Diagonal (L3, L5) a 3 min.</p><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;border-bottom:1px solid var(--accent)">Ver en Google Maps →</a></div>
+      <div><div class="loc-block-label">Horario</div>
+        <div class="sched-row"><span class="sched-day">Lunes – Viernes</span><span>08:00 – 21:00</span></div>
+        <div class="sched-row"><span class="sched-day">Sábado</span><span>09:00 – 14:00</span></div>
+        <div class="sched-row"><span class="sched-day">Domingo</span><span class="closed">Cerrado</span></div>
       </div>
-      <div class="loc-block">
-        <div class="loc-block-label">Horario de la clínica</div>
-        <div class="sched-row"><span class="sched-day">Lunes – Viernes</span><span class="sched-time">08:00 – 21:00</span></div>
-        <div class="sched-row"><span class="sched-day">Sábado</span><span class="sched-time">09:00 – 14:00</span></div>
-        <div class="sched-row"><span class="sched-day">Domingo</span><span class="sched-time closed">Cerrado</span></div>
-      </div>
-      <div class="loc-block">
-        <div class="loc-block-label">Contacto</div>
-        <p style="font-size:20px;font-weight:700;margin-bottom:6px"><a href="tel:+34931234567" style="color:var(--text);text-decoration:none">+34 931 234 567</a></p>
-        <p style="font-size:13px;color:var(--text-muted)">info@fisioactiva.es</p>
-      </div>
+      <div><div class="loc-block-label">Contacto</div><p style="font-size:20px;font-weight:700;margin-bottom:6px"><a href="tel:+34931234567" style="color:var(--text)">+34 931 234 567</a></p><p style="font-size:13px;color:var(--text-muted)">info@fisioactiva.es</p></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <div class="footer-brand">
-        <div class="footer-brand-mark"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-        FisioActiva
-      </div>
-      <div class="footer-desc">Clínica de fisioterapia en Barcelona. Fisioterapeutas colegiados especializados en recuperación de lesiones, deporte y bienestar.</div>
-    </div>
-    <div>
-      <div class="footer-col-title">Tratamientos</div>
-      <ul class="footer-links">
-        <li><a href="#tratamientos">Musculoesquelética</a></li>
-        <li><a href="#tratamientos">Deportiva</a></li>
-        <li><a href="#tratamientos">Suelo Pélvico</a></li>
-        <li><a href="#tratamientos">Neurológica</a></li>
-        <li><a href="#bonos">Bonos sesiones</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Clínica</div>
-      <ul class="footer-links">
-        <li><a href="#equipo">Nuestro equipo</a></li>
-        <li><a href="#testimonios">Testimonios</a></li>
-        <li><a href="#reservas">Reservar cita</a></li>
-        <li><a href="#ubicacion">Cómo llegar</a></li>
-        <li><a href="#">Política de privacidad</a></li>
-      </ul>
-    </div>
+    <div><div class="footer-brand"><div class="footer-brand-mark"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>FisioActiva</div><div class="footer-desc">Clínica de fisioterapia en Barcelona. Fisioterapeutas colegiados especializados en recuperación de lesiones.</div></div>
+    <div><div class="footer-col-title">Tratamientos</div><ul class="footer-links"><li><a href="#tratamientos">Musculoesquelética</a></li><li><a href="#tratamientos">Deportiva</a></li><li><a href="#tratamientos">Suelo Pélvico</a></li><li><a href="#bonos">Bonos sesiones</a></li></ul></div>
+    <div><div class="footer-col-title">Clínica</div><ul class="footer-links"><li><a href="#equipo">Equipo</a></li><li><a href="#reservas">Reservar cita</a></li><li><a href="#ubicacion">Cómo llegar</a></li><li><a href="/" style="color:rgba(255,255,255,.5)">Web por Sitalia</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 FisioActiva · Todos los derechos reservados · Col. nº 08-XXXX</div>
-    <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Aviso legal</a></div>
-  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 FisioActiva · Col. nº 08-XXXX</div><div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a></div></div>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/34931234567?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20vuestros%20tratamientos." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp FisioActiva">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
+<a href="https://wa.me/34931234567" class="wa-float" target="_blank" style="font-size:0">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
 </a>
 
+<script src="shared.js"></script>
 <script>
-// --- SERVICIOS DATA ---
-var SVCS = [
-  { n: 'Fisioterapia Musculoesquelética', dur: '45-60 min', price: '45€' },
-  { n: 'Fisioterapia Deportiva', dur: '60 min', price: '55€' },
-  { n: 'Electroterapia y Ultrasonidos', dur: '30 min', price: '35€' },
-  { n: 'Fisioterapia de Suelo Pélvico', dur: '50 min', price: '55€' },
-  { n: 'Fisioterapia Neurológica', dur: '60 min', price: '60€' },
-  { n: 'Masaje Terapéutico', dur: '45 min', price: '40€' },
-  { n: 'Primera Consulta', dur: '20 min', price: 'Gratuita' }
-];
+var SVCS=[{n:'Fisioterapia Musculoesquelética',dur:'45-60 min',price:'45€'},{n:'Fisioterapia Deportiva',dur:'60 min',price:'55€'},{n:'Electroterapia y Ultrasonidos',dur:'30 min',price:'35€'},{n:'Fisioterapia de Suelo Pélvico',dur:'50 min',price:'55€'},{n:'Fisioterapia Neurológica',dur:'60 min',price:'60€'},{n:'Masaje Terapéutico',dur:'45 min',price:'40€'},{n:'Primera Consulta',dur:'20 min',price:'Gratuita'}];
+var SLOTS_M=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30'],BOOKED_M=[1,3,5];
+var SLOTS_T=['16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30'],BOOKED_T=[0,2,6,8];
+var res={svc:null,date:null,slot:null,physio:'',name:'',phone:'',notes:''};
 
-// Slots mañana y tarde, lunes-sábado
-var SLOTS_MAÑANA = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30'];
-var SLOTS_TARDE  = ['16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30'];
-var BOOKED_M = [1, 3, 5];
-var BOOKED_T = [0, 2, 6, 8];
-
-var res = { svc: null, date: null, slot: null, physio: '', name: '', phone: '', notes: '' };
-
-function resSvcChange() {
-  var v = document.getElementById('res-svc').value;
-  res.svc = v !== '' ? parseInt(v) : null;
-  document.getElementById('resbtn1').disabled = res.svc === null;
+function resSvcChange(){var v=document.getElementById('res-svc').value;res.svc=v!==''?parseInt(v):null;document.getElementById('resbtn1').disabled=res.svc===null;}
+function resDateChange(){var d=document.getElementById('res-date').value;res.date=d||null;res.slot=null;document.getElementById('resbtn2').disabled=true;renderResSlots();}
+function resTo(n){
+  if(n>1&&res.svc===null)return;
+  if(n>2&&!res.slot)return;
+  document.querySelectorAll('.res-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.res-step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('rspanel'+n).classList.add('active');
+  document.getElementById('rstab'+n).classList.add('active');
+  if(n===2){var svc=SVCS[res.svc];document.getElementById('res-svc-chip').innerHTML='<div class="res-svc-selected"><span class="res-svc-selected-name">'+svc.n+'</span><span class="res-svc-selected-meta">'+svc.dur+' · '+svc.price+'</span></div>';renderResSlots();}
+  if(n===3)renderResSummary();
 }
-
-function resDateChange() {
-  var d = document.getElementById('res-date').value;
-  res.date = d || null;
-  res.slot = null;
-  document.getElementById('resbtn2').disabled = true;
-  renderResSlots();
-}
-
-function resTo(n) {
-  if (n > 1 && res.svc === null) return;
-  if (n > 2 && !res.slot) return;
-  document.querySelectorAll('.res-panel').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.res-step').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('rspanel' + n).classList.add('active');
-  document.getElementById('rstab' + n).classList.add('active');
-  if (n === 2) {
-    // Mostrar chip del servicio seleccionado
-    var svc = SVCS[res.svc];
-    document.getElementById('res-svc-chip').innerHTML =
-      '<div class="res-svc-selected"><span class="res-svc-selected-name">' + svc.n + '</span><span class="res-svc-selected-meta">' + svc.dur + ' · ' + svc.price + '</span></div>';
-    renderResSlots();
-  }
-  if (n === 3) renderResSummary();
-}
-
-function renderResSlots() {
-  var grid = document.getElementById('res-slots-grid');
-  if (!res.date) {
-    grid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:12px 0">Selecciona una fecha para ver los horarios disponibles.</p>';
-    return;
-  }
-  var d = new Date(res.date + 'T12:00:00');
-  var dow = d.getDay(); // 0=dom, 6=sab
-  grid.innerHTML = '';
-  if (dow === 0) {
-    grid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:12px 0">La clínica está cerrada los domingos. Elige otro día.</p>';
-    return;
-  }
-  // Sábado solo mañana
-  addSlotGroup(grid, 'Mañana', SLOTS_MAÑANA, BOOKED_M);
-  if (dow !== 6) addSlotGroup(grid, 'Tarde', SLOTS_TARDE, BOOKED_T);
-}
-
-function addSlotGroup(grid, label, slots, booked) {
-  var title = document.createElement('div');
-  title.style.cssText = 'grid-column:1/-1;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);padding:14px 0 4px;border-top:1px solid var(--border-light);margin-top:6px';
-  title.textContent = label;
-  grid.appendChild(title);
-  slots.forEach(function(slot, i) {
-    var btn = document.createElement('button');
-    var isBooked = booked.indexOf(i) > -1;
-    btn.className = 'res-slot' + (isBooked ? ' booked' : '');
-    btn.textContent = slot;
-    btn.disabled = isBooked;
-    if (!isBooked) {
-      btn.onclick = function() {
-        document.querySelectorAll('.res-slot').forEach(function(s){ s.classList.remove('selected'); });
-        btn.classList.add('selected');
-        res.slot = slot;
-        document.getElementById('resbtn2').disabled = false;
-      };
-    }
-    grid.appendChild(btn);
-  });
-}
-
-function renderResSummary() {
-  var d = new Date(res.date + 'T12:00:00');
-  var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  var dateStr = days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear();
-  var svc = SVCS[res.svc];
-  var physio = document.getElementById('res-physio').value || 'Sin preferencia';
-  res.physio = physio;
-  var html = '';
-  html += '<div class="res-confirm-row"><span class="res-confirm-label">Tratamiento</span><span class="res-confirm-value">' + svc.n + '</span></div>';
-  html += '<div class="res-confirm-row"><span class="res-confirm-label">Duración · Precio</span><span class="res-confirm-value">' + svc.dur + ' · ' + svc.price + '</span></div>';
-  html += '<div class="res-confirm-row"><span class="res-confirm-label">Fecha y hora</span><span class="res-confirm-value">' + dateStr + ' a las ' + res.slot + 'h</span></div>';
-  html += '<div class="res-confirm-row"><span class="res-confirm-label">Fisioterapeuta</span><span class="res-confirm-value">' + physio + '</span></div>';
-  document.getElementById('res-summary').innerHTML = html;
-  resCheckData();
-}
-
-function resCheckData() {
-  var name = (document.getElementById('res-name') || {value:''}).value.trim();
-  var phone = (document.getElementById('res-phone') || {value:''}).value.trim();
-  res.name = name;
-  res.phone = phone;
-  res.notes = (document.getElementById('res-notes') || {value:''}).value.trim();
-  var btn = document.getElementById('resbtn3');
-  if (btn) btn.disabled = !(name && phone);
-}
-
-function resWA() {
-  var svc = SVCS[res.svc];
-  var d = new Date(res.date + 'T12:00:00');
-  var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  var dateStr = days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()];
-  var lines = [
-    'Hola, quiero reservar una cita en FisioActiva:',
-    '',
-    'Tratamiento: ' + svc.n,
-    'Fecha: ' + dateStr,
-    'Hora: ' + res.slot + 'h',
-    'Fisioterapeuta: ' + (res.physio || 'Sin preferencia'),
-    'Nombre: ' + res.name,
-    'Teléfono: ' + res.phone
-  ];
-  if (res.notes) lines.push('Motivo/síntomas: ' + res.notes);
-  lines.push('', 'Podéis confirmar disponibilidad? Gracias!');
-  var msg = lines.join('\n');
-  window.open('https://wa.me/34931234567?text=' + encodeURIComponent(msg), '_blank');
-  document.getElementById('res-wizard').style.display = 'none';
-  document.getElementById('res-success').style.display = 'block';
-}
-
-function resetRes() {
-  res = { svc: null, date: null, slot: null, physio: '', name: '', phone: '', notes: '' };
-  document.getElementById('res-svc').value = '';
-  document.getElementById('res-date').value = '';
-  document.getElementById('resbtn1').disabled = true;
-  document.getElementById('resbtn2').disabled = true;
-  document.getElementById('res-wizard').style.display = 'block';
-  document.getElementById('res-success').style.display = 'none';
-  resTo(1);
-}
-
-// Set min date
-(function(){
-  var input = document.getElementById('res-date');
-  if (input) {
-    var t = new Date();
-    var y = t.getFullYear();
-    var m = String(t.getMonth()+1).padStart(2,'0');
-    var d = String(t.getDate()).padStart(2,'0');
-    input.min = y+'-'+m+'-'+d;
-  }
-})();
+function renderResSlots(){var grid=document.getElementById('res-slots-grid');if(!res.date){grid.innerHTML='<p style="font-size:13px;color:var(--text-muted);padding:12px 0">Selecciona una fecha.</p>';return;}var d=new Date(res.date+'T12:00:00'),dow=d.getDay();grid.innerHTML='';if(dow===0){grid.innerHTML='<p style="font-size:13px;color:var(--text-muted);padding:12px 0">Cerrado domingos.</p>';return;}addSlotGroup(grid,'Mañana',SLOTS_M,BOOKED_M);if(dow!==6)addSlotGroup(grid,'Tarde',SLOTS_T,BOOKED_T);}
+function addSlotGroup(grid,label,slots,booked){var t=document.createElement('div');t.style.cssText='grid-column:1/-1;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:14px 0 4px;border-top:1px solid var(--border-light);margin-top:6px';t.textContent=label;grid.appendChild(t);slots.forEach(function(slot,i){var btn=document.createElement('button'),isBooked=booked.indexOf(i)>-1;btn.className='res-slot'+(isBooked?' booked':'');btn.textContent=slot;btn.disabled=isBooked;if(!isBooked)btn.onclick=function(){document.querySelectorAll('.res-slot').forEach(function(s){s.classList.remove('selected');});btn.classList.add('selected');res.slot=slot;document.getElementById('resbtn2').disabled=false;};grid.appendChild(btn);});}
+function renderResSummary(){var d=new Date(res.date+'T12:00:00'),DAYS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MONS=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],dateStr=DAYS[d.getDay()]+', '+d.getDate()+' de '+MONS[d.getMonth()]+' de '+d.getFullYear(),svc=SVCS[res.svc];res.physio=document.getElementById('res-physio').value||'Sin preferencia';document.getElementById('res-summary').innerHTML='<div class="res-confirm-row"><span class="res-confirm-label">Tratamiento</span><span>'+svc.n+'</span></div><div class="res-confirm-row"><span class="res-confirm-label">Fecha y hora</span><span>'+dateStr+' a las '+res.slot+'h</span></div><div class="res-confirm-row"><span class="res-confirm-label">Fisioterapeuta</span><span>'+res.physio+'</span></div><div class="res-confirm-row"><span class="res-confirm-label">Precio</span><span>'+svc.price+'</span></div>';resCheckData();}
+function resCheckData(){res.name=(document.getElementById('res-name')||{value:''}).value.trim();res.phone=(document.getElementById('res-phone')||{value:''}).value.trim();res.notes=(document.getElementById('res-notes')||{value:''}).value.trim();var btn=document.getElementById('resbtn3');if(btn)btn.disabled=!(res.name&&res.phone);}
+function resWA(){var svc=SVCS[res.svc],d=new Date(res.date+'T12:00:00'),DAYS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MONS=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],dateStr=DAYS[d.getDay()]+', '+d.getDate()+' de '+MONS[d.getMonth()],lines=['Hola, quiero reservar una cita en FisioActiva:','','Tratamiento: '+svc.n,'Fecha: '+dateStr,'Hora: '+res.slot+'h','Fisioterapeuta: '+(res.physio||'Sin preferencia'),'Nombre: '+res.name,'Teléfono: '+res.phone];if(res.notes)lines.push('Síntomas: '+res.notes);lines.push('','¿Podéis confirmar? Gracias!');window.open('https://wa.me/34931234567?text='+encodeURIComponent(lines.join('\n')),'_blank');document.getElementById('res-wizard').style.display='none';document.getElementById('res-success').style.display='block';}
+function resetRes(){res={svc:null,date:null,slot:null,physio:'',name:'',phone:'',notes:''};document.getElementById('res-svc').value='';document.getElementById('res-date').value='';['resbtn1','resbtn2'].forEach(function(id){document.getElementById(id).disabled=true;});document.getElementById('res-wizard').style.display='block';document.getElementById('res-success').style.display='none';resTo(1);}
+(function(){var i=document.getElementById('res-date');if(i){var t=new Date();i.min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');}})();
 </script>
 </body>
 </html>
