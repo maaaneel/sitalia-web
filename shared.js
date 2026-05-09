@@ -229,29 +229,36 @@
     slotGrid.innerHTML = '';
 
     slots.forEach(function (t, i) {
-      var te       = t + svc.d;
-      var isBooked = bookedSet.has(i);
-      var isSel    = (bk.slot === i);
+      var te    = t + svc.d;
+      var isSel = (bk.slot === i);
+
+      // Slots ocupados no se muestran — desaparecen del grid
+      if (bookedSet.has(i)) return;
 
       var el = document.createElement('div');
-      el.className = 'bk-slot' + (isBooked ? ' booked' : isSel ? ' sel' : '');
-
-      if (isBooked) {
-        el.innerHTML = '<div style="color:var(--border);font-size:18px;line-height:1">&#8212;</div>';
-      } else {
-        el.innerHTML =
-          '<div class="bk-slot-time">' + fmt(t) + '</div>' +
-          '<div class="bk-slot-end">' + fmt(te) + '</div>';
-        el.addEventListener('click', function () {
-          document.querySelectorAll('.bk-slot').forEach(function (x) { x.classList.remove('sel'); });
-          el.classList.add('sel');
-          bk.slot = i; bk.st = fmt(t); bk.se = fmt(te);
-          var btn3 = document.getElementById('bkbtn3');
-          if (btn3) btn3.disabled = false;
-        });
-      }
+      el.className = 'bk-slot' + (isSel ? ' sel' : '');
+      el.innerHTML =
+        '<div class="bk-slot-time">' + fmt(t) + '</div>' +
+        '<div class="bk-slot-end">' + fmt(te) + '</div>';
+      el.addEventListener('click', function () {
+        document.querySelectorAll('.bk-slot').forEach(function (x) { x.classList.remove('sel'); });
+        el.classList.add('sel');
+        bk.slot = i; bk.st = fmt(t); bk.se = fmt(te);
+        var btn3 = document.getElementById('bkbtn3');
+        if (btn3) btn3.disabled = false;
+      });
       slotGrid.appendChild(el);
     });
+
+    // Si no queda ningún slot libre, mostrar mensaje y bloquear el botón
+    if (slotGrid.children.length === 0) {
+      slotGrid.innerHTML =
+        '<p style="grid-column:1/-1;text-align:center;padding:24px 0;' +
+        'color:var(--text3);font-size:14px;line-height:1.6">' +
+        'No hay disponibilidad para este día.<br>Por favor elige otra fecha.</p>';
+      var btn3e = document.getElementById('bkbtn3');
+      if (btn3e) btn3e.disabled = true;
+    }
   }
 
   function renderConfirm() {

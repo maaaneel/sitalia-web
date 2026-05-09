@@ -163,6 +163,7 @@
             </div>
             <div class="bk-cal-grid" id="bk-dow"></div>
             <div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div>
+            <div id="bk-full-msg" style="display:none;text-align:center;padding:10px 0 2px;font-size:13px;color:#ef4444">Este día está completo — elige otra fecha</div>
             <button class="bk-btn" id="bkbtn2" disabled onclick="Sitalia.bkTo(3)">SIGUIENTE: VER HORARIOS</button>
             <button class="bk-back" onclick="Sitalia.bkTo(1)">&#8592; Volver</button>
           </div>
@@ -481,6 +482,24 @@ Sitalia.bkTo = async function(n) {
         var bookedIdx = (data.reservados || []).map(function(h) {
           return slots.indexOf(h);
         }).filter(function(idx) { return idx >= 0; });
+
+        // Ocultar mensaje de día lleno (por si venía de otro día)
+        var fullMsg = document.getElementById('bk-full-msg');
+        if (fullMsg) fullMsg.style.display = 'none';
+
+        // Comprobar si el día está completamente lleno
+        if (slots.length > 0 && bookedIdx.length >= slots.length) {
+          // Marcar el día seleccionado como lleno en el calendario (tachado + gris)
+          document.querySelectorAll('.bk-cal-day.sel').forEach(function(el) {
+            el.classList.remove('sel');
+            el.style.cssText = 'color:var(--text3);text-decoration:line-through;opacity:.45;cursor:default';
+          });
+          // Mostrar aviso y dejar botón desactivado
+          if (fullMsg) fullMsg.style.display = 'block';
+          var btn2 = document.getElementById('bkbtn2');
+          if (btn2) btn2.disabled = true;
+          return; // no avanzar al paso 3
+        }
 
         Sitalia.setBkConfig({ bookedIdx: bookedIdx });
       } catch(e) { console.warn('Error cargando disponibilidad:', e); }
