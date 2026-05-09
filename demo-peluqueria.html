@@ -439,20 +439,17 @@ Sitalia.initBooking({
   bookedIdx: []
 });
 
-// Verificar si hay trabajadores configurados; si no hay ninguno, bloquear todo el calendario
-(async function checkWorkers() {
+// Cargar horario real desde los trabajadores configurados en el admin
+// Si no hay trabajadores o un día no tiene cobertura, ese día aparece cerrado en el calendario
+(async function loadSchedule() {
   try {
-    var hoy = new Date();
-    var fechaHoy = hoy.getFullYear() + '-' + String(hoy.getMonth()+1).padStart(2,'0') + '-' + String(hoy.getDate()).padStart(2,'0');
-    var r = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fechaHoy);
+    var r = await fetch('/api/schedule?negocio=' + BK_NEGOCIO);
     var d = await r.json();
-    if (d.hasWorkers === false) {
-      // Sin trabajadores: mostrar todos los días como cerrados
-      var schedVacio = [null, null, null, null, null, null, null];
-      BK_SCHED = schedVacio;
-      Sitalia.setBkConfig({ sched: schedVacio });
+    if (d.sched) {
+      BK_SCHED = d.sched;
+      Sitalia.setBkConfig({ sched: d.sched });
     }
-  } catch(e) { /* si la API falla, mantener horario por defecto */ }
+  } catch(e) { /* si la API falla, mantener horario por defecto del HTML */ }
 })();
 
 // Interceptar bkTo para cargar disponibilidad real al ir al paso 3
