@@ -95,7 +95,7 @@ section{padding:80px 0}
 .nicho-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:18px}
 .nicho-features{list-style:none;margin-bottom:20px;display:flex;flex-direction:column;gap:5px}
 .nicho-features li{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px}
-.nicho-features li::before{content:"✓";color:var(--nicho-color,var(--accent));font-weight:700;font-size:11px;flex-shrink:0}
+.nicho-features li::before{content:"";color:var(--nicho-color,var(--accent));font-weight:700;font-size:11px;flex-shrink:0}
 .nicho-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--nicho-color,var(--accent));letter-spacing:.04em;transition:gap .2s}
 .nicho-link:hover{gap:10px}
 
@@ -123,9 +123,9 @@ section{padding:80px 0}
 .dif-cell{padding:16px 20px;font-size:13px}
 .dif-header{background:rgba(255,255,255,.05);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .dif-bad{color:#6b7280;display:flex;align-items:center;gap:8px}
-.dif-bad::before{content:"✗";color:#ef4444;font-weight:700;flex-shrink:0}
+.dif-bad::before{content:"";color:#ef4444;font-weight:700;flex-shrink:0}
 .dif-good{color:#e5e7eb;display:flex;align-items:center;gap:8px}
-.dif-good::before{content:"✓";color:#34d399;font-weight:700;flex-shrink:0}
+.dif-good::before{content:"";color:#34d399;font-weight:700;flex-shrink:0}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .stat-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px 24px}
 .stat-box-num{font-size:36px;font-weight:800;color:#fff;letter-spacing:-0.02em}
@@ -143,7 +143,7 @@ section{padding:80px 0}
 .precio-period{font-size:13px;color:var(--text3);margin-bottom:28px}
 .precio-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .precio-features li{font-size:14px;color:var(--text2);display:flex;align-items:flex-start;gap:10px}
-.precio-features li::before{content:"✓";color:var(--accent);font-weight:700;margin-top:2px;flex-shrink:0}
+.precio-features li::before{content:"";color:var(--accent);font-weight:700;margin-top:2px;flex-shrink:0}
 .precio-cta{width:100%;padding:13px;border-radius:8px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;border:none}
 .precio-cta.outline{background:none;border:1.5px solid var(--border);color:var(--text)}
 .precio-cta.outline:hover{border-color:var(--text)}
@@ -299,7 +299,7 @@ footer{background:var(--text);padding:48px 0 32px}
     <div class="nichos-grid">
 
       <div class="nicho-card reveal" style="--nicho-color:#c9a84c">
-        <span class="nicho-icon">✂️</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></span>
         <div class="nicho-name">Peluquerías y barberías</div>
         <p class="nicho-desc">Reservas online, catálogo de servicios, perfiles del equipo y galería de trabajos.</p>
         <ul class="nicho-features">
@@ -312,7 +312,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal reveal-delay-1" style="--nicho-color:#8b2635">
-        <span class="nicho-icon">🍽️</span>
+        <span class="nicho-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></span>
         <div class="nicho-name">Restaurantes y bares</div>
         <p class="nicho-desc">Carta digital, reservas de mesa, menú del día y galería de platos.</p>
         <ul class="nicho-features">
@@ -325,7 +325,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal reveal-delay-2" style="--nicho-color:#2d6a4f">
-        <span class="nicho-icon">🏥</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
         <div class="nicho-name">Clínicas de fisioterapia</div>
         <p class="nicho-desc">Reserva de tratamientos, presentación del equipo, bonos y testimonios.</p>
         <ul class="nicho-features">
@@ -338,7 +338,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal" style="--nicho-color:#4f6f8f">
-        <span class="nicho-icon">🧠</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 017 4.5v0A2.5 2.5 0 014.5 7H4a2 2 0 000 4h.5A2.5 2.5 0 017 13.5v0A2.5 2.5 0 019.5 16v0a2.5 2.5 0 002.5-2.5v-7A2.5 2.5 0 009.5 2z"/><path d="M14.5 2A2.5 2.5 0 0117 4.5v0A2.5 2.5 0 0119.5 7H20a2 2 0 010 4h-.5A2.5 2.5 0 0117 13.5v0A2.5 2.5 0 0114.5 16v0a2.5 2.5 0 01-2.5-2.5v-7A2.5 2.5 0 0114.5 2z"/></svg></span>
         <div class="nicho-name">Psicólogos</div>
         <p class="nicho-desc">Imagen de confianza, especialidades, modalidades presencial y online.</p>
         <ul class="nicho-features">
@@ -351,7 +351,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal reveal-delay-1" style="--nicho-color:#1b3a5c">
-        <span class="nicho-icon">⚖️</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 6l9 3 9-3"/><path d="M3 12l9 3 9-3"/></svg></span>
         <div class="nicho-name">Bufetes de abogados</div>
         <p class="nicho-desc">Imagen corporativa, áreas legales, captación de leads y consulta gratuita.</p>
         <ul class="nicho-features">
@@ -364,7 +364,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal reveal-delay-2" style="--nicho-color:#d4621a">
-        <span class="nicho-icon">🎓</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
         <div class="nicho-name">Academias y extraescolares</div>
         <p class="nicho-desc">Actividades, horarios, inscripciones online y equipo docente.</p>
         <ul class="nicho-features">
@@ -377,7 +377,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card reveal" style="--nicho-color:#1a5fa8">
-        <span class="nicho-icon">🎾</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12a15.3 15.3 0 014-10 15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10z"/><path d="M12 2a15.3 15.3 0 0110 4 15.3 15.3 0 01-10 4 15.3 15.3 0 01-10-4 15.3 15.3 0 0110-4z"/></svg></span>
         <div class="nicho-name">Clubs de pádel</div>
         <p class="nicho-desc">Reserva de pistas en tiempo real, cuotas de socio, clases y torneos.</p>
         <ul class="nicho-features">
@@ -390,7 +390,7 @@ footer{background:var(--text);padding:48px 0 32px}
       </div>
 
       <div class="nicho-card" style="--nicho-color:#7c3aed;border-style:dashed;background:var(--bg2)">
-        <span class="nicho-icon">💡</span>
+        <span class="nicho-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8 6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/></svg></span>
         <div class="nicho-name">¿Tu sector no está aquí?</div>
         <p class="nicho-desc">Trabajamos con cualquier tipo de negocio local. Cuéntanos tu caso y te preparamos una propuesta.</p>
         <ul class="nicho-features">
@@ -541,21 +541,21 @@ footer{background:var(--text);padding:48px 0 32px}
         <h2 class="section-title">Hablemos de tu negocio</h2>
         <p class="section-sub" style="margin-bottom:40px">Cuéntanos en qué sector estás y qué necesitas. Te preparamos una demo gratuita sin compromiso.</p>
         <div class="contacto-info-item">
-          <div class="contacto-info-icon">✉️</div>
+          <div class="contacto-info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
           <div>
             <div class="contacto-info-label">Email</div>
             <div class="contacto-info-val">hola@sitalia.es</div>
           </div>
         </div>
         <div class="contacto-info-item">
-          <div class="contacto-info-icon">💬</div>
+          <div class="contacto-info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
           <div>
             <div class="contacto-info-label">WhatsApp</div>
             <div class="contacto-info-val">Respuesta en menos de 24h</div>
           </div>
         </div>
         <div class="contacto-info-item">
-          <div class="contacto-info-icon">⚡</div>
+          <div class="contacto-info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <div>
             <div class="contacto-info-label">Demo gratuita</div>
             <div class="contacto-info-val">Lista en 48 horas</div>
@@ -607,7 +607,7 @@ footer{background:var(--text);padding:48px 0 32px}
             <span id="cf-btn-txt">Enviar mensaje</span>
           </button>
           <div id="cf-ok" style="display:none;text-align:center;padding:16px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;color:#166534;font-size:14px;font-weight:500">
-            ✓ ¡Mensaje enviado! Te responderemos en menos de 24h.
+             ¡Mensaje enviado! Te responderemos en menos de 24h.
           </div>
         </div>
       </div>
@@ -669,50 +669,4 @@ footer{background:var(--text);padding:48px 0 32px}
 <script>
 // ─── Enviar formulario: guarda en Supabase + envía email de notificación
 // Las credenciales NO están aquí — viven en variables de entorno de Vercel.
-async function enviarContacto() {
-  var nombre   = document.getElementById('cf-nombre').value.trim();
-  var apellido = document.getElementById('cf-apellido').value.trim();
-  var email    = document.getElementById('cf-email').value.trim();
-  var tel      = document.getElementById('cf-tel').value.trim();
-  var tipo     = document.getElementById('cf-tipo').value;
-  var msg      = document.getElementById('cf-msg').value.trim();
-
-  if (!nombre || !apellido || !email || !tipo) {
-    alert('Por favor rellena nombre, apellido, email y tipo de negocio.');
-    return;
-  }
-
-  var btn    = document.getElementById('cf-btn');
-  var btnTxt = document.getElementById('cf-btn-txt');
-  var okBox  = document.getElementById('cf-ok');
-  btn.disabled = true;
-  btnTxt.textContent = 'Enviando…';
-
-  try {
-    var resp = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: nombre, apellido: apellido, email: email, telefono: tel, tipo_negocio: tipo, mensaje: msg })
-    });
-    if (resp.ok) {
-      btn.style.display = 'none';
-      okBox.style.display = 'block';
-      document.getElementById('cf-nombre').value   = '';
-      document.getElementById('cf-apellido').value = '';
-      document.getElementById('cf-email').value    = '';
-      document.getElementById('cf-tel').value      = '';
-      document.getElementById('cf-tipo').value     = '';
-      document.getElementById('cf-msg').value      = '';
-    } else {
-      throw new Error('server error');
-    }
-  } catch (e) {
-    alert('Ha habido un error al enviar. Por favor escríbenos directamente a hola@sitalia.es');
-    btn.disabled = false;
-    btnTxt.textContent = 'Enviar mensaje';
-  }
-}
-</script>
-
-</body>
-</html>
+as

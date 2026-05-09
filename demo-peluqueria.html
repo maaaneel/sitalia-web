@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barberia El Rincon</title>
+<title>Barberia El Rincon — Barcelona</title>
 <link rel="stylesheet" href="shared.css">
 <style>
 :root {
@@ -21,21 +21,61 @@
   --bg-rgb: 249,247,244;
 }
 
-/* Galería especial peluquería: 1ª imagen ocupa 2 filas */
-.gallery-grid {
-  grid-template-columns: repeat(3, 1fr) !important;
-  grid-auto-rows: 160px;
-  gap: 1px;
+/* ── Layout reservas + info ─────────────────────────────────────── */
+.reservas-wrap {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  align-items: start;
 }
+@media(max-width:960px) {
+  .reservas-wrap { grid-template-columns: 1fr; }
+}
+.reservas-info { position: sticky; top: 100px; }
+.info-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+.info-pill-icon {
+  width: 36px; height: 36px;
+  background: var(--bg);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.info-pill-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; text-transform: uppercase; letter-spacing: .06em; }
+.info-pill-val   { font-size: 14px; font-weight: 500; color: var(--text); }
+
+/* ── Booking overrides ──────────────────────────────────────────── */
+.bk-panel.active { padding: 24px; border: 1px solid var(--border); border-top: none; }
+.booking-steps   { border-bottom: 1px solid var(--border); background: none; border-left: none; border-right: none; border-top: none; }
+.bk-step         { border-right: 1px solid var(--border); }
+.bk-step.active  { background: none; color: var(--text); font-weight: 500; box-shadow: inset 0 -2px 0 var(--text); }
+.booking-wrap    { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; }
+
+/* ── Galería ────────────────────────────────────────────────────── */
+.gallery-grid { grid-template-columns: repeat(3,1fr) !important; grid-auto-rows: 160px; gap: 1px; }
 @media(max-width:720px) { .gallery-grid { grid-template-columns: 1fr 1fr !important; } }
 .gallery-item { display: flex; align-items: center; justify-content: center; background: var(--bg); }
 .gallery-item:first-child { grid-row: span 2; }
 
-/* Booking panel padding */
-.bk-panel.active { padding: 28px; border: 1px solid var(--border); border-top: none; }
-.booking-steps { border-bottom: 1px solid var(--border); background: none; border-left: none; border-right: none; border-top: none; }
-.bk-step { border-right: 1px solid var(--border); }
-.bk-step.active { background: none; color: var(--text); font-weight: 500; box-shadow: inset 0 -2px 0 var(--text); }
+/* ── Confirm inputs ─────────────────────────────────────────────── */
+.bk-form-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 14px; font-family: inherit; outline: none;
+  background: #fff; color: var(--text);
+  transition: border-color .2s;
+}
+.bk-form-input:focus { border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -43,9 +83,7 @@
 <div class="demo-banner">DEMO — Barberia El Rincon · Sitalia.es</div>
 
 <a href="/" class="back-to-sitalia">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-    <path d="M8 1L3 6l5 5"/>
-  </svg>
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
@@ -53,13 +91,13 @@
   <div class="nav-inner">
     <div class="nav-logo">Barberia <span>El Rincon</span></div>
     <div class="nav-links" id="navlinks">
+      <a href="#reservas">Reservar</a>
       <a href="#servicios">Servicios</a>
       <a href="#equipo">Equipo</a>
       <a href="#galeria">Galería</a>
-      <a href="#resenas">Reseñas</a>
-      <a href="#contacto">Reservar</a>
+      <a href="#horarios">Ubicación</a>
     </div>
-    <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">RESERVAR</button>
+    <button class="nav-cta" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">RESERVAR CITA</button>
     <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
 </nav>
@@ -77,8 +115,8 @@
         <h1 class="hero-title">El arte del<br><em>buen corte</em></h1>
         <p class="hero-sub">Barberia tradicional en el corazón de Barcelona. Cortes clásicos, afeitados con navaja y el mejor ambiente del barrio.</p>
         <div class="hero-btns">
-          <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">RESERVAR CITA</button>
-          <button class="btn-ghost" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Ver servicios →</button>
+          <button class="btn-primary" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">RESERVAR CITA</button>
+          <button class="btn-ghost" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Ver servicios</button>
         </div>
       </div>
       <div class="hero-stats reveal reveal-delay-2">
@@ -86,6 +124,121 @@
         <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Clientes al mes</div></div>
         <div class="stat-item"><div class="stat-num">5.0</div><div class="stat-label">Valoración media</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- RESERVAS — sección principal, justo después del hero -->
+<section id="reservas">
+  <div class="container">
+    <div class="reservas-wrap">
+
+      <!-- Widget de reservas -->
+      <div>
+        <div class="reveal" style="margin-bottom:28px">
+          <div class="label" style="margin-bottom:10px">Reservas online</div>
+          <h2 class="section-title">Reserva tu cita</h2>
+          <p style="font-size:15px;color:var(--text2);margin-top:10px">Elige servicio, día y hora. Confirmación por email al instante.</p>
+        </div>
+        <div class="booking-wrap reveal">
+          <div class="booking-steps">
+            <button class="bk-step active" data-s="1" onclick="Sitalia.bkTo(1)">1 Servicio</button>
+            <button class="bk-step" data-s="2" onclick="Sitalia.bkTo(2)">2 Fecha</button>
+            <button class="bk-step" data-s="3" onclick="Sitalia.bkTo(3)">3 Hora</button>
+            <button class="bk-step" data-s="4" onclick="Sitalia.bkTo(4)">4 Confirmar</button>
+          </div>
+          <div class="bk-panel active" id="bp1">
+            <div class="bk-panel-label">Selecciona el servicio</div>
+            <div id="bk-svcs"></div>
+            <button class="bk-btn" id="bkbtn1" disabled onclick="Sitalia.bkTo(2)">SIGUIENTE: ELEGIR FECHA</button>
+          </div>
+          <div class="bk-panel" id="bp2">
+            <div class="bk-panel-label">Selecciona el día</div>
+            <div class="bk-cal-hdr">
+              <button class="bk-cal-nav" onclick="Sitalia.bkMon(-1)">&#8249;</button>
+              <span class="bk-cal-month" id="bk-month"></span>
+              <button class="bk-cal-nav" onclick="Sitalia.bkMon(1)">&#8250;</button>
+            </div>
+            <div class="bk-cal-grid" id="bk-dow"></div>
+            <div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div>
+            <button class="bk-btn" id="bkbtn2" disabled onclick="Sitalia.bkTo(3)">SIGUIENTE: VER HORARIOS</button>
+            <button class="bk-back" onclick="Sitalia.bkTo(1)">&#8592; Volver</button>
+          </div>
+          <div class="bk-panel" id="bp3">
+            <div class="bk-panel-label">Selecciona la hora</div>
+            <div class="bk-slots-info" id="bk-sinfo"></div>
+            <div class="bk-slots-grid" id="bk-slots"></div>
+            <button class="bk-btn" id="bkbtn3" disabled onclick="Sitalia.bkTo(4)">SIGUIENTE: CONFIRMAR</button>
+            <button class="bk-back" onclick="Sitalia.bkTo(2)">&#8592; Volver</button>
+          </div>
+          <div class="bk-panel" id="bp4">
+            <div class="bk-panel-label">Confirma tu reserva</div>
+            <div id="bk-confirm"></div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
+              <input id="bk-nombre" class="bk-form-input" type="text" placeholder="Nombre completo *">
+              <input id="bk-tel"    class="bk-form-input" type="tel" placeholder="Teléfono (opcional)">
+              <input id="bk-email"  class="bk-form-input" type="email" placeholder="Email para confirmación *">
+            </div>
+            <button id="bk-submit" class="bk-btn" style="margin-top:16px" onclick="confirmarReserva()">
+              <span id="bk-submit-txt">CONFIRMAR RESERVA</span>
+            </button>
+            <div id="bk-ok" style="display:none;margin-top:16px;padding:16px;background:#f6f3ee;border-radius:8px;border:1px solid var(--border);color:var(--text);font-size:14px;font-weight:500;text-align:center">
+              Reserva confirmada. Te hemos enviado un email con los detalles.
+            </div>
+            <button class="bk-back" onclick="Sitalia.bkTo(3)">&#8592; Cambiar hora</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info lateral -->
+      <div class="reservas-info reveal reveal-delay-2">
+        <div class="label" style="margin-bottom:16px">Información</div>
+        <div class="info-pill">
+          <div class="info-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <div class="info-pill-label">Horario</div>
+            <div class="info-pill-val">Mar–Vie 9:00–20:00</div>
+            <div class="info-pill-val">Sáb 9:00–18:00</div>
+          </div>
+        </div>
+        <div class="info-pill">
+          <div class="info-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="info-pill-label">Dirección</div>
+            <div class="info-pill-val">Calle Mayor 23</div>
+            <div class="info-pill-val" style="color:var(--text3);font-size:13px">Eixample, Barcelona</div>
+          </div>
+        </div>
+        <div class="info-pill">
+          <div class="info-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.1 2.18 2 2 0 012.07.1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="info-pill-label">Teléfono</div>
+            <div class="info-pill-val">+34 612 345 678</div>
+          </div>
+        </div>
+        <div class="info-pill">
+          <div class="info-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="info-pill-label">Email</div>
+            <div class="info-pill-val">hola@barberiaelrincon.es</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:18px;background:#fff;border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--text2);line-height:1.6">
+          <strong style="color:var(--text);display:block;margin-bottom:6px">Cancelaciones</strong>
+          Puedes cancelar o modificar tu cita con al menos 2 horas de antelación respondiendo al email de confirmación.
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -102,12 +255,12 @@
       </div>
     </div>
     <div class="svc-grid">
-      <div class="svc-card reveal reveal-delay-1"><div class="svc-tag empty">-</div><div class="svc-name">Corte de pelo</div><div class="svc-desc">Corte clásico o moderno adaptado a tu estilo personal.</div><div class="svc-footer"><span class="svc-price">18€</span><span class="svc-time">30 MIN</span></div></div>
-      <div class="svc-card reveal reveal-delay-2"><div class="svc-tag empty">-</div><div class="svc-name">Arreglo de barba</div><div class="svc-desc">Perfilado y acabado perfecto de tu barba.</div><div class="svc-footer"><span class="svc-price">12€</span><span class="svc-time">20 MIN</span></div></div>
-      <div class="svc-card featured reveal reveal-delay-3"><div class="svc-tag">Más popular</div><div class="svc-name">Corte + Barba</div><div class="svc-desc">El pack completo para salir impecable.</div><div class="svc-footer"><span class="svc-price">25€</span><span class="svc-time">45 MIN</span></div></div>
-      <div class="svc-card reveal reveal-delay-1"><div class="svc-tag empty">-</div><div class="svc-name">Afeitado con navaja</div><div class="svc-desc">Afeitado tradicional con toalla caliente.</div><div class="svc-footer"><span class="svc-price">20€</span><span class="svc-time">40 MIN</span></div></div>
-      <div class="svc-card reveal reveal-delay-2"><div class="svc-tag empty">-</div><div class="svc-name">Corte niño</div><div class="svc-desc">Corte para los más pequeños con paciencia.</div><div class="svc-footer"><span class="svc-price">12€</span><span class="svc-time">25 MIN</span></div></div>
-      <div class="svc-card reveal reveal-delay-3"><div class="svc-tag empty">-</div><div class="svc-name">Tratamiento capilar</div><div class="svc-desc">Hidratación y cuidado profundo del cabello.</div><div class="svc-footer"><span class="svc-price">15€</span><span class="svc-time">20 MIN</span></div></div>
+      <div class="svc-card reveal reveal-delay-1"><div class="svc-tag empty"></div><div class="svc-name">Corte de pelo</div><div class="svc-desc">Corte clásico o moderno adaptado a tu estilo personal.</div><div class="svc-footer"><span class="svc-price">18€</span><span class="svc-time">30 min</span></div></div>
+      <div class="svc-card reveal reveal-delay-2"><div class="svc-tag empty"></div><div class="svc-name">Arreglo de barba</div><div class="svc-desc">Perfilado y acabado perfecto de tu barba.</div><div class="svc-footer"><span class="svc-price">12€</span><span class="svc-time">20 min</span></div></div>
+      <div class="svc-card featured reveal reveal-delay-3"><div class="svc-tag">Más popular</div><div class="svc-name">Corte + Barba</div><div class="svc-desc">El pack completo para salir impecable.</div><div class="svc-footer"><span class="svc-price">25€</span><span class="svc-time">45 min</span></div></div>
+      <div class="svc-card reveal reveal-delay-1"><div class="svc-tag empty"></div><div class="svc-name">Afeitado con navaja</div><div class="svc-desc">Afeitado tradicional con toalla caliente.</div><div class="svc-footer"><span class="svc-price">20€</span><span class="svc-time">40 min</span></div></div>
+      <div class="svc-card reveal reveal-delay-2"><div class="svc-tag empty"></div><div class="svc-name">Corte niño</div><div class="svc-desc">Corte para los más pequeños con paciencia.</div><div class="svc-footer"><span class="svc-price">12€</span><span class="svc-time">25 min</span></div></div>
+      <div class="svc-card reveal reveal-delay-3"><div class="svc-tag empty"></div><div class="svc-name">Tratamiento capilar</div><div class="svc-desc">Hidratación y cuidado profundo del cabello.</div><div class="svc-footer"><span class="svc-price">15€</span><span class="svc-time">20 min</span></div></div>
     </div>
   </div>
 </section>
@@ -127,22 +280,44 @@
         <div class="team-name">Pepe Martinez</div>
         <div class="team-role">Fundador &amp; Master Barber</div>
         <p class="team-bio">25 años de experiencia. Especialista en cortes clásicos y afeitado con navaja.</p>
-        <a href="#contacto" class="team-link">Reservar cita →</a>
+        <a href="#reservas" class="team-link">Reservar cita</a>
       </div>
       <div class="team-card reveal reveal-delay-2">
         <div class="team-photo"><img src="images/pel-team-marta.jpg" alt="Carlos Ruiz"></div>
         <div class="team-name">Carlos Ruiz</div>
         <div class="team-role">Barber</div>
         <p class="team-bio">Especializado en estilos modernos y degradados. Campeón provincial 2022.</p>
-        <a href="#contacto" class="team-link">Reservar cita →</a>
+        <a href="#reservas" class="team-link">Reservar cita</a>
       </div>
       <div class="team-card reveal reveal-delay-3">
         <div class="team-photo"><img src="images/pel-team-alex.jpg" alt="Marc Sanchez"></div>
         <div class="team-name">Marc Sanchez</div>
         <div class="team-role">Barber &amp; Colorista</div>
         <p class="team-bio">Experto en coloración y técnicas de decoloración para hombre.</p>
-        <a href="#contacto" class="team-link">Reservar cita →</a>
+        <a href="#reservas" class="team-link">Reservar cita</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- RESEÑAS -->
+<section id="resenas">
+  <div class="container">
+    <div class="label reveal" style="margin-bottom:10px">Opiniones</div>
+    <div class="rating-row reveal">
+      <span class="rating-big">5.0</span>
+      <div>
+        <div class="rating-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <div class="rating-count">188 reseñas en Google</div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal reveal-delay-1"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"El mejor sitio de Barcelona para un corte clásico. Pepe lleva cortándome el pelo 10 años y siempre sale perfecto."</p><div class="review-author">Javier M.</div><div class="review-date">hace 2 semanas</div></div>
+      <div class="review-card reveal reveal-delay-2"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"Ambiente increíble, buen precio y trabajo de calidad. El afeitado con navaja es una experiencia que hay que probar."</p><div class="review-author">Alejandro R.</div><div class="review-date">hace 1 mes</div></div>
+      <div class="review-card reveal reveal-delay-3"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"Carlos es un artista con el degradado. Llevo meses viniendo y siempre quedo más que satisfecho."</p><div class="review-author">David L.</div><div class="review-date">hace 3 semanas</div></div>
+      <div class="review-card reveal reveal-delay-4"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="review-text">"Profesionalidad al 100%. Reservé online y fue todo rapidísimo. Muy recomendable."</p><div class="review-author">Tomás G.</div><div class="review-date">hace 1 semana</div></div>
     </div>
   </div>
 </section>
@@ -157,7 +332,7 @@
         <div class="label" style="margin-bottom:10px">Galería</div>
         <h2 class="section-title">Nuestro trabajo</h2>
       </div>
-      <a href="https://instagram.com" style="font-size:12px;color:var(--text3)">Ver Instagram →</a>
+      <a href="https://instagram.com" style="font-size:12px;color:var(--text3)">Ver Instagram</a>
     </div>
     <div class="gallery-grid reveal">
       <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-1.jpg" alt="Corte clásico"></div><div class="gallery-overlay"><span class="gallery-label">Corte clásico</span></div></div>
@@ -165,28 +340,6 @@
       <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-3.jpg" alt="Barba"></div><div class="gallery-overlay"><span class="gallery-label">Barba</span></div></div>
       <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-4.jpg" alt="Afeitado"></div><div class="gallery-overlay"><span class="gallery-label">Afeitado</span></div></div>
       <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-5.jpg" alt="Moderno"></div><div class="gallery-overlay"><span class="gallery-label">Moderno</span></div></div>
-    </div>
-  </div>
-</section>
-
-<hr>
-
-<!-- RESEÑAS -->
-<section id="resenas">
-  <div class="container">
-    <div class="label reveal" style="margin-bottom:10px">Opiniones</div>
-    <div class="rating-row reveal">
-      <span class="rating-big">5.0</span>
-      <div>
-        <div class="rating-stars">★ ★ ★ ★ ★</div>
-        <div class="rating-count">188 reseñas en Google</div>
-      </div>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card reveal reveal-delay-1"><div class="review-stars">★★★★★</div><p class="review-text">"El mejor sitio de Barcelona para un corte clásico. Pepe lleva cortándome el pelo 10 años y siempre sale perfecto."</p><div class="review-author">Javier M.</div><div class="review-date">hace 2 semanas</div></div>
-      <div class="review-card reveal reveal-delay-2"><div class="review-stars">★★★★★</div><p class="review-text">"Ambiente increíble, buen precio y trabajo de calidad. El afeitado con navaja es una experiencia que hay que probar."</p><div class="review-author">Alejandro R.</div><div class="review-date">hace 1 mes</div></div>
-      <div class="review-card reveal reveal-delay-3"><div class="review-stars">★★★★★</div><p class="review-text">"Carlos es un artista con el degradado. Llevo meses viniendo y siempre quedo más que satisfecho."</p><div class="review-author">David L.</div><div class="review-date">hace 3 semanas</div></div>
-      <div class="review-card reveal reveal-delay-4"><div class="review-stars">★★★★★</div><p class="review-text">"Profesionalidad al 100%. Reservé por WhatsApp y fue todo rapidísimo. Muy recomendable."</p><div class="review-author">Tomás G.</div><div class="review-date">hace 1 semana</div></div>
     </div>
   </div>
 </section>
@@ -202,9 +355,9 @@
     </div>
     <div class="location-grid">
       <div class="location-map reveal reveal-delay-1">
-        <div style="font-size:32px;color:var(--text3)">📍</div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div style="text-align:center">
-          <div style="font-size:15px;font-weight:400;margin-bottom:6px">Barberia El Rincon</div>
+          <div style="font-size:15px;font-weight:500;margin-bottom:4px">Barberia El Rincon</div>
           <div style="font-size:13px;color:var(--text2)">Calle Mayor 23, Eixample, Barcelona</div>
         </div>
         <a href="https://maps.google.com" target="_blank" class="btn-primary">VER EN MAPS</a>
@@ -213,8 +366,8 @@
         <div class="info-block">
           <div class="info-label">Horarios</div>
           <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-closed">Cerrado</span></div>
-          <div class="schedule-row"><span class="schedule-day">Martes – Viernes</span><span>10:00 – 20:00</span></div>
-          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>10:00 – 18:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Martes – Viernes</span><span>9:00 – 20:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>9:00 – 18:00</span></div>
           <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
         </div>
         <div class="info-block">
@@ -222,67 +375,6 @@
           <div class="info-val" style="margin-bottom:6px">+34 612 345 678</div>
           <div class="info-val">hola@barberiaelrincon.es</div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr>
-
-<!-- RESERVAS -->
-<section id="contacto">
-  <div class="container">
-    <div class="reveal" style="max-width:600px">
-      <div class="label" style="margin-bottom:10px">Reservas</div>
-      <h2 class="section-title">Reserva tu cita</h2>
-      <p style="font-size:14px;color:var(--text2);margin-top:10px">Elige servicio, día y hora. Te confirmamos por WhatsApp en menos de 1 hora.</p>
-    </div>
-    <div class="booking-wrap reveal">
-      <div class="booking-steps">
-        <button class="bk-step active" data-s="1" onclick="Sitalia.bkTo(1)">1 Servicio</button>
-        <button class="bk-step" data-s="2" onclick="Sitalia.bkTo(2)">2 Fecha</button>
-        <button class="bk-step" data-s="3" onclick="Sitalia.bkTo(3)">3 Hora</button>
-        <button class="bk-step" data-s="4" onclick="Sitalia.bkTo(4)">4 Confirmar</button>
-      </div>
-      <div class="bk-panel active" id="bp1">
-        <div class="bk-panel-label">Selecciona el servicio</div>
-        <div id="bk-svcs"></div>
-        <button class="bk-btn" id="bkbtn1" disabled onclick="Sitalia.bkTo(2)">SIGUIENTE: ELEGIR FECHA</button>
-      </div>
-      <div class="bk-panel" id="bp2">
-        <div class="bk-panel-label">Selecciona el día</div>
-        <div class="bk-cal-hdr">
-          <button class="bk-cal-nav" onclick="Sitalia.bkMon(-1)">‹</button>
-          <span class="bk-cal-month" id="bk-month"></span>
-          <button class="bk-cal-nav" onclick="Sitalia.bkMon(1)">›</button>
-        </div>
-        <div class="bk-cal-grid" id="bk-dow"></div>
-        <div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div>
-        <button class="bk-btn" id="bkbtn2" disabled onclick="Sitalia.bkTo(3)">SIGUIENTE: VER HORARIOS</button>
-        <button class="bk-back" onclick="Sitalia.bkTo(1)">← Volver</button>
-      </div>
-      <div class="bk-panel" id="bp3">
-        <div class="bk-panel-label">Selecciona la hora</div>
-        <div class="bk-slots-info" id="bk-sinfo"></div>
-        <div class="bk-slots-grid" id="bk-slots"></div>
-        <button class="bk-btn" id="bkbtn3" disabled onclick="Sitalia.bkTo(4)">SIGUIENTE: CONFIRMAR</button>
-        <button class="bk-back" onclick="Sitalia.bkTo(2)">← Volver</button>
-      </div>
-      <div class="bk-panel" id="bp4">
-        <div class="bk-panel-label">Confirma tu reserva</div>
-        <div id="bk-confirm"></div>
-        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
-          <input id="bk-nombre" class="form-input" type="text" placeholder="Tu nombre *" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
-          <input id="bk-tel" class="form-input" type="tel" placeholder="Teléfono (opcional)" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
-          <input id="bk-email" class="form-input" type="email" placeholder="Email para confirmación *" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
-        </div>
-        <button id="bk-submit" class="bk-btn" style="margin-top:16px" onclick="confirmarReserva()">
-          <span id="bk-submit-txt">CONFIRMAR RESERVA</span>
-        </button>
-        <div id="bk-ok" style="display:none;margin-top:16px;padding:16px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;color:#166534;font-size:14px;font-weight:500;text-align:center">
-          ✓ ¡Reserva confirmada! Te hemos enviado un email con los detalles.
-        </div>
-        <button class="bk-back" onclick="Sitalia.bkTo(3)">← Cambiar hora</button>
       </div>
     </div>
   </div>
@@ -299,11 +391,11 @@
       <div>
         <div class="footer-col-title">Navegación</div>
         <div class="footer-links">
+          <a href="#reservas">Reservar</a>
           <a href="#servicios">Servicios</a>
           <a href="#equipo">Equipo</a>
           <a href="#galeria">Galería</a>
-          <a href="#resenas">Reseñas</a>
-          <a href="#contacto">Reservar</a>
+          <a href="#horarios">Ubicación</a>
         </div>
       </div>
       <div>
@@ -322,7 +414,10 @@
   </div>
 </footer>
 
-<a href="#contacto" class="wa-float" title="WhatsApp">💬</a>
+<!-- Botón flotante de reserva (sin emoji) -->
+<a href="#reservas" class="wa-float" title="Reservar cita" style="font-size:11px;font-weight:700;letter-spacing:.04em;width:auto;padding:0 18px;border-radius:100px">
+  RESERVAR
+</a>
 
 <script src="shared.js"></script>
 <script>
@@ -341,49 +436,40 @@ Sitalia.initBooking({
   preselectSvc: 2,
   svcs:  BK_SVCS,
   sched: BK_SCHED,
-  bookedIdx: []  // se carga dinámicamente al seleccionar fecha
+  bookedIdx: []
 });
 
 // Interceptar bkTo para cargar disponibilidad real al ir al paso 3
 var _originalBkTo = Sitalia.bkTo;
 Sitalia.bkTo = async function(n) {
   if (n === 3) {
-    var bkDate = window._bkState && window._bkState.date;
-    // Intentar leer la fecha desde el widget
     try {
       var calSel = document.querySelector('.bk-cal-day.sel');
-      if (calSel) {
-        // La fecha la maneja shared.js internamente; la leemos del texto del día seleccionado
-        // y la construimos desde el mes visible
-        var monthEl = document.getElementById('bk-month');
-        if (monthEl && calSel.textContent) {
-          var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-          var partes = monthEl.textContent.split(' ');
-          var mes  = meses.indexOf(partes[0]);
-          var anio = parseInt(partes[1]);
-          var dia  = parseInt(calSel.textContent);
-          var fecha = anio + '-' + String(mes+1).padStart(2,'0') + '-' + String(dia).padStart(2,'0');
-          window._bkFecha = fecha;
-          var resp = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
-          var data = await resp.json();
-          // Convertir horas de inicio a índices de slot
-          var svcIdx = 2; // servicio seleccionado por defecto
-          var selectedSvc = document.querySelector('.bk-svc.selected');
-          if (selectedSvc) {
-            var allSvcs = document.querySelectorAll('.bk-svc');
-            allSvcs.forEach(function(el, i) { if (el === selectedSvc) svcIdx = i; });
-          }
-          var svc = BK_SVCS[svcIdx];
-          var dow = new Date(fecha + 'T12:00:00').getDay();
-          dow = dow === 0 ? 6 : dow - 1;
-          var range = BK_SCHED[dow];
-          if (range && svc) {
-            var slots = [];
-            for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
-            var bookedIdx = (data.reservados || []).map(function(h) { return slots.indexOf(h); }).filter(function(i) { return i >= 0; });
-            // Actualizar config de shared.js
-            window._bkBookedIdx = bookedIdx;
-          }
+      var monthEl = document.getElementById('bk-month');
+      if (calSel && monthEl) {
+        var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        var partes = monthEl.textContent.split(' ');
+        var mes  = meses.indexOf(partes[0]);
+        var anio = parseInt(partes[1]);
+        var dia  = parseInt(calSel.textContent);
+        var fecha = anio + '-' + String(mes+1).padStart(2,'0') + '-' + String(dia).padStart(2,'0');
+        window._bkFecha = fecha;
+        var resp = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
+        var data = await resp.json();
+        var svcIdx = 2;
+        document.querySelectorAll('.bk-svc').forEach(function(el, i) {
+          if (el.classList.contains('selected')) svcIdx = i;
+        });
+        var svc = BK_SVCS[svcIdx];
+        var dow = new Date(fecha + 'T12:00:00').getDay();
+        dow = dow === 0 ? 6 : dow - 1;
+        var range = BK_SCHED[dow];
+        if (range && svc) {
+          var slots = [];
+          for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
+          window._bkBookedIdx = (data.reservados || []).map(function(h) {
+            return slots.indexOf(h);
+          }).filter(function(i) { return i >= 0; });
         }
       }
     } catch(e) { console.warn('Error cargando disponibilidad:', e); }
@@ -391,28 +477,19 @@ Sitalia.bkTo = async function(n) {
   _originalBkTo(n);
 };
 
-// Guardar bookedIdx para que renderSlots lo use
-// Parchear renderSlots leyendo window._bkBookedIdx si existe
-var _origRenderSlots = window.Sitalia._renderSlots;
-
-// ── Confirmar reserva ───────────────────────────────────────────────────
 async function confirmarReserva() {
   var nombre = document.getElementById('bk-nombre').value.trim();
   var tel    = document.getElementById('bk-tel').value.trim();
   var email  = document.getElementById('bk-email').value.trim();
-
   if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
 
   var btn    = document.getElementById('bk-submit');
   var btnTxt = document.getElementById('bk-submit-txt');
   btn.disabled = true;
-  btnTxt.textContent = 'Enviando…';
+  btnTxt.textContent = 'Enviando...';
 
-  // Recoger datos del widget
   var selSvc  = document.querySelector('.bk-svc.selected');
   var selSlot = document.querySelector('.bk-slot.sel');
-  var monthEl = document.getElementById('bk-month');
-
   if (!selSvc || !selSlot || !window._bkFecha) {
     alert('Por favor selecciona servicio, fecha y hora primero.');
     btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
@@ -422,7 +499,6 @@ async function confirmarReserva() {
   var svcIdx = 0;
   document.querySelectorAll('.bk-svc').forEach(function(el, i) { if (el === selSvc) svcIdx = i; });
   var svc = BK_SVCS[svcIdx];
-
   var horaTexto = selSlot.querySelector('.bk-slot-time') ? selSlot.querySelector('.bk-slot-time').textContent : '';
   var partes = horaTexto.split(':');
   var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
@@ -433,16 +509,9 @@ async function confirmarReserva() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        negocio:     BK_NEGOCIO,
-        servicio:    svc.n,
-        duracion_min: svc.d,
-        precio:      svc.p,
-        fecha:       window._bkFecha,
-        hora_inicio: horaInicio,
-        hora_fin:    horaFin,
-        nombre:      nombre,
-        telefono:    tel,
-        email:       email
+        negocio: BK_NEGOCIO, servicio: svc.n, duracion_min: svc.d, precio: svc.p,
+        fecha: window._bkFecha, hora_inicio: horaInicio, hora_fin: horaFin,
+        nombre: nombre, telefono: tel, email: email
       })
     });
     var data = await resp.json();
