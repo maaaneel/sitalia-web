@@ -443,36 +443,27 @@ Sitalia.initBooking({
 var _originalBkTo = Sitalia.bkTo;
 Sitalia.bkTo = async function(n) {
   if (n === 3) {
-    try {
-      var calSel = document.querySelector('.bk-cal-day.sel');
-      var monthEl = document.getElementById('bk-month');
-      if (calSel && monthEl) {
-        var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        var partes = monthEl.textContent.split(' ');
-        var mes  = meses.indexOf(partes[0]);
-        var anio = parseInt(partes[1]);
-        var dia  = parseInt(calSel.textContent);
-        var fecha = anio + '-' + String(mes+1).padStart(2,'0') + '-' + String(dia).padStart(2,'0');
-        window._bkFecha = fecha;
-        var resp = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
-        var data = await resp.json();
-        var svcIdx = 2;
-        document.querySelectorAll('.bk-svc').forEach(function(el, i) {
-          if (el.classList.contains('selected')) svcIdx = i;
-        });
-        var svc = BK_SVCS[svcIdx];
-        var dow = new Date(fecha + 'T12:00:00').getDay();
-        dow = dow === 0 ? 6 : dow - 1;
+    var state = Sitalia.getBkState();
+    if (state.date && state.svc !== null) {
+      try {
+        var d     = state.date;
+        var fecha = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+        var resp  = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
+        var data  = await resp.json();
+        var svc   = BK_SVCS[state.svc];
+        var dow   = d.getDay() === 0 ? 6 : d.getDay() - 1;
         var range = BK_SCHED[dow];
+        var slots = [];
         if (range && svc) {
-          var slots = [];
           for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
-          window._bkBookedIdx = (data.reservados || []).map(function(h) {
-            return slots.indexOf(h);
-          }).filter(function(i) { return i >= 0; });
         }
-      }
-    } catch(e) { console.warn('Error cargando disponibilidad:', e); }
+        var bookedIdx = (data.reservados || []).map(function(h) {
+          return slots.indexOf(h);
+        }).filter(function(idx) { return idx >= 0; });
+        // Actualizar bkConfig.bookedIdx dentro del IIFE antes de renderizar slots
+        Sitalia.setBkConfig({ bookedIdx: bookedIdx });
+      } catch(e) { console.warn('Error cargando disponibilidad:', e); }
+    }
   }
   _originalBkTo(n);
 };
@@ -483,24 +474,22 @@ async function confirmarReserva() {
   var email  = document.getElementById('bk-email').value.trim();
   if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
 
+  // Leer estado directamente del widget (state interno del IIFE)
+  var state = Sitalia.getBkState();
+  if (state.svc === null || !state.date || state.st === '') {
+    alert('Por favor selecciona servicio, fecha y hora primero.');
+    return;
+  }
+
   var btn    = document.getElementById('bk-submit');
   var btnTxt = document.getElementById('bk-submit-txt');
   btn.disabled = true;
   btnTxt.textContent = 'Enviando...';
 
-  var selSvc  = document.querySelector('.bk-svc.selected');
-  var selSlot = document.querySelector('.bk-slot.sel');
-  if (!selSvc || !selSlot || !window._bkFecha) {
-    alert('Por favor selecciona servicio, fecha y hora primero.');
-    btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
-    return;
-  }
-
-  var svcIdx = 0;
-  document.querySelectorAll('.bk-svc').forEach(function(el, i) { if (el === selSvc) svcIdx = i; });
-  var svc = BK_SVCS[svcIdx];
-  var horaTexto = selSlot.querySelector('.bk-slot-time') ? selSlot.querySelector('.bk-slot-time').textContent : '';
-  var partes = horaTexto.split(':');
+  var svc        = BK_SVCS[state.svc];
+  var d          = state.date;
+  var fecha      = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  var partes     = state.st.split(':');
   var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
   var horaFin    = horaInicio + svc.d;
 
@@ -510,7 +499,7 @@ async function confirmarReserva() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         negocio: BK_NEGOCIO, servicio: svc.n, duracion_min: svc.d, precio: svc.p,
-        fecha: window._bkFecha, hora_inicio: horaInicio, hora_fin: horaFin,
+        fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin,
         nombre: nombre, telefono: tel, email: email
       })
     });

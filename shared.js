@@ -308,7 +308,10 @@
     initBooking: initBooking,
     bkTo:        bkTo,
     bkMon:       bkMon,
-    bkWA:        bkWA
+    bkWA:        bkWA,
+    // Acceso al estado interno del widget de reservas
+    getBkState:  function() { return bk; },
+    setBkConfig: function(cfg) { Object.assign(bkConfig, cfg); }
   };
 
 })();

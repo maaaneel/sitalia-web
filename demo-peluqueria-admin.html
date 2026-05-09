@@ -5,54 +5,119 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Panel Admin — Barberia El Rincón</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;color:#111;min-height:100vh}
-  /* Login */
-  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-  .login-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:40px;width:100%;max-width:360px;text-align:center}
-  .login-box h1{font-size:20px;margin-bottom:6px}
-  .login-box p{color:#6b7280;font-size:14px;margin-bottom:24px}
-  .login-input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;outline:none;margin-bottom:12px;font-family:inherit}
-  .login-input:focus{border-color:#111}
-  .btn{width:100%;padding:12px;background:#111;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer}
-  .btn:hover{background:#333}
-  .btn-danger{background:#ef4444;font-size:13px;padding:7px 14px;width:auto;border-radius:6px}
-  .btn-danger:hover{background:#dc2626}
-  .btn-sm{background:#f3f4f6;color:#111;font-size:13px;padding:7px 14px;width:auto;border-radius:6px}
-  .btn-sm:hover{background:#e5e7eb}
-  .error-msg{color:#ef4444;font-size:13px;margin-top:8px}
-  /* Header */
-  .header{background:#111;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
-  .header h1{font-size:17px;font-weight:600}
-  .header-right{display:flex;align-items:center;gap:12px}
-  .logout{color:rgba(255,255,255,.6);font-size:13px;cursor:pointer;background:none;border:none;padding:0}
-  .logout:hover{color:#fff}
-  /* Main */
-  .main{max-width:860px;margin:0 auto;padding:32px 24px}
-  .date-bar{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
-  .date-bar label{font-size:13px;color:#6b7280;font-weight:500}
-  .date-input{padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:inherit;outline:none;cursor:pointer}
-  .date-input:focus{border-color:#111}
-  .nav-day{background:#f3f4f6;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer}
-  .nav-day:hover{background:#e5e7eb}
-  /* Stats */
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
-  @media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px}
-  .stat-val{font-size:26px;font-weight:700;line-height:1}
-  .stat-lbl{font-size:12px;color:#6b7280;margin-top:4px}
-  /* Reservas */
-  .section-title{font-size:14px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-  .reserva-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .reserva-hora{font-size:20px;font-weight:700;min-width:60px}
-  .reserva-info{flex:1;min-width:160px}
-  .reserva-nombre{font-size:15px;font-weight:600;margin-bottom:2px}
-  .reserva-svc{font-size:13px;color:#6b7280}
-  .reserva-contacto{font-size:13px;color:#6b7280;margin-top:3px}
-  .reserva-acciones{display:flex;gap:8px}
-  .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:100px;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
-  .empty{text-align:center;padding:48px 24px;color:#9ca3af;font-size:15px;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
-  .loading{text-align:center;padding:40px;color:#9ca3af}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f4f5;color:#111;min-height:100vh}
+
+/* ── Login ───────────────────────────────────────────── */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f4f4f5}
+.login-box{background:#fff;border:1px solid #e4e4e7;border-radius:14px;padding:40px;width:100%;max-width:360px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.login-logo{width:48px;height:48px;background:#111;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px}
+.login-box h1{font-size:20px;font-weight:700;margin-bottom:4px}
+.login-box p{color:#71717a;font-size:14px;margin-bottom:28px}
+.login-input{width:100%;padding:11px 14px;border:1.5px solid #e4e4e7;border-radius:9px;font-size:15px;outline:none;margin-bottom:12px;font-family:inherit;transition:border-color .15s}
+.login-input:focus{border-color:#111}
+.btn-primary{width:100%;padding:12px;background:#111;color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-primary:hover{background:#333}
+.error-msg{color:#ef4444;font-size:13px;margin-top:10px}
+
+/* ── Header ──────────────────────────────────────────── */
+.header{background:#111;color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.header-brand{display:flex;align-items:center;gap:10px}
+.header-brand h1{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.header-right{display:flex;align-items:center;gap:16px}
+.logout-btn{color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;background:none;border:none;padding:0;transition:color .15s}
+.logout-btn:hover{color:#fff}
+
+/* ── View tabs ───────────────────────────────────────── */
+.view-bar{background:#fff;border-bottom:1px solid #e4e4e7;padding:0 24px;display:flex;align-items:center;gap:0}
+.view-tab{padding:13px 18px;font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.view-tab:hover{color:#111}
+.view-tab.active{color:#111;border-bottom-color:#111}
+.view-bar-right{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 0}
+
+/* ── Main ────────────────────────────────────────────── */
+.main{max-width:1000px;margin:0 auto;padding:28px 24px}
+
+/* ── Date nav ────────────────────────────────────────── */
+.date-nav{display:flex;align-items:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.date-display{font-size:17px;font-weight:700;min-width:200px}
+.nav-btn{background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;color:#374151;transition:background .15s;white-space:nowrap}
+.nav-btn:hover{background:#f4f4f5}
+.nav-btn.today{background:#111;color:#fff;border-color:#111}
+.nav-btn.today:hover{background:#333}
+.date-input-wrap{position:relative}
+.date-input{padding:8px 12px;border:1px solid #e4e4e7;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff;color:#111;cursor:pointer}
+.date-input:focus{border-color:#111}
+
+/* ── Stats ───────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:18px 20px}
+.stat-val{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.stat-lbl{font-size:12px;color:#71717a;margin-top:5px;font-weight:500}
+.stat-sub{font-size:11px;color:#a1a1aa;margin-top:2px}
+
+/* ── Section title ───────────────────────────────────── */
+.section-title{font-size:12px;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+
+/* ── DAY VIEW ────────────────────────────────────────── */
+.day-list{}
+.reserva-card{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:opacity .2s}
+.reserva-card.past{opacity:.5}
+.reserva-hora{font-size:20px;font-weight:800;min-width:56px;letter-spacing:-.02em;line-height:1}
+.reserva-hora-end{font-size:11px;color:#a1a1aa;margin-top:2px}
+.reserva-divider{width:3px;height:40px;background:#e4e4e7;border-radius:2px;flex-shrink:0}
+.reserva-divider.now{background:#22c55e}
+.reserva-info{flex:1;min-width:140px}
+.reserva-nombre{font-size:15px;font-weight:600;margin-bottom:3px}
+.reserva-svc{font-size:13px;color:#71717a;margin-bottom:2px}
+.reserva-contacto{font-size:12px;color:#a1a1aa;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.reserva-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge-ok{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:100px;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
+.btn-action{background:#f4f4f5;color:#111;border:1px solid #e4e4e7;font-size:12px;font-weight:500;padding:6px 12px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:background .15s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn-action:hover{background:#e4e4e7}
+.btn-cancel{background:#fff;color:#ef4444;border-color:#fecaca}
+.btn-cancel:hover{background:#fef2f2}
+.empty{text-align:center;padding:52px 24px;color:#a1a1aa;font-size:15px;background:#fff;border:1px solid #e4e4e7;border-radius:12px}
+.loading{text-align:center;padding:40px;color:#a1a1aa;font-size:14px}
+
+/* ── 3-DAY & WEEK VIEW ───────────────────────────────── */
+.multi-grid{display:grid;gap:16px}
+.multi-grid.view-3d{grid-template-columns:repeat(3,1fr)}
+.multi-grid.view-week{grid-template-columns:repeat(7,1fr)}
+@media(max-width:860px){.multi-grid.view-3d{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.multi-grid.view-3d,.multi-grid.view-week{grid-template-columns:1fr}}
+.day-col{background:#fff;border:1px solid #e4e4e7;border-radius:12px;overflow:hidden}
+.day-col-head{padding:12px 14px;border-bottom:1px solid #e4e4e7;font-size:12px;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
+.day-col-head.today-head{background:#111;color:#fff}
+.day-col-count{font-size:11px;font-weight:500;background:rgba(0,0,0,.08);padding:2px 7px;border-radius:100px}
+.today-head .day-col-count{background:rgba(255,255,255,.15);color:#fff}
+.day-col-body{padding:10px}
+.mini-card{padding:9px 10px;border-radius:8px;margin-bottom:7px;border-left:3px solid #22c55e;background:#f9fafb;cursor:default}
+.mini-card.past{border-color:#d1d5db;opacity:.6}
+.mini-hora{font-size:12px;font-weight:700;color:#111;margin-bottom:1px}
+.mini-nombre{font-size:12px;font-weight:500;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-svc{font-size:11px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-empty{text-align:center;padding:16px 8px;color:#d1d5db;font-size:12px}
+.day-col-loading{text-align:center;padding:20px 8px;color:#a1a1aa;font-size:12px}
+
+/* ── Block slot panel ────────────────────────────────── */
+.block-panel{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:20px;margin-bottom:24px}
+.block-panel h3{font-size:14px;font-weight:600;margin-bottom:14px;color:#374151}
+.block-form{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.block-form label{font-size:12px;color:#71717a;font-weight:500;display:block;margin-bottom:4px}
+.block-input{padding:9px 12px;border:1px solid #e4e4e7;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff}
+.block-input:focus{border-color:#111}
+.btn-block{background:#111;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-block:hover{background:#333}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media(max-width:600px){
+  .main{padding:20px 16px}
+  .stat-val{font-size:22px}
+  .reserva-hora{font-size:16px;min-width:44px}
+}
 </style>
 </head>
 <body>
@@ -60,11 +125,12 @@
 <!-- LOGIN -->
 <div id="login-screen" class="login-wrap">
   <div class="login-box">
-    <div style="font-size:32px;margin-bottom:12px">✂️</div>
+    <div class="login-logo">✂</div>
     <h1>Barberia El Rincón</h1>
     <p>Panel de administración</p>
-    <input id="pwd-input" class="login-input" type="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')login()">
-    <button class="btn" onclick="login()">Entrar</button>
+    <input id="pwd-input" class="login-input" type="password" placeholder="Contraseña"
+           onkeydown="if(event.key==='Enter')login()">
+    <button class="btn-primary" onclick="login()">Entrar</button>
     <p id="login-error" class="error-msg" style="display:none">Contraseña incorrecta</p>
   </div>
 </div>
@@ -72,22 +138,32 @@
 <!-- PANEL ADMIN -->
 <div id="admin-screen" style="display:none">
   <div class="header">
-    <h1>✂️ Barberia El Rincón — Reservas</h1>
+    <div class="header-brand">
+      <div style="width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">✂</div>
+      <h1>Barberia El Rincón</h1>
+    </div>
     <div class="header-right">
-      <button class="logout" onclick="logout()">Cerrar sesión</button>
+      <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <!-- View tabs -->
+  <div class="view-bar">
+    <button class="view-tab active" data-view="day" onclick="setView('day')">Diaria</button>
+    <button class="view-tab" data-view="3d"  onclick="setView('3d')">3 días</button>
+    <button class="view-tab" data-view="week" onclick="setView('week')">Semana</button>
+    <div class="view-bar-right">
+      <button class="nav-btn" onclick="navigate(-1)">← Anterior</button>
+      <button class="nav-btn today" onclick="irHoy()">Hoy</button>
+      <button class="nav-btn" onclick="navigate(1)">Siguiente →</button>
+      <input id="fecha-input" class="date-input" type="date" onchange="onDateChange()" title="Ir a fecha">
     </div>
   </div>
 
   <div class="main">
-    <!-- Selector de fecha -->
-    <div class="date-bar">
-      <button class="nav-day" onclick="cambiarDia(-1)">← Ayer</button>
-      <div>
-        <label>Fecha</label><br>
-        <input id="fecha-input" class="date-input" type="date" onchange="cargarReservas()">
-      </div>
-      <button class="nav-day" onclick="cambiarDia(1)">Mañana →</button>
-      <button class="btn-sm" onclick="irHoy()">Hoy</button>
+    <!-- Date display -->
+    <div class="date-nav">
+      <div class="date-display" id="date-display">—</div>
     </div>
 
     <!-- Stats -->
@@ -95,47 +171,79 @@
       <div class="stat">
         <div class="stat-val" id="stat-total">—</div>
         <div class="stat-lbl">Citas hoy</div>
+        <div class="stat-sub" id="stat-total-sub"></div>
       </div>
       <div class="stat">
         <div class="stat-val" id="stat-prox">—</div>
         <div class="stat-lbl">Próxima cita</div>
+        <div class="stat-sub" id="stat-prox-sub"></div>
       </div>
       <div class="stat">
         <div class="stat-val" id="stat-ingresos">—</div>
         <div class="stat-lbl">Ingresos estimados</div>
+        <div class="stat-sub" id="stat-ing-sub">hoy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="stat-semana">—</div>
+        <div class="stat-lbl">Esta semana</div>
+        <div class="stat-sub" id="stat-semana-sub">citas</div>
       </div>
     </div>
 
-    <!-- Lista de reservas -->
-    <div class="section-title">Citas del día</div>
-    <div id="reservas-list"><div class="loading">Cargando…</div></div>
+    <!-- Bloquear franja horaria -->
+    <div class="block-panel" id="block-panel">
+      <h3>Bloquear franja horaria</h3>
+      <div class="block-form">
+        <div>
+          <label>Fecha</label>
+          <input type="date" id="block-fecha" class="block-input">
+        </div>
+        <div>
+          <label>Hora inicio</label>
+          <input type="time" id="block-hora-ini" class="block-input" value="09:00">
+        </div>
+        <div>
+          <label>Hora fin</label>
+          <input type="time" id="block-hora-fin" class="block-input" value="10:00">
+        </div>
+        <div>
+          <label>Motivo (opcional)</label>
+          <input type="text" id="block-motivo" class="block-input" placeholder="Ej: Reunión, festivo…" style="width:180px">
+        </div>
+        <button class="btn-block" onclick="bloquearFranja()">Bloquear</button>
+      </div>
+    </div>
+
+    <!-- Content area -->
+    <div id="view-content"></div>
   </div>
 </div>
 
 <script>
 var NEGOCIO = 'peluqueria';
 var _token  = '';
+var _view   = 'day';
+var _baseDate = new Date(); // fecha de referencia para navegación
 
+// ── Auth ────────────────────────────────────────────────────────
 function login() {
   var pwd = document.getElementById('pwd-input').value;
   if (!pwd) return;
-  // Verificar contra el servidor
-  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + hoy() + '&token=' + encodeURIComponent(pwd))
+  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + isoDate(_baseDate) + '&token=' + encodeURIComponent(pwd))
     .then(function(r) {
       if (r.ok) {
         _token = pwd;
         sessionStorage.setItem('admin_token', pwd);
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('admin-screen').style.display = 'block';
-        document.getElementById('fecha-input').value = hoy();
-        cargarReservas();
+        document.getElementById('fecha-input').value = isoDate(_baseDate);
+        document.getElementById('block-fecha').value = isoDate(_baseDate);
+        render();
       } else {
         document.getElementById('login-error').style.display = 'block';
       }
     })
-    .catch(function() {
-      document.getElementById('login-error').style.display = 'block';
-    });
+    .catch(function() { document.getElementById('login-error').style.display = 'block'; });
 }
 
 function logout() {
@@ -146,97 +254,302 @@ function logout() {
   document.getElementById('pwd-input').value = '';
 }
 
-function hoy() {
-  return new Date().toISOString().split('T')[0];
-}
+(function autoLogin() {
+  var saved = sessionStorage.getItem('admin_token');
+  if (saved) { document.getElementById('pwd-input').value = saved; login(); }
+})();
 
-function irHoy() {
-  document.getElementById('fecha-input').value = hoy();
-  cargarReservas();
+// ── Helpers ─────────────────────────────────────────────────────
+function isoDate(d) {
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
 }
-
-function cambiarDia(delta) {
-  var d = new Date(document.getElementById('fecha-input').value + 'T12:00:00');
-  d.setDate(d.getDate() + delta);
-  document.getElementById('fecha-input').value = d.toISOString().split('T')[0];
-  cargarReservas();
-}
-
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
 function fmt(mins) {
-  var h = Math.floor(mins / 60);
-  var m = mins % 60;
+  var h = Math.floor(mins/60), m = mins%60;
   return h + ':' + (m < 10 ? '0' : '') + m;
 }
+function addDays(d, n) {
+  var r = new Date(d); r.setDate(r.getDate() + n); return r;
+}
+function startOfWeek(d) {
+  var r = new Date(d);
+  var dow = r.getDay(); // 0=Sun
+  var diff = dow === 0 ? -6 : 1 - dow;
+  r.setDate(r.getDate() + diff);
+  return r;
+}
+var DIAS   = ['Do','Lu','Ma','Mi','Ju','Vi','Sa'];
+var DIAS_L = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var MESES  = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var MESES_C = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
-function cargarReservas() {
-  var fecha = document.getElementById('fecha-input').value;
-  if (!fecha) return;
-  document.getElementById('reservas-list').innerHTML = '<div class="loading">Cargando…</div>';
-
-  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha + '&token=' + encodeURIComponent(_token))
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var reservas = data.reservas || [];
-      // Stats
-      document.getElementById('stat-total').textContent = reservas.length;
-      var ahora  = new Date();
-      var minNow = ahora.getHours() * 60 + ahora.getMinutes();
-      var prox   = reservas.find(function(r) { return r.hora_inicio >= minNow; });
-      document.getElementById('stat-prox').textContent = prox ? fmt(prox.hora_inicio) : '—';
-      var total = reservas.reduce(function(s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
-      document.getElementById('stat-ingresos').textContent = total > 0 ? total + '€' : '—';
-
-      // Lista
-      if (reservas.length === 0) {
-        document.getElementById('reservas-list').innerHTML = '<div class="empty">No hay citas para este día</div>';
-        return;
-      }
-      document.getElementById('reservas-list').innerHTML = reservas.map(function(r) {
-        return '<div class="reserva-card" id="card-' + r.id + '">' +
-          '<div class="reserva-hora">' + fmt(r.hora_inicio) + '</div>' +
-          '<div class="reserva-info">' +
-            '<div class="reserva-nombre">' + r.nombre + '</div>' +
-            '<div class="reserva-svc">' + r.servicio + ' · ' + r.duracion_min + ' min' + (r.precio ? ' · ' + r.precio + '€' : '') + '</div>' +
-            '<div class="reserva-contacto">' +
-              (r.telefono ? '📞 ' + r.telefono + ' · ' : '') +
-              '✉️ ' + r.email +
-            '</div>' +
-          '</div>' +
-          '<div class="reserva-acciones">' +
-            '<span class="badge">Confirmada</span>' +
-            '<button class="btn btn-danger" onclick="cancelar(' + r.id + ')">Cancelar</button>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    })
-    .catch(function() {
-      document.getElementById('reservas-list').innerHTML = '<div class="empty">Error al cargar las reservas</div>';
-    });
+function labelDate(d) {
+  return DIAS_L[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' ' + d.getFullYear();
+}
+function shortDate(d) {
+  return DIAS[d.getDay()] + ' ' + d.getDate() + ' ' + MESES_C[d.getMonth()];
+}
+function isToday(d) {
+  var t = new Date(); t.setHours(0,0,0,0);
+  var x = new Date(d); x.setHours(0,0,0,0);
+  return x.getTime() === t.getTime();
+}
+function isPast(d) {
+  var t = new Date(); t.setHours(0,0,0,0);
+  var x = new Date(d); x.setHours(0,0,0,0);
+  return x < t;
 }
 
+// ── Navigation ──────────────────────────────────────────────────
+function setView(v) {
+  _view = v;
+  document.querySelectorAll('.view-tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.view === v);
+  });
+  render();
+}
+function navigate(dir) {
+  var step = _view === 'week' ? 7 : _view === '3d' ? 3 : 1;
+  _baseDate = addDays(_baseDate, dir * step);
+  document.getElementById('fecha-input').value = isoDate(_baseDate);
+  render();
+}
+function irHoy() {
+  _baseDate = new Date();
+  document.getElementById('fecha-input').value = isoDate(_baseDate);
+  render();
+}
+function onDateChange() {
+  var v = document.getElementById('fecha-input').value;
+  if (v) { _baseDate = new Date(v + 'T12:00:00'); render(); }
+}
+
+// ── Fetch reservas ──────────────────────────────────────────────
+function fetchReservas(fecha) {
+  return fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha + '&token=' + encodeURIComponent(_token))
+    .then(function(r) { return r.json(); })
+    .then(function(d) { return d.reservas || []; });
+}
+
+// ── Weekly stats (fetch Mon–Sun) ────────────────────────────────
+function fetchWeekStats(baseDate) {
+  var mon = startOfWeek(baseDate);
+  var promises = [];
+  for (var i = 0; i < 7; i++) {
+    promises.push(fetchReservas(isoDate(addDays(mon, i))));
+  }
+  return Promise.all(promises).then(function(days) {
+    var total = days.reduce(function(s, d) { return s + d.length; }, 0);
+    var ingresos = days.reduce(function(s, d) {
+      return s + d.reduce(function(ss, r) { return ss + (parseFloat(r.precio)||0); }, 0);
+    }, 0);
+    return { total: total, ingresos: ingresos };
+  });
+}
+
+// ── Render dispatcher ───────────────────────────────────────────
+function render() {
+  if (_view === 'day')  renderDay();
+  else if (_view === '3d')   renderMulti(3);
+  else if (_view === 'week') renderMulti(7);
+}
+
+// ── DAY VIEW ────────────────────────────────────────────────────
+function renderDay() {
+  var fecha = isoDate(_baseDate);
+  document.getElementById('date-display').textContent = labelDate(_baseDate);
+  document.getElementById('view-content').innerHTML = '<div class="loading">Cargando…</div>';
+
+  fetchReservas(fecha).then(function(reservas) {
+    updateStats(reservas, fecha);
+    renderDayList(reservas, fecha, 'view-content');
+  }).catch(function() {
+    document.getElementById('view-content').innerHTML = '<div class="empty">Error al cargar las reservas</div>';
+  });
+}
+
+function updateStats(reservas, fecha) {
+  document.getElementById('stat-total').textContent = reservas.length;
+  document.getElementById('stat-total-sub').textContent = reservas.length === 1 ? 'cita' : 'citas';
+  var now = new Date();
+  var minNow = now.getHours()*60 + now.getMinutes();
+  var prox = reservas.find(function(r) { return r.hora_inicio >= minNow; });
+  document.getElementById('stat-prox').textContent = prox ? fmt(prox.hora_inicio) : '—';
+  document.getElementById('stat-prox-sub').textContent = prox ? prox.nombre : '';
+  var total = reservas.reduce(function(s,r) { return s+(parseFloat(r.precio)||0); }, 0);
+  document.getElementById('stat-ingresos').textContent = total > 0 ? total + '€' : '—';
+
+  // Weekly stats
+  fetchWeekStats(_baseDate).then(function(ws) {
+    document.getElementById('stat-semana').textContent = ws.total;
+    document.getElementById('stat-semana-sub').textContent = 'citas · ' + (ws.ingresos > 0 ? ws.ingresos + '€' : '');
+  }).catch(function() {});
+}
+
+function renderDayList(reservas, fecha, containerId) {
+  var container = document.getElementById(containerId);
+  if (reservas.length === 0) {
+    container.innerHTML = '<div class="empty">No hay citas para este día</div>';
+    return;
+  }
+  var now = new Date();
+  var minNow = now.getHours()*60 + now.getMinutes();
+  var todayFlag = isToday(new Date(fecha + 'T12:00:00'));
+
+  container.innerHTML = '<div class="section-title">Citas del día</div>' + reservas.map(function(r) {
+    var past = todayFlag && r.hora_fin <= minNow;
+    var now_ = todayFlag && r.hora_inicio <= minNow && r.hora_fin > minNow;
+    return '<div class="reserva-card' + (past ? ' past' : '') + '" id="card-' + r.id + '">' +
+      '<div>' +
+        '<div class="reserva-hora">' + fmt(r.hora_inicio) + '</div>' +
+        '<div class="reserva-hora-end">' + fmt(r.hora_fin||r.hora_inicio+r.duracion_min) + '</div>' +
+      '</div>' +
+      '<div class="reserva-divider' + (now_ ? ' now' : '') + '"></div>' +
+      '<div class="reserva-info">' +
+        '<div class="reserva-nombre">' + r.nombre + '</div>' +
+        '<div class="reserva-svc">' + r.servicio + ' · ' + r.duracion_min + ' min' + (r.precio ? ' · ' + r.precio + '€' : '') + '</div>' +
+        '<div class="reserva-contacto">' +
+          (r.telefono ? '<a href="tel:' + r.telefono + '" class="btn-action" style="text-decoration:none" title="Llamar">' + r.telefono + '</a>' : '') +
+          '<a href="mailto:' + r.email + '" class="btn-action" style="text-decoration:none" title="Enviar email">' + r.email + '</a>' +
+        '</div>' +
+      '</div>' +
+      '<div class="reserva-actions">' +
+        '<span class="badge-ok"><span class="badge-dot"></span>Confirmada</span>' +
+        (r.telefono ? '<a href="https://wa.me/' + r.telefono.replace(/\D/g,'') + '?text=' + encodeURIComponent('Hola ' + r.nombre + ', te escribimos desde Barberia El Rincón.') + '" target="_blank" class="btn-action">WhatsApp</a>' : '') +
+        '<button class="btn-action btn-cancel" onclick="cancelar(' + r.id + ')">Cancelar</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── MULTI VIEW (3d / week) ──────────────────────────────────────
+function renderMulti(days) {
+  var startDate = _view === 'week' ? startOfWeek(_baseDate) : _baseDate;
+  var dates = [];
+  for (var i = 0; i < days; i++) dates.push(addDays(startDate, i));
+
+  // Date range label
+  var first = dates[0], last = dates[dates.length-1];
+  document.getElementById('date-display').textContent =
+    first.getDate() + ' ' + MESES_C[first.getMonth()] + ' — ' + last.getDate() + ' ' + MESES_C[last.getMonth()] + ' ' + last.getFullYear();
+
+  // Build grid skeleton
+  var gridClass = _view === 'week' ? 'view-week' : 'view-3d';
+  var html = '<div class="multi-grid ' + gridClass + '">';
+  dates.forEach(function(d) {
+    var isT = isToday(d);
+    var iP  = isPast(d);
+    html += '<div class="day-col" id="col-' + isoDate(d) + '">' +
+      '<div class="day-col-head' + (isT ? ' today-head' : '') + '">' +
+        '<span>' + shortDate(d) + '</span>' +
+        '<span class="day-col-count" id="cnt-' + isoDate(d) + '">…</span>' +
+      '</div>' +
+      '<div class="day-col-body" id="body-' + isoDate(d) + '">' +
+        '<div class="day-col-loading">Cargando…</div>' +
+      '</div>' +
+    '</div>';
+  });
+  html += '</div>';
+  document.getElementById('view-content').innerHTML = html;
+
+  // Fetch each day
+  var allCounts = [];
+  dates.forEach(function(d) {
+    var fecha = isoDate(d);
+    fetchReservas(fecha).then(function(reservas) {
+      allCounts.push(reservas.length);
+      document.getElementById('cnt-' + fecha).textContent = reservas.length;
+      var body = document.getElementById('body-' + fecha);
+      if (reservas.length === 0) {
+        body.innerHTML = '<div class="mini-empty">Sin citas</div>';
+        return;
+      }
+      var now = new Date();
+      var minNow = now.getHours()*60 + now.getMinutes();
+      var isT = isToday(d);
+      body.innerHTML = reservas.map(function(r) {
+        var past = isT && r.hora_fin <= minNow;
+        return '<div class="mini-card' + (past ? ' past' : '') + '" title="' + r.nombre + ' · ' + r.servicio + '">' +
+          '<div class="mini-hora">' + fmt(r.hora_inicio) + '</div>' +
+          '<div class="mini-nombre">' + r.nombre + '</div>' +
+          '<div class="mini-svc">' + r.servicio + '</div>' +
+        '</div>';
+      }).join('');
+    }).catch(function() {
+      document.getElementById('cnt-' + fecha).textContent = '!';
+      document.getElementById('body-' + fecha).innerHTML = '<div class="mini-empty">Error</div>';
+    });
+  });
+
+  // Update day stats (use today's data or first date)
+  var todayFecha = isoDate(new Date());
+  var targetFecha = dates.find(function(d) { return isoDate(d) === todayFecha; });
+  if (targetFecha) {
+    fetchReservas(isoDate(targetFecha)).then(function(r) { updateStats(r, isoDate(targetFecha)); }).catch(function() {});
+  }
+}
+
+// ── Cancel ──────────────────────────────────────────────────────
 function cancelar(id) {
-  if (!confirm('¿Cancelar esta reserva? Se enviará un email al cliente.')) return;
+  if (!confirm('¿Cancelar esta reserva? Se enviará un email de aviso al cliente.')) return;
   fetch('/api/admin-reservas?id=' + id + '&token=' + encodeURIComponent(_token), { method: 'DELETE' })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.ok) {
         var card = document.getElementById('card-' + id);
-        if (card) { card.style.opacity = '.4'; card.style.pointerEvents = 'none'; }
-        cargarReservas();
+        if (card) { card.style.opacity = '.25'; card.style.pointerEvents = 'none'; }
+        setTimeout(render, 800);
       } else {
         alert('Error al cancelar: ' + (data.error || ''));
       }
     });
 }
 
-// Auto-login si hay token en sesión
-(function() {
-  var saved = sessionStorage.getItem('admin_token');
-  if (saved) {
-    document.getElementById('pwd-input').value = saved;
-    login();
-  }
-})();
+// ── Block slot ──────────────────────────────────────────────────
+function bloquearFranja() {
+  var fecha = document.getElementById('block-fecha').value;
+  var ini   = document.getElementById('block-hora-ini').value;
+  var fin   = document.getElementById('block-hora-fin').value;
+  var motivo = document.getElementById('block-motivo').value.trim() || 'Bloqueado';
+  if (!fecha || !ini || !fin) { alert('Completa los campos de fecha y hora.'); return; }
+
+  var iniMins = timeToMins(ini);
+  var finMins = timeToMins(fin);
+  if (finMins <= iniMins) { alert('La hora de fin debe ser posterior a la de inicio.'); return; }
+
+  // Crear reserva de bloqueo en Supabase
+  fetch('/api/booking', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      negocio: NEGOCIO,
+      servicio: 'BLOQUEADO: ' + motivo,
+      duracion_min: finMins - iniMins,
+      precio: 0,
+      fecha: fecha,
+      hora_inicio: iniMins,
+      hora_fin: finMins,
+      nombre: 'Admin',
+      email: 'admin@sitalia.es'
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      alert('Franja bloqueada correctamente.');
+      document.getElementById('block-motivo').value = '';
+      render();
+    } else {
+      alert('Error: ' + (data.error || 'No se pudo bloquear.'));
+    }
+  })
+  .catch(function() { alert('Error de conexión.'); });
+}
+
+function timeToMins(t) {
+  var p = t.split(':');
+  return parseInt(p[0])*60 + parseInt(p[1]||0);
+}
 </script>
 </body>
 </html>
