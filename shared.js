@@ -71,7 +71,7 @@
     calD.setDate(1);
 
     renderSvcs();
-    renderCal();
+    // renderCalView se llama aquí para inicializar el mes actual en el paso 2
 
     // Botón de toggle móvil del nav (puede llamarse desde aquí)
     var navCta = document.querySelector('.nav-cta');
