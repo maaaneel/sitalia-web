@@ -271,10 +271,17 @@
       <div class="bk-panel" id="bp4">
         <div class="bk-panel-label">Confirma tu reserva</div>
         <div id="bk-confirm"></div>
-        <button class="bk-wa-btn" onclick="Sitalia.bkWA()">
-          <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-          CONFIRMAR POR WHATSAPP
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+          <input id="bk-nombre" class="form-input" type="text" placeholder="Tu nombre *" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
+          <input id="bk-tel" class="form-input" type="tel" placeholder="Teléfono (opcional)" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
+          <input id="bk-email" class="form-input" type="email" placeholder="Email para confirmación *" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none">
+        </div>
+        <button id="bk-submit" class="bk-btn" style="margin-top:16px" onclick="confirmarReserva()">
+          <span id="bk-submit-txt">CONFIRMAR RESERVA</span>
         </button>
+        <div id="bk-ok" style="display:none;margin-top:16px;padding:16px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;color:#166534;font-size:14px;font-weight:500;text-align:center">
+          ✓ ¡Reserva confirmada! Te hemos enviado un email con los detalles.
+        </div>
         <button class="bk-back" onclick="Sitalia.bkTo(3)">← Cambiar hora</button>
       </div>
     </div>
@@ -319,21 +326,139 @@
 
 <script src="shared.js"></script>
 <script>
+var BK_NEGOCIO = 'peluqueria';
+var BK_SVCS = [
+  { n: 'Corte de pelo',       d: 30, p: '18' },
+  { n: 'Arreglo de barba',    d: 20, p: '12' },
+  { n: 'Corte + Barba',       d: 45, p: '25', pop: true },
+  { n: 'Afeitado con navaja', d: 40, p: '20' },
+  { n: 'Corte niño',          d: 25, p: '12' },
+  { n: 'Tratamiento capilar', d: 20, p: '15' }
+];
+var BK_SCHED = [null, [540,1200], [540,1200], [540,1200], [540,1200], [540,1080], null];
+
 Sitalia.initBooking({
   preselectSvc: 2,
-  phone: '34612345678',
-  svcs: [
-    { n: 'Corte de pelo',      d: 30, p: '18' },
-    { n: 'Arreglo de barba',   d: 20, p: '12' },
-    { n: 'Corte + Barba',      d: 45, p: '25', pop: true },
-    { n: 'Afeitado con navaja',d: 40, p: '20' },
-    { n: 'Corte niño',         d: 25, p: '12' },
-    { n: 'Tratamiento capilar',d: 20, p: '15' }
-  ],
-  // 0=Lun..6=Dom: [apertura_min, cierre_min] o null=cerrado
-  sched: [null, [600,1200], [600,1200], [600,1200], [600,1200], [600,1080], null],
-  bookedIdx: [0, 2, 5, 7, 11, 13, 16, 19]
+  svcs:  BK_SVCS,
+  sched: BK_SCHED,
+  bookedIdx: []  // se carga dinámicamente al seleccionar fecha
 });
+
+// Interceptar bkTo para cargar disponibilidad real al ir al paso 3
+var _originalBkTo = Sitalia.bkTo;
+Sitalia.bkTo = async function(n) {
+  if (n === 3) {
+    var bkDate = window._bkState && window._bkState.date;
+    // Intentar leer la fecha desde el widget
+    try {
+      var calSel = document.querySelector('.bk-cal-day.sel');
+      if (calSel) {
+        // La fecha la maneja shared.js internamente; la leemos del texto del día seleccionado
+        // y la construimos desde el mes visible
+        var monthEl = document.getElementById('bk-month');
+        if (monthEl && calSel.textContent) {
+          var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+          var partes = monthEl.textContent.split(' ');
+          var mes  = meses.indexOf(partes[0]);
+          var anio = parseInt(partes[1]);
+          var dia  = parseInt(calSel.textContent);
+          var fecha = anio + '-' + String(mes+1).padStart(2,'0') + '-' + String(dia).padStart(2,'0');
+          window._bkFecha = fecha;
+          var resp = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
+          var data = await resp.json();
+          // Convertir horas de inicio a índices de slot
+          var svcIdx = 2; // servicio seleccionado por defecto
+          var selectedSvc = document.querySelector('.bk-svc.selected');
+          if (selectedSvc) {
+            var allSvcs = document.querySelectorAll('.bk-svc');
+            allSvcs.forEach(function(el, i) { if (el === selectedSvc) svcIdx = i; });
+          }
+          var svc = BK_SVCS[svcIdx];
+          var dow = new Date(fecha + 'T12:00:00').getDay();
+          dow = dow === 0 ? 6 : dow - 1;
+          var range = BK_SCHED[dow];
+          if (range && svc) {
+            var slots = [];
+            for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
+            var bookedIdx = (data.reservados || []).map(function(h) { return slots.indexOf(h); }).filter(function(i) { return i >= 0; });
+            // Actualizar config de shared.js
+            window._bkBookedIdx = bookedIdx;
+          }
+        }
+      }
+    } catch(e) { console.warn('Error cargando disponibilidad:', e); }
+  }
+  _originalBkTo(n);
+};
+
+// Guardar bookedIdx para que renderSlots lo use
+// Parchear renderSlots leyendo window._bkBookedIdx si existe
+var _origRenderSlots = window.Sitalia._renderSlots;
+
+// ── Confirmar reserva ───────────────────────────────────────────────────
+async function confirmarReserva() {
+  var nombre = document.getElementById('bk-nombre').value.trim();
+  var tel    = document.getElementById('bk-tel').value.trim();
+  var email  = document.getElementById('bk-email').value.trim();
+
+  if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
+
+  var btn    = document.getElementById('bk-submit');
+  var btnTxt = document.getElementById('bk-submit-txt');
+  btn.disabled = true;
+  btnTxt.textContent = 'Enviando…';
+
+  // Recoger datos del widget
+  var selSvc  = document.querySelector('.bk-svc.selected');
+  var selSlot = document.querySelector('.bk-slot.sel');
+  var monthEl = document.getElementById('bk-month');
+
+  if (!selSvc || !selSlot || !window._bkFecha) {
+    alert('Por favor selecciona servicio, fecha y hora primero.');
+    btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+    return;
+  }
+
+  var svcIdx = 0;
+  document.querySelectorAll('.bk-svc').forEach(function(el, i) { if (el === selSvc) svcIdx = i; });
+  var svc = BK_SVCS[svcIdx];
+
+  var horaTexto = selSlot.querySelector('.bk-slot-time') ? selSlot.querySelector('.bk-slot-time').textContent : '';
+  var partes = horaTexto.split(':');
+  var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
+  var horaFin    = horaInicio + svc.d;
+
+  try {
+    var resp = await fetch('/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        negocio:     BK_NEGOCIO,
+        servicio:    svc.n,
+        duracion_min: svc.d,
+        precio:      svc.p,
+        fecha:       window._bkFecha,
+        hora_inicio: horaInicio,
+        hora_fin:    horaFin,
+        nombre:      nombre,
+        telefono:    tel,
+        email:       email
+      })
+    });
+    var data = await resp.json();
+    if (!resp.ok) {
+      alert(data.error || 'Error al confirmar la reserva.');
+      btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+      return;
+    }
+    btn.style.display = 'none';
+    document.getElementById('bk-ok').style.display = 'block';
+    document.querySelector('.bk-back').style.display = 'none';
+  } catch(e) {
+    alert('Error de conexión. Inténtalo de nuevo.');
+    btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+  }
+}
 </script>
 </body>
 </html>

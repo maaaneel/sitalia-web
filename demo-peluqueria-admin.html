@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel Admin — Barberia El Rincón</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;color:#111;min-height:100vh}
+  /* Login */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:40px;width:100%;max-width:360px;text-align:center}
+  .login-box h1{font-size:20px;margin-bottom:6px}
+  .login-box p{color:#6b7280;font-size:14px;margin-bottom:24px}
+  .login-input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;outline:none;margin-bottom:12px;font-family:inherit}
+  .login-input:focus{border-color:#111}
+  .btn{width:100%;padding:12px;background:#111;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer}
+  .btn:hover{background:#333}
+  .btn-danger{background:#ef4444;font-size:13px;padding:7px 14px;width:auto;border-radius:6px}
+  .btn-danger:hover{background:#dc2626}
+  .btn-sm{background:#f3f4f6;color:#111;font-size:13px;padding:7px 14px;width:auto;border-radius:6px}
+  .btn-sm:hover{background:#e5e7eb}
+  .error-msg{color:#ef4444;font-size:13px;margin-top:8px}
+  /* Header */
+  .header{background:#111;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+  .header h1{font-size:17px;font-weight:600}
+  .header-right{display:flex;align-items:center;gap:12px}
+  .logout{color:rgba(255,255,255,.6);font-size:13px;cursor:pointer;background:none;border:none;padding:0}
+  .logout:hover{color:#fff}
+  /* Main */
+  .main{max-width:860px;margin:0 auto;padding:32px 24px}
+  .date-bar{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+  .date-bar label{font-size:13px;color:#6b7280;font-weight:500}
+  .date-input{padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:inherit;outline:none;cursor:pointer}
+  .date-input:focus{border-color:#111}
+  .nav-day{background:#f3f4f6;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer}
+  .nav-day:hover{background:#e5e7eb}
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+  @media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px}
+  .stat-val{font-size:26px;font-weight:700;line-height:1}
+  .stat-lbl{font-size:12px;color:#6b7280;margin-top:4px}
+  /* Reservas */
+  .section-title{font-size:14px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .reserva-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .reserva-hora{font-size:20px;font-weight:700;min-width:60px}
+  .reserva-info{flex:1;min-width:160px}
+  .reserva-nombre{font-size:15px;font-weight:600;margin-bottom:2px}
+  .reserva-svc{font-size:13px;color:#6b7280}
+  .reserva-contacto{font-size:13px;color:#6b7280;margin-top:3px}
+  .reserva-acciones{display:flex;gap:8px}
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:100px;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+  .empty{text-align:center;padding:48px 24px;color:#9ca3af;font-size:15px;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+  .loading{text-align:center;padding:40px;color:#9ca3af}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-box">
+    <div style="font-size:32px;margin-bottom:12px">✂️</div>
+    <h1>Barberia El Rincón</h1>
+    <p>Panel de administración</p>
+    <input id="pwd-input" class="login-input" type="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn" onclick="login()">Entrar</button>
+    <p id="login-error" class="error-msg" style="display:none">Contraseña incorrecta</p>
+  </div>
+</div>
+
+<!-- PANEL ADMIN -->
+<div id="admin-screen" style="display:none">
+  <div class="header">
+    <h1>✂️ Barberia El Rincón — Reservas</h1>
+    <div class="header-right">
+      <button class="logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Selector de fecha -->
+    <div class="date-bar">
+      <button class="nav-day" onclick="cambiarDia(-1)">← Ayer</button>
+      <div>
+        <label>Fecha</label><br>
+        <input id="fecha-input" class="date-input" type="date" onchange="cargarReservas()">
+      </div>
+      <button class="nav-day" onclick="cambiarDia(1)">Mañana →</button>
+      <button class="btn-sm" onclick="irHoy()">Hoy</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val" id="stat-total">—</div>
+        <div class="stat-lbl">Citas hoy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="stat-prox">—</div>
+        <div class="stat-lbl">Próxima cita</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="stat-ingresos">—</div>
+        <div class="stat-lbl">Ingresos estimados</div>
+      </div>
+    </div>
+
+    <!-- Lista de reservas -->
+    <div class="section-title">Citas del día</div>
+    <div id="reservas-list"><div class="loading">Cargando…</div></div>
+  </div>
+</div>
+
+<script>
+var NEGOCIO = 'peluqueria';
+var _token  = '';
+
+function login() {
+  var pwd = document.getElementById('pwd-input').value;
+  if (!pwd) return;
+  // Verificar contra el servidor
+  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + hoy() + '&token=' + encodeURIComponent(pwd))
+    .then(function(r) {
+      if (r.ok) {
+        _token = pwd;
+        sessionStorage.setItem('admin_token', pwd);
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-screen').style.display = 'block';
+        document.getElementById('fecha-input').value = hoy();
+        cargarReservas();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    })
+    .catch(function() {
+      document.getElementById('login-error').style.display = 'block';
+    });
+}
+
+function logout() {
+  sessionStorage.removeItem('admin_token');
+  _token = '';
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd-input').value = '';
+}
+
+function hoy() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function irHoy() {
+  document.getElementById('fecha-input').value = hoy();
+  cargarReservas();
+}
+
+function cambiarDia(delta) {
+  var d = new Date(document.getElementById('fecha-input').value + 'T12:00:00');
+  d.setDate(d.getDate() + delta);
+  document.getElementById('fecha-input').value = d.toISOString().split('T')[0];
+  cargarReservas();
+}
+
+function fmt(mins) {
+  var h = Math.floor(mins / 60);
+  var m = mins % 60;
+  return h + ':' + (m < 10 ? '0' : '') + m;
+}
+
+function cargarReservas() {
+  var fecha = document.getElementById('fecha-input').value;
+  if (!fecha) return;
+  document.getElementById('reservas-list').innerHTML = '<div class="loading">Cargando…</div>';
+
+  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha + '&token=' + encodeURIComponent(_token))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var reservas = data.reservas || [];
+      // Stats
+      document.getElementById('stat-total').textContent = reservas.length;
+      var ahora  = new Date();
+      var minNow = ahora.getHours() * 60 + ahora.getMinutes();
+      var prox   = reservas.find(function(r) { return r.hora_inicio >= minNow; });
+      document.getElementById('stat-prox').textContent = prox ? fmt(prox.hora_inicio) : '—';
+      var total = reservas.reduce(function(s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
+      document.getElementById('stat-ingresos').textContent = total > 0 ? total + '€' : '—';
+
+      // Lista
+      if (reservas.length === 0) {
+        document.getElementById('reservas-list').innerHTML = '<div class="empty">No hay citas para este día</div>';
+        return;
+      }
+      document.getElementById('reservas-list').innerHTML = reservas.map(function(r) {
+        return '<div class="reserva-card" id="card-' + r.id + '">' +
+          '<div class="reserva-hora">' + fmt(r.hora_inicio) + '</div>' +
+          '<div class="reserva-info">' +
+            '<div class="reserva-nombre">' + r.nombre + '</div>' +
+            '<div class="reserva-svc">' + r.servicio + ' · ' + r.duracion_min + ' min' + (r.precio ? ' · ' + r.precio + '€' : '') + '</div>' +
+            '<div class="reserva-contacto">' +
+              (r.telefono ? '📞 ' + r.telefono + ' · ' : '') +
+              '✉️ ' + r.email +
+            '</div>' +
+          '</div>' +
+          '<div class="reserva-acciones">' +
+            '<span class="badge">Confirmada</span>' +
+            '<button class="btn btn-danger" onclick="cancelar(' + r.id + ')">Cancelar</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    })
+    .catch(function() {
+      document.getElementById('reservas-list').innerHTML = '<div class="empty">Error al cargar las reservas</div>';
+    });
+}
+
+function cancelar(id) {
+  if (!confirm('¿Cancelar esta reserva? Se enviará un email al cliente.')) return;
+  fetch('/api/admin-reservas?id=' + id + '&token=' + encodeURIComponent(_token), { method: 'DELETE' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        var card = document.getElementById('card-' + id);
+        if (card) { card.style.opacity = '.4'; card.style.pointerEvents = 'none'; }
+        cargarReservas();
+      } else {
+        alert('Error al cancelar: ' + (data.error || ''));
+      }
+    });
+}
+
+// Auto-login si hay token en sesión
+(function() {
+  var saved = sessionStorage.getItem('admin_token');
+  if (saved) {
+    document.getElementById('pwd-input').value = saved;
+    login();
+  }
+})();
+</script>
+</body>
+</html>
