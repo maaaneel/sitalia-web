@@ -513,6 +513,8 @@ async function confirmarReserva() {
   var tel    = document.getElementById('bk-tel').value.trim();
   var email  = document.getElementById('bk-email').value.trim();
   if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRe.test(email)) { alert('El email introducido no es válido.\nEjemplo correcto: nombre@dominio.com'); return; }
 
   // Leer estado directamente del widget (state interno del IIFE)
   var state = Sitalia.getBkState();

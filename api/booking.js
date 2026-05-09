@@ -25,6 +25,17 @@ function workersAt(workers, dow, t) {
   }).length;
 }
 
+// ¿Se solapan los intervalos [h, h+dm) y [t, t+dur)?
+// Dos intervalos se solapan si uno empieza antes de que el otro termine.
+function intervalsOverlap(h, dm, t, dur) {
+  return h < t + dur && h + dm > t;
+}
+
+// Cuántas reservas existentes solapan con el slot [t, t+dur)
+function countOverlapping(bookings, t, dur) {
+  return (bookings || []).filter(b => intervalsOverlap(b.hora_inicio, b.duracion_min, t, dur)).length;
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -36,7 +47,7 @@ module.exports = async function handler(req, res) {
     const { negocio, fecha, rango_ini, rango_fin, duracion } = req.query;
     if (!negocio || !fecha) return res.status(400).json({ error: 'Faltan parámetros' });
 
-    // Reservas confirmadas del día
+    // Reservas confirmadas del día (necesitamos hora_inicio Y duracion_min para el chequeo de solapamiento)
     const { data: bookings, error: bErr } = await sb()
       .from('reservas')
       .select('hora_inicio, duracion_min')
@@ -55,48 +66,40 @@ module.exports = async function handler(req, res) {
 
     const hasWorkers = workers && workers.length > 0;
 
-    // Conteo de reservas por hora_inicio
-    const bookingCounts = {};
-    (bookings || []).forEach(b => {
-      bookingCounts[b.hora_inicio] = (bookingCounts[b.hora_inicio] || 0) + 1;
-    });
-
-    // ── Sin trabajadores configurados: comportamiento clásico (1 reserva = bloqueado)
+    // ── Sin trabajadores: bloquear todo
     if (!hasWorkers) {
-      return res.status(200).json({ hasWorkers: false, reservados: Object.keys(bookingCounts).map(Number) });
+      // Devolver todas las horas de inicio con reservas como bloqueadas
+      const starts = [...new Set((bookings || []).map(b => b.hora_inicio))];
+      return res.status(200).json({ hasWorkers: false, reservados: starts });
     }
 
-    // ── Con rango+duracion: recorrer todos los slots del rango y verificar disponibilidad
+    const dateObj = new Date(fecha + 'T12:00:00');
+    const jsDay   = dateObj.getDay();
+    const dow     = jsDay === 0 ? 6 : jsDay - 1; // Mon=0, Sun=6
+
+    // ── Con rango+duracion: recorrer todos los slots y comprobar solapamiento real
     if (rango_ini && rango_fin && duracion) {
-      const ini     = parseInt(rango_ini);
-      const fin     = parseInt(rango_fin);
-      const dur     = parseInt(duracion);
-      const dateObj = new Date(fecha + 'T12:00:00');
-      const jsDay   = dateObj.getDay();
-      const dow     = jsDay === 0 ? 6 : jsDay - 1; // Mon=0, Sun=6
+      const ini = parseInt(rango_ini);
+      const fin = parseInt(rango_fin);
+      const dur = parseInt(duracion);
 
       const reservados = [];
       for (let t = ini; t + dur <= fin; t += dur) {
         const cap    = workersAt(workers, dow, t);
-        const booked = bookingCounts[t] || 0;
-        // Bloqueado si no hay trabajador disponible O todos ocupados
+        // Contar reservas que solapan con este slot (independientemente del servicio/duración)
+        const booked = countOverlapping(bookings, t, dur);
         if (cap === 0 || booked >= cap) reservados.push(t);
       }
       return res.status(200).json({ hasWorkers: true, reservados });
     }
 
-    // ── Con trabajadores pero sin parámetros de rango: aplicar capacidad solo a horas con reservas
-    const dateObj = new Date(fecha + 'T12:00:00');
-    const jsDay   = dateObj.getDay();
-    const dow     = jsDay === 0 ? 6 : jsDay - 1;
-
-    const reservados = Object.keys(bookingCounts)
-      .map(Number)
-      .filter(t => {
-        const cap = workersAt(workers, dow, t);
-        return cap === 0 || bookingCounts[t] >= cap;
-      });
-
+    // ── Sin parámetros de rango: fallback con solapamiento parcial
+    const starts = [...new Set((bookings || []).map(b => b.hora_inicio))];
+    const reservados = starts.filter(t => {
+      const cap    = workersAt(workers, dow, t);
+      const booked = countOverlapping(bookings, t, 1); // mínimo: misma hora de inicio
+      return cap === 0 || booked >= cap;
+    });
     return res.status(200).json({ hasWorkers: true, reservados });
   }
 
@@ -112,23 +115,31 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    // Comprobar slot disponible considerando capacidad de trabajadores
-    const { data: existing } = await sb()
+    // Validación de email básica en el servidor también
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRe.test(email)) {
+      return res.status(400).json({ error: 'El email introducido no es válido.' });
+    }
+
+    // Obtener todas las reservas del día para comprobar solapamiento real
+    const { data: dayBookings } = await sb()
       .from('reservas')
-      .select('id')
+      .select('hora_inicio, duracion_min')
       .eq('negocio', negocio)
       .eq('fecha', fecha)
-      .eq('hora_inicio', hora_inicio)
       .eq('estado', 'confirmada');
 
-    if (existing && existing.length > 0) {
+    const overlapping = countOverlapping(dayBookings, hora_inicio, duracion_min || 30);
+
+    if (overlapping > 0) {
+      // Obtener capacidad de trabajadores
       const { data: workers } = await sb()
         .from('trabajadores')
         .select('horario')
         .eq('negocio', negocio)
         .eq('activo', true);
 
-      let cap = 1; // Por defecto 1 si no hay trabajadores configurados
+      let cap = 1;
       if (workers && workers.length > 0) {
         const dateObj = new Date(fecha + 'T12:00:00');
         const jsDay   = dateObj.getDay();
@@ -136,7 +147,7 @@ module.exports = async function handler(req, res) {
         cap = workersAt(workers, dow, hora_inicio);
       }
 
-      if (existing.length >= cap) {
+      if (overlapping >= cap) {
         return res.status(409).json({ error: 'Este horario ya no está disponible. Por favor elige otro.' });
       }
     }
@@ -162,7 +173,6 @@ module.exports = async function handler(req, res) {
         weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
       });
 
-      // Email al cliente
       await resend.emails.send({
         from:    'Barberia El Rincón <reservas@sitalia.es>',
         to:      email,
@@ -190,7 +200,6 @@ module.exports = async function handler(req, res) {
           </div>`,
       });
 
-      // Email al negocio
       await resend.emails.send({
         from:    'Sitalia Reservas <notificaciones@sitalia.es>',
         to:      'hola@sitalia.es',
