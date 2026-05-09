@@ -448,11 +448,19 @@ Sitalia.bkTo = async function(n) {
       try {
         var d     = state.date;
         var fecha = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-        var resp  = await fetch('/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha);
-        var data  = await resp.json();
         var svc   = BK_SVCS[state.svc];
         var dow   = d.getDay() === 0 ? 6 : d.getDay() - 1;
         var range = BK_SCHED[dow];
+
+        // Enviamos rango y duración al API para que calcule disponibilidad con trabajadores
+        var url = '/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha;
+        if (range && svc) {
+          url += '&rango_ini=' + range[0] + '&rango_fin=' + range[1] + '&duracion=' + svc.d;
+        }
+        var resp  = await fetch(url);
+        var data  = await resp.json();
+
+        // Mapear hora_inicio bloqueadas → índices de slot
         var slots = [];
         if (range && svc) {
           for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
@@ -460,7 +468,7 @@ Sitalia.bkTo = async function(n) {
         var bookedIdx = (data.reservados || []).map(function(h) {
           return slots.indexOf(h);
         }).filter(function(idx) { return idx >= 0; });
-        // Actualizar bkConfig.bookedIdx dentro del IIFE antes de renderizar slots
+
         Sitalia.setBkConfig({ bookedIdx: bookedIdx });
       } catch(e) { console.warn('Error cargando disponibilidad:', e); }
     }
@@ -475,6 +483,205 @@ async function confirmarReserva() {
   if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
 
   // Leer estado directamente del widget (state interno del IIFE)
+  var state = Sitalia.getBkState();
+  if (state.svc === null || !state.date || state.st === '') {
+    alert('Por favor selecciona servicio, fecha y hora primero.');
+    return;
+  }
+
+  var btn    = document.getElementById('bk-submit');
+  var btnTxt = document.getElementById('bk-submit-txt');
+  btn.disabled = true;
+  btnTxt.textContent = 'Enviando...';
+
+  var svc        = BK_SVCS[state.svc];
+  var d          = state.date;
+  var fecha      = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  var partes     = state.st.split(':');
+  var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
+  var horaFin    = horaInicio + svc.d;
+
+  try {
+    var resp = await fetch('/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        negocio: BK_NEGOCIO, servicio: svc.n, duracion_min: svc.d, precio: svc.p,
+        fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin,
+        nombre: nombre, telefono: tel, email: email
+      })
+    });
+    var data = await resp.json();
+    if (!resp.ok) {
+      alert(data.error || 'Error al confirmar la reserva.');
+      btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+      return;
+    }
+    btn.style.display = 'none';
+    document.getElementById('bk-ok').style.display = 'block';
+    document.querySelector('.bk-back').style.display = 'none';
+  } catch(e) {
+    alert('Error de conexión. Inténtalo de nuevo.');
+    btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+  }
+}
+</script>
+</body>
+</html>
+        <div class="label" style="margin-bottom:10px">Galería</div>
+        <h2 class="section-title">Nuestro trabajo</h2>
+      </div>
+      <a href="https://instagram.com" style="font-size:12px;color:var(--text3)">Ver Instagram</a>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-1.jpg" alt="Corte clásico"></div><div class="gallery-overlay"><span class="gallery-label">Corte clásico</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-2.jpg" alt="Degradado"></div><div class="gallery-overlay"><span class="gallery-label">Degradado</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-3.jpg" alt="Barba"></div><div class="gallery-overlay"><span class="gallery-label">Barba</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-4.jpg" alt="Afeitado"></div><div class="gallery-overlay"><span class="gallery-label">Afeitado</span></div></div>
+      <div class="gallery-item"><div class="gallery-item-img"><img src="images/pel-gallery-5.jpg" alt="Moderno"></div><div class="gallery-overlay"><span class="gallery-label">Moderno</span></div></div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- UBICACIÓN -->
+<section id="horarios">
+  <div class="container">
+    <div class="reveal">
+      <div class="label" style="margin-bottom:10px">Ubicación</div>
+      <h2 class="section-title">Dónde estamos</h2>
+    </div>
+    <div class="location-grid">
+      <div class="location-map reveal reveal-delay-1">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:500;margin-bottom:4px">Barberia El Rincon</div>
+          <div style="font-size:13px;color:var(--text2)">Calle Mayor 23, Eixample, Barcelona</div>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-primary">VER EN MAPS</a>
+      </div>
+      <div class="location-info reveal reveal-delay-2">
+        <div class="info-block">
+          <div class="info-label">Horarios</div>
+          <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-closed">Cerrado</span></div>
+          <div class="schedule-row"><span class="schedule-day">Martes – Viernes</span><span>9:00 – 20:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>9:00 – 18:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 612 345 678</div>
+          <div class="info-val">hola@barberiaelrincon.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Barberia <span>El Rincon</span></div>
+        <p class="footer-tagline">Cortes con carácter desde 1998.<br>Barcelona, Eixample.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegación</div>
+        <div class="footer-links">
+          <a href="#reservas">Reservar</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#equipo">Equipo</a>
+          <a href="#galeria">Galería</a>
+          <a href="#horarios">Ubicación</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Calle Mayor 23, Eixample, Barcelona</li>
+          <li>+34 612 345 678</li>
+          <li>hola@barberiaelrincon.es</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Barberia El Rincon · <a href="/" style="color:var(--accent)">Web por Sitalia</a></p>
+      <div style="display:flex;gap:16px"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#reservas" class="wa-float" title="Reservar cita" style="font-size:11px;font-weight:700;letter-spacing:.04em;width:auto;padding:0 18px;border-radius:100px">
+  RESERVAR
+</a>
+
+<script src="shared.js"></script>
+<script>
+var BK_NEGOCIO = 'peluqueria';
+var BK_SVCS = [
+  { n: 'Corte de pelo',       d: 30, p: '18' },
+  { n: 'Arreglo de barba',    d: 20, p: '12' },
+  { n: 'Corte + Barba',       d: 45, p: '25', pop: true },
+  { n: 'Afeitado con navaja', d: 40, p: '20' },
+  { n: 'Corte niño',          d: 25, p: '12' },
+  { n: 'Tratamiento capilar', d: 20, p: '15' }
+];
+var BK_SCHED = [null, [540,1200], [540,1200], [540,1200], [540,1200], [540,1080], null];
+
+Sitalia.initBooking({
+  preselectSvc: 2,
+  svcs:  BK_SVCS,
+  sched: BK_SCHED,
+  bookedIdx: []
+});
+
+// Interceptar bkTo para cargar disponibilidad real al ir al paso 3
+// La API acepta rango_ini/rango_fin/duracion para calcular capacidad por trabajador
+var _originalBkTo = Sitalia.bkTo;
+Sitalia.bkTo = async function(n) {
+  if (n === 3) {
+    var state = Sitalia.getBkState();
+    if (state.date && state.svc !== null) {
+      try {
+        var d     = state.date;
+        var fecha = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+        var svc   = BK_SVCS[state.svc];
+        var dow   = d.getDay() === 0 ? 6 : d.getDay() - 1;
+        var range = BK_SCHED[dow];
+
+        // Pasar rango y duración para que la API calcule disponibilidad por trabajador
+        var url = '/api/booking?negocio=' + BK_NEGOCIO + '&fecha=' + fecha;
+        if (range && svc) {
+          url += '&rango_ini=' + range[0] + '&rango_fin=' + range[1] + '&duracion=' + svc.d;
+        }
+        var resp = await fetch(url);
+        var data = await resp.json();
+
+        // Construir array de slots y mapear hora_inicio bloqueadas a índices
+        var slots = [];
+        if (range && svc) {
+          for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
+        }
+        var bookedIdx = (data.reservados || []).map(function(h) {
+          return slots.indexOf(h);
+        }).filter(function(idx) { return idx >= 0; });
+
+        Sitalia.setBkConfig({ bookedIdx: bookedIdx });
+      } catch(e) { console.warn('Error cargando disponibilidad:', e); }
+    }
+  }
+  _originalBkTo(n);
+};
+
+async function confirmarReserva() {
+  var nombre = document.getElementById('bk-nombre').value.trim();
+  var tel    = document.getElementById('bk-tel').value.trim();
+  var email  = document.getElementById('bk-email').value.trim();
+  if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
+
+  // Leer estado directamente del widget (acceso al estado interno del IIFE)
   var state = Sitalia.getBkState();
   if (state.svc === null || !state.date || state.st === '') {
     alert('Por favor selecciona servicio, fecha y hora primero.');

@@ -315,3 +315,9 @@
   };
 
 })();
+so al estado interno del widget de reservas
+    getBkState:  function() { return bk; },
+    setBkConfig: function(cfg) { Object.assign(bkConfig, cfg); }
+  };
+
+})();
