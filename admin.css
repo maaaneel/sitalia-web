@@ -1,0 +1,194 @@
+/* ============================================================
+   SITALIA — admin.css
+   Estilos del panel de administración.
+   Completamente independiente de shared.css.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f4f4f5;
+  color: #111;
+  min-height: 100vh;
+}
+
+/* ── Login ───────────────────────────────────────────── */
+.login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.login-box  { background:#fff; border:1px solid #e4e4e7; border-radius:14px; padding:40px; width:100%; max-width:360px; text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.06); }
+.login-logo { width:48px; height:48px; background:#111; border-radius:12px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:20px; color:#fff; font-weight:800; letter-spacing:-.02em; }
+.login-box h1 { font-size:20px; font-weight:700; margin-bottom:4px; }
+.login-box p  { color:#71717a; font-size:14px; margin-bottom:28px; }
+.login-input  { width:100%; padding:11px 14px; border:1.5px solid #e4e4e7; border-radius:9px; font-size:15px; outline:none; margin-bottom:12px; font-family:inherit; transition:border-color .15s; }
+.login-input:focus { border-color:#111; }
+.btn-primary  { width:100%; padding:12px; background:#111; color:#fff; border:none; border-radius:9px; font-size:15px; font-weight:600; cursor:pointer; transition:background .15s; }
+.btn-primary:hover { background:#333; }
+.error-msg    { color:#ef4444; font-size:13px; margin-top:10px; }
+
+/* ── Header ──────────────────────────────────────────── */
+.header        { background:#111; color:#fff; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; position:sticky; top:0; z-index:100; box-shadow:0 1px 0 rgba(255,255,255,.06); }
+.header-brand  { display:flex; align-items:center; gap:10px; }
+.header-logo   { width:28px; height:28px; background:rgba(255,255,255,.1); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; }
+.header-brand h1 { font-size:15px; font-weight:600; }
+.logout-btn  { color:rgba(255,255,255,.45); font-size:13px; cursor:pointer; background:none; border:none; padding:0; transition:color .15s; }
+.logout-btn:hover { color:#fff; }
+
+/* ── Tab bar ─────────────────────────────────────────── */
+.tab-bar { background:#fff; border-bottom:1px solid #e4e4e7; padding:0 20px; display:flex; align-items:center; flex-wrap:wrap; position:sticky; top:56px; z-index:90; }
+.tab { padding:13px 15px; font-size:13px; font-weight:500; color:#71717a; cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; transition:all .15s; white-space:nowrap; flex-shrink:0; }
+.tab:hover { color:#111; }
+.tab.active { color:#111; border-bottom-color:#111; }
+.tab-bar-right { margin-left:auto; display:flex; align-items:center; gap:6px; padding:6px 0; flex-shrink:0; }
+.nav-btn { background:#f4f4f5; border:1px solid #e4e4e7; border-radius:8px; padding:7px 12px; font-size:13px; cursor:pointer; color:#374151; transition:background .15s; white-space:nowrap; font-family:inherit; }
+.nav-btn:hover { background:#e4e4e7; }
+.nav-btn.today-btn { background:#111; color:#fff; border-color:#111; }
+.nav-btn.today-btn:hover { background:#333; }
+.date-input { padding:7px 10px; border:1px solid #e4e4e7; border-radius:8px; font-size:13px; font-family:inherit; outline:none; background:#fff; cursor:pointer; }
+.date-input:focus { border-color:#111; }
+
+/* ── Main ────────────────────────────────────────────── */
+.main { max-width:1000px; margin:0 auto; padding:24px 20px; }
+
+/* ── Date heading ────────────────────────────────────── */
+.date-heading { font-size:18px; font-weight:700; margin-bottom:20px; letter-spacing:-.02em; color:#111; }
+
+/* ── Stats ───────────────────────────────────────────── */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.stat  { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:16px 18px; }
+.stat-val  { font-size:26px; font-weight:800; line-height:1; letter-spacing:-.03em; }
+.stat-lbl  { font-size:12px; color:#71717a; margin-top:5px; font-weight:500; }
+.stat-sub  { font-size:11px; color:#a1a1aa; margin-top:2px; min-height:14px; }
+
+/* ── Section label ───────────────────────────────────── */
+.section-label { font-size:11px; font-weight:700; color:#a1a1aa; text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; }
+
+/* ── DAY VIEW ────────────────────────────────────────── */
+.reserva-card { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:16px 20px; margin-bottom:10px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; transition:opacity .2s; }
+.reserva-card.done { opacity:.45; }
+.r-hora { font-size:20px; font-weight:800; letter-spacing:-.02em; line-height:1; min-width:52px; }
+.r-hora-end { font-size:11px; color:#a1a1aa; margin-top:2px; }
+.r-sep { width:3px; height:40px; background:#e4e4e7; border-radius:2px; flex-shrink:0; }
+.r-sep.active { background:#22c55e; }
+.r-info { flex:1; min-width:130px; }
+.r-nombre { font-size:15px; font-weight:600; margin-bottom:3px; }
+.r-svc    { font-size:13px; color:#71717a; }
+.r-contact { display:flex; align-items:center; gap:8px; margin-top:4px; flex-wrap:wrap; }
+.r-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.badge-ok { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 9px; border-radius:100px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; }
+.dot-green { width:5px; height:5px; border-radius:50%; background:#22c55e; }
+.btn-sm { background:#f4f4f5; color:#111; border:1px solid #e4e4e7; font-size:12px; font-weight:500; padding:6px 11px; border-radius:7px; cursor:pointer; white-space:nowrap; text-decoration:none; display:inline-flex; align-items:center; font-family:inherit; transition:background .15s; }
+.btn-sm:hover { background:#e4e4e7; }
+.btn-danger { background:#fff; color:#ef4444; border-color:#fecaca; }
+.btn-danger:hover { background:#fef2f2; }
+.empty-state   { text-align:center; padding:52px 24px; color:#a1a1aa; font-size:14px; background:#fff; border:1px solid #e4e4e7; border-radius:12px; }
+.loading-state { text-align:center; padding:40px; color:#a1a1aa; font-size:13px; }
+
+/* ── SEMANA / MULTI VIEW ─────────────────────────────── */
+.week-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:12px; }
+.multi-grid   { display:grid; gap:12px; }
+.multi-grid.g3 { grid-template-columns:repeat(3,1fr); }
+.multi-grid.g7 { grid-template-columns:repeat(7,1fr); min-width:700px; }
+@media(max-width:860px) { .multi-grid.g3 { grid-template-columns:1fr 1fr; } }
+@media(max-width:580px) { .multi-grid.g3 { grid-template-columns:1fr; } }
+.day-col { background:#fff; border:1px solid #e4e4e7; border-radius:12px; overflow:hidden; }
+.day-col-head { padding:11px 13px; border-bottom:1px solid #e4e4e7; display:flex; align-items:center; justify-content:space-between; }
+.day-col-head.today-col { background:#111; color:#fff; }
+.day-col-title { font-size:12px; font-weight:600; color:#71717a; text-transform:uppercase; letter-spacing:.06em; }
+.day-col-head.today-col .day-col-title { color:rgba(255,255,255,.7); }
+.day-col-cnt { font-size:11px; font-weight:600; background:#f4f4f5; color:#374151; padding:2px 7px; border-radius:100px; }
+.day-col-head.today-col .day-col-cnt { background:rgba(255,255,255,.15); color:#fff; }
+.day-col-body { padding:8px; }
+.mini-card  { padding:8px 10px; border-radius:8px; border-left:3px solid #22c55e; background:#f9fafb; margin-bottom:6px; }
+.mini-card.past { border-color:#d1d5db; opacity:.55; }
+.mini-time  { font-size:11px; font-weight:700; color:#111; margin-bottom:1px; }
+.mini-name  { font-size:12px; font-weight:500; color:#374151; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mini-svc   { font-size:11px; color:#a1a1aa; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mini-empty { text-align:center; padding:14px 8px; color:#d1d5db; font-size:12px; }
+
+/* ── MONTH VIEW ──────────────────────────────────────── */
+.month-summary    { font-size:13px; color:#71717a; font-weight:500; margin-bottom:16px; }
+.month-cal        { background:#fff; border:1px solid #e4e4e7; border-radius:12px; overflow:hidden; }
+.month-dow-row    { display:grid; grid-template-columns:repeat(7,1fr); background:#f9fafb; border-bottom:1px solid #e4e4e7; }
+.month-dow-cell   { padding:9px 0; text-align:center; font-size:11px; font-weight:700; color:#a1a1aa; text-transform:uppercase; letter-spacing:.06em; }
+.month-weeks-grid { display:grid; grid-template-columns:repeat(7,1fr); }
+.month-cell { min-height:80px; padding:8px 8px 6px; border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0; cursor:pointer; transition:background .12s; position:relative; }
+.month-cell:nth-child(7n)    { border-right:none; }
+.month-cell:hover:not(.mc-empty) { background:#f9fafb; }
+.month-cell.mc-today         { background:#eff6ff; }
+.month-cell.mc-today .mc-day { background:#111; color:#fff; border-radius:50%; }
+.month-cell.mc-past          { opacity:.6; }
+.month-cell.mc-empty         { background:#fafafa; cursor:default; pointer-events:none; }
+.mc-day   { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; font-size:13px; font-weight:600; color:#111; margin-bottom:5px; }
+.mc-badge { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:100px; line-height:1.5; }
+.mc-badge-0    { color:#d1d5db; }
+.mc-badge-lo   { background:#f0fdf4; color:#16a34a; }
+.mc-badge-hi   { background:#dcfce7; color:#15803d; }
+.mc-badge-full { background:#166534; color:#fff; }
+
+/* ── EQUIPO TAB ──────────────────────────────────────── */
+.equipo-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.equipo-title  { font-size:16px; font-weight:700; }
+.btn-add { background:#111; color:#fff; border:none; border-radius:9px; padding:9px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+.btn-add:hover { background:#333; }
+
+/* Worker form */
+.worker-form { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:24px; margin-bottom:16px; }
+.worker-form h3 { font-size:14px; font-weight:700; margin-bottom:18px; color:#374151; }
+.form-row   { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; margin-bottom:18px; }
+.form-group { display:flex; flex-direction:column; gap:5px; }
+.form-label { font-size:12px; font-weight:600; color:#71717a; }
+.form-input { padding:9px 12px; border:1.5px solid #e4e4e7; border-radius:8px; font-size:14px; font-family:inherit; outline:none; transition:border-color .15s; background:#fff; }
+.form-input:focus { border-color:#111; }
+.form-input.w-name { width:220px; }
+
+/* Schedule grid */
+.sched-grid { border:1px solid #e4e4e7; border-radius:10px; overflow:hidden; margin-bottom:18px; }
+.sched-row  { display:grid; grid-template-columns:120px auto 1fr; align-items:center; padding:10px 14px; gap:12px; border-bottom:1px solid #e4e4e7; }
+.sched-row:last-child { border-bottom:none; }
+.sched-row.off { background:#fafafa; }
+.sched-day-label { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; }
+.day-toggle { width:16px; height:16px; cursor:pointer; accent-color:#111; flex-shrink:0; }
+.sched-times { display:flex; align-items:center; gap:6px; }
+.time-input  { padding:6px 8px; border:1px solid #e4e4e7; border-radius:7px; font-size:13px; font-family:inherit; outline:none; width:88px; }
+.time-input:focus { border-color:#111; }
+.time-sep        { font-size:12px; color:#a1a1aa; font-weight:500; }
+.sched-off-label { font-size:12px; color:#a1a1aa; font-style:italic; }
+.form-actions    { display:flex; gap:10px; align-items:center; }
+.btn-save        { background:#111; color:#fff; border:none; border-radius:8px; padding:10px 20px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+.btn-save:hover  { background:#333; }
+.btn-cancel-form { background:#f4f4f5; color:#111; border:1px solid #e4e4e7; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:500; cursor:pointer; font-family:inherit; }
+.btn-cancel-form:hover { background:#e4e4e7; }
+
+/* Worker list */
+.worker-card   { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:18px 20px; margin-bottom:10px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.worker-avatar { width:40px; height:40px; border-radius:50%; background:#111; color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+.worker-info   { flex:1; min-width:140px; }
+.worker-name   { font-size:15px; font-weight:600; margin-bottom:4px; }
+.worker-sched  { font-size:12px; color:#71717a; line-height:1.6; }
+.worker-actions { display:flex; gap:8px; }
+
+/* ── Block panel ─────────────────────────────────────── */
+.block-panel       { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:20px; margin-bottom:20px; }
+.block-panel-title { font-size:13px; font-weight:600; color:#374151; margin-bottom:14px; }
+.block-form        { display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; }
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width:640px) {
+  .tab { padding:11px 11px; font-size:12px; }
+  .tab-bar-right { width:100%; border-top:1px solid #f0f0f0; padding:6px 0; gap:5px; margin-left:0; flex-wrap:wrap; }
+  .nav-btn    { padding:6px 10px; font-size:12px; flex:1; text-align:center; justify-content:center; }
+  .date-input { font-size:12px; padding:6px 8px; flex:1; }
+  .main   { padding:16px 12px; }
+  .stats  { grid-template-columns:1fr 1fr; gap:10px; }
+  .stat-val { font-size:22px; }
+  .stat   { padding:14px 14px; }
+  .month-cell { min-height:56px; padding:5px 4px; }
+  .mc-day { width:22px; height:22px; font-size:11px; margin-bottom:3px; }
+  .mc-badge { font-size:10px; padding:1px 5px; }
+  .month-dow-cell { font-size:10px; padding:7px 0; }
+  .r-hora { font-size:16px; min-width:44px; }
+}
+@media (max-width:400px) {
+  .tab { padding:10px 8px; font-size:11px; }
+  .sched-row { grid-template-columns:100px auto 1fr; padding:8px 10px; gap:8px; }
+  .form-input.w-name { width:100%; }
+}

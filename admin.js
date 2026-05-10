@@ -1,0 +1,605 @@
+/* ============================================================
+   SITALIA — admin.js
+   Lógica del panel de administración.
+   Configuración por negocio: window.NEGOCIO_ID y window.NEGOCIO_NOMBRE
+   deben definirse en el HTML antes de cargar este script.
+   ============================================================ */
+
+/* ── Constantes y estado ──────────────────────────────── */
+var NEGOCIO = window.NEGOCIO_ID || 'negocio';
+
+var _token    = '';
+var _view     = 'day';
+var _baseDate = new Date();
+
+var DAYS_SHORT  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+var DAYS_LONG   = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+var MONTHS      = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var MONTHS_LONG = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var MONTHS_C    = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+/* ── Auth ─────────────────────────────────────────────── */
+function login() {
+  var pwd = document.getElementById('pwd-input').value.trim();
+  if (!pwd) return;
+  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + isoDate(_baseDate) + '&token=' + enc(pwd))
+    .then(function (r) {
+      if (r.ok) {
+        _token = pwd;
+        sessionStorage.setItem('admin_token', pwd);
+        document.getElementById('login-screen').style.display  = 'none';
+        document.getElementById('admin-screen').style.display  = 'block';
+        document.getElementById('fecha-input').value = isoDate(_baseDate);
+        loadTodayStats();
+        render();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    })
+    .catch(function () { document.getElementById('login-error').style.display = 'block'; });
+}
+
+function logout() {
+  sessionStorage.removeItem('admin_token');
+  _token = '';
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd-input').value = '';
+}
+
+(function autoLogin() {
+  var saved = sessionStorage.getItem('admin_token');
+  if (saved) { document.getElementById('pwd-input').value = saved; login(); }
+})();
+
+/* ── Helpers ──────────────────────────────────────────── */
+function isoDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function pad(n)     { return n < 10 ? '0' + n : '' + n; }
+function enc(s)     { return encodeURIComponent(s); }
+function fmt(m)     { var h = Math.floor(m / 60), mm = m % 60; return h + ':' + (mm < 10 ? '0' : '') + mm; }
+function minsToTime(m) { return pad(Math.floor(m / 60)) + ':' + pad(m % 60); }
+function timeToMins(t) { var p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1] || 0); }
+function addDays(d, n) { var r = new Date(d); r.setDate(r.getDate() + n); return r; }
+function weekStart(d) {
+  var r = new Date(d), dow = r.getDay();
+  r.setDate(r.getDate() + (dow === 0 ? -6 : 1 - dow));
+  return r;
+}
+function isToday(d) {
+  var t = new Date(); t.setHours(0, 0, 0, 0);
+  var x = new Date(d); x.setHours(0, 0, 0, 0);
+  return x.getTime() === t.getTime();
+}
+function shortDate(d) {
+  return DAYS_SHORT[d.getDay() === 0 ? 6 : d.getDay() - 1] + ' ' + d.getDate() + ' ' + MONTHS_C[d.getMonth()];
+}
+function longDate(d) {
+  var dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
+  return DAYS_LONG[dow] + ', ' + d.getDate() + ' de ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+/* ── Fetch helpers ────────────────────────────────────── */
+function fetchDay(fecha) {
+  return fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha + '&token=' + enc(_token))
+    .then(function (r) { return r.json(); })
+    .then(function (d) { return d.reservas || []; });
+}
+function fetchWorkers() {
+  return fetch('/api/trabajadores?negocio=' + NEGOCIO + '&token=' + enc(_token))
+    .then(function (r) { return r.json(); })
+    .then(function (d) { return d.trabajadores || []; });
+}
+function soloReales(rs) {
+  return rs.filter(function (r) { return !r.servicio || !r.servicio.startsWith('BLOQUEADO:'); });
+}
+
+/* ── Stats (siempre datos de hoy) ─────────────────────── */
+function loadTodayStats() {
+  var today = isoDate(new Date());
+  var mon   = weekStart(new Date());
+
+  ['s-total', 's-prox', 's-ing', 's-week'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && el.textContent === '—') el.textContent = '…';
+  });
+
+  fetchDay(today).then(function (all) {
+    var rs   = soloReales(all);
+    var now  = new Date();
+    var minN = now.getHours() * 60 + now.getMinutes();
+
+    document.getElementById('s-total').textContent     = rs.length;
+    document.getElementById('s-total-sub').textContent = rs.length === 1 ? 'cita confirmada' : 'citas confirmadas';
+
+    var prox = rs.find(function (r) { return r.hora_inicio >= minN; });
+    document.getElementById('s-prox').textContent     = prox ? fmt(prox.hora_inicio) : '—';
+    document.getElementById('s-prox-sub').textContent = prox ? prox.nombre : (rs.length ? 'no quedan más hoy' : 'libre');
+
+    var ing = rs.reduce(function (s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
+    document.getElementById('s-ing').textContent     = ing > 0 ? Math.round(ing) + '€' : (rs.length ? '0€' : '—');
+    document.getElementById('s-ing-sub').textContent = 'ingresos estimados';
+  }).catch(function () { document.getElementById('s-total').textContent = '?'; });
+
+  var promises = [];
+  for (var i = 0; i < 7; i++) promises.push(fetchDay(isoDate(addDays(mon, i))));
+  Promise.all(promises).then(function (days) {
+    var allRs = days.map(soloReales);
+    var total = allRs.reduce(function (s, d) { return s + d.length; }, 0);
+    var ing   = allRs.reduce(function (s, d) {
+      return s + d.reduce(function (ss, r) { return ss + (parseFloat(r.precio) || 0); }, 0);
+    }, 0);
+    document.getElementById('s-week').textContent     = total;
+    document.getElementById('s-week-sub').textContent = total + ' citas' + (ing > 0 ? ' · ' + Math.round(ing) + '€' : '');
+  }).catch(function () { document.getElementById('s-week').textContent = '?'; });
+}
+
+/* ── Navegación y vistas ──────────────────────────────── */
+function setView(v) {
+  _view = v;
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.classList.toggle('active', t.dataset.view === v);
+  });
+  document.getElementById('nav-controls').style.display = v === 'equipo' ? 'none' : '';
+  render();
+}
+
+function navigate(dir) {
+  if (_view === 'month') {
+    var m = _baseDate.getMonth() + dir;
+    var y = _baseDate.getFullYear();
+    _baseDate = new Date(y, m, 1);
+  } else {
+    var step = _view === 'week' ? 7 : 1;
+    _baseDate = addDays(_baseDate, dir * step);
+  }
+  document.getElementById('fecha-input').value = isoDate(_baseDate);
+  render();
+}
+
+function irHoy() {
+  _baseDate = new Date();
+  document.getElementById('fecha-input').value = isoDate(_baseDate);
+  render();
+}
+
+function onDateChange() {
+  var v = document.getElementById('fecha-input').value;
+  if (v) { _baseDate = new Date(v + 'T12:00:00'); render(); }
+}
+
+function render() {
+  if      (_view === 'day')    renderDay();
+  else if (_view === 'week')   renderMulti(7);
+  else if (_view === 'month')  renderMonth();
+  else if (_view === 'equipo') renderEquipo();
+}
+
+/* ── Vista diaria ─────────────────────────────────────── */
+function renderDay() {
+  var fecha = isoDate(_baseDate);
+  document.getElementById('date-heading').textContent = longDate(_baseDate);
+  document.getElementById('view-content').innerHTML =
+    '<div class="block-panel">' +
+      '<div class="block-panel-title">Bloquear franja horaria</div>' +
+      '<div class="block-form">' +
+        '<div class="form-group"><label class="form-label">Fecha</label><input type="date" id="bl-fecha" class="form-input" value="' + fecha + '"></div>' +
+        '<div class="form-group"><label class="form-label">Hora inicio</label><input type="time" id="bl-ini" class="form-input" value="09:00"></div>' +
+        '<div class="form-group"><label class="form-label">Hora fin</label><input type="time" id="bl-fin" class="form-input" value="10:00"></div>' +
+        '<div class="form-group"><label class="form-label">Motivo (opcional)</label><input type="text" id="bl-motivo" class="form-input" style="width:180px" placeholder="Reunión, festivo…"></div>' +
+        '<div class="form-group"><label class="form-label">&nbsp;</label><button class="btn-save" onclick="bloquearFranja()">Bloquear</button></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="section-label">Citas del día</div>' +
+    '<div id="day-list"><div class="loading-state">Cargando…</div></div>';
+
+  fetchDay(fecha).then(function (rs) {
+    renderDayList(rs, fecha, 'day-list');
+  }).catch(function () {
+    document.getElementById('day-list').innerHTML = '<div class="empty-state">Error al cargar</div>';
+  });
+}
+
+function renderDayList(rs, fecha, elId) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+
+  var reales     = rs.filter(function (r) { return !r.servicio || !r.servicio.startsWith('BLOQUEADO:'); });
+  var bloqueados = rs.filter(function (r) { return r.servicio && r.servicio.startsWith('BLOQUEADO:'); });
+
+  if (rs.length === 0) { el.innerHTML = '<div class="empty-state">No hay citas para este día</div>'; return; }
+
+  var now   = new Date();
+  var minN  = now.getHours() * 60 + now.getMinutes();
+  var today = isToday(new Date(fecha + 'T12:00:00'));
+  var html  = '';
+
+  if (reales.length === 0) {
+    html += '<div class="empty-state" style="margin-bottom:12px">Sin citas de clientes</div>';
+  } else {
+    html += reales.map(function (r) {
+      var horaFin = r.hora_fin || (r.hora_inicio + r.duracion_min);
+      var done    = today && horaFin <= minN;
+      var active  = today && r.hora_inicio <= minN && horaFin > minN;
+      return '<div class="reserva-card' + (done ? ' done' : '') + '" id="card-' + r.id + '">' +
+        '<div><div class="r-hora">' + fmt(r.hora_inicio) + '</div><div class="r-hora-end">' + fmt(horaFin) + '</div></div>' +
+        '<div class="r-sep' + (active ? ' active' : '') + '"></div>' +
+        '<div class="r-info">' +
+          '<div class="r-nombre">' + r.nombre + '</div>' +
+          '<div class="r-svc">' + r.servicio + ' &middot; ' + r.duracion_min + ' min' + (r.precio ? ' &middot; ' + r.precio + '€' : '') + '</div>' +
+          '<div class="r-contact">' +
+            (r.telefono ? '<a href="tel:' + r.telefono + '" class="btn-sm">' + r.telefono + '</a>' : '') +
+            '<a href="mailto:' + r.email + '" class="btn-sm">' + r.email + '</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="r-actions">' +
+          '<span class="badge-ok"><span class="dot-green"></span>Confirmada</span>' +
+          (r.telefono ? '<a href="https://wa.me/' + r.telefono.replace(/\D/g, '') + '?text=' + enc('Hola ' + r.nombre + ', te escribimos desde ' + (window.NEGOCIO_NOMBRE || 'el negocio') + '.') + '" target="_blank" class="btn-sm">WhatsApp</a>' : '') +
+          '<button class="btn-sm btn-danger" onclick="cancelar(' + r.id + ')">Cancelar</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  if (bloqueados.length > 0) {
+    html += '<div class="section-label" style="margin-top:20px">Franjas bloqueadas</div>';
+    html += bloqueados.map(function (r) {
+      var horaFin = r.hora_fin || (r.hora_inicio + r.duracion_min);
+      var motivo  = r.servicio.replace('BLOQUEADO: ', '');
+      return '<div class="reserva-card done" id="card-' + r.id + '" style="background:#fafafa;border-style:dashed">' +
+        '<div><div class="r-hora" style="font-size:15px;color:#71717a">' + fmt(r.hora_inicio) + '</div><div class="r-hora-end">' + fmt(horaFin) + '</div></div>' +
+        '<div class="r-sep"></div>' +
+        '<div class="r-info">' +
+          '<div class="r-nombre" style="color:#71717a;font-size:13px">Franja bloqueada</div>' +
+          '<div class="r-svc">' + motivo + '</div>' +
+        '</div>' +
+        '<div class="r-actions"><button class="btn-sm btn-danger" onclick="cancelar(' + r.id + ')" title="Eliminar bloqueo">Desbloquear</button></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  el.innerHTML = html;
+}
+
+/* ── Vista semana ─────────────────────────────────────── */
+function renderMulti(nDays) {
+  var start = nDays === 7 ? weekStart(_baseDate) : _baseDate;
+  var dates = [];
+  for (var i = 0; i < nDays; i++) dates.push(addDays(start, i));
+
+  var f = dates[0], l = dates[dates.length - 1];
+  document.getElementById('date-heading').textContent =
+    f.getDate() + ' ' + MONTHS_C[f.getMonth()] + ' — ' + l.getDate() + ' ' + MONTHS_C[l.getMonth()] + ' ' + l.getFullYear();
+
+  var cls      = nDays === 7 ? 'g7' : 'g3';
+  var innerHtml = '<div class="multi-grid ' + cls + '">';
+  dates.forEach(function (d) {
+    var key  = isoDate(d);
+    var head = isToday(d) ? 'today-col' : '';
+    innerHtml +=
+      '<div class="day-col">' +
+        '<div class="day-col-head ' + head + '">' +
+          '<span class="day-col-title">' + shortDate(d) + '</span>' +
+          '<span class="day-col-cnt" id="cnt-' + key + '">…</span>' +
+        '</div>' +
+        '<div class="day-col-body" id="body-' + key + '"><div class="loading-state" style="padding:16px 8px;font-size:12px">…</div></div>' +
+      '</div>';
+  });
+  innerHtml += '</div>';
+
+  document.getElementById('view-content').innerHTML =
+    nDays === 7 ? '<div class="week-scroll">' + innerHtml + '</div>' : innerHtml;
+
+  dates.forEach(function (d) {
+    var key = isoDate(d);
+    fetchDay(key).then(function (all) {
+      var rs  = soloReales(all);
+      var blq = all.length - rs.length;
+      var cntEl  = document.getElementById('cnt-' + key);
+      var bodyEl = document.getElementById('body-' + key);
+      if (cntEl)  cntEl.textContent = rs.length;
+      if (!bodyEl) return;
+
+      if (rs.length === 0 && blq === 0) { bodyEl.innerHTML = '<div class="mini-empty">Sin citas</div>'; return; }
+
+      var now  = new Date();
+      var minN = now.getHours() * 60 + now.getMinutes();
+      var tod  = isToday(d);
+      var html = rs.map(function (r) {
+        var horaFin = r.hora_fin || (r.hora_inicio + r.duracion_min);
+        var done    = tod && horaFin <= minN;
+        return '<div class="mini-card' + (done ? ' past' : '') + '" title="' + r.nombre + ' · ' + r.servicio + '">' +
+          '<div class="mini-time">' + fmt(r.hora_inicio) + '</div>' +
+          '<div class="mini-name">' + r.nombre + '</div>' +
+          '<div class="mini-svc">' + r.servicio + '</div>' +
+        '</div>';
+      }).join('');
+      if (blq > 0) html += '<div class="mini-empty" style="color:#d1d5db;font-size:11px;padding:6px 8px">' + blq + ' franja' + (blq > 1 ? 's' : '') + ' bloqueada' + (blq > 1 ? 's' : '') + '</div>';
+      bodyEl.innerHTML = html || '<div class="mini-empty">Sin citas</div>';
+    }).catch(function () {
+      var c = document.getElementById('cnt-' + key);
+      var b = document.getElementById('body-' + key);
+      if (c) c.textContent = '!';
+      if (b) b.innerHTML = '<div class="mini-empty">Error</div>';
+    });
+  });
+}
+
+/* ── Vista mes ────────────────────────────────────────── */
+function renderMonth() {
+  var year  = _baseDate.getFullYear();
+  var month = _baseDate.getMonth();
+
+  document.getElementById('date-heading').textContent = MONTHS_LONG[month] + ' ' + year;
+
+  var firstDay = new Date(year, month, 1);
+  var lastDay  = new Date(year, month + 1, 0);
+  var startOff = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+  var today    = new Date(); today.setHours(0, 0, 0, 0);
+
+  var dowRow = DAYS_SHORT.map(function (d) { return '<div class="month-dow-cell">' + d + '</div>'; }).join('');
+
+  var cells    = '';
+  var allDates = [];
+  for (var e = 0; e < startOff; e++) cells += '<div class="month-cell mc-empty"></div>';
+
+  for (var d = 1; d <= lastDay.getDate(); d++) {
+    var dt   = new Date(year, month, d);
+    var key  = isoDate(dt);
+    var isT  = dt.getTime() === today.getTime();
+    var isPt = dt < today;
+    var cls  = 'month-cell' + (isT ? ' mc-today' : '') + (isPt ? ' mc-past' : '');
+    cells += '<div class="' + cls + '" id="mc-' + key + '" onclick="goToDay(\'' + key + '\')" title="Ver día ' + d + '">' +
+      '<div class="mc-day">' + d + '</div>' +
+      '<div id="mcb-' + key + '" class="mc-badge mc-badge-0"></div>' +
+    '</div>';
+    allDates.push({ dt: dt, key: key });
+  }
+
+  var total    = startOff + lastDay.getDate();
+  var reminder = total % 7;
+  if (reminder > 0) { for (var f = reminder; f < 7; f++) cells += '<div class="month-cell mc-empty"></div>'; }
+
+  document.getElementById('view-content').innerHTML =
+    '<div id="month-summary" class="month-summary">Calculando…</div>' +
+    '<div class="month-cal">' +
+      '<div class="month-dow-row">' + dowRow + '</div>' +
+      '<div class="month-weeks-grid">' + cells + '</div>' +
+    '</div>';
+
+  var totales = { citas: 0, ingresos: 0, cargados: 0, total: allDates.length };
+
+  allDates.forEach(function (item) {
+    fetchDay(item.key).then(function (all) {
+      var rs  = soloReales(all);
+      var cnt = rs.length;
+      var ing = rs.reduce(function (s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
+
+      totales.citas    += cnt;
+      totales.ingresos += ing;
+      totales.cargados++;
+
+      var bdg = document.getElementById('mcb-' + item.key);
+      if (bdg) {
+        if (cnt === 0)       { bdg.className = 'mc-badge mc-badge-0';    bdg.textContent = ''; }
+        else if (cnt <= 2)   { bdg.className = 'mc-badge mc-badge-lo';   bdg.textContent = cnt === 1 ? '1 cita' : cnt + ' citas'; }
+        else if (cnt <= 4)   { bdg.className = 'mc-badge mc-badge-hi';   bdg.textContent = cnt + ' citas'; }
+        else                 { bdg.className = 'mc-badge mc-badge-full'; bdg.textContent = cnt + ' citas'; }
+      }
+
+      if (totales.cargados === totales.total) {
+        var sumEl = document.getElementById('month-summary');
+        if (sumEl) {
+          var txt = totales.citas === 0
+            ? 'Sin citas este mes'
+            : totales.citas + (totales.citas === 1 ? ' cita' : ' citas') + ' este mes';
+          if (totales.ingresos > 0) txt += ' · ' + Math.round(totales.ingresos) + '€ estimados';
+          sumEl.textContent = txt;
+        }
+      }
+    }).catch(function () { totales.cargados++; });
+  });
+}
+
+function goToDay(dateStr) {
+  _baseDate = new Date(dateStr + 'T12:00:00');
+  document.getElementById('fecha-input').value = dateStr;
+  setView('day');
+}
+
+/* ── Cancelar reserva ─────────────────────────────────── */
+function cancelar(id) {
+  if (!confirm('¿Cancelar esta reserva? Se enviará un email de aviso al cliente.')) return;
+  fetch('/api/admin-reservas?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d.ok) {
+        var c = document.getElementById('card-' + id);
+        if (c) { c.style.opacity = '.2'; c.style.pointerEvents = 'none'; }
+        setTimeout(function () { loadTodayStats(); render(); }, 600);
+      } else { alert('Error: ' + (d.error || '')); }
+    });
+}
+
+/* ── Bloquear franja ──────────────────────────────────── */
+function bloquearFranja() {
+  var fecha  = document.getElementById('bl-fecha').value;
+  var ini    = document.getElementById('bl-ini').value;
+  var fin    = document.getElementById('bl-fin').value;
+  var motivo = (document.getElementById('bl-motivo').value || '').trim() || 'Bloqueado';
+  if (!fecha || !ini || !fin) { alert('Completa fecha y horas.'); return; }
+  var iniM = timeToMins(ini), finM = timeToMins(fin);
+  if (finM <= iniM) { alert('La hora de fin debe ser posterior a la de inicio.'); return; }
+  fetch('/api/booking', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      negocio: NEGOCIO, servicio: 'BLOQUEADO: ' + motivo,
+      duracion_min: finM - iniM, precio: 0,
+      fecha: fecha, hora_inicio: iniM, hora_fin: finM,
+      nombre: 'Admin', email: 'admin@sitalia.es'
+    })
+  }).then(function (r) { return r.json(); }).then(function (d) {
+    if (d.ok) { document.getElementById('bl-motivo').value = ''; loadTodayStats(); render(); }
+    else { alert('Error: ' + (d.error || 'No se pudo bloquear')); }
+  }).catch(function () { alert('Error de conexión'); });
+}
+
+/* ── Pestaña Equipo ───────────────────────────────────── */
+var _editingId = null;
+
+function renderEquipo() {
+  document.getElementById('date-heading').textContent = 'Gestión del equipo';
+  document.getElementById('view-content').innerHTML =
+    '<div class="equipo-header">' +
+      '<div class="equipo-title">Trabajadores</div>' +
+      '<button class="btn-add" onclick="showWorkerForm(null)">+ Añadir trabajador</button>' +
+    '</div>' +
+    '<div id="worker-form-wrap" style="display:none"></div>' +
+    '<div id="workers-list"><div class="loading-state">Cargando…</div></div>';
+  loadWorkers();
+}
+
+function loadWorkers() {
+  fetchWorkers().then(function (ws) {
+    var el = document.getElementById('workers-list');
+    if (!el) return;
+    if (ws.length === 0) {
+      el.innerHTML = '<div class="empty-state">No hay trabajadores. Añade el primero para gestionar la disponibilidad de citas.</div>';
+      return;
+    }
+    el.innerHTML = ws.map(function (w) {
+      return '<div class="worker-card" id="wcard-' + w.id + '">' +
+        '<div class="worker-avatar">' + initials(w.nombre) + '</div>' +
+        '<div class="worker-info">' +
+          '<div class="worker-name">' + w.nombre + '</div>' +
+          '<div class="worker-sched">' + schedSummary(w.horario) + '</div>' +
+        '</div>' +
+        '<div class="worker-actions">' +
+          '<button class="btn-sm" onclick="showWorkerForm(' + JSON.stringify(w).replace(/"/g, '&quot;') + ')">Editar</button>' +
+          '<button class="btn-sm btn-danger" onclick="deleteWorker(' + w.id + ',\'' + w.nombre + '\')">Eliminar</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }).catch(function () {
+    var el = document.getElementById('workers-list');
+    if (el) el.innerHTML = '<div class="empty-state">Error al cargar los trabajadores</div>';
+  });
+}
+
+function initials(name) {
+  return name.split(' ').slice(0, 2).map(function (p) { return p[0]; }).join('').toUpperCase();
+}
+
+function schedSummary(horario) {
+  if (!horario || horario.length === 0) return 'Sin horario configurado';
+  var working = (horario || []).filter(function (d) { return d.inicio !== null; });
+  if (working.length === 0) return 'Sin días laborables';
+  return working.map(function (d) { return DAYS_SHORT[d.dow] + ' ' + minsToTime(d.inicio) + '-' + minsToTime(d.fin); }).join(' &middot; ');
+}
+
+function showWorkerForm(worker) {
+  _editingId = worker ? worker.id : null;
+  var wrap   = document.getElementById('worker-form-wrap');
+  if (!wrap) return;
+
+  var defaultSched = [
+    { dow: 0, inicio: 540, fin: 1080 }, { dow: 1, inicio: 540, fin: 1080 },
+    { dow: 2, inicio: 540, fin: 1080 }, { dow: 3, inicio: 540, fin: 1080 },
+    { dow: 4, inicio: 540, fin: 1080 }, { dow: 5, inicio: null, fin: null },
+    { dow: 6, inicio: null, fin: null }
+  ];
+  var sched = worker ? (worker.horario && worker.horario.length ? worker.horario : defaultSched) : defaultSched;
+
+  var rows = '';
+  for (var i = 0; i < 7; i++) {
+    var dayData = sched.find(function (d) { return d.dow === i; }) || { dow: i, inicio: null, fin: null };
+    var works   = dayData.inicio !== null;
+    var iniVal  = works ? minsToTime(dayData.inicio) : '09:00';
+    var finVal  = works ? minsToTime(dayData.fin)    : '18:00';
+    rows +=
+      '<div class="sched-row' + (works ? '' : ' off') + '" id="srow-' + i + '">' +
+        '<label class="sched-day-label">' +
+          '<input type="checkbox" class="day-toggle" id="dcheck-' + i + '" ' + (works ? 'checked' : '') + ' onchange="toggleDayRow(' + i + ')">' +
+          DAYS_LONG[i] +
+        '</label>' +
+        '<div class="sched-times" id="stimes-' + i + '" style="' + (works ? '' : 'display:none') + '">' +
+          '<input type="time" class="time-input" id="dini-' + i + '" value="' + iniVal + '">' +
+          '<span class="time-sep">—</span>' +
+          '<input type="time" class="time-input" id="dfin-' + i + '" value="' + finVal + '">' +
+        '</div>' +
+        '<span class="sched-off-label" id="soff-' + i + '" style="' + (works ? 'display:none' : '') + '">Libre</span>' +
+      '</div>';
+  }
+
+  wrap.innerHTML =
+    '<div class="worker-form">' +
+      '<h3>' + (worker ? 'Editar trabajador' : 'Nuevo trabajador') + '</h3>' +
+      '<div class="form-row">' +
+        '<div class="form-group">' +
+          '<label class="form-label">Nombre</label>' +
+          '<input type="text" id="w-nombre" class="form-input w-name" placeholder="Nombre completo" value="' + (worker ? worker.nombre : '') + '">' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-label" style="margin-bottom:10px">Horario laboral</div>' +
+      '<div class="sched-grid">' + rows + '</div>' +
+      '<div class="form-actions">' +
+        '<button class="btn-save" onclick="saveWorker()">Guardar</button>' +
+        '<button class="btn-cancel-form" onclick="hideWorkerForm()">Cancelar</button>' +
+      '</div>' +
+    '</div>';
+
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function toggleDayRow(i) {
+  var checked = document.getElementById('dcheck-' + i).checked;
+  var row     = document.getElementById('srow-' + i);
+  var times   = document.getElementById('stimes-' + i);
+  var off     = document.getElementById('soff-' + i);
+  if (checked) { row.classList.remove('off'); times.style.display = ''; off.style.display = 'none'; }
+  else         { row.classList.add('off');    times.style.display = 'none'; off.style.display = ''; }
+}
+
+function hideWorkerForm() {
+  var wrap = document.getElementById('worker-form-wrap');
+  if (wrap) wrap.style.display = 'none';
+  _editingId = null;
+}
+
+function saveWorker() {
+  var nombre = (document.getElementById('w-nombre').value || '').trim();
+  if (!nombre) { alert('El nombre es obligatorio.'); return; }
+
+  var horario = [];
+  for (var i = 0; i < 7; i++) {
+    var works = document.getElementById('dcheck-' + i).checked;
+    horario.push({ dow: i, inicio: works ? timeToMins(document.getElementById('dini-' + i).value) : null, fin: works ? timeToMins(document.getElementById('dfin-' + i).value) : null });
+  }
+
+  var body = { negocio: NEGOCIO, nombre: nombre, horario: horario, token: _token };
+  if (_editingId) body.id = _editingId;
+
+  fetch('/api/trabajadores', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function (r) {
+    return r.text().then(function (txt) {
+      try {
+        var d = JSON.parse(txt);
+        if (d.ok) { hideWorkerForm(); loadWorkers(); }
+        else { alert('Error del servidor: ' + (d.error || 'error desconocido')); }
+      } catch (e) {
+        alert('Error: el servidor devolvió una respuesta inesperada (HTTP ' + r.status + ').\n\n' + txt.slice(0, 200));
+      }
+    });
+  }).catch(function (e) { alert('Error de red: ' + e.message); });
+}
+
+function deleteWorker(id, nombre) {
+  if (!confirm('¿Eliminar a ' + nombre + ' del equipo?')) return;
+  fetch('/api/trabajadores?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) { if (d.ok) { loadWorkers(); } else { alert('Error: ' + (d.error || '')); } });
+}

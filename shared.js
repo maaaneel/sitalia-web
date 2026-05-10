@@ -311,14 +311,148 @@
   });
 
 
+  /* ── loadScheduleAndInit ───────────────────────────────────
+     Función única de arranque para cada nicho.
+     Llama a initBooking, carga el horario real desde la API,
+     instala el interceptor de disponibilidad y registra
+     confirmarReserva() como global.
+     Uso en cada config de nicho:
+       Sitalia.loadScheduleAndInit({ negocio:'peluqueria', svcs:[…], sched:[…], preselectSvc:2 });
+  ─────────────────────────────────────────────────────────── */
+  function loadScheduleAndInit(cfg) {
+    var negocio = cfg.negocio;
+    var svcs    = cfg.svcs;
+
+    // 1. Inicializar widget de reservas
+    initBooking(cfg);
+
+    // 2. Cargar horario real desde los trabajadores configurados en el admin
+    (async function loadSchedule() {
+      try {
+        var r = await fetch('/api/schedule?negocio=' + negocio);
+        var d = await r.json();
+        if (d.sched) { bkConfig.sched = d.sched; }
+      } catch (e) { /* si la API falla, mantener horario por defecto */ }
+    })();
+
+    // 3. Interceptar bkTo(3) para consultar disponibilidad real antes de mostrar slots
+    var _origBkTo = bkTo;
+    window.Sitalia.bkTo = async function (n) {
+      if (n === 3 && bk.date !== null && bk.svc !== null) {
+        try {
+          var d     = bk.date;
+          var fecha = d.getFullYear() + '-' +
+                      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(d.getDate()).padStart(2, '0');
+          var svc   = svcs[bk.svc];
+          var dow   = d.getDay() === 0 ? 6 : d.getDay() - 1;
+          var range = bkConfig.sched[dow];
+
+          var url = '/api/booking?negocio=' + negocio + '&fecha=' + fecha;
+          if (range && svc) {
+            url += '&rango_ini=' + range[0] + '&rango_fin=' + range[1] + '&duracion=' + svc.d;
+          }
+
+          var resp = await fetch(url);
+          var data = await resp.json();
+
+          // Mapear horas_inicio bloqueadas → índices de slot
+          var slots = [];
+          if (range && svc) {
+            for (var t = range[0]; t + svc.d <= range[1]; t += svc.d) slots.push(t);
+          }
+          var bookedIdx = (data.reservados || []).map(function (h) {
+            return slots.indexOf(h);
+          }).filter(function (i) { return i >= 0; });
+
+          // Resetear mensaje de día lleno
+          var fullMsg = document.getElementById('bk-full-msg');
+          if (fullMsg) fullMsg.style.display = 'none';
+
+          // Si el día está lleno, marcarlo y no avanzar al paso 3
+          if (slots.length > 0 && bookedIdx.length >= slots.length) {
+            document.querySelectorAll('.bk-cal-day.sel').forEach(function (el) {
+              el.classList.remove('sel');
+              el.style.cssText = 'color:var(--text3);text-decoration:line-through;opacity:.45;cursor:default';
+            });
+            if (fullMsg) fullMsg.style.display = 'block';
+            var btn2 = document.getElementById('bkbtn2');
+            if (btn2) btn2.disabled = true;
+            return;
+          }
+
+          bkConfig.bookedIdx = bookedIdx;
+        } catch (e) { console.warn('Error cargando disponibilidad:', e); }
+      }
+      _origBkTo(n);
+    };
+
+    // 4. Registrar confirmarReserva() como función global accesible desde el HTML
+    window.confirmarReserva = async function () {
+      var nombre = document.getElementById('bk-nombre').value.trim();
+      var tel    = document.getElementById('bk-tel').value.trim();
+      var email  = document.getElementById('bk-email').value.trim();
+
+      if (!nombre || !email) { alert('Por favor introduce tu nombre y email.'); return; }
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRe.test(email)) {
+        alert('El email introducido no es válido.\nEjemplo correcto: nombre@dominio.com');
+        return;
+      }
+      if (bk.svc === null || !bk.date || bk.st === '') {
+        alert('Por favor selecciona servicio, fecha y hora primero.');
+        return;
+      }
+
+      var btn    = document.getElementById('bk-submit');
+      var btnTxt = document.getElementById('bk-submit-txt');
+      btn.disabled = true;
+      btnTxt.textContent = 'Enviando...';
+
+      var svc        = svcs[bk.svc];
+      var d          = bk.date;
+      var fecha      = d.getFullYear() + '-' +
+                       String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                       String(d.getDate()).padStart(2, '0');
+      var partes     = bk.st.split(':');
+      var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
+      var horaFin    = horaInicio + svc.d;
+
+      try {
+        var resp = await fetch('/api/booking', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            negocio: negocio, servicio: svc.n, duracion_min: svc.d, precio: svc.p,
+            fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin,
+            nombre: nombre, telefono: tel, email: email
+          })
+        });
+        var data = await resp.json();
+        if (!resp.ok) {
+          alert(data.error || 'Error al confirmar la reserva.');
+          btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+          return;
+        }
+        btn.style.display = 'none';
+        document.getElementById('bk-ok').style.display = 'block';
+        document.querySelector('.bk-back').style.display = 'none';
+      } catch (e) {
+        alert('Error de conexión. Inténtalo de nuevo.');
+        btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
+      }
+    };
+  }
+
   /* ── Exports globales ──────────────────────────────────── */
   window.Sitalia = {
-    initBooking: initBooking,
-    bkTo:        bkTo,
-    bkMon:       bkMon,
-    bkWA:        bkWA,
-    getBkState:  function() { return bk; },
-    setBkConfig: function(cfg) { Object.assign(bkConfig, cfg); }
+    initBooking:         initBooking,
+    loadScheduleAndInit: loadScheduleAndInit,
+    bkTo:                bkTo,
+    bkMon:               bkMon,
+    bkWA:                bkWA,
+    getBkState:          function () { return bk; },
+    setBkConfig:         function (cfg) { Object.assign(bkConfig, cfg); }
   };
 
 })();
