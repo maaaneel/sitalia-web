@@ -118,7 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mc-badge-lo{background:#f0fdf4;color:#16a34a}
 .mc-badge-hi{background:#dcfce7;color:#15803d}
 .mc-badge-full{background:#166534;color:#fff}
-.mc-ing{font-size:10px;color:#a1a1aa;margin-top:3px}
+.month-summary{font-size:13px;color:#71717a;font-weight:500;margin-bottom:16px}
 
 /* ── EQUIPO TAB ──────────────────────────────────────── */
 .equipo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
@@ -180,7 +180,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   .month-cell{min-height:56px;padding:5px 4px}
   .mc-day{width:22px;height:22px;font-size:11px;margin-bottom:3px}
   .mc-badge{font-size:10px;padding:1px 5px}
-  .mc-ing{display:none}
   .month-dow-cell{font-size:10px;padding:7px 0}
   .r-hora{font-size:16px;min-width:44px}
 }
@@ -663,7 +662,6 @@ function renderMonth() {
     cells += '<div class="' + cls + '" id="mc-' + key + '" onclick="goToDay(\'' + key + '\')" title="Ver día ' + d + '">' +
       '<div class="mc-day">' + d + '</div>' +
       '<div id="mcb-' + key + '" class="mc-badge mc-badge-0"></div>' +
-      '<div id="mci-' + key + '" class="mc-ing"></div>' +
     '</div>';
     allDates.push({ dt: dt, key: key });
   }
@@ -676,38 +674,58 @@ function renderMonth() {
   }
 
   document.getElementById('view-content').innerHTML =
+    '<div id="month-summary" class="month-summary">Calculando…</div>' +
     '<div class="month-cal">' +
       '<div class="month-dow-row">' + dowRow + '</div>' +
       '<div class="month-weeks-grid">' + cells + '</div>' +
     '</div>';
 
-  // Cargar datos de cada día en paralelo
+  // Cargar datos de cada día en paralelo y acumular totales
+  var totales = { citas: 0, ingresos: 0, cargados: 0, total: allDates.length };
+
   allDates.forEach(function(item) {
     fetchDay(item.key).then(function(all) {
       var rs  = soloReales(all);
       var cnt = rs.length;
       var ing = rs.reduce(function(s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
 
-      var bdg  = document.getElementById('mcb-' + item.key);
-      var ingEl = document.getElementById('mci-' + item.key);
-      if (!bdg) return;
+      // Acumular totales del mes
+      totales.citas    += cnt;
+      totales.ingresos += ing;
+      totales.cargados++;
 
-      if (cnt === 0) {
-        bdg.className   = 'mc-badge mc-badge-0';
-        bdg.textContent = '';
-      } else if (cnt <= 2) {
-        bdg.className   = 'mc-badge mc-badge-lo';
-        bdg.textContent = cnt === 1 ? '1 cita' : cnt + ' citas';
-      } else if (cnt <= 4) {
-        bdg.className   = 'mc-badge mc-badge-hi';
-        bdg.textContent = cnt + ' citas';
-      } else {
-        bdg.className   = 'mc-badge mc-badge-full';
-        bdg.textContent = cnt + ' citas';
+      // Actualizar badge del día
+      var bdg = document.getElementById('mcb-' + item.key);
+      if (bdg) {
+        if (cnt === 0) {
+          bdg.className   = 'mc-badge mc-badge-0';
+          bdg.textContent = '';
+        } else if (cnt <= 2) {
+          bdg.className   = 'mc-badge mc-badge-lo';
+          bdg.textContent = cnt === 1 ? '1 cita' : cnt + ' citas';
+        } else if (cnt <= 4) {
+          bdg.className   = 'mc-badge mc-badge-hi';
+          bdg.textContent = cnt + ' citas';
+        } else {
+          bdg.className   = 'mc-badge mc-badge-full';
+          bdg.textContent = cnt + ' citas';
+        }
       }
 
-      if (ingEl && ing > 0) ingEl.textContent = Math.round(ing) + '€';
-    }).catch(function() { /* silencioso */ });
+      // Actualizar resumen mensual cuando todos los días estén cargados
+      if (totales.cargados === totales.total) {
+        var sumEl = document.getElementById('month-summary');
+        if (sumEl) {
+          var txt = totales.citas === 0
+            ? 'Sin citas este mes'
+            : totales.citas + (totales.citas === 1 ? ' cita' : ' citas') + ' este mes';
+          if (totales.ingresos > 0) txt += ' · ' + Math.round(totales.ingresos) + '€ estimados';
+          sumEl.textContent = txt;
+        }
+      }
+    }).catch(function() {
+      totales.cargados++;
+    });
   });
 }
 
