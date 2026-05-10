@@ -29,29 +29,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .logout-btn:hover{color:#fff}
 
 /* ── Tab bar ─────────────────────────────────────────── */
-.tab-bar{background:#fff;border-bottom:1px solid #e4e4e7;padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto}
-.tab{padding:14px 16px;font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.tab-bar{background:#fff;border-bottom:1px solid #e4e4e7;padding:0 20px;display:flex;align-items:center;flex-wrap:wrap;position:sticky;top:56px;z-index:90}
+.tab{padding:13px 15px;font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .tab:hover{color:#111}
 .tab.active{color:#111;border-bottom-color:#111}
-.tab-bar-right{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 0;flex-shrink:0}
-.nav-btn{background:#f4f4f5;border:1px solid #e4e4e7;border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;color:#374151;transition:background .15s;white-space:nowrap;font-family:inherit}
+.tab-bar-right{margin-left:auto;display:flex;align-items:center;gap:6px;padding:6px 0;flex-shrink:0}
+.nav-btn{background:#f4f4f5;border:1px solid #e4e4e7;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;color:#374151;transition:background .15s;white-space:nowrap;font-family:inherit}
 .nav-btn:hover{background:#e4e4e7}
 .nav-btn.today-btn{background:#111;color:#fff;border-color:#111}
 .nav-btn.today-btn:hover{background:#333}
-.date-input{padding:7px 11px;border:1px solid #e4e4e7;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff;cursor:pointer}
+.date-input{padding:7px 10px;border:1px solid #e4e4e7;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff;cursor:pointer}
 .date-input:focus{border-color:#111}
 
 /* ── Main ────────────────────────────────────────────── */
-.main{max-width:1000px;margin:0 auto;padding:28px 24px}
+.main{max-width:1000px;margin:0 auto;padding:24px 20px}
 
 /* ── Date heading ────────────────────────────────────── */
-.date-heading{font-size:18px;font-weight:700;margin-bottom:22px;letter-spacing:-.02em;color:#111}
+.date-heading{font-size:18px;font-weight:700;margin-bottom:20px;letter-spacing:-.02em;color:#111}
 
 /* ── Stats ───────────────────────────────────────────── */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
-@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:400px){.stats{grid-template-columns:1fr 1fr}}
-.stat{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:18px 20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:16px 18px}
 .stat-val{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.03em}
 .stat-lbl{font-size:12px;color:#71717a;margin-top:5px;font-weight:500}
 .stat-sub{font-size:11px;color:#a1a1aa;margin-top:2px;min-height:14px}
@@ -80,12 +78,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .empty-state{text-align:center;padding:52px 24px;color:#a1a1aa;font-size:14px;background:#fff;border:1px solid #e4e4e7;border-radius:12px}
 .loading-state{text-align:center;padding:40px;color:#a1a1aa;font-size:13px}
 
-/* ── MULTI VIEW ──────────────────────────────────────── */
-.multi-grid{display:grid;gap:14px}
+/* ── SEMANA / MULTI VIEW ─────────────────────────────── */
+.week-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+.multi-grid{display:grid;gap:12px}
 .multi-grid.g3{grid-template-columns:repeat(3,1fr)}
-.multi-grid.g7{grid-template-columns:repeat(7,1fr)}
+.multi-grid.g7{grid-template-columns:repeat(7,1fr);min-width:700px}
 @media(max-width:860px){.multi-grid.g3{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.multi-grid.g3,.multi-grid.g7{grid-template-columns:1fr}}
+@media(max-width:580px){.multi-grid.g3{grid-template-columns:1fr}}
 .day-col{background:#fff;border:1px solid #e4e4e7;border-radius:12px;overflow:hidden}
 .day-col-head{padding:11px 13px;border-bottom:1px solid #e4e4e7;display:flex;align-items:center;justify-content:space-between}
 .day-col-head.today-col{background:#111;color:#fff}
@@ -100,6 +99,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mini-name{font-size:12px;font-weight:500;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mini-svc{font-size:11px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mini-empty{text-align:center;padding:14px 8px;color:#d1d5db;font-size:12px}
+
+/* ── MONTH VIEW ──────────────────────────────────────── */
+.month-cal{background:#fff;border:1px solid #e4e4e7;border-radius:12px;overflow:hidden}
+.month-dow-row{display:grid;grid-template-columns:repeat(7,1fr);background:#f9fafb;border-bottom:1px solid #e4e4e7}
+.month-dow-cell{padding:9px 0;text-align:center;font-size:11px;font-weight:700;color:#a1a1aa;text-transform:uppercase;letter-spacing:.06em}
+.month-weeks-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.month-cell{min-height:80px;padding:8px 8px 6px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .12s;position:relative;vertical-align:top}
+.month-cell:nth-child(7n){border-right:none}
+.month-cell:hover:not(.mc-empty){background:#f9fafb}
+.month-cell.mc-today{background:#eff6ff}
+.month-cell.mc-today .mc-day{background:#111;color:#fff;border-radius:50%}
+.month-cell.mc-past{opacity:.6}
+.month-cell.mc-empty{background:#fafafa;cursor:default;pointer-events:none}
+.mc-day{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;font-size:13px;font-weight:600;color:#111;margin-bottom:5px}
+.mc-badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:100px;line-height:1.5}
+.mc-badge-0{color:#d1d5db}
+.mc-badge-lo{background:#f0fdf4;color:#16a34a}
+.mc-badge-hi{background:#dcfce7;color:#15803d}
+.mc-badge-full{background:#166534;color:#fff}
+.mc-ing{font-size:10px;color:#a1a1aa;margin-top:3px}
 
 /* ── EQUIPO TAB ──────────────────────────────────────── */
 .equipo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
@@ -149,10 +168,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .block-form{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
 
 /* ── Responsive ──────────────────────────────────────── */
-@media(max-width:600px){
-  .main{padding:18px 14px}
+@media(max-width:640px){
+  .tab{padding:11px 11px;font-size:12px}
+  .tab-bar-right{width:100%;border-top:1px solid #f0f0f0;padding:6px 0;gap:5px;margin-left:0;flex-wrap:wrap}
+  .nav-btn{padding:6px 10px;font-size:12px;flex:1;text-align:center;justify-content:center}
+  .date-input{font-size:12px;padding:6px 8px;flex:1}
+  .main{padding:16px 12px}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
   .stat-val{font-size:22px}
+  .stat{padding:14px 14px}
+  .month-cell{min-height:56px;padding:5px 4px}
+  .mc-day{width:22px;height:22px;font-size:11px;margin-bottom:3px}
+  .mc-badge{font-size:10px;padding:1px 5px}
+  .mc-ing{display:none}
+  .month-dow-cell{font-size:10px;padding:7px 0}
   .r-hora{font-size:16px;min-width:44px}
+}
+@media(max-width:400px){
+  .tab{padding:10px 8px;font-size:11px}
   .sched-row{grid-template-columns:100px auto 1fr;padding:8px 10px;gap:8px}
   .form-input.w-name{width:100%}
 }
@@ -187,9 +220,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <button class="tab active" data-view="day"   onclick="setView('day')">Diaria</button>
-    <button class="tab"        data-view="3d"    onclick="setView('3d')">3 días</button>
-    <button class="tab"        data-view="week"  onclick="setView('week')">Semana</button>
+    <button class="tab active" data-view="day"    onclick="setView('day')">Día</button>
+    <button class="tab"        data-view="week"   onclick="setView('week')">Semana</button>
+    <button class="tab"        data-view="month"  onclick="setView('month')">Mes</button>
     <button class="tab"        data-view="equipo" onclick="setView('equipo')">Equipo</button>
     <div class="tab-bar-right" id="nav-controls">
       <button class="nav-btn" onclick="navigate(-1)">← Ant.</button>
@@ -246,6 +279,7 @@ var _baseDate = new Date();
 var DAYS_SHORT = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
 var DAYS_LONG  = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 var MONTHS     = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var MONTHS_LONG = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var MONTHS_C   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 /* ═══════════════════════════════════════════════════
@@ -337,8 +371,6 @@ function fetchWorkers() {
 /* ═══════════════════════════════════════════════════
    STATS (siempre con datos de HOY)
 ═══════════════════════════════════════════════════ */
-
-// Filtra slots bloqueados por admin (no son citas reales de clientes)
 function soloReales(rs) {
   return rs.filter(function(r) {
     return !r.servicio || !r.servicio.startsWith('BLOQUEADO:');
@@ -349,13 +381,11 @@ function loadTodayStats() {
   var today = isoDate(new Date());
   var mon   = weekStart(new Date());
 
-  // Indicadores de carga
   ['s-total','s-prox','s-ing','s-week'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el && el.textContent === '—') el.textContent = '…';
   });
 
-  // Stats del día de hoy
   fetchDay(today).then(function(all) {
     var rs  = soloReales(all);
     var now = new Date();
@@ -375,7 +405,6 @@ function loadTodayStats() {
     document.getElementById('s-total').textContent = '?';
   });
 
-  // Stats semanales (lunes → domingo de la semana actual)
   var promises = [];
   for (var i = 0; i < 7; i++) promises.push(fetchDay(isoDate(addDays(mon, i))));
   Promise.all(promises).then(function(days) {
@@ -404,8 +433,15 @@ function setView(v) {
   render();
 }
 function navigate(dir) {
-  var step = _view === 'week' ? 7 : _view === '3d' ? 3 : 1;
-  _baseDate = addDays(_baseDate, dir * step);
+  if (_view === 'month') {
+    // Navegar mes a mes
+    var m = _baseDate.getMonth() + dir;
+    var y = _baseDate.getFullYear();
+    _baseDate = new Date(y, m, 1);
+  } else {
+    var step = _view === 'week' ? 7 : 1;
+    _baseDate = addDays(_baseDate, dir * step);
+  }
   document.getElementById('fecha-input').value = isoDate(_baseDate);
   render();
 }
@@ -420,8 +456,8 @@ function onDateChange() {
 }
 function render() {
   if      (_view === 'day')    renderDay();
-  else if (_view === '3d')     renderMulti(3);
   else if (_view === 'week')   renderMulti(7);
+  else if (_view === 'month')  renderMonth();
   else if (_view === 'equipo') renderEquipo();
 }
 
@@ -456,7 +492,6 @@ function renderDayList(rs, fecha, elId) {
   var el = document.getElementById(elId);
   if (!el) return;
 
-  // Separar citas reales de franjas bloqueadas
   var reales     = rs.filter(function(r){ return !r.servicio || !r.servicio.startsWith('BLOQUEADO:'); });
   var bloqueados = rs.filter(function(r){ return r.servicio && r.servicio.startsWith('BLOQUEADO:'); });
 
@@ -471,7 +506,6 @@ function renderDayList(rs, fecha, elId) {
 
   var html = '';
 
-  // Citas reales
   if (reales.length === 0) {
     html += '<div class="empty-state" style="margin-bottom:12px">Sin citas de clientes</div>';
   } else {
@@ -499,7 +533,6 @@ function renderDayList(rs, fecha, elId) {
     }).join('');
   }
 
-  // Franjas bloqueadas (separadas visualmente)
   if (bloqueados.length > 0) {
     html += '<div class="section-label" style="margin-top:20px">Franjas bloqueadas</div>';
     html += bloqueados.map(function(r) {
@@ -523,7 +556,7 @@ function renderDayList(rs, fecha, elId) {
 }
 
 /* ═══════════════════════════════════════════════════
-   VISTA MULTI (3 días / semana)
+   VISTA SEMANA (multi-columna)
 ═══════════════════════════════════════════════════ */
 function renderMulti(nDays) {
   var start = nDays === 7 ? weekStart(_baseDate) : _baseDate;
@@ -535,11 +568,12 @@ function renderMulti(nDays) {
     f.getDate()+' '+MONTHS_C[f.getMonth()]+' — '+l.getDate()+' '+MONTHS_C[l.getMonth()]+' '+l.getFullYear();
 
   var cls = nDays === 7 ? 'g7' : 'g3';
-  var html = '<div class="multi-grid ' + cls + '">';
+  // Para 7 días, envolver en contenedor scrollable en móvil
+  var innerHtml = '<div class="multi-grid ' + cls + '">';
   dates.forEach(function(d) {
     var key = isoDate(d);
     var head = isToday(d) ? 'today-col' : '';
-    html += '<div class="day-col">'+
+    innerHtml += '<div class="day-col">'+
       '<div class="day-col-head '+head+'">'+
         '<span class="day-col-title">'+shortDate(d)+'</span>'+
         '<span class="day-col-cnt" id="cnt-'+key+'">…</span>'+
@@ -547,15 +581,19 @@ function renderMulti(nDays) {
       '<div class="day-col-body" id="body-'+key+'"><div class="loading-state" style="padding:16px 8px;font-size:12px">…</div></div>'+
     '</div>';
   });
-  html += '</div>';
+  innerHtml += '</div>';
+
+  var html = nDays === 7
+    ? '<div class="week-scroll">' + innerHtml + '</div>'
+    : innerHtml;
+
   document.getElementById('view-content').innerHTML = html;
 
   dates.forEach(function(d) {
     var key = isoDate(d);
     fetchDay(key).then(function(all) {
       var rs  = soloReales(all);
-      var blq = all.length - rs.length; // cantidad de bloqueados
-      // El contador solo muestra citas reales
+      var blq = all.length - rs.length;
       document.getElementById('cnt-'+key).textContent = rs.length;
       var body = document.getElementById('body-'+key);
       if (!body) return;
@@ -575,7 +613,6 @@ function renderMulti(nDays) {
           '<div class="mini-svc">'+r.servicio+'</div>'+
         '</div>';
       }).join('');
-      // Indicador de franjas bloqueadas si las hay
       if (blq > 0) {
         html += '<div class="mini-empty" style="color:#d1d5db;font-size:11px;padding:6px 8px">'+blq+' franja'+(blq>1?'s':'')+' bloqueada'+(blq>1?'s':'')+'</div>';
       }
@@ -587,6 +624,98 @@ function renderMulti(nDays) {
       if (b) b.innerHTML = '<div class="mini-empty">Error</div>';
     });
   });
+}
+
+/* ═══════════════════════════════════════════════════
+   VISTA MES
+═══════════════════════════════════════════════════ */
+function renderMonth() {
+  var year  = _baseDate.getFullYear();
+  var month = _baseDate.getMonth();
+
+  document.getElementById('date-heading').textContent = MONTHS_LONG[month] + ' ' + year;
+
+  var firstDay = new Date(year, month, 1);
+  var lastDay  = new Date(year, month + 1, 0);
+  var startOff = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // Lu=0
+  var today    = new Date(); today.setHours(0,0,0,0);
+
+  // Cabecera días de la semana
+  var dowRow = DAYS_SHORT.map(function(d) {
+    return '<div class="month-dow-cell">' + d + '</div>';
+  }).join('');
+
+  // Celdas vacías del inicio
+  var cells = '';
+  for (var e = 0; e < startOff; e++) {
+    cells += '<div class="month-cell mc-empty"></div>';
+  }
+
+  // Días del mes
+  var allDates = [];
+  for (var d = 1; d <= lastDay.getDate(); d++) {
+    var dt   = new Date(year, month, d);
+    var key  = isoDate(dt);
+    var isT  = dt.getTime() === today.getTime();
+    var isPt = dt < today;
+    var cls  = 'month-cell' + (isT ? ' mc-today' : '') + (isPt ? ' mc-past' : '');
+
+    cells += '<div class="' + cls + '" id="mc-' + key + '" onclick="goToDay(\'' + key + '\')" title="Ver día ' + d + '">' +
+      '<div class="mc-day">' + d + '</div>' +
+      '<div id="mcb-' + key + '" class="mc-badge mc-badge-0"></div>' +
+      '<div id="mci-' + key + '" class="mc-ing"></div>' +
+    '</div>';
+    allDates.push({ dt: dt, key: key });
+  }
+
+  // Celdas vacías al final para completar la última fila
+  var totalCells = startOff + lastDay.getDate();
+  var remainder  = totalCells % 7;
+  if (remainder > 0) {
+    for (var f = remainder; f < 7; f++) cells += '<div class="month-cell mc-empty"></div>';
+  }
+
+  document.getElementById('view-content').innerHTML =
+    '<div class="month-cal">' +
+      '<div class="month-dow-row">' + dowRow + '</div>' +
+      '<div class="month-weeks-grid">' + cells + '</div>' +
+    '</div>';
+
+  // Cargar datos de cada día en paralelo
+  allDates.forEach(function(item) {
+    fetchDay(item.key).then(function(all) {
+      var rs  = soloReales(all);
+      var cnt = rs.length;
+      var ing = rs.reduce(function(s, r) { return s + (parseFloat(r.precio) || 0); }, 0);
+
+      var bdg  = document.getElementById('mcb-' + item.key);
+      var ingEl = document.getElementById('mci-' + item.key);
+      if (!bdg) return;
+
+      if (cnt === 0) {
+        bdg.className   = 'mc-badge mc-badge-0';
+        bdg.textContent = '';
+      } else if (cnt <= 2) {
+        bdg.className   = 'mc-badge mc-badge-lo';
+        bdg.textContent = cnt === 1 ? '1 cita' : cnt + ' citas';
+      } else if (cnt <= 4) {
+        bdg.className   = 'mc-badge mc-badge-hi';
+        bdg.textContent = cnt + ' citas';
+      } else {
+        bdg.className   = 'mc-badge mc-badge-full';
+        bdg.textContent = cnt + ' citas';
+      }
+
+      if (ingEl && ing > 0) ingEl.textContent = Math.round(ing) + '€';
+    }).catch(function() { /* silencioso */ });
+  });
+}
+
+// Ir a la vista de día al hacer clic en el mes
+function goToDay(dateStr) {
+  _baseDate = new Date(dateStr + 'T12:00:00');
+  document.getElementById('fecha-input').value = dateStr;
+  setView('day');
 }
 
 /* ═══════════════════════════════════════════════════
@@ -707,7 +836,6 @@ function showWorkerForm(worker) {
   var wrap = document.getElementById('worker-form-wrap');
   if (!wrap) return;
 
-  // Horario por defecto: Lun-Vie 9:00-18:00
   var defaultSched = [
     {dow:0, inicio:540, fin:1080},
     {dow:1, inicio:540, fin:1080},
@@ -804,7 +932,6 @@ function saveWorker() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   }).then(function(r) {
-    // Leer como texto primero para detectar respuestas HTML (función no desplegada)
     return r.text().then(function(txt) {
       try {
         var d = JSON.parse(txt);
@@ -815,7 +942,6 @@ function saveWorker() {
           alert('Error del servidor: ' + (d.error || 'error desconocido'));
         }
       } catch(e) {
-        // El servidor devolvió HTML en vez de JSON — probablemente la función no está desplegada
         alert('Error: el servidor devolvió una respuesta inesperada (HTTP ' + r.status + ').\n\nPosibles causas:\n1. api/trabajadores.js no está subido a GitHub\n2. Vercel no ha redesplegado aún\n\nRespuesta del servidor:\n' + txt.slice(0, 200));
       }
     });
