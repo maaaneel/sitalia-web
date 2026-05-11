@@ -6,195 +6,7 @@
 <title>Vidal & Asociados | Bufete de Abogados · Madrid</title>
 <meta name="description" content="Bufete de abogados en Madrid especializado en derecho mercantil, laboral, civil y penal. Más de 20 años de experiencia. Consulta gratuita."/>
 <link rel="stylesheet" href="shared.css">
-<style>
-:root{
-  --bg:#f7f6f3; --bg-dark:#efece6; --bg-navy:#0f2035; --bg-card:#ffffff;
-  --text:#1a1a1a; --text-muted:#636059; --text-soft:#9a9590;
-  --accent:#1b3a5c; --accent-hover:#142d47; --accent-light:#2d5a8e;
-  --gold:#b8965a; --gold-light:#d4b483; --gold-pale:#f4ead8;
-  --border:#ddd8d0; --border-light:#e8e3db;
-}
-body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
-
-/* NAV */
-nav{background:var(--bg-navy);height:68px;padding:0 6%}
-.nav-logo{display:flex;align-items:center;gap:12px}
-.nav-logo-emblem{width:32px;height:32px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center}
-.nav-logo-emblem svg{width:16px;height:16px;fill:var(--gold)}
-.nav-logo-text{font-size:15px;font-weight:700;color:#fff;letter-spacing:.08em;text-transform:uppercase}
-.nav-logo-text span{color:var(--gold-light)}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--gold-light)}
-.nav-cta{background:var(--gold);color:var(--bg-navy);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;text-decoration:none;transition:background .2s}
-.nav-cta:hover{background:var(--gold-light)}
-@media(max-width:768px){.nav-links{display:none}}
-
-/* HERO */
-.hero{background:var(--bg-navy);min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:68px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,150,90,.05) 0%,transparent 50%);pointer-events:none}
-.hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 5% 80px 8%;position:relative;z-index:1}
-.hero-tag{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px}
-.hero-tag::before{content:"";width:28px;height:1px;background:var(--gold)}
-.hero-title{font-size:clamp(34px,4vw,58px);font-weight:800;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:22px}
-.hero-title em{font-style:normal;color:var(--gold-light);display:block;font-weight:300}
-.hero-desc{font-size:15px;color:rgba(255,255,255,.5);max-width:440px;line-height:1.75;margin-bottom:40px}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
-.btn-gold{background:var(--gold);color:var(--bg-navy);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-block}
-.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:#fff;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px 31px;border:1px solid rgba(255,255,255,.25);cursor:pointer;text-decoration:none;transition:all .2s;display:inline-block}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.hero-stats{display:flex;gap:40px;flex-wrap:wrap}
-.hero-stat-item{text-align:center}
-.hero-stat-num{font-size:30px;font-weight:800;color:var(--gold-light);letter-spacing:-.03em;line-height:1}
-.hero-stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:5px}
-.hero-visual{display:flex;align-items:center;justify-content:center;padding:60px 6%;position:relative;z-index:1}
-.hero-visual-card{border:1px solid rgba(255,255,255,.1);padding:40px;max-width:360px;width:100%;background:rgba(255,255,255,.03);backdrop-filter:blur(4px)}
-.hero-visual-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid rgba(184,150,90,.3)}
-.hero-visual-area{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.hero-visual-area:last-of-type{border-bottom:none}
-.hero-visual-area-dot{width:6px;height:6px;background:var(--gold);flex-shrink:0}
-.hero-visual-area-name{font-size:13px;color:rgba(255,255,255,.7);letter-spacing:.02em}
-.hero-visual-area-tag{margin-left:auto;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);padding:3px 10px;border:1px solid rgba(255,255,255,.08)}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{display:none}.hero-content{padding:60px 6%}}
-
-/* SECTIONS */
-section{padding:96px 6%}
-.section-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px}
-.section-label::before{content:"";width:20px;height:1px;background:var(--gold)}
-.section-title{font-size:clamp(26px,3.2vw,44px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px}
-.section-sub{font-size:15px;color:var(--text-muted);max-width:520px;line-height:1.7}
-.section-head{margin-bottom:60px}
-
-/* ÁREAS */
-#areas{background:var(--bg)}
-.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border:1px solid var(--border)}
-.area-card{background:var(--bg-card);padding:36px;border-bottom:1px solid var(--border-light);border-right:1px solid var(--border-light);transition:all .2s;cursor:default;position:relative;overflow:hidden}
-.area-card::before{content:"";position:absolute;left:0;top:0;width:3px;height:0;background:var(--gold);transition:height .3s}
-.area-card:hover::before{height:100%}
-.area-card:hover{background:var(--bg-dark)}
-.area-icon{font-size:26px;margin-bottom:16px;display:block}
-.area-title{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
-.area-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:14px}
-.area-items{list-style:none;display:flex;flex-direction:column;gap:5px}
-.area-items li{font-size:11px;color:var(--text-soft);display:flex;align-items:center;gap:7px}
-.area-items li::before{content:"";width:4px;height:1px;background:var(--gold);flex-shrink:0}
-@media(max-width:900px){.areas-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:580px){.areas-grid{grid-template-columns:1fr}}
-
-/* DIFERENCIADORES */
-#diferenciadores{background:var(--bg-navy)}
-.dif-grid{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:center}
-.dif-items{display:grid;grid-template-columns:1fr 1fr;gap:2px}
-.dif-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:28px;transition:background .15s}
-.dif-item:hover{background:rgba(255,255,255,.06)}
-.dif-item-num{font-size:36px;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1;margin-bottom:10px}
-.dif-item-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.01em}
-.dif-item-text{font-size:12px;color:rgba(255,255,255,.38);line-height:1.65}
-@media(max-width:768px){.dif-grid{grid-template-columns:1fr}.dif-items{grid-template-columns:1fr}}
-
-/* EQUIPO */
-#equipo{background:var(--bg)}
-.equipo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px;border:1px solid var(--border)}
-.equipo-card{background:var(--bg-card);overflow:hidden;transition:all .2s}
-.equipo-card:hover{box-shadow:0 8px 32px rgba(27,58,92,.1)}
-.equipo-photo{background:var(--bg-dark);height:180px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:3px solid var(--gold)}
-.equipo-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.equipo-initials{width:64px;height:64px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;letter-spacing:.05em}
-.equipo-info{padding:24px}
-.equipo-name{font-size:14px;font-weight:700;margin-bottom:3px;letter-spacing:-.01em}
-.equipo-role{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.equipo-bio{font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:12px}
-.equipo-col{font-size:10px;color:var(--text-soft);letter-spacing:.04em}
-.equipo-spec-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
-.equipo-tag{background:var(--gold-pale);color:var(--gold);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px}
-
-/* PROCESO */
-#proceso{background:var(--bg-dark)}
-.proceso-timeline{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border)}
-.proceso-item{padding:36px 28px;border-right:1px solid var(--border);background:var(--bg-card);position:relative}
-.proceso-item:last-child{border-right:none}
-.proceso-item::after{content:attr(data-arrow);position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--gold);z-index:2;background:var(--bg-card);line-height:1}
-.proceso-item:last-child::after{display:none}
-.proceso-step{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.proceso-step::before{content:"";display:inline-block;width:20px;height:1px;background:var(--gold)}
-.proceso-title{font-size:14px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
-.proceso-desc{font-size:12px;color:var(--text-muted);line-height:1.65}
-@media(max-width:900px){.proceso-timeline{grid-template-columns:repeat(2,1fr)}.proceso-item:nth-child(2){border-right:none}.proceso-item::after{display:none}}
-@media(max-width:580px){.proceso-timeline{grid-template-columns:1fr}.proceso-item{border-right:none}}
-
-/* CONSULTA */
-#consulta{background:var(--bg)}
-.consulta-wrap{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border)}
-.consulta-form{background:var(--bg-card);padding:48px}
-.consulta-promo{background:var(--bg-navy);padding:48px;position:relative;overflow:hidden}
-.consulta-promo::before{content:"";position:absolute;bottom:-40px;right:-40px;width:200px;height:200px;border:1px solid rgba(184,150,90,.15);border-radius:50%}
-.consulta-promo::after{content:"";position:absolute;bottom:-80px;right:-80px;width:300px;height:300px;border:1px solid rgba(184,150,90,.08);border-radius:50%}
-.form-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:9px;display:block}
-.form-input,.form-textarea{width:100%;background:var(--bg);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;font-weight:300;transition:border-color .2s;border-radius:0;margin-bottom:18px}
-.form-input:focus,.form-textarea:focus{border-color:var(--accent)}
-.form-textarea{resize:none;line-height:1.6}
-.form-select{width:100%;background:var(--bg);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text);outline:none;font-family:inherit;appearance:none;transition:border-color .2s;border-radius:0;margin-bottom:18px}
-.form-select:focus{border-color:var(--accent)}
-.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-btn{width:100%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background .2s;border-radius:0}
-.form-btn:hover{background:var(--accent-hover)}
-.form-success{text-align:center;padding:40px 0}
-.form-success-icon{font-size:48px;margin-bottom:16px}
-.form-success-title{font-size:18px;font-weight:700;margin-bottom:8px}
-.form-success-text{font-size:13px;color:var(--text-muted);line-height:1.65}
-.promo-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;position:relative;z-index:1}
-.promo-headline{font-size:26px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:24px;position:relative;z-index:1;letter-spacing:-.02em}
-.promo-headline em{color:var(--gold-light);font-style:normal;font-weight:300;display:block}
-.promo-items{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:32px;position:relative;z-index:1}
-.promo-item{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.5}
-.promo-item-check{width:20px;height:20px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--gold);margin-top:1px}
-.promo-contact{position:relative;z-index:1;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
-.promo-contact-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
-.promo-contact-phone{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em}
-.promo-contact-phone a{color:#fff;text-decoration:none}
-.promo-contact-email{font-size:12px;color:rgba(255,255,255,.35);margin-top:4px}
-@media(max-width:700px){.consulta-wrap{grid-template-columns:1fr}.form-grid-2{grid-template-columns:1fr}.consulta-form,.consulta-promo{padding:28px 22px}}
-
-/* UBICACIÓN */
-#ubicacion{background:var(--bg-dark);padding:0}
-.ub-grid{display:grid;grid-template-columns:1fr 1fr}
-.ub-map{background:#1a1a2e;min-height:380px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.ub-map-pin{font-size:44px;opacity:.3}
-.ub-map-addr{color:rgba(255,255,255,.2);font-size:11px;letter-spacing:.1em;text-align:center;max-width:180px;line-height:1.6;text-transform:uppercase}
-.ub-info{background:var(--bg-card);padding:48px;border:1px solid var(--border)}
-.ub-block{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border-light)}
-.ub-block:last-child{margin:0;padding:0;border:none}
-.ub-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.ub-text{font-size:13px;color:var(--text-muted);line-height:1.7}
-.ub-hor-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border-light)}
-.ub-hor-row:last-child{border-bottom:none}
-.ub-hor-day{color:var(--text-muted)}
-.ub-hor-time{font-weight:600}
-.ub-hor-time.closed{color:#c0392b;font-weight:400}
-@media(max-width:768px){.ub-grid{grid-template-columns:1fr}.ub-map{min-height:200px}}
-
-/* FOOTER */
-footer{background:#07121f;border-top:1px solid rgba(255,255,255,.04);padding:56px 6% 28px}
-.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
-.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.footer-brand-emblem{width:24px;height:24px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center}
-.footer-brand-emblem svg{width:12px;height:12px;fill:var(--gold)}
-.footer-brand-name{font-size:13px;font-weight:700;color:#fff;letter-spacing:.08em;text-transform:uppercase}
-.footer-brand-name span{color:var(--gold)}
-.footer-desc{font-size:11px;color:rgba(255,255,255,.22);line-height:1.7;max-width:240px;margin-bottom:16px}
-.footer-col-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
-.footer-links a{font-size:11px;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:var(--gold-light)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.04);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.footer-copy{font-size:10px;color:rgba(255,255,255,.18)}
-.footer-legal{display:flex;gap:16px}
-.footer-legal a{font-size:10px;color:rgba(255,255,255,.18);text-decoration:none}
-.footer-legal a:hover{color:rgba(255,255,255,.4)}
-@media(max-width:900px){.footer-inner{grid-template-columns:1fr 1fr}}
-@media(max-width:580px){.footer-inner{grid-template-columns:1fr}}
-</style>
+<link rel="stylesheet" href="abogados.css">
 </head>
 <body>
 
@@ -204,7 +16,6 @@ footer{background:#07121f;border-top:1px solid rgba(255,255,255,.04);padding:56p
   Sitalia
 </a>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <div class="nav-logo-emblem"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
@@ -394,7 +205,7 @@ footer{background:#07121f;border-top:1px solid rgba(255,255,255,.04);padding:56p
     <div><div class="footer-col-title">Legal</div><ul class="footer-links"><li><a href="#">Aviso legal</a></li><li><a href="#">Política de privacidad</a></li><li><a href="#">Política de cookies</a></li><li><a href="#">Honorarios</a></li></ul></div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Vidal &amp; Asociados S.L.P. · Todos los derechos reservados · ICAM nº 28-XXXXX</div>
+    <div class="footer-copy">© 2026 Vidal &amp; Asociados S.L.P. · Todos los derechos reservados · ICAM nº 28-XXXXX</div>
     <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Aviso legal</a></div>
   </div>
 </footer>
@@ -404,23 +215,6 @@ footer{background:#07121f;border-top:1px solid rgba(255,255,255,.04);padding:56p
 </a>
 
 <script src="shared.js"></script>
-<script>
-function submitLead() {
-  var name = document.getElementById('f-name').value.trim();
-  var phone = document.getElementById('f-phone').value.trim();
-  var caso = document.getElementById('f-caso').value.trim();
-  if (!name || !phone || !caso) { alert('Por favor, rellene nombre, teléfono y descripción del caso.'); return; }
-  var email = document.getElementById('f-email').value.trim();
-  var area = document.getElementById('f-area').value;
-  var lines = ['Buenos días, desearía una consulta gratuita:','','Nombre: '+name,'Teléfono: '+phone];
-  if (email) lines.push('Email: '+email);
-  if (area) lines.push('Área legal: '+area);
-  lines.push('','Descripción del caso:',caso,'','Quedo a su disposición. Muchas gracias.');
-  window.open('https://wa.me/34914123456?text='+encodeURIComponent(lines.join('\n')),'_blank');
-  document.getElementById('form-fields').style.display='none';
-  document.getElementById('form-success').style.display='block';
-}
-</script>
+<script src="abogados.js"></script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
