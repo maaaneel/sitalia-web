@@ -1,9 +1,10 @@
 /* ============================================================
-   SITALIA — admin.js
+   SITALIA — admin.js  v2  (Ausencias + Servicios)
    Lógica del panel de administración.
    Configuración por negocio: window.NEGOCIO_ID y window.NEGOCIO_NOMBRE
    deben definirse en el HTML antes de cargar este script.
    ============================================================ */
+console.log('[admin.js] v2 cargado — Ausencias + Servicios activos');
 
 /* ── Constantes y estado ──────────────────────────────── */
 var NEGOCIO = window.NEGOCIO_ID || 'negocio';
@@ -140,7 +141,10 @@ function setView(v) {
   document.querySelectorAll('.tab').forEach(function (t) {
     t.classList.toggle('active', t.dataset.view === v);
   });
-  document.getElementById('nav-controls').style.display = (v === 'equipo' || v === 'servicios') ? 'none' : '';
+  var isManagement = (v === 'equipo' || v === 'servicios');
+  document.getElementById('nav-controls').style.display = isManagement ? 'none' : '';
+  var statsEl = document.querySelector('.stats');
+  if (statsEl) statsEl.style.display = isManagement ? 'none' : '';
   render();
 }
 
@@ -635,7 +639,8 @@ function loadAusencias() {
 }
 
 function saveAusencias() {
-  localStorage.setItem(ausKey(), JSON.stringify(_ausencias));
+  try { localStorage.setItem(ausKey(), JSON.stringify(_ausencias)); }
+  catch (e) { console.warn('[admin] localStorage no disponible:', e); }
 }
 
 function getWorkerAusList(wid) {
@@ -809,7 +814,8 @@ function loadSvcs() {
 }
 
 function saveSvcs() {
-  localStorage.setItem(svcKey(), JSON.stringify(_svcs));
+  try { localStorage.setItem(svcKey(), JSON.stringify(_svcs)); }
+  catch (e) { console.warn('[admin] localStorage no disponible:', e); }
 }
 
 function renderServicios() {
