@@ -11,6 +11,7 @@ var NEGOCIO = window.NEGOCIO_ID || 'negocio';
 var _token    = '';
 var _view     = 'day';
 var _baseDate = new Date();
+var _workers  = [];                  // caché de trabajadores cargados
 
 var DAYS_SHORT  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
 var DAYS_LONG   = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
@@ -139,7 +140,7 @@ function setView(v) {
   document.querySelectorAll('.tab').forEach(function (t) {
     t.classList.toggle('active', t.dataset.view === v);
   });
-  document.getElementById('nav-controls').style.display = v === 'equipo' ? 'none' : '';
+  document.getElementById('nav-controls').style.display = (v === 'equipo' || v === 'servicios') ? 'none' : '';
   render();
 }
 
@@ -171,7 +172,8 @@ function render() {
   if      (_view === 'day')    renderDay();
   else if (_view === 'week')   renderMulti(7);
   else if (_view === 'month')  renderMonth();
-  else if (_view === 'equipo') renderEquipo();
+  else if (_view === 'equipo')    renderEquipo();
+  else if (_view === 'servicios') renderServicios();
 }
 
 /* ── Vista diaria ─────────────────────────────────────── */
@@ -461,6 +463,7 @@ function renderEquipo() {
 
 function loadWorkers() {
   fetchWorkers().then(function (ws) {
+    _workers = ws;
     var el = document.getElementById('workers-list');
     if (!el) return;
     if (ws.length === 0) {
@@ -468,15 +471,24 @@ function loadWorkers() {
       return;
     }
     el.innerHTML = ws.map(function (w) {
-      return '<div class="worker-card" id="wcard-' + w.id + '">' +
-        '<div class="worker-avatar">' + initials(w.nombre) + '</div>' +
-        '<div class="worker-info">' +
-          '<div class="worker-name">' + w.nombre + '</div>' +
-          '<div class="worker-sched">' + schedSummary(w.horario) + '</div>' +
+      var ausCount = getWorkerAusTotal(w.id);
+      return '<div class="worker-group">' +
+        '<div class="worker-card" id="wcard-' + w.id + '">' +
+          '<div class="worker-avatar">' + initials(w.nombre) + '</div>' +
+          '<div class="worker-info">' +
+            '<div class="worker-name">' + w.nombre + '</div>' +
+            '<div class="worker-sched">' + schedSummary(w.horario) + '</div>' +
+          '</div>' +
+          '<div class="worker-actions">' +
+            '<button class="btn-sm" onclick="showWorkerForm(' + JSON.stringify(w).replace(/"/g, '&quot;') + ')">Editar horario</button>' +
+            '<button class="btn-sm btn-aus" onclick="showAusencias(' + w.id + ')" id="aus-btn-' + w.id + '">' +
+              'Ausencias' + (ausCount > 0 ? ' <span class="aus-badge">' + ausCount + '</span>' : '') +
+            '</button>' +
+            '<button class="btn-sm btn-danger" onclick="deleteWorker(' + w.id + ',\'' + w.nombre.replace(/'/g, "\\'") + '\')">Eliminar</button>' +
+          '</div>' +
         '</div>' +
-        '<div class="worker-actions">' +
-          '<button class="btn-sm" onclick="showWorkerForm(' + JSON.stringify(w).replace(/"/g, '&quot;') + ')">Editar</button>' +
-          '<button class="btn-sm btn-danger" onclick="deleteWorker(' + w.id + ',\'' + w.nombre + '\')">Eliminar</button>' +
+        '<div class="aus-wrap" id="aus-wrap-' + w.id + '" style="display:none">' +
+          '<div id="aus-inner-' + w.id + '"></div>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -602,4 +614,357 @@ function deleteWorker(id, nombre) {
   fetch('/api/trabajadores?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
     .then(function (r) { return r.json(); })
     .then(function (d) { if (d.ok) { loadWorkers(); } else { alert('Error: ' + (d.error || '')); } });
+}
+
+/* ════════════════════════════════════════════════════════════
+   MÓDULO: AUSENCIAS DE TRABAJADORES
+   Almacenamiento: localStorage  (producción → endpoint API)
+   ════════════════════════════════════════════════════════════ */
+
+var _ausencias             = null;   // { workerId: ['2025-07-01', ...], ... }
+var _viewingAusenciasId    = null;   // id del trabajador cuyo calendario está abierto
+var _ausCalMonth           = new Date(); // mes que muestra el calendario de ausencias
+
+function ausKey() { return NEGOCIO + '_ausencias'; }
+
+function loadAusencias() {
+  if (_ausencias !== null) return _ausencias;
+  try { _ausencias = JSON.parse(localStorage.getItem(ausKey()) || '{}'); }
+  catch (e) { _ausencias = {}; }
+  return _ausencias;
+}
+
+function saveAusencias() {
+  localStorage.setItem(ausKey(), JSON.stringify(_ausencias));
+}
+
+function getWorkerAusList(wid) {
+  return loadAusencias()[wid] || [];
+}
+
+function getWorkerAusTotal(wid) {
+  return getWorkerAusList(wid).length;
+}
+
+function toggleAusencia(wid, dateStr) {
+  var aus = loadAusencias();
+  if (!aus[wid]) aus[wid] = [];
+  var idx = aus[wid].indexOf(dateStr);
+  if (idx > -1) aus[wid].splice(idx, 1);
+  else          aus[wid].push(dateStr);
+  _ausencias = aus;
+  saveAusencias();
+  renderAusCalendar(wid);          // re-render solo el calendario
+  refreshAusBadge(wid);
+}
+
+function refreshAusBadge(wid) {
+  var btn = document.getElementById('aus-btn-' + wid);
+  if (!btn) return;
+  var count = getWorkerAusTotal(wid);
+  btn.innerHTML = 'Ausencias' + (count > 0 ? ' <span class="aus-badge">' + count + '</span>' : '');
+}
+
+function showAusencias(wid) {
+  // cierra cualquier otro panel abierto
+  document.querySelectorAll('.aus-wrap').forEach(function (el) {
+    if (el.id !== 'aus-wrap-' + wid) el.style.display = 'none';
+  });
+
+  var wrap = document.getElementById('aus-wrap-' + wid);
+  if (!wrap) return;
+
+  if (_viewingAusenciasId === wid && wrap.style.display === 'block') {
+    wrap.style.display   = 'none';
+    _viewingAusenciasId  = null;
+    return;
+  }
+
+  _viewingAusenciasId = wid;
+  var now = new Date();
+  _ausCalMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  wrap.style.display = 'block';
+  renderAusCalendar(wid);
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function ausCalNav(dir) {
+  _ausCalMonth = new Date(_ausCalMonth.getFullYear(), _ausCalMonth.getMonth() + dir, 1);
+  renderAusCalendar(_viewingAusenciasId);
+}
+
+function renderAusCalendar(wid) {
+  var el = document.getElementById('aus-inner-' + wid);
+  if (!el) return;
+
+  var worker = _workers.find(function (w) { return w.id === wid; });
+  if (!worker) { el.innerHTML = '<div class="loading-state">Error</div>'; return; }
+
+  var year  = _ausCalMonth.getFullYear();
+  var month = _ausCalMonth.getMonth();
+
+  // días laborables del trabajador (0=Lun … 6=Dom)
+  var workingDows = (worker.horario || [])
+    .filter(function (d) { return d.inicio !== null; })
+    .map(function (d) { return d.dow; });
+
+  var aus      = getWorkerAusList(wid);
+  var firstDay = new Date(year, month, 1);
+  var lastDay  = new Date(year, month + 1, 0);
+  var startOff = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+
+  var dowRow = DAYS_SHORT.map(function (d) { return '<div class="aus-dow">' + d + '</div>'; }).join('');
+
+  var cells = '';
+  for (var e = 0; e < startOff; e++) cells += '<div class="aus-cell aus-empty"></div>';
+
+  for (var d = 1; d <= lastDay.getDate(); d++) {
+    var dt       = new Date(year, month, d);
+    var dowJS    = dt.getDay();                        // 0=Dom JS
+    var dow      = dowJS === 0 ? 6 : dowJS - 1;       // 0=Lun interno
+    var key      = isoDate(dt);
+    var isWork   = workingDows.indexOf(dow) > -1;
+    var isAbsent = aus.indexOf(key) > -1;
+    var isTod    = isToday(dt);
+
+    var cls = 'aus-cell';
+    if (!isWork)       cls += ' aus-nowork';
+    else if (isAbsent) cls += ' aus-absent';
+    else               cls += ' aus-work';
+    if (isTod)         cls += ' aus-today';
+
+    var click = isWork
+      ? 'onclick="toggleAusencia(' + wid + ',\'' + key + '\')" title="' + (isAbsent ? 'Quitar ausencia' : 'Marcar ausente') + '"'
+      : 'title="Día libre habitual"';
+
+    cells += '<div class="' + cls + '" ' + click + '>' + d + '</div>';
+  }
+
+  var total = startOff + lastDay.getDate();
+  var rem   = total % 7;
+  if (rem > 0) for (var f = rem; f < 7; f++) cells += '<div class="aus-cell aus-empty"></div>';
+
+  var monthAus = aus.filter(function (s) {
+    return s.startsWith(year + '-' + pad(month + 1));
+  }).length;
+
+  el.innerHTML =
+    '<div class="aus-header">' +
+      '<div class="aus-worker-name">' + worker.nombre + ' — Calendario de ausencias</div>' +
+      '<div class="aus-nav-row">' +
+        '<button class="aus-nav" onclick="ausCalNav(-1)">&#8249;</button>' +
+        '<span class="aus-cal-title">' +
+          MONTHS_LONG[month] + ' ' + year +
+          (monthAus > 0 ? ' <span class="aus-month-badge">' + monthAus + ' aus.</span>' : '') +
+        '</span>' +
+        '<button class="aus-nav" onclick="ausCalNav(1)">&#8250;</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="aus-legend">' +
+      '<span class="aus-leg"><span class="aus-dot aus-dot-work"></span>Trabaja</span>' +
+      '<span class="aus-leg"><span class="aus-dot aus-dot-absent"></span>Ausente / vacaciones</span>' +
+      '<span class="aus-leg"><span class="aus-dot aus-dot-nowork"></span>Libre habitual</span>' +
+    '</div>' +
+    '<div class="aus-grid-wrap">' +
+      '<div class="aus-dow-row">' + dowRow + '</div>' +
+      '<div class="aus-weeks">' + cells + '</div>' +
+    '</div>' +
+    '<div class="aus-footer-note">Haz clic en un día de trabajo para marcarlo como ausente (vacaciones, baja, etc.). Su horario no cambia; ese día simplemente no aparece disponible para reservas.</div>';
+}
+
+/* ════════════════════════════════════════════════════════════
+   MÓDULO: GESTIÓN DE SERVICIOS
+   Almacenamiento: localStorage  (producción → endpoint API)
+
+   Cada servicio tiene:
+     - nombre          : string
+     - duracion_display: string  ← lo que ve el cliente ("3 horas", "45 min")
+     - duracion_min    : number  ← minutos que bloquea el calendario
+     - precio          : number  (opcional)
+   ════════════════════════════════════════════════════════════ */
+
+var _svcs        = null;
+var _editingSvcId = null;
+
+function svcKey() { return NEGOCIO + '_services'; }
+
+function loadSvcs() {
+  if (_svcs !== null) return _svcs;
+  try { _svcs = JSON.parse(localStorage.getItem(svcKey()) || 'null'); }
+  catch (e) { _svcs = null; }
+  if (!_svcs) {
+    // Servicios de ejemplo para peluquería
+    _svcs = [
+      { id: 1, nombre: 'Corte de pelo',        duracion_display: '30 min',  duracion_min: 30, precio: 15 },
+      { id: 2, nombre: 'Corte + barba',         duracion_display: '45 min',  duracion_min: 45, precio: 20 },
+      { id: 3, nombre: 'Afeitado clásico',      duracion_display: '30 min',  duracion_min: 30, precio: 12 },
+      { id: 4, nombre: 'Tinte completo',        duracion_display: '3 horas', duracion_min: 30, precio: 55 },
+      { id: 5, nombre: 'Mechas / highlights',   duracion_display: '2 horas', duracion_min: 45, precio: 70 },
+      { id: 6, nombre: 'Tratamiento capilar',   duracion_display: '1 hora',  duracion_min: 45, precio: 35 }
+    ];
+    saveSvcs();
+  }
+  return _svcs;
+}
+
+function saveSvcs() {
+  localStorage.setItem(svcKey(), JSON.stringify(_svcs));
+}
+
+function renderServicios() {
+  document.getElementById('date-heading').textContent = 'Catálogo de servicios';
+  var svcs = loadSvcs();
+
+  var listHtml = svcs.length === 0
+    ? '<div class="empty-state">Sin servicios. Añade el primero.</div>'
+    : svcs.map(function (s) {
+        var sameTime = (s.duracion_display === s.duracion_min + ' min');
+        return '<div class="svc-card" id="scard-' + s.id + '">' +
+          '<div class="svc-info">' +
+            '<div class="svc-name">' + s.nombre + '</div>' +
+            '<div class="svc-pills">' +
+              '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + s.duracion_display + '</span>' +
+              (!sameTime
+                ? '<span class="svc-pill svc-pill-agenda" title="Tiempo que ocupa en la agenda del trabajador">' + s.duracion_min + ' min agenda</span>'
+                : '') +
+              (s.precio ? '<span class="svc-pill svc-pill-price">' + s.precio + '€</span>' : '') +
+            '</div>' +
+            (!sameTime
+              ? '<div class="svc-note-inline">El cliente espera ' + s.duracion_display + ' pero el trabajador queda libre tras ' + s.duracion_min + ' min</div>'
+              : '') +
+          '</div>' +
+          '<div class="worker-actions">' +
+            '<button class="btn-sm" onclick="showSvcForm(' + JSON.stringify(s).replace(/"/g, '&quot;') + ')">Editar</button>' +
+            '<button class="btn-sm btn-danger" onclick="deleteSvc(' + s.id + ',\'' + s.nombre.replace(/'/g, "\\'") + '\')">Eliminar</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+  document.getElementById('view-content').innerHTML =
+    '<div class="equipo-header">' +
+      '<div class="equipo-title">Servicios</div>' +
+      '<button class="btn-add" onclick="showSvcForm(null)">+ Añadir servicio</button>' +
+    '</div>' +
+    '<div class="svc-intro">Define los servicios que ofrece el negocio. Para servicios con tiempo de espera (tinte, mechas…) puedes indicar una duración visible diferente a la duración real en agenda.</div>' +
+    '<div id="svc-form-wrap" style="display:none"></div>' +
+    '<div id="svcs-list">' + listHtml + '</div>';
+}
+
+function showSvcForm(svc) {
+  _editingSvcId = svc ? svc.id : null;
+  var wrap = document.getElementById('svc-form-wrap');
+  if (!wrap) return;
+
+  wrap.innerHTML =
+    '<div class="worker-form svc-form">' +
+      '<h3>' + (svc ? 'Editar servicio' : 'Nuevo servicio') + '</h3>' +
+      '<div class="form-row">' +
+        '<div class="form-group" style="flex:1">' +
+          '<label class="form-label">Nombre del servicio *</label>' +
+          '<input type="text" id="sv-nombre" class="form-input" placeholder="Ej: Tinte + corte" ' +
+            'value="' + (svc ? svc.nombre : '') + '" style="width:100%">' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label class="form-label">Precio (€)</label>' +
+          '<input type="number" id="sv-precio" class="form-input" placeholder="0" min="0" step="0.5" ' +
+            'value="' + (svc ? (svc.precio || '') : '') + '" style="width:90px">' +
+        '</div>' +
+      '</div>' +
+      '<div class="svc-dur-section">' +
+        '<div class="svc-dur-col">' +
+          '<label class="form-label">Duración visible al cliente *</label>' +
+          '<input type="text" id="sv-display" class="form-input" placeholder="Ej: 3 horas, 45 min…" ' +
+            'value="' + (svc ? svc.duracion_display : '') + '" oninput="updateSvcExample()">' +
+          '<div class="svc-dur-hint">Texto libre que verá el cliente al reservar</div>' +
+        '</div>' +
+        '<div class="svc-dur-arrow">→</div>' +
+        '<div class="svc-dur-col">' +
+          '<label class="form-label">Minutos que ocupa en agenda *</label>' +
+          '<input type="number" id="sv-durmin" class="form-input" placeholder="30" min="5" step="5" ' +
+            'value="' + (svc ? svc.duracion_min : '') + '" oninput="updateSvcExample()" style="width:90px">' +
+          '<div class="svc-dur-hint">Tiempo que se bloquea en el calendario del trabajador</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="svc-example" id="sv-example"></div>' +
+      '<div class="form-actions">' +
+        '<button class="btn-save" onclick="saveSvc()">Guardar servicio</button>' +
+        '<button class="btn-cancel-form" onclick="hideSvcForm()">Cancelar</button>' +
+      '</div>' +
+    '</div>';
+
+  updateSvcExample();
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateSvcExample() {
+  var display = (document.getElementById('sv-display') || {}).value || '';
+  var durMin  = parseInt((document.getElementById('sv-durmin') || {}).value) || 0;
+  var el      = document.getElementById('sv-example');
+  if (!el) return;
+  display = display.trim();
+  if (!display || !durMin) { el.innerHTML = ''; el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  var dispMins = parseDisplayDur(display);
+  if (dispMins && dispMins !== durMin) {
+    el.className = 'svc-example svc-example-split';
+    el.innerHTML =
+      '<strong>Ejemplo — Tinte:</strong> el cliente ve <em>"' + display + '"</em> de duración. ' +
+      'El sistema bloquea solo <em>' + durMin + ' min</em> en el calendario — ' +
+      'tras aplicar el producto el trabajador puede atender otra cita o tarea mientras el cliente espera.';
+  } else {
+    el.className = 'svc-example svc-example-same';
+    el.innerHTML =
+      'El cliente verá <em>"' + display + '"</em> y el sistema bloqueará <em>' + durMin + ' min</em> en la agenda.';
+  }
+}
+
+function parseDisplayDur(s) {
+  var h = s.match(/(\d+)\s*h/i);
+  var m = s.match(/(\d+)\s*min/i);
+  var total = (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+  return total || null;
+}
+
+function hideSvcForm() {
+  var wrap = document.getElementById('svc-form-wrap');
+  if (wrap) wrap.style.display = 'none';
+  _editingSvcId = null;
+}
+
+function saveSvc() {
+  var nombre  = ((document.getElementById('sv-nombre')  || {}).value || '').trim();
+  var display = ((document.getElementById('sv-display') || {}).value || '').trim();
+  var durMin  = parseInt((document.getElementById('sv-durmin')  || {}).value) || 0;
+  var precio  = parseFloat((document.getElementById('sv-precio') || {}).value) || 0;
+
+  if (!nombre)  { alert('El nombre del servicio es obligatorio.'); return; }
+  if (!display) { alert('La duración visible al cliente es obligatoria.'); return; }
+  if (!durMin)  { alert('Los minutos en agenda son obligatorios (mínimo 5).'); return; }
+
+  var svcs = loadSvcs();
+  if (_editingSvcId !== null) {
+    for (var i = 0; i < svcs.length; i++) {
+      if (svcs[i].id === _editingSvcId) {
+        svcs[i] = { id: _editingSvcId, nombre: nombre, duracion_display: display, duracion_min: durMin, precio: precio };
+        break;
+      }
+    }
+  } else {
+    var maxId = svcs.length
+      ? svcs.reduce(function (mx, s) { return s.id > mx ? s.id : mx; }, 0)
+      : 0;
+    svcs.push({ id: maxId + 1, nombre: nombre, duracion_display: display, duracion_min: durMin, precio: precio });
+  }
+  _svcs = svcs;
+  saveSvcs();
+  hideSvcForm();
+  renderServicios();
+}
+
+function deleteSvc(id, nombre) {
+  if (!confirm('¿Eliminar el servicio "' + nombre + '"?')) return;
+  _svcs = loadSvcs().filter(function (s) { return s.id !== id; });
+  saveSvcs();
+  renderServicios();
 }
