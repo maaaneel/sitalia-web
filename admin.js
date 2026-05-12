@@ -481,7 +481,7 @@ function loadWorkers() {
           '</div>' +
           '<div class="worker-actions">' +
             '<button class="btn-sm" onclick="showWorkerForm(' + JSON.stringify(w).replace(/"/g, '&quot;') + ')">Editar horario</button>' +
-            '<button class="btn-sm btn-aus" onclick="showAusencias(' + w.id + ')" id="aus-btn-' + w.id + '">' +
+            '<button class="btn-sm btn-aus" onclick="showAusencias(\'' + w.id + '\')" id="aus-btn-' + w.id + '">' +
               'Ausencias' + (ausCount > 0 ? ' <span class="aus-badge">' + ausCount + '</span>' : '') +
             '</button>' +
             '<button class="btn-sm btn-danger" onclick="deleteWorker(' + w.id + ',\'' + w.nombre.replace(/'/g, "\\'") + '\')">Eliminar</button>' +
@@ -639,7 +639,7 @@ function saveAusencias() {
 }
 
 function getWorkerAusList(wid) {
-  return loadAusencias()[wid] || [];
+  return loadAusencias()[String(wid)] || [];
 }
 
 function getWorkerAusTotal(wid) {
@@ -647,11 +647,12 @@ function getWorkerAusTotal(wid) {
 }
 
 function toggleAusencia(wid, dateStr) {
+  var key = String(wid);
   var aus = loadAusencias();
-  if (!aus[wid]) aus[wid] = [];
-  var idx = aus[wid].indexOf(dateStr);
-  if (idx > -1) aus[wid].splice(idx, 1);
-  else          aus[wid].push(dateStr);
+  if (!aus[key]) aus[key] = [];
+  var idx = aus[key].indexOf(dateStr);
+  if (idx > -1) aus[key].splice(idx, 1);
+  else          aus[key].push(dateStr);
   _ausencias = aus;
   saveAusencias();
   renderAusCalendar(wid);          // re-render solo el calendario
@@ -697,8 +698,8 @@ function renderAusCalendar(wid) {
   var el = document.getElementById('aus-inner-' + wid);
   if (!el) return;
 
-  var worker = _workers.find(function (w) { return w.id === wid; });
-  if (!worker) { el.innerHTML = '<div class="loading-state">Error</div>'; return; }
+  var worker = _workers.find(function (w) { return String(w.id) === String(wid); });
+  if (!worker) { el.innerHTML = '<div class="loading-state">Error: trabajador no encontrado</div>'; return; }
 
   var year  = _ausCalMonth.getFullYear();
   var month = _ausCalMonth.getMonth();
@@ -734,7 +735,7 @@ function renderAusCalendar(wid) {
     if (isTod)         cls += ' aus-today';
 
     var click = isWork
-      ? 'onclick="toggleAusencia(' + wid + ',\'' + key + '\')" title="' + (isAbsent ? 'Quitar ausencia' : 'Marcar ausente') + '"'
+      ? 'onclick="toggleAusencia(\'' + wid + '\',\'' + key + '\')" title="' + (isAbsent ? 'Quitar ausencia' : 'Marcar ausente') + '"'
       : 'title="Día libre habitual"';
 
     cells += '<div class="' + cls + '" ' + click + '>' + d + '</div>';
