@@ -93,7 +93,7 @@
       el.innerHTML =
         '<div>' +
           '<div class="bk-svc-name">' + s.n + (s.pop ? ' <span style="font-size:10px;color:var(--accent);letter-spacing:.06em">POPULAR</span>' : '') + '</div>' +
-          '<div class="bk-svc-dur">' + s.d + ' min</div>' +
+          '<div class="bk-svc-dur">' + (s.display || s.d + ' min') + '</div>' +
         '</div>' +
         '<div class="bk-svc-price">' + s.p + '&#8364;</div>';
 
@@ -171,17 +171,23 @@
         var isToday  = dt.getTime() === today.getTime();
         var isSel    = bk.date && dt.toDateString() === bk.date.toDateString();
 
+        // Comprobar si el día está marcado como ausente en el panel admin
+        var mm2 = calD.getMonth() + 1;
+        var dateKey = calD.getFullYear() + '-' + (mm2 < 10 ? '0' : '') + mm2 + '-' + (day < 10 ? '0' : '') + day;
+        var isAbsent = !isPast && !isClosed && bkConfig.absentDates && bkConfig.absentDates[dateKey];
+
         var el  = document.createElement('div');
         var cls = 'bk-cal-day';
-        if (isSel)         cls += ' sel';
-        else if (isPast)   cls += ' past';
-        else if (isClosed) cls += ' closed';
-        else               cls += ' avail';
+        if (isSel)                    cls += ' sel';
+        else if (isPast)              cls += ' past';
+        else if (isClosed || isAbsent) cls += ' closed';
+        else                          cls += ' avail';
         if (isToday && !isSel) cls += ' today';
+        if (isAbsent && !isSel) el.title = 'Sin disponibilidad este día';
         el.className = cls;
         el.textContent = day;
 
-        if (!isPast && !isClosed) {
+        if (!isPast && !isClosed && !isAbsent) {
           el.addEventListener('click', function () {
             document.querySelectorAll('.bk-cal-day').forEach(function (x) { x.classList.remove('sel'); });
             el.classList.add('sel');
@@ -221,7 +227,7 @@
     var sinfo = document.getElementById('bk-sinfo');
     if (sinfo) {
       var dateStr = bk.date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-      sinfo.innerHTML = '<strong>' + svc.n + '</strong> &middot; ' + svc.d + ' min &middot; ' + dateStr;
+      sinfo.innerHTML = '<strong>' + svc.n + '</strong> &middot; ' + (svc.display || svc.d + ' min') + ' &middot; ' + dateStr;
     }
 
     var slotGrid = document.getElementById('bk-slots');
@@ -269,7 +275,7 @@
     if (!conf) return;
     conf.innerHTML =
       row('SERVICIO', svc.n) +
-      row('DURACIÓN', svc.d + ' min') +
+      row('DURACIÓN', svc.display || svc.d + ' min') +
       row('PRECIO',   svc.p + '&#8364;') +
       row('FECHA',    dateStr) +
       row('HORA',     bk.st + ' &mdash; ' + bk.se);
