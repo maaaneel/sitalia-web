@@ -488,21 +488,24 @@ nav.scrolled {
 
 .team-card { display: flex; flex-direction: column; gap: 16px; }
 
-/* Placeholder elegante de foto: cuadrado con silueta sutil */
 .team-photo {
   aspect-ratio: 4/5;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  display: flex; align-items: end; justify-content: center;
   overflow: hidden;
   position: relative;
 }
 .team-photo img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 25%;   /* sube un poco para priorizar la cara */
+  display: block;
   transition: transform .6s ease;
 }
 .team-card:hover .team-photo img { transform: scale(1.03); }
+/* El flex solo se aplica al placeholder, para centrar la silueta SVG */
+.team-photo.placeholder { display: flex; align-items: end; justify-content: center; }
 /* Si la imagen no carga (placeholder), mostramos icono SVG */
 .team-photo.placeholder::before {
   content: '';
@@ -556,13 +559,17 @@ nav.scrolled {
   border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
 }
 .gallery-item img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
   transition: transform .6s ease;
 }
 .gallery-item:hover img { transform: scale(1.04); }
+/* Solo aplica flex al placeholder (para centrar el icono) */
+.gallery-item.placeholder { display: flex; align-items: center; justify-content: center; }
 .gallery-item.placeholder::before {
   content: '';
   position: absolute; inset: 0;
@@ -687,24 +694,8 @@ footer {
 .footer-bottom a { color: rgba(255,255,255,.7); }
 .footer-bottom a:hover { color: #fff; }
 
-/* ═══════════════════════════════════════════════════════
-   Botón flotante de WhatsApp / reservar (mobile sticky)
-   ═══════════════════════════════════════════════════════ */
-.wa-float {
-  position: fixed;
-  bottom: 20px; right: 20px;
-  background: var(--text); color: #fff;
-  border-radius: 100px;
-  padding: 14px 22px;
-  font-size: 12px; font-weight: 600; letter-spacing: .08em;
-  text-decoration: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,.15);
-  z-index: 99;
-  transition: transform .15s;
-  display: none;  /* solo aparece en mobile */
-}
-.wa-float:hover { transform: translateY(-2px); }
-@media (max-width: 980px) { .wa-float { display: inline-flex; align-items: center; } }
+/* Si el shared.css renderiza .wa-float por defecto, lo ocultamos en peluquería. */
+.wa-float { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════
    Reveal animations (mantenemos del shared.js)
