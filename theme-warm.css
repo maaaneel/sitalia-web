@@ -1,0 +1,177 @@
+/* ============================================================
+   SITALIA — theme-warm.css
+   Tema CÁLIDO ARTESANAL.
+
+   Se activa con: <body data-theme="warm">
+
+   Paleta: crema, marrón, terracota.
+   Tipografía titulares: Playfair Display (serif).
+   Vibe: acogedora, "negocio de barrio con calidad".
+
+   Carga DESPUÉS de theme-nordic.css. Solo contiene overrides.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+/* ── Variables ──────────────────────────────────────────── */
+[data-theme="warm"] {
+  --bg:         #faf6f0;
+  --bg-soft:    #f4ede2;
+  --bg-card:    #ffffff;
+  --bg2:        #f4ede2;
+  --bg-dark:    #3d2817;
+  --bg-warm:    #f0e6d6;
+  --text:       #2d1f17;
+  --text-muted: #6b5544;
+  --text-soft:  #a89484;
+  --text2:      #6b5544;
+  --text3:      #a89484;
+  --accent:     #a05a2c;
+  --border:     #e8ddcc;
+  --border-strong: #d4c5ad;
+  --bg-rgb:     250, 246, 240;
+}
+
+/* ── Tipografía ────────────────────────────────────────── */
+[data-theme="warm"] .hero-title,
+[data-theme="warm"] .section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -.01em;
+}
+[data-theme="warm"] .hero-title em,
+[data-theme="warm"] .section-title em,
+[data-theme="warm"] .section-title strong {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* Botón "back to sitalia" y banners */
+[data-theme="warm"] .back-to-sitalia {
+  background: rgba(250, 246, 240, 0.92);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+[data-theme="warm"] .back-to-sitalia:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+/* Nav scrolled */
+[data-theme="warm"] nav.scrolled {
+  background: rgba(250, 246, 240, .92);
+  border-bottom-color: var(--border);
+}
+
+/* Botón CTA del nav: marrón con texto crema */
+[data-theme="warm"] .nav-cta { background: var(--text); color: var(--bg); }
+[data-theme="warm"] .nav-cta:hover { background: var(--accent); }
+
+/* ── Hero info row ─────────────────────────────────────── */
+[data-theme="warm"] .hero-eyebrow-line { background: var(--accent); }
+[data-theme="warm"] .hero-info-row { border-top-color: var(--border); }
+
+/* ── Booking widget ────────────────────────────────────── */
+[data-theme="warm"] .booking-wrap { background: #fff; border-color: var(--border); }
+[data-theme="warm"] .booking-steps { background: var(--bg-soft); border-bottom-color: var(--border); }
+[data-theme="warm"] .bk-step { border-right-color: var(--border); }
+[data-theme="warm"] .bk-step.active { box-shadow: inset 0 -2px 0 var(--accent); }
+[data-theme="warm"] .bk-svc { background: var(--bg-soft); }
+[data-theme="warm"] .bk-svc.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+[data-theme="warm"] .bk-cal-day.sel { background: var(--accent); }
+[data-theme="warm"] .bk-slot.sel { background: var(--accent); border-color: var(--accent); }
+[data-theme="warm"] .bk-form-input:focus { border-color: var(--accent); }
+[data-theme="warm"] .bk-btn { background: var(--text); }
+[data-theme="warm"] .bk-btn:hover:not(:disabled) { background: var(--accent); }
+
+/* ── CTA card ─────────────────────────────────────────── */
+[data-theme="warm"] .cta-card { background: #fff; border-color: var(--border); }
+[data-theme="warm"] .cta-card-btn { background: var(--text); }
+[data-theme="warm"] .cta-card-btn:hover { background: var(--accent); }
+[data-theme="warm"] .cta-card-btn-outline { border-color: var(--border-strong); }
+[data-theme="warm"] .cta-card-btn-outline:hover { border-color: var(--text); background: var(--bg-soft); }
+
+/* ── Lead form ────────────────────────────────────────── */
+[data-theme="warm"] .lead-form { background: #fff; border-color: var(--border); }
+[data-theme="warm"] .lead-form-input:focus,
+[data-theme="warm"] .lead-form-select:focus,
+[data-theme="warm"] .lead-form-textarea:focus { border-color: var(--accent); }
+[data-theme="warm"] .lead-form-btn { background: var(--text); }
+[data-theme="warm"] .lead-form-btn:hover:not(:disabled) { background: var(--accent); }
+
+/* ── Section backgrounds ──────────────────────────────── */
+[data-theme="warm"] .section-pad-bg,
+[data-theme="warm"] .cta-section { background: var(--bg-soft); border-top-color: var(--border); }
+[data-theme="warm"] #hero { background: var(--bg); }
+
+/* ── Services list ────────────────────────────────────── */
+[data-theme="warm"] .svc-list { border-top-color: var(--border); }
+[data-theme="warm"] .svc-row { border-bottom-color: var(--border); }
+[data-theme="warm"] .svc-row.popular { background: #fff; }
+[data-theme="warm"] .svc-row-name .pop-tag {
+  color: var(--accent); border-color: var(--accent);
+}
+
+/* ── Team & galería: bordes y fondos ──────────────────── */
+[data-theme="warm"] .team-photo,
+[data-theme="warm"] .gallery-item,
+[data-theme="warm"] .hero-img { background: var(--bg-soft); border-color: var(--border); }
+
+/* ── Ubicación ────────────────────────────────────────── */
+[data-theme="warm"] .location-map { background: var(--bg-soft); border-color: var(--border); }
+[data-theme="warm"] .location-map .btn-primary { background: var(--text); }
+[data-theme="warm"] .location-map .btn-primary:hover { background: var(--accent); }
+[data-theme="warm"] .info-block { border-top-color: var(--border); }
+
+/* ── Footer cálido (no negro puro) ─────────────────────── */
+[data-theme="warm"] footer {
+  background: var(--bg-dark);
+  color: #f5ede0;
+}
+[data-theme="warm"] .footer-logo { color: #f5ede0; }
+[data-theme="warm"] .footer-logo span { color: rgba(245, 237, 224, 0.55); }
+[data-theme="warm"] .footer-tagline { color: rgba(245, 237, 224, 0.55); }
+[data-theme="warm"] .footer-col-title { color: rgba(245, 237, 224, 0.55); }
+[data-theme="warm"] .footer-links a,
+[data-theme="warm"] .footer-contact li { color: rgba(245, 237, 224, 0.8); }
+[data-theme="warm"] .footer-links a:hover { color: #fff; }
+[data-theme="warm"] .footer-grid { border-bottom-color: rgba(245, 237, 224, 0.12); }
+[data-theme="warm"] .footer-bottom { color: rgba(245, 237, 224, 0.55); }
+[data-theme="warm"] .footer-bottom a { color: rgba(245, 237, 224, 0.7); }
+
+/* ── Cards específicas del nicho (fisio bonos, abogados áreas, etc.) ── */
+[data-theme="warm"] .bono-card,
+[data-theme="warm"] .esp-card,
+[data-theme="warm"] .area-card,
+[data-theme="warm"] .act-card,
+[data-theme="warm"] .inst-card { background: #fff; border-color: var(--border); }
+[data-theme="warm"] .bono-card.featured,
+[data-theme="warm"] .bono-card.featured::before { border-color: var(--accent); background: var(--accent); }
+[data-theme="warm"] .bono-card.featured::before { background: var(--accent); }
+[data-theme="warm"] .area-card:hover,
+[data-theme="warm"] .act-card:hover,
+[data-theme="warm"] .esp-card:hover,
+[data-theme="warm"] .bono-card:hover { border-color: var(--accent); }
+
+/* ── Bloque oscuro: usar tono cálido en lugar de negro ── */
+[data-theme="warm"] .dif-section,
+[data-theme="warm"] .cuotas-section { background: var(--bg-dark); }
+
+/* ── Restaurante: menú del día ────────────────────────── */
+[data-theme="warm"] .menu-dia-card { background: var(--bg-soft); border-color: var(--border); }
+[data-theme="warm"] .menu-section-title { border-bottom-color: var(--border); }
+
+/* ── Demo banner + switcher ───────────────────────────── */
+[data-theme="warm"] .demo-banner { background: var(--bg-dark); color: #f5ede0; }
+[data-theme="warm"] .demo-banner-themes-label { color: rgba(245,237,224,.5); }
+[data-theme="warm"] .demo-banner-themes button {
+  background: rgba(245,237,224,.08); color: rgba(245,237,224,.75);
+}
+[data-theme="warm"] .demo-banner-themes button:hover:not(.active) {
+  background: rgba(245,237,224,.18); color: #fff;
+}
+[data-theme="warm"] .demo-banner-themes button.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}

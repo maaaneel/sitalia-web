@@ -1,0 +1,351 @@
+/* ============================================================
+   SITALIA — theme-luxury.css
+   Tema LUJO OSCURO.
+
+   Se activa con: <body data-theme="luxury">
+
+   Paleta: negro, blanco, acento dorado/champán.
+   Tipografía titulares: Cormorant Garamond (serif elegante).
+   Vibe: alto contraste, sofisticado, premium.
+
+   Carga DESPUÉS de theme-nordic.css. Solo contiene overrides.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
+/* ── Variables ──────────────────────────────────────────── */
+[data-theme="luxury"] {
+  --bg:         #0a0a0a;
+  --bg-soft:    #161616;
+  --bg-card:    #161616;
+  --bg2:        #161616;
+  --bg-dark:    #000000;
+  --bg-warm:    #161616;
+  --text:       #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-soft:  rgba(255, 255, 255, 0.45);
+  --text2:      rgba(255, 255, 255, 0.7);
+  --text3:      rgba(255, 255, 255, 0.45);
+  --accent:     #c9a86e;
+  --border:     rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --bg-rgb:     10, 10, 10;
+}
+
+[data-theme="luxury"] body,
+[data-theme="luxury"] {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Tipografía ────────────────────────────────────────── */
+[data-theme="luxury"] .hero-title,
+[data-theme="luxury"] .section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -.005em;
+  line-height: 1.05;
+}
+[data-theme="luxury"] .hero-title {
+  font-size: clamp(44px, 6.5vw, 72px);
+}
+[data-theme="luxury"] .hero-title em,
+[data-theme="luxury"] .section-title em,
+[data-theme="luxury"] .section-title strong {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+
+/* ── Demo banner + switcher ───────────────────────────── */
+[data-theme="luxury"] .demo-banner {
+  background: #000;
+  color: var(--accent);
+  letter-spacing: .25em;
+}
+[data-theme="luxury"] .demo-banner-themes-label { color: rgba(201,168,110,.55); }
+[data-theme="luxury"] .demo-banner-themes button {
+  background: rgba(201,168,110,.1);
+  color: rgba(201,168,110,.8);
+  border-color: transparent;
+}
+[data-theme="luxury"] .demo-banner-themes button:hover:not(.active) {
+  background: rgba(201,168,110,.2); color: var(--accent);
+}
+[data-theme="luxury"] .demo-banner-themes button.active {
+  background: var(--accent); color: #0a0a0a; border-color: var(--accent);
+}
+
+/* ── Back to sitalia ──────────────────────────────────── */
+[data-theme="luxury"] .back-to-sitalia {
+  background: rgba(10, 10, 10, 0.85);
+  border-color: var(--border);
+  color: rgba(255, 255, 255, 0.6);
+}
+[data-theme="luxury"] .back-to-sitalia:hover {
+  background: var(--accent); color: #0a0a0a; border-color: var(--accent);
+}
+
+/* ── Nav ──────────────────────────────────────────────── */
+[data-theme="luxury"] nav.scrolled {
+  background: rgba(10, 10, 10, 0.85);
+  border-bottom-color: var(--border);
+}
+[data-theme="luxury"] .nav-logo { color: #fff; }
+[data-theme="luxury"] .nav-logo span { color: var(--text-muted); }
+[data-theme="luxury"] .nav-links a { color: var(--text-muted); }
+[data-theme="luxury"] .nav-links a:hover { color: #fff; }
+[data-theme="luxury"] .nav-cta {
+  background: var(--accent); color: #0a0a0a;
+}
+[data-theme="luxury"] .nav-cta:hover { background: #d4b682; }
+[data-theme="luxury"] .nav-toggle { color: #fff; }
+[data-theme="luxury"] .nav-links.open { background: var(--bg); border-bottom-color: var(--border); }
+
+/* ── Hero eyebrow ─────────────────────────────────────── */
+[data-theme="luxury"] .hero-eyebrow-line { background: var(--accent); }
+[data-theme="luxury"] .hero-eyebrow,
+[data-theme="luxury"] .hero-eyebrow .label,
+[data-theme="luxury"] .section-eyebrow { color: var(--accent); }
+[data-theme="luxury"] .hero-info-row { border-top-color: var(--border); }
+[data-theme="luxury"] .hero-info-label { color: var(--accent); }
+[data-theme="luxury"] .hero-info-val { color: #fff; }
+[data-theme="luxury"] .hero-info-val.muted { color: var(--text-muted); }
+
+/* ── Booking widget ────────────────────────────────────── */
+[data-theme="luxury"] .booking-wrap {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+[data-theme="luxury"] .booking-steps {
+  background: rgba(255,255,255,0.03);
+  border-bottom-color: var(--border);
+}
+[data-theme="luxury"] .bk-step { border-right-color: var(--border); color: var(--text-soft); }
+[data-theme="luxury"] .bk-step.active {
+  background: var(--bg-card); color: #fff;
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+[data-theme="luxury"] .bk-step.done { color: var(--text-muted); }
+[data-theme="luxury"] .bk-step.done::before { color: var(--accent); }
+[data-theme="luxury"] .bk-panel-label { color: var(--accent); }
+[data-theme="luxury"] .bk-svc { background: rgba(255,255,255,0.03); }
+[data-theme="luxury"] .bk-svc:hover { background: rgba(255,255,255,0.06); }
+[data-theme="luxury"] .bk-svc.selected {
+  background: rgba(201, 168, 110, 0.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+[data-theme="luxury"] .bk-svc-name { color: #fff; }
+[data-theme="luxury"] .bk-svc-price { color: var(--accent); }
+[data-theme="luxury"] .bk-cal-nav { border-color: var(--border); color: var(--text-muted); background: transparent; }
+[data-theme="luxury"] .bk-cal-nav:hover { background: rgba(255,255,255,0.06); color: #fff; }
+[data-theme="luxury"] .bk-cal-month { color: #fff; }
+[data-theme="luxury"] .bk-cal-day { color: #fff; }
+[data-theme="luxury"] .bk-cal-day.avail:hover { background: rgba(255,255,255,0.06); }
+[data-theme="luxury"] .bk-cal-day.past,
+[data-theme="luxury"] .bk-cal-day.closed { color: rgba(255,255,255,0.2); }
+[data-theme="luxury"] .bk-cal-day.sel { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .bk-slot { background: transparent; border-color: var(--border); color: #fff; }
+[data-theme="luxury"] .bk-slot:hover { border-color: var(--accent); }
+[data-theme="luxury"] .bk-slot.sel { background: var(--accent); border-color: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .bk-slot.sel .bk-slot-end { color: rgba(10,10,10,0.6); }
+[data-theme="luxury"] .bk-slots-info { background: rgba(255,255,255,0.03); color: var(--text-muted); }
+[data-theme="luxury"] .bk-slots-info strong { color: #fff; }
+[data-theme="luxury"] .bk-confirm-row { border-bottom-color: var(--border); }
+[data-theme="luxury"] .bk-confirm-label { color: var(--accent); }
+[data-theme="luxury"] .bk-confirm-val { color: #fff; }
+[data-theme="luxury"] .bk-form-input {
+  background: rgba(255,255,255,0.04); color: #fff; border-color: var(--border);
+}
+[data-theme="luxury"] .bk-form-input::placeholder { color: var(--text-soft); }
+[data-theme="luxury"] .bk-form-input:focus { border-color: var(--accent); }
+[data-theme="luxury"] .bk-btn { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .bk-btn:hover:not(:disabled) { background: #d4b682; }
+[data-theme="luxury"] .bk-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); }
+[data-theme="luxury"] .bk-back { color: var(--text-soft); }
+[data-theme="luxury"] .bk-back:hover { color: var(--accent); }
+
+/* ── CTA card ─────────────────────────────────────────── */
+[data-theme="luxury"] .cta-card {
+  background: var(--bg-card); border-color: var(--border);
+}
+[data-theme="luxury"] .cta-card-eyebrow { color: var(--accent); }
+[data-theme="luxury"] .cta-card-title { color: #fff; }
+[data-theme="luxury"] .cta-card-sub { color: var(--text-muted); }
+[data-theme="luxury"] .cta-card-btn { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .cta-card-btn:hover { background: #d4b682; }
+[data-theme="luxury"] .cta-card-btn-outline {
+  background: transparent; color: #fff; border-color: var(--border-strong);
+}
+[data-theme="luxury"] .cta-card-btn-outline:hover {
+  border-color: var(--accent); background: rgba(201, 168, 110, 0.06);
+}
+[data-theme="luxury"] .cta-card-divider { background: var(--border); }
+[data-theme="luxury"] .cta-card-info-row { color: var(--text-muted); }
+[data-theme="luxury"] .cta-card-info-row strong { color: #fff; }
+[data-theme="luxury"] .cta-card-info-row svg { color: var(--accent); }
+
+/* ── Lead form ────────────────────────────────────────── */
+[data-theme="luxury"] .lead-form { background: var(--bg-card); border-color: var(--border); }
+[data-theme="luxury"] .lead-form h3 { color: #fff; }
+[data-theme="luxury"] .lead-form-sub { color: var(--text-muted); }
+[data-theme="luxury"] .lead-form-label { color: var(--accent); }
+[data-theme="luxury"] .lead-form-input,
+[data-theme="luxury"] .lead-form-select,
+[data-theme="luxury"] .lead-form-textarea {
+  background: rgba(255,255,255,0.04); color: #fff; border-color: var(--border);
+}
+[data-theme="luxury"] .lead-form-input::placeholder,
+[data-theme="luxury"] .lead-form-textarea::placeholder { color: var(--text-soft); }
+[data-theme="luxury"] .lead-form-input:focus,
+[data-theme="luxury"] .lead-form-select:focus,
+[data-theme="luxury"] .lead-form-textarea:focus { border-color: var(--accent); }
+[data-theme="luxury"] .lead-form-btn { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .lead-form-btn:hover:not(:disabled) { background: #d4b682; }
+[data-theme="luxury"] .lead-form-note { color: var(--text-soft); }
+[data-theme="luxury"] .lead-form-consent { color: var(--text-muted); }
+[data-theme="luxury"] .lead-form-consent a { color: var(--accent); }
+
+/* ── Sections ─────────────────────────────────────────── */
+[data-theme="luxury"] #hero { background: var(--bg); }
+[data-theme="luxury"] .section-pad-bg,
+[data-theme="luxury"] .cta-section {
+  background: var(--bg-soft); border-top-color: var(--border);
+}
+
+/* ── Services list ────────────────────────────────────── */
+[data-theme="luxury"] .svc-list { border-top-color: var(--border); }
+[data-theme="luxury"] .svc-row { border-bottom-color: var(--border); }
+[data-theme="luxury"] .svc-row:hover { background: rgba(255,255,255,0.03); }
+[data-theme="luxury"] .svc-row.popular { background: rgba(201, 168, 110, 0.04); }
+[data-theme="luxury"] .svc-row-name { color: #fff; }
+[data-theme="luxury"] .svc-row-desc { color: var(--text-muted); }
+[data-theme="luxury"] .svc-row-price { color: var(--accent); }
+[data-theme="luxury"] .svc-row-dur { color: var(--text-soft); }
+[data-theme="luxury"] .svc-row-name .pop-tag { color: var(--accent); border-color: var(--accent); }
+
+/* ── Team & galería ───────────────────────────────────── */
+[data-theme="luxury"] .team-photo,
+[data-theme="luxury"] .gallery-item,
+[data-theme="luxury"] .hero-img {
+  background: var(--bg-soft); border-color: var(--border);
+}
+[data-theme="luxury"] .team-name { color: #fff; }
+[data-theme="luxury"] .team-role { color: var(--accent); }
+[data-theme="luxury"] .team-bio { color: var(--text-muted); }
+
+/* ── Ubicación ────────────────────────────────────────── */
+[data-theme="luxury"] .location-map {
+  background: var(--bg-soft); border-color: var(--border);
+}
+[data-theme="luxury"] .location-map .map-icon { color: var(--accent); }
+[data-theme="luxury"] .location-map .map-title { color: #fff; }
+[data-theme="luxury"] .location-map .map-addr { color: var(--text-muted); }
+[data-theme="luxury"] .location-map .btn-primary { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .location-map .btn-primary:hover { background: #d4b682; }
+[data-theme="luxury"] .info-block { border-top-color: var(--border); }
+[data-theme="luxury"] .info-label { color: var(--accent); }
+[data-theme="luxury"] .schedule-row { color: #fff; }
+[data-theme="luxury"] .schedule-day { color: var(--text-muted); }
+[data-theme="luxury"] .schedule-closed { color: var(--text-soft); }
+[data-theme="luxury"] .info-val { color: #fff; }
+
+/* ── Footer (mismo color que el body, da continuidad) ─── */
+[data-theme="luxury"] footer {
+  background: var(--bg-dark);
+  color: #fff;
+  border-top: 1px solid var(--border);
+}
+[data-theme="luxury"] .footer-grid { border-bottom-color: var(--border); }
+[data-theme="luxury"] .footer-logo { color: #fff; }
+[data-theme="luxury"] .footer-logo span { color: var(--text-muted); }
+[data-theme="luxury"] .footer-tagline,
+[data-theme="luxury"] .footer-col-title { color: var(--text-soft); }
+[data-theme="luxury"] .footer-col-title { color: var(--accent); }
+[data-theme="luxury"] .footer-links a,
+[data-theme="luxury"] .footer-contact li { color: var(--text-muted); }
+[data-theme="luxury"] .footer-links a:hover { color: var(--accent); }
+[data-theme="luxury"] .footer-bottom { color: var(--text-soft); }
+[data-theme="luxury"] .footer-bottom a { color: var(--text-muted); }
+[data-theme="luxury"] .footer-bottom a:hover { color: var(--accent); }
+
+/* ── Cards específicas del nicho ──────────────────────── */
+[data-theme="luxury"] .bono-card,
+[data-theme="luxury"] .esp-card,
+[data-theme="luxury"] .area-card,
+[data-theme="luxury"] .act-card,
+[data-theme="luxury"] .inst-card { background: var(--bg-card); border-color: var(--border); }
+[data-theme="luxury"] .bono-card.featured { border-color: var(--accent); }
+[data-theme="luxury"] .bono-card.featured::before { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .bono-sesiones,
+[data-theme="luxury"] .bono-precio { color: #fff; }
+[data-theme="luxury"] .bono-precio-tachado { color: var(--text-soft); }
+[data-theme="luxury"] .bono-label { color: var(--accent); }
+[data-theme="luxury"] .bono-list { color: var(--text-muted); border-top-color: var(--border); }
+[data-theme="luxury"] .area-title,
+[data-theme="luxury"] .esp-card-title,
+[data-theme="luxury"] .act-title,
+[data-theme="luxury"] .inst-title { color: #fff; }
+[data-theme="luxury"] .area-icon,
+[data-theme="luxury"] .act-icon { color: var(--accent); }
+[data-theme="luxury"] .area-desc,
+[data-theme="luxury"] .esp-card-desc,
+[data-theme="luxury"] .act-desc,
+[data-theme="luxury"] .inst-desc { color: var(--text-muted); }
+[data-theme="luxury"] .area-card:hover,
+[data-theme="luxury"] .act-card:hover,
+[data-theme="luxury"] .esp-card:hover,
+[data-theme="luxury"] .bono-card:hover { border-color: var(--accent); }
+
+/* Bloque oscuro: ya es oscuro, igualar */
+[data-theme="luxury"] .dif-section,
+[data-theme="luxury"] .cuotas-section { background: var(--bg-soft); }
+
+/* Proceso pasos */
+[data-theme="luxury"] .proceso-step { border-top-color: var(--accent); }
+[data-theme="luxury"] .proceso-num { color: var(--accent); }
+[data-theme="luxury"] .proceso-title,
+[data-theme="luxury"] .proceso-step-title { color: #fff; }
+[data-theme="luxury"] .proceso-desc,
+[data-theme="luxury"] .proceso-step-desc { color: var(--text-muted); }
+
+/* FAQ */
+[data-theme="luxury"] .faq-item { border-bottom-color: var(--border); }
+[data-theme="luxury"] .faq-q { color: #fff; }
+[data-theme="luxury"] .faq-a { color: var(--text-muted); }
+
+/* Sobre mí (psicólogo) */
+[data-theme="luxury"] .sobre-photo { background: var(--bg-soft); border-color: var(--border); }
+[data-theme="luxury"] .sobre-bio p { color: var(--text-muted); }
+[data-theme="luxury"] .sobre-bio p strong { color: #fff; }
+[data-theme="luxury"] .sobre-creds { border-top-color: var(--border); }
+[data-theme="luxury"] .sobre-cred-item { color: #fff; }
+[data-theme="luxury"] .sobre-cred-label { color: var(--accent); }
+
+/* Restaurante: menú del día */
+[data-theme="luxury"] .menu-dia-card { background: var(--bg-card); border-color: var(--border); }
+[data-theme="luxury"] .menu-dia-precio { color: var(--accent); }
+[data-theme="luxury"] .menu-section-title { color: var(--accent); border-bottom-color: var(--border); }
+[data-theme="luxury"] .menu-item-name { color: #fff; }
+[data-theme="luxury"] .menu-item-desc { color: var(--text-muted); }
+[data-theme="luxury"] .menu-item-price { color: var(--accent); }
+[data-theme="luxury"] .plato-prefix { color: var(--accent); }
+
+/* Pádel cuotas */
+[data-theme="luxury"] .cuota-name { color: var(--accent); }
+[data-theme="luxury"] .cuota-card.featured { border-color: var(--accent); }
+[data-theme="luxury"] .cuota-card.featured::before { background: var(--accent); color: #0a0a0a; }
+
+/* Academia horarios */
+[data-theme="luxury"] .horario-table { border-top-color: var(--border); }
+[data-theme="luxury"] .horario-row { border-bottom-color: var(--border); }
+[data-theme="luxury"] .horario-time { color: #fff; }
+[data-theme="luxury"] .horario-acts { color: var(--text-muted); }
+
+/* Abogados: dif-stats */
+[data-theme="luxury"] .dif-stat-num { color: var(--accent); }
+[data-theme="luxury"] .dif-stat-label { color: var(--text-muted); }
+
+/* Selección de texto */
+[data-theme="luxury"] ::selection { background: var(--accent); color: #0a0a0a; }

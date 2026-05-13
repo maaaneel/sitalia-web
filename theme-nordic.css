@@ -57,11 +57,41 @@ section { padding: 0; }
 .container { max-width: 1200px; padding: 0 32px; margin: 0 auto; }
 @media (max-width: 720px) { .container { padding: 0 20px; } }
 
-/* ── Demo banner (top) ─────────────────────────────────── */
+/* ── Demo banner (top, con selector de tema) ──────────── */
 .demo-banner {
   background: #0a0a0a; color: #fff;
   font-size: 10px; letter-spacing: .15em; font-weight: 500;
-  padding: 7px;
+  padding: 7px 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.demo-banner-name { white-space: nowrap; }
+.demo-banner-themes {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 9px; letter-spacing: .12em; font-weight: 500;
+}
+.demo-banner-themes-label {
+  color: rgba(255,255,255,.5); margin-right: 4px;
+}
+.demo-banner-themes button {
+  background: rgba(255,255,255,.08);
+  border: 1px solid transparent;
+  color: rgba(255,255,255,.7);
+  padding: 4px 9px;
+  border-radius: 3px;
+  font-size: 9px; letter-spacing: .1em; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: all .15s;
+}
+.demo-banner-themes button:hover:not(.active) {
+  color: #fff; background: rgba(255,255,255,.15);
+}
+.demo-banner-themes button.active {
+  background: #fff; color: #0a0a0a; border-color: #fff;
+}
+@media (max-width: 540px) {
+  .demo-banner { padding: 8px 12px; flex-direction: column; gap: 6px; }
+  .demo-banner-themes { font-size: 9px; }
 }
 
 /* ── Back to Sitalia link ──────────────────────────────── */
