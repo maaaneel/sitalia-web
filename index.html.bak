@@ -407,10 +407,6 @@
             <label class="form-label">¿Qué necesitas? <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
             <textarea id="cf-msg" class="form-input" rows="3" placeholder="Web nueva, mejorar la que tengo, añadir reservas online..."></textarea>
           </div>
-          <label class="form-consent" style="display:flex;align-items:flex-start;gap:10px;margin:8px 0 16px;font-size:12px;color:var(--text2);line-height:1.5;cursor:pointer">
-            <input type="checkbox" id="cf-consent" required style="margin-top:3px;flex-shrink:0;cursor:pointer">
-            <span>He leído y acepto la <a href="/privacidad.html" target="_blank" style="color:var(--text);text-decoration:underline">política de privacidad</a>.</span>
-          </label>
           <button id="cf-btn" class="btn-primary" style="width:100%;justify-content:center;gap:8px;padding:14px 24px;font-size:15px" onclick="enviarContacto()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             <span id="cf-btn-txt">Enviar mensaje</span>
@@ -466,15 +462,6 @@
     <div class="footer-bottom">
       <div class="footer-copy">© 2025 Sitalia. Todos los derechos reservados.</div>
       <div class="footer-legal">
-        <a href="/privacidad.html">Privacidad</a>
-        <a href="/aviso-legal.html">Aviso legal</a>
-        <a href="/cookies.html">Cookies</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="index.js" defer></script>
-<script src="cookie-banner.js" defer></script>
-</body>
-</html>
+        <a href="#">Privacidad</a>
+        <a href="#">Aviso legal</a>
+   

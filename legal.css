@@ -1,0 +1,159 @@
+/* ============================================================
+   SITALIA — legal.css
+   Estilos para las páginas legales (privacidad, aviso legal, cookies).
+   Comparte tokens y tipografía con theme-nordic.css pero adaptado
+   a documento textual de lectura.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:         #ffffff;
+  --bg-soft:    #fafafa;
+  --text:       #0a0a0a;
+  --text-muted: #555555;
+  --text-soft:  #999999;
+  --border:     #eaeaea;
+  --font:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--text); text-decoration: underline; text-decoration-color: var(--text-soft); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--text); }
+
+/* ── Header simple (logo + back) ───────────────────────── */
+.legal-header {
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+  background: #fff;
+}
+.legal-header-inner {
+  max-width: 760px; margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.legal-logo {
+  font-size: 16px; font-weight: 600; letter-spacing: -.01em;
+  text-decoration: none; color: var(--text);
+}
+.legal-logo span { font-weight: 300; color: var(--text-muted); }
+.legal-back {
+  font-size: 11px; letter-spacing: .12em; font-weight: 500;
+  text-transform: uppercase; color: var(--text-muted);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px;
+  transition: all .15s;
+}
+.legal-back:hover { background: var(--text); color: #fff; border-color: var(--text); }
+
+/* ── Container y contenido legal ───────────────────────── */
+.legal-main {
+  max-width: 760px; margin: 0 auto; padding: 64px 32px 96px;
+}
+@media (max-width: 600px) { .legal-main { padding: 48px 20px 64px; } }
+
+.legal-eyebrow {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500; margin-bottom: 16px;
+}
+.legal-title {
+  font-size: clamp(32px, 5vw, 44px); font-weight: 400;
+  letter-spacing: -.025em; line-height: 1.1;
+  margin-bottom: 12px;
+}
+.legal-subtitle {
+  font-size: 15px; color: var(--text-muted); line-height: 1.6;
+  margin-bottom: 8px;
+}
+.legal-updated {
+  font-size: 12px; color: var(--text-soft);
+  margin-bottom: 56px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+}
+
+.legal-main h2 {
+  font-size: 22px; font-weight: 500; letter-spacing: -.01em;
+  margin-top: 48px; margin-bottom: 16px;
+  color: var(--text);
+}
+.legal-main h3 {
+  font-size: 16px; font-weight: 600; letter-spacing: -.005em;
+  margin-top: 28px; margin-bottom: 10px;
+  color: var(--text);
+}
+.legal-main p, .legal-main li {
+  color: var(--text-muted); line-height: 1.7;
+  margin-bottom: 14px;
+}
+.legal-main p strong, .legal-main li strong { color: var(--text); font-weight: 500; }
+.legal-main ul, .legal-main ol { padding-left: 24px; margin-bottom: 20px; }
+.legal-main li { margin-bottom: 8px; }
+.legal-main a { color: var(--text); }
+
+/* Tabla de procesadores / cookies */
+.legal-table {
+  width: 100%; border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 13px;
+}
+.legal-table th, .legal-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+.legal-table th {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500;
+  background: var(--bg-soft);
+}
+.legal-table td { color: var(--text-muted); line-height: 1.55; }
+.legal-table td strong { color: var(--text); font-weight: 500; }
+
+/* Bloque destacado (notas) */
+.legal-callout {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 24px 0;
+  font-size: 14px; color: var(--text);
+}
+.legal-callout strong { font-weight: 500; }
+
+/* Footer mínimo */
+.legal-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+  background: var(--bg-soft);
+}
+.legal-footer-inner {
+  max-width: 760px; margin: 0 auto; padding: 0 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--text-soft); flex-wrap: wrap; gap: 12px;
+}
+.legal-footer-links { display: flex; gap: 20px; }
+.legal-footer-links a {
+  font-size: 12px; color: var(--text-muted); text-decoration: none;
+}
+.legal-footer-links a:hover { color: var(--text); }
+
+/* ── Cookie banner (mismo estilo que en theme-nordic.css) ─── */
+.sitalia-cookie-banner{position:fixed;bottom:16px;left:16px;right:16px;max-width:480px;margin:0 auto;background:#0a0a0a;color:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.25);padding:16px 18px;z-index:9999;font-family:inherit;font-size:13px;line-height:1.5;animation:scb-in .25s ease}
+@media(min-width:720px){.sitalia-cookie-banner{right:24px;left:auto;bottom:24px;max-width:420px;margin:0}}
+.scb-inner{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.scb-text{flex:1;min-width:200px;color:rgba(255,255,255,.85)}
+.scb-text strong{color:#fff;font-weight:600}
+.scb-text a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.scb-text a:hover{opacity:.85}
+.scb-btn{background:#fff;color:#0a0a0a;border:none;padding:9px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;border-radius:6px;cursor:pointer;font-family:inherit;transition:background .15s;flex-shrink:0}
+.scb-btn:hover{background:rgba(255,255,255,.85)}
+.scb-hide{opacity:0;transform:translateY(20px);transition:all .25s ease}
+@keyframes scb-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}

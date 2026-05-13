@@ -28,6 +28,14 @@ async function enviarContacto() {
     return;
   }
 
+  // RGPD: consentimiento explícito de la política de privacidad
+  var consent = document.getElementById('cf-consent');
+  if (consent && !consent.checked) {
+    alert('Debes aceptar la política de privacidad para poder enviar el formulario.');
+    consent.focus();
+    return;
+  }
+
   var btn    = document.getElementById('cf-btn');
   var btnTxt = document.getElementById('cf-btn-txt');
   var okDiv  = document.getElementById('cf-ok');

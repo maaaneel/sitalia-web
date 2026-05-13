@@ -379,9 +379,8 @@
     <div class="footer-bottom">
       <p>© 2026 Barberia El Rincón · Web por <a href="/">Sitalia</a></p>
       <div style="display:flex;gap:18px">
-        <a href="/privacidad.html">Privacidad</a>
-        <a href="/aviso-legal.html">Aviso legal</a>
-        <a href="/cookies.html">Cookies</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
       </div>
     </div>
   </div>
@@ -389,6 +388,5 @@
 
 <script src="shared.js?v=3"></script>
 <script src="peluqueria-config.js?v=3"></script>
-<script src="cookie-banner.js" defer></script>
 </body>
 </html>

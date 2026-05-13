@@ -530,6 +530,22 @@ nav.scrolled {
   font-size: 13px; text-align: center;
 }
 
+/* Checkbox de consentimiento RGPD */
+.lead-form-consent {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 8px 0 12px;
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+  cursor: pointer;
+}
+.lead-form-consent input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--text);
+  cursor: pointer;
+}
+.lead-form-consent a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.lead-form-consent a:hover { text-decoration: none; }
+
 /* ═══════════════════════════════════════════════════════
    SECCIONES — headers y typography
    ═══════════════════════════════════════════════════════ */
@@ -782,6 +798,51 @@ footer {
    Ocultar botones flotantes legados (wa-float)
    ═══════════════════════════════════════════════════════ */
 .wa-float { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════
+   COOKIE BANNER (informativo, esquina inferior)
+   ═══════════════════════════════════════════════════════ */
+.sitalia-cookie-banner {
+  position: fixed;
+  bottom: 16px; left: 16px; right: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #0a0a0a; color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  padding: 16px 18px;
+  z-index: 9999;
+  font-family: var(--font, -apple-system, sans-serif);
+  font-size: 13px; line-height: 1.5;
+  animation: scb-in .25s ease;
+}
+@media (min-width: 720px) {
+  .sitalia-cookie-banner { right: 24px; left: auto; bottom: 24px; max-width: 420px; margin: 0; }
+}
+.scb-inner { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.scb-text { flex: 1; min-width: 200px; color: rgba(255,255,255,.85); }
+.scb-text strong { color: #fff; font-weight: 600; }
+.scb-text a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.scb-text a:hover { opacity: .85; }
+.scb-btn {
+  background: #fff; color: #0a0a0a;
+  border: none; padding: 9px 18px;
+  font-size: 12px; font-weight: 600; letter-spacing: .06em;
+  border-radius: 6px; cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+.scb-btn:hover { background: rgba(255,255,255,.85); }
+.scb-hide { opacity: 0; transform: translateY(20px); transition: all .25s ease; }
+@keyframes scb-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sitalia-cookie-banner { animation: none; }
+  .scb-hide { transition: none; }
+}
 
 /* ═══════════════════════════════════════════════════════
    Reveal animations + accesibilidad
