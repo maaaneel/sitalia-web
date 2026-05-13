@@ -116,6 +116,17 @@ section { padding: 0; }
 .back-to-sitalia:hover {
   background: #0a0a0a; color: #fff; border-color: #0a0a0a;
 }
+/* En móvil: botón compacto solo con la flecha. El texto "Sitalia" se oculta. */
+@media (max-width: 600px) {
+  .back-to-sitalia {
+    top: 38px; left: 10px;
+    padding: 0; gap: 0;
+    width: 30px; height: 30px;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .back-to-sitalia .back-text { display: none; }
+}
 
 /* ── NAV ───────────────────────────────────────────────── */
 nav {
