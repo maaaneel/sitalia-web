@@ -1,271 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casa Lola | Cocina de Mercado · Madrid</title>
-<meta name="description" content="Restaurante de cocina de mercado en el corazón de Madrid. Ingredientes frescos, recetas de temporada y vinos naturales.">
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="restaurante.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Lola — Cocina de Mercado · Madrid</title>
+  <meta name="description" content="Casa Lola, cocina de mercado en pleno centro de Madrid. Menú del día, carta de temporada y ambiente cuidado.">
+  <meta property="og:title" content="Casa Lola — Madrid">
+  <meta property="og:description" content="Cocina de mercado en Madrid.">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://sitalia.es/images/res-gallery-1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="theme-nordic.css">
+  <link rel="stylesheet" href="restaurante.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "Restaurant",
+    "name": "Casa Lola",
+    "image": "https://sitalia.es/images/res-gallery-1.jpg",
+    "description": "Restaurante de cocina de mercado en Madrid.",
+    "address": { "@type": "PostalAddress", "streetAddress": "Calle de Las Letras 14", "addressLocality": "Madrid", "addressCountry": "ES" },
+    "telephone": "+34915550123",
+    "servesCuisine": "Spanish",
+    "priceRange": "€€",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "13:00", "closes": "16:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday","Friday","Saturday"], "opens": "20:30", "closes": "23:30" }
+    ],
+    "url": "https://sitalia.es/demo-restaurante"
+  }
+  </script>
 </head>
 <body>
 
 <div class="demo-banner">DEMO — Casa Lola · Sitalia.es</div>
 
 <a href="/" class="back-to-sitalia">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
 <nav>
-  <div class="nav-logo">Casa <span>Lola</span></div>
-  <ul class="nav-links" id="navlinks" style="list-style:none">
-    <li><a href="#carta">Carta</a></li>
-    <li><a href="#menudia">Menú del día</a></li>
-    <li><a href="#galeria">Galería</a></li>
-    <li><a href="#resenas">Reseñas</a></li>
-    <li><a href="#ubicacion">Ubicación</a></li>
-  </ul>
-  <a href="#reservas" class="nav-cta">Reservar mesa</a>
-  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+  <div class="nav-inner">
+    <div class="nav-logo">Casa <span>Lola</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#carta">Carta</a>
+      <a href="#menudia">Menú del día</a>
+      <a href="#galeria">Galería</a>
+      <a href="#ubicacion">Ubicación</a>
+    </div>
+    <a href="tel:+34915550123" class="nav-cta">RESERVAR MESA</a>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding:0">
-  <div class="hero-content reveal">
-    <div class="hero-tag">Cocina de mercado · Madrid</div>
-    <h1 class="hero-title">Sabor<br>de <em>temporada,</em><br>alma local.</h1>
-    <p class="hero-desc">Ingredientes frescos de productores locales, recetas con historia y una carta de vinos naturales cuidada con mimo. En el corazón de Malasaña desde 2009.</p>
-    <div class="hero-actions">
-      <a href="#reservas" class="btn-primary">Reservar mesa</a>
-      <a href="#carta" class="btn-outline">Ver carta</a>
-    </div>
-  </div>
-  <div class="hero-image">
-    <img src="images/res-hero.jpg" alt="Interior restaurante">
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="hero-stat-num">15</div><div class="hero-stat-label">Años abiertos</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">4.9</div><div class="hero-stat-label">Google Reviews</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Km. 0</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CARTA -->
-<section id="carta">
-  <div class="section-head reveal">
-    <div class="section-label">Nuestra propuesta</div>
-    <h2 class="section-title">La Carta</h2>
-    <p class="section-sub">Una selección honesta de platos de temporada. La carta cambia con el mercado.</p>
-  </div>
-  <div class="menu-tabs reveal">
-    <button class="menu-tab active" onclick="showTab('entrantes',this)">Entrantes</button>
-    <button class="menu-tab" onclick="showTab('principales',this)">Principales</button>
-    <button class="menu-tab" onclick="showTab('postres',this)">Postres</button>
-    <button class="menu-tab" onclick="showTab('vinos',this)">Vinos</button>
-  </div>
-  <div id="tab-entrantes" class="menu-panel active reveal">
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Croquetas de jamón ibérico</div><div class="menu-item-desc">Bechamel cremosa, jamón DO Jabugo, fritura artesanal. 6 uds.</div><div class="menu-item-tag">&#9733; Firma</div></div><div class="menu-item-price">12€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Ensalada de temporada</div><div class="menu-item-desc">Lechugas variadas, tomate cherry, granada, vinagreta de miel y mostaza.</div></div><div class="menu-item-price">9€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tabla de ibéricos</div><div class="menu-item-desc">Selección de embutidos ibéricos de bellota, pan de cristal con tomate. Para 2.</div></div><div class="menu-item-price">18€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Pulpo a la brasa</div><div class="menu-item-desc">Pulpo gallego, patata rota con pimentón de la Vera, AOVE.</div><div class="menu-item-tag"> Popular</div></div><div class="menu-item-price">16€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Gazpacho andaluz</div><div class="menu-item-desc">Tomate de huerta, pepino, pimiento y pan. Servido frío. (Temporada)</div></div><div class="menu-item-price">7€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Boquerones en vinagre</div><div class="menu-item-desc">Boquerones frescos marinados en casa, ajo laminado, perejil, AOVE.</div></div><div class="menu-item-price">8€</div></div>
-  </div>
-  <div id="tab-principales" class="menu-panel">
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Carrilleras de ternera al vino tinto</div><div class="menu-item-desc">Guisadas 8 horas, reducción de Rioja, puré de patata trufado.</div><div class="menu-item-tag">&#9733; Firma</div></div><div class="menu-item-price">22€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Lubina a la plancha</div><div class="menu-item-desc">Lubina salvaje del Cantábrico, verduras de temporada, salsa verde.</div></div><div class="menu-item-price">26€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Secreto ibérico a la brasa</div><div class="menu-item-desc">Secreto DO Jabugo, patatas bravas caseras, alioli de ajo negro.</div><div class="menu-item-tag"> Popular</div></div><div class="menu-item-price">20€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Risotto de setas y trufa</div><div class="menu-item-desc">Arroz carnaroli, mix de setas silvestres, parmesano añejo, aceite de trufa.</div></div><div class="menu-item-price">18€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Bacalao al pil pil</div><div class="menu-item-desc">Lomo de bacalao desalado, salsa pil pil tradicional, guindilla al aceite.</div></div><div class="menu-item-price">21€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Pasta al huevo con trufa</div><div class="menu-item-desc">Pappardelle fresca, mantequilla, parmesano, ralladura de trufa negra.</div></div><div class="menu-item-price">19€</div></div>
-  </div>
-  <div id="tab-postres" class="menu-panel">
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tarta de queso al horno</div><div class="menu-item-desc">Nuestra receta propia, textura cremosa, mermelada de frutos rojos.</div><div class="menu-item-tag">&#9733; Firma</div></div><div class="menu-item-price">7€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Coulant de chocolate</div><div class="menu-item-desc">Chocolate 70% Valrhona, corazón fundente, helado de vainilla.</div></div><div class="menu-item-price">8€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Arroz con leche</div><div class="menu-item-desc">Receta de la abuela, canela, limón, caramelizado al momento.</div></div><div class="menu-item-price">6€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Selección de quesos</div><div class="menu-item-desc">3 quesos artesanos de España, membrillo, nueces, pan de higos.</div></div><div class="menu-item-price">12€</div></div>
-  </div>
-  <div id="tab-vinos" class="menu-panel">
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vino de la casa — Blanco</div><div class="menu-item-desc">Verdejo Rueda. Fresco, afrutado, mineral.</div></div><div class="menu-item-price">Copa 4€ · Botella 16€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vino de la casa — Tinto</div><div class="menu-item-desc">Tempranillo Ribera del Duero. Cuerpo medio, taninos suaves.</div></div><div class="menu-item-price">Copa 5€ · Botella 18€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Cava Brut Nature</div><div class="menu-item-desc">Penedès, elaboración tradicional. Seco, elegante.</div><div class="menu-item-tag"> Celebración</div></div><div class="menu-item-price">Botella 22€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Rioja Reserva 2019</div><div class="menu-item-desc">Tempranillo 100%, crianza 18 meses en roble francés.</div></div><div class="menu-item-price">Botella 32€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Albariño Rías Baixas</div><div class="menu-item-desc">Fresco y aromático. Perfecto con pescados y mariscos.</div></div><div class="menu-item-price">Copa 6€ · Botella 24€</div></div>
-    <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Orange Wine — Natural</div><div class="menu-item-desc">Macabeo con maceración de pieles. Naranja intenso, tánico, único.</div><div class="menu-item-tag"> Natural</div></div><div class="menu-item-price">Copa 7€ · Botella 28€</div></div>
-  </div>
-</section>
-
-<!-- MENÚ DEL DÍA -->
-<section id="menudia">
-  <div class="section-head reveal">
-    <div class="section-label">De lunes a viernes</div>
-    <h2 class="section-title">Menú del día</h2>
-    <p class="section-sub">13:30 a 16:00h. Primero, segundo, postre o café, pan y bebida incluida.</p>
-  </div>
-  <div class="menudia-grid">
-    <div class="menudia-card reveal reveal-delay-1">
-      <div class="menudia-card-header">
-        <div><div class="menudia-day">Esta semana</div><div style="font-size:13px;color:var(--text-muted);margin-top:4px">Lunes a viernes · 13:30–16:00h</div></div>
-        <div><div class="menudia-price">14.50€</div><div class="menudia-price-label">IVA incluido</div></div>
-      </div>
-      <div class="menudia-course">
-        <div class="menudia-course-title">Primeros (a elegir)</div>
-        <div class="menudia-dish">Ensalada verde con vinagreta de miel</div>
-        <div class="menudia-dish">Crema de calabaza con pipas tostadas</div>
-        <div class="menudia-dish">Macarrones con tomate y albahaca fresca</div>
-      </div>
-      <div class="menudia-course">
-        <div class="menudia-course-title">Segundos (a elegir)</div>
-        <div class="menudia-dish">Merluza al horno con patatas</div>
-        <div class="menudia-dish">Pollo asado con verduras de temporada</div>
-        <div class="menudia-dish">Lentejas estofadas con chorizo (miércoles)</div>
-      </div>
-      <div class="menudia-course">
-        <div class="menudia-course-title">Postre o café</div>
-        <div class="menudia-dish">Flan de huevo casero · Yogur natural con miel · Café o infusión</div>
-      </div>
-      <div class="menudia-note">Pan de masa madre y bebida incluida. Consulta alérgenos en sala.</div>
-    </div>
-    <div class="menudia-info">
-      <div class="menudia-info-card reveal reveal-delay-1"><div class="menudia-info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="menudia-info-title">Horario del menú</div><div class="menudia-info-text">Servimos el menú del día de lunes a viernes de 13:30 a 16:00h.</div></div>
-      <div class="menudia-info-card reveal reveal-delay-2"><div class="menudia-info-icon"></div><div class="menudia-info-title">Opción vegetariana</div><div class="menudia-info-text">Siempre disponemos de alternativas vegetarianas y sin gluten.</div></div>
-      <div class="menudia-info-card reveal reveal-delay-3"><div class="menudia-info-icon"></div><div class="menudia-info-title">Grupos y empresas</div><div class="menudia-info-text">Menús cerrados para grupos +8 personas. Pídenos presupuesto.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- RESERVAS -->
-<section id="reservas">
-  <div class="section-head reveal" style="text-align:center;max-width:560px;margin:0 auto 48px">
-    <div class="section-label" style="justify-content:center">Sin esperas</div>
-    <h2 class="section-title">Reserva tu mesa</h2>
-    <p class="section-sub" style="margin:0 auto">Elige fecha, hora y comensales. Confirmamos por WhatsApp al momento.</p>
-  </div>
-  <div class="res-container reveal">
-    <div id="res-success" style="display:none" class="res-success">
-      <div class="res-success-icon"></div>
-      <div class="res-success-title">¡Reserva enviada!</div>
-      <div class="res-success-text">Te hemos abierto WhatsApp con los detalles de tu reserva. Confirmamos en menos de 1 hora.</div>
-      <button class="res-retry" onclick="resetRes()">Hacer otra reserva</button>
-    </div>
-    <div id="res-wizard">
-      <div class="res-steps">
-        <button class="res-step active" id="rstab1" onclick="resTo(1)">1 · Fecha</button>
-        <button class="res-step" id="rstab2" onclick="resTo(2)">2 · Hora</button>
-        <button class="res-step" id="rstab3" onclick="resTo(3)">3 · Confirmar</button>
-      </div>
-      <div class="res-panel active" id="rspanel1">
-        <div class="res-grid-2">
-          <div><span class="res-label">Fecha</span><input type="date" class="res-input" id="res-date" onchange="resDateChange()"></div>
-          <div><span class="res-label">Personas</span>
-            <select class="res-select" id="res-pax" onchange="resPaxChange()">
-              <option value="">Nº comensales</option>
-              <option value="1">1 persona</option><option value="2">2 personas</option><option value="3">3 personas</option><option value="4">4 personas</option><option value="5">5 personas</option><option value="6">6 personas</option><option value="7">7 personas</option><option value="8">8+ personas (consultar)</option>
-            </select>
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Madrid · Barrio de las Letras · Desde 2008</span>
+        </div>
+        <h1 class="hero-title">Sabor de<br><em>temporada,</em><br>alma local.</h1>
+        <p class="hero-sub">
+          Cocina de mercado en el corazón de Madrid. Producto de proximidad,
+          menú del día casero y carta que cambia con la temporada.
+        </p>
+        <div class="hero-info-row">
+          <div class="hero-info-item">
+            <span class="hero-info-label">Horario</span>
+            <span class="hero-info-val">Mar–Sáb 13:00–16:00</span>
+            <span class="hero-info-val muted">Jue–Sáb 20:30–23:30</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-val">Calle de Las Letras 14</span>
+            <span class="hero-info-val muted">Madrid Centro</span>
           </div>
         </div>
-        <button class="res-btn" id="resbtn1" disabled onclick="resTo(2)">SIGUIENTE: ELEGIR HORA</button>
       </div>
-      <div class="res-panel" id="rspanel2">
-        <span class="res-label">Selecciona un horario disponible</span>
-        <div id="res-slots-grid" class="res-slots-grid"></div><br>
-        <button class="res-btn" id="resbtn2" disabled onclick="resTo(3)">SIGUIENTE: CONFIRMAR</button>
-        <button class="res-back" onclick="resTo(1)">← Cambiar fecha</button>
-      </div>
-      <div class="res-panel" id="rspanel3">
-        <div class="res-grid-2">
-          <div><span class="res-label">Tu nombre</span><input type="text" class="res-input" id="res-name" placeholder="Ej: María García" oninput="resCheckData()"></div>
-          <div><span class="res-label">Teléfono</span><input type="tel" class="res-input" id="res-phone" placeholder="+34 600 000 000" oninput="resCheckData()"></div>
+
+      <div class="cta-card reveal reveal-delay-1">
+        <div class="cta-card-eyebrow">Reservar mesa</div>
+        <div class="cta-card-title">Te guardamos sitio.</div>
+        <div class="cta-card-sub">Llámanos o escríbenos por WhatsApp. Te confirmamos en minutos.</div>
+
+        <a href="https://wa.me/34915550123?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20mesa%20en%20Casa%20Lola"
+           target="_blank" rel="noopener" class="cta-card-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1-1.1 2.5s1.1 2.9 1.3 3.1c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M20.5 3.5C18.3 1.2 15.3 0 12 0 5.4 0 0 5.4 0 12c0 2.1.5 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.4-8.3zM12 21.8c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.5-1.5-5.3 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 9.9-10 9.9z"/></svg>
+          RESERVAR POR WHATSAPP
+        </a>
+        <a href="tel:+34915550123" class="cta-card-btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 010 2.18 2 2 0 011.99.1h3a2 2 0 012 1.72c.13.96.37 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          LLAMAR · 915 550 123
+        </a>
+
+        <div class="cta-card-divider"></div>
+        <div class="cta-card-info">
+          <div class="cta-card-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div>Reservas hasta <strong>15 minutos antes</strong> de cada servicio.</div>
+          </div>
+          <div class="cta-card-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <div>Grupos a partir de <strong>8 personas</strong>: contacta para opciones de menú.</div>
+          </div>
         </div>
-        <div class="res-field"><span class="res-label">Resumen de tu reserva</span><div id="res-summary" style="border:1px solid var(--border);padding:16px 20px;background:var(--bg)"></div></div>
-        <button class="res-wa-btn" id="resbtn3" disabled onclick="resWA()">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-          CONFIRMAR RESERVA POR WHATSAPP
-        </button>
-        <button class="res-back" onclick="resTo(2)">← Cambiar horario</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GALERÍA -->
-<section id="galeria" style="padding-top:96px;padding-bottom:0">
-  <div style="padding:0 5% 48px" class="reveal">
-    <div class="section-label">Momentos y platos</div>
-    <h2 class="section-title">Galería</h2>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-item"><img src="images/res-gallery-1.jpg" alt="Pulpo"></div>
-    <div class="gallery-item"><img src="images/res-gallery-2.jpg" alt="Ambiente"></div>
-    <div class="gallery-item"><img src="images/res-gallery-3.jpg" alt="Croquetas"></div>
-    <div class="gallery-item"><img src="images/res-gallery-4.jpg" alt="Tarta queso"></div>
-    <div class="gallery-item"><img src="images/res-gallery-5.jpg" alt="Vinos"></div>
-  </div>
-</section>
-
-<!-- RESEÑAS -->
-<section id="resenas">
-  <div class="reviews-summary reveal">
-    <div class="reviews-score">4.9</div>
-    <div class="reviews-detail">
-      <div class="reviews-stars-big"><span></span><span></span><span></span><span></span><span></span></div>
-      <div class="reviews-count">Basado en 218 reseñas verificadas</div>
-      <div class="reviews-platform">Google · TripAdvisor</div>
+<section id="carta" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Carta</div>
+        <h2 class="section-title">Cocina de temporada</h2>
+      </div>
     </div>
-  </div>
-  <div class="reviews-grid">
-    <div class="review-card reveal reveal-delay-1"><div class="review-stars"><span class="review-star"></span></div><p class="review-text">"Las croquetas de jamón son las mejores que he probado en Madrid. Ya hemos vuelto tres veces y siempre impecable."</p><div class="review-author">Ana M.</div><div class="review-meta">Madrid · hace 2 semanas · Google</div></div>
-    <div class="review-card reveal reveal-delay-2"><div class="review-stars"><span class="review-star"></span></div><p class="review-text">"Menú del día imbatible. Cantidad, calidad y precio difícil de encontrar en la zona. El coulant de chocolate, increíble."</p><div class="review-author">Carlos R.</div><div class="review-meta">Malasaña · hace 1 mes · Google</div></div>
-    <div class="review-card reveal reveal-delay-3"><div class="review-stars"><span class="review-star"></span></div><p class="review-text">"Vinimos para una cena de empresa y fue todo perfecto. Rápidos respondiendo por WhatsApp, muy atentos."</p><div class="review-author">Patricia G.</div><div class="review-meta">Madrid · hace 3 semanas · TripAdvisor</div></div>
-    <div class="review-card reveal reveal-delay-4"><div class="review-stars"><span class="review-star"></span></div><p class="review-text">"Llevan 15 años y se nota que aman lo que hacen. La carta de vinos naturales es una sorpresa muy agradable."</p><div class="review-author">Javier S.</div><div class="review-meta">Madrid · hace 2 meses · Google</div></div>
-  </div>
-</section>
-
-<!-- UBICACIÓN -->
-<section id="ubicacion" style="padding:0">
-  <div class="location-grid">
-    <div class="map-placeholder"><div class="map-pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="map-address">Calle de Manuela Malasaña 12<br>28004 Madrid</div></div>
-    <div class="location-info reveal">
-      <div class="location-block">
-        <div class="location-block-label">Cómo llegar</div>
-        <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px">Calle de Manuela Malasaña 12, 28004 Madrid. Metro: Tribunal (L10) o Bilbao (L4, L5).</p>
-        <a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;border-bottom:1px solid var(--accent)">Abrir en Google Maps →</a>
+    <div class="menu-grid">
+      <div>
+        <div class="menu-section-title reveal">Para empezar</div>
+        <div class="menu-item reveal"><div><div class="menu-item-name">Tomate de huerta, AOVE y sal en escamas</div><div class="menu-item-desc">Variedad raf, picual ecológico.</div></div><div class="menu-item-price">8€</div></div>
+        <div class="menu-item reveal"><div><div class="menu-item-name">Croquetas caseras de jamón</div><div class="menu-item-desc">Receta de la casa, bechamel sin prisas.</div></div><div class="menu-item-price">9€</div></div>
+        <div class="menu-item reveal"><div><div class="menu-item-name">Ensaladilla rusa con bonito</div><div class="menu-item-desc">Mahonesa al momento, bonito del Cantábrico.</div></div><div class="menu-item-price">10€</div></div>
+        <div class="menu-item reveal"><div><div class="menu-item-name">Pulpo a la brasa</div><div class="menu-item-desc">Patata asada, pimentón ahumado.</div></div><div class="menu-item-price">16€</div></div>
       </div>
-      <div class="location-block">
-        <div class="location-block-label">Horario</div>
-        <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="closed">Cerrado</span></div>
-        <div class="schedule-row"><span class="schedule-day">Martes – Viernes</span><span>13:30–16:30 · 20:00–23:30</span></div>
-        <div class="schedule-row"><span class="schedule-day">Sábado</span><span>13:30–17:00 · 20:00–00:00</span></div>
-        <div class="schedule-row"><span class="schedule-day">Domingo</span><span>13:30–17:00</span></div>
-      </div>
-      <div class="location-block">
-        <div class="location-block-label">Contacto directo</div>
-        <p style="font-size:20px;font-weight:700;margin-bottom:6px"><a href="tel:+34912345678" style="color:var(--text)">+34 912 345 678</a></p>
-        <p style="font-size:13px;color:var(--text-muted)">reservas@casalola.es</p>
+      <div>
+        <div class="menu-section-title reveal reveal-delay-1">Principales</div>
+        <div class="menu-item reveal reveal-delay-1"><div><div class="menu-item-name">Bacalao confitado al pil-pil</div><div class="menu-item-desc">Acompañado de pisto manchego.</div></div><div class="menu-item-price">19€</div></div>
+        <div class="menu-item reveal reveal-delay-1"><div><div class="menu-item-name">Carrillera de ibérico al vino tinto</div><div class="menu-item-desc">Puré rústico de patata.</div></div><div class="menu-item-price">18€</div></div>
+        <div class="menu-item reveal reveal-delay-1"><div><div class="menu-item-name">Tartar de atún rojo</div><div class="menu-item-desc">Aguacate, soja, sésamo tostado.</div></div><div class="menu-item-price">21€</div></div>
+        <div class="menu-item reveal reveal-delay-1"><div><div class="menu-item-name">Arroz meloso de gambones</div><div class="menu-item-desc">Mínimo para dos personas.</div></div><div class="menu-item-price">22€/p</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section id="menudia" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Menú del día</div>
+        <h2 class="section-title">Hoy se come bien</h2>
+      </div>
+    </div>
+    <div class="menu-dia-card reveal">
+      <div class="menu-dia-header">
+        <span class="menu-dia-label">Lunes a Viernes · Mediodía</span>
+        <span class="menu-dia-precio">15€</span>
+      </div>
+      <div class="menu-dia-list">
+        <div><span class="plato-prefix">PRIMERO</span>Crema de calabaza asada con semillas</div>
+        <div><span class="plato-prefix">PRIMERO</span>Ensalada templada de queso de cabra y nueces</div>
+        <div><span class="plato-prefix">SEGUNDO</span>Merluza al horno con verduras de temporada</div>
+        <div><span class="plato-prefix">SEGUNDO</span>Solomillo de cerdo a la mostaza con puré</div>
+        <div><span class="plato-prefix">POSTRE</span>Tarta de queso casera o fruta de temporada</div>
+        <div style="margin-top:8px;font-size:12px;color:var(--text-soft)">Incluye pan, bebida y café.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Galería</div>
+        <h2 class="section-title">El ambiente</h2>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal"><img src="images/res-gallery-1.jpg" alt="Plato de Casa Lola" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-1"><img src="images/res-gallery-2.jpg" alt="Salón del restaurante" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-2"><img src="images/res-gallery-3.jpg" alt="Detalle de cocina" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-3"><img src="images/res-gallery-4.jpg" alt="Mesa servida" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Dónde estamos</div>
+        <h2 class="section-title">Ubicación y horario</h2>
+      </div>
+    </div>
+    <div class="location-grid">
+      <div class="location-map reveal">
+        <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="map-title">Casa Lola</div>
+          <div class="map-addr">Calle de Las Letras 14 · Madrid Centro</div>
+        </div>
+        <a href="https://maps.google.com/?q=Calle+de+las+Letras+14+Madrid" target="_blank" rel="noopener" class="btn-primary">VER EN MAPS &#8599;</a>
+      </div>
+      <div class="location-info reveal reveal-delay-1">
+        <div class="info-block">
+          <div class="info-label">Horario</div>
+          <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-closed">Cerrado</span></div>
+          <div class="schedule-row"><span class="schedule-day">Mar–Sáb mediodía</span><span>13:00 – 16:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Jue–Sáb cena</span><span>20:30 – 23:30</span></div>
+          <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 915 550 123</div>
+          <div class="info-val">hola@casalola.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div style="padding:0 5%">
+  <div class="container">
     <div class="footer-grid">
-      <div><div class="footer-logo">Casa <span>Lola</span></div><p class="footer-tagline">Cocina de mercado desde 2009.<br>Malasaña, Madrid.</p></div>
-      <div><div class="footer-col-title">Navegación</div><div class="footer-links"><a href="#carta">Carta</a><a href="#menudia">Menú del día</a><a href="#galeria">Galería</a><a href="#reservas">Reservar</a></div></div>
-      <div><div class="footer-col-title">Contacto</div><ul class="footer-contact"><li>Calle Manuela Malasaña 12, Madrid</li><li>+34 912 345 678</li><li>reservas@casalola.es</li></ul></div>
+      <div>
+        <div class="footer-logo">Casa <span>Lola</span></div>
+        <p class="footer-tagline">Cocina de mercado en Madrid.<br>Desde 2008.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegación</div>
+        <div class="footer-links">
+          <a href="#carta">Carta</a>
+          <a href="#menudia">Menú del día</a>
+          <a href="#galeria">Galería</a>
+          <a href="#ubicacion">Ubicación</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Calle de Las Letras 14, Madrid</li>
+          <li>+34 915 550 123</li>
+          <li>hola@casalola.es</li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Casa Lola · <a href="/" style="color:var(--accent)">Web por Sitalia</a></p>
-      <div style="display:flex;gap:16px"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+      <p>© 2026 Casa Lola · Web por <a href="/">Sitalia</a></p>
+      <div style="display:flex;gap:18px"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
     </div>
   </div>
 </footer>
 
-<a href="#reservas" class="wa-float" title="Reservar mesa" style="font-size:11px;font-weight:700;letter-spacing:.04em;width:auto;padding:0 18px;border-radius:100px">RESERVAR</a>
-
-<script src="shared.js"></script>
-<script src="restaurante.js"></script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>

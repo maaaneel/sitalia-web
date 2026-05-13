@@ -1,229 +1,357 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Academia Talento | Extraescolares y Actividades · Sevilla</title>
-<meta name="description" content="Academia de extraescolares en Sevilla. Idiomas, música, deporte, arte y refuerzo escolar. Inscripción online. Grupos reducidos y profesores especializados."/>
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="academia.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Talento — Extraescolares · Sevilla</title>
+  <meta name="description" content="Academia Talento, extraescolares y actividades para niños en Sevilla. Inglés, robótica, música, deportes y más.">
+  <meta property="og:title" content="Academia Talento — Sevilla">
+  <meta property="og:description" content="Extraescolares para niños en Sevilla.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://sitalia.es/images/aca-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="theme-nordic.css">
+  <link rel="stylesheet" href="academia.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "EducationalOrganization",
+    "name": "Academia Talento",
+    "image": "https://sitalia.es/images/aca-hero.jpg",
+    "address": { "@type": "PostalAddress", "streetAddress": "Avenida Reina Mercedes 22", "addressLocality": "Sevilla", "addressCountry": "ES" },
+    "telephone": "+34954550321",
+    "url": "https://sitalia.es/demo-academia"
+  }
+  </script>
 </head>
 <body>
 
 <div class="demo-banner">DEMO — Academia Talento · Sitalia.es</div>
+
 <a href="/" class="back-to-sitalia">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <div class="nav-logo-mark"></div>
-    <div class="nav-logo-text">Academia <span>Talento</span></div>
+  <div class="nav-inner">
+    <div class="nav-logo">Academia <span>Talento</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#actividades">Actividades</a>
+      <a href="#horarios">Horarios</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#inscripcion">Inscripción</a>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('inscripcion').scrollIntoView({behavior:'smooth'})">SOLICITAR INFO</button>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
-  <ul class="nav-links" id="navlinks">
-    <li><a href="#actividades">Actividades</a></li>
-    <li><a href="#horarios">Horarios</a></li>
-    <li><a href="#equipo">Equipo</a></li>
-    <li><a href="#ubicacion">Centro</a></li>
-  </ul>
-  <a href="#inscripcion" class="nav-cta">Inscríbete</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menú">&#9776;</button>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding:0;position:relative">
-  <img src="images/aca-hero.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.08;z-index:0;pointer-events:none" alt="">
-  <div class="hero-content reveal" style="position:relative;z-index:1">
-    <div class="hero-pill"><span class="hero-pill-icon"></span><span class="hero-pill-text">Sevilla · Desde 2010</span></div>
-    <h1 class="hero-title">Donde los<br/>niños <em>crecen</em><br/>aprendiendo.</h1>
-    <p class="hero-desc">Actividades extraescolares de calidad para niños y jóvenes de 3 a 18 años. Grupos reducidos, profesores vocacionales y un ambiente donde cada niño brilla a su manera.</p>
-    <div class="hero-actions">
-      <a href="#inscripcion" class="btn-primary">Inscríbete ahora</a>
-      <a href="#actividades" class="btn-outline">Ver actividades</a>
-    </div>
-    <div class="hero-chips">
-      <div class="hero-chip"> 3–18 años</div>
-      <div class="hero-chip"> Grupos de 6–10</div>
-      <div class="hero-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 12 4 16"/></svg> Trial gratuito</div>
-      <div class="hero-chip"> 15 años activos</div>
-    </div>
-  </div>
-  <div class="hero-visual reveal reveal-delay-2" style="position:relative;z-index:1">
-    <div class="hero-visual-inner">
-      <div class="hero-stat-big"><div class="hero-stat-big-num">+600</div><div><div class="hero-stat-big-label">Alumnos activos</div><div class="hero-stat-big-sub">Este curso 2024–25</div></div></div>
-      <div class="hero-stat-big"><div class="hero-stat-big-num">18</div><div><div class="hero-stat-big-label">Actividades diferentes</div><div class="hero-stat-big-sub">Idiomas · Deporte · Arte · Música</div></div></div>
-      <div class="hero-stat-big"><div class="hero-stat-big-num">6:1</div><div><div class="hero-stat-big-label">Ratio alumno–monitor</div><div class="hero-stat-big-sub">Atención personalizada real</div></div></div>
-      <div class="hero-stat-big"><div class="hero-stat-big-num">97%</div><div><div class="hero-stat-big-label">Familias que repiten</div><div class="hero-stat-big-sub">Según encuesta anual</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ACTIVIDADES -->
-<section id="actividades">
-  <div class="section-head reveal">
-    <div class="section-label">Nuestro catálogo</div>
-    <h2 class="section-title">Actividades</h2>
-    <p class="section-sub">Escoge entre 18 actividades agrupadas por áreas. Todas con prueba gratuita de una semana sin compromiso.</p>
-  </div>
-  <div class="act-tabs">
-    <button class="act-tab active" onclick="showAct('idiomas',this)"> Idiomas</button>
-    <button class="act-tab" onclick="showAct('musica',this)"> Música</button>
-    <button class="act-tab" onclick="showAct('deporte',this)"> Deporte</button>
-    <button class="act-tab" onclick="showAct('arte',this)"> Arte y Creatividad</button>
-    <button class="act-tab" onclick="showAct('refuerzo',this)"> Refuerzo</button>
-  </div>
-  <div id="act-idiomas" class="act-panel active">
-    <div class="act-card reveal"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon"></span><div class="act-name">Inglés — Todos los niveles</div><div class="act-desc">Método comunicativo Cambridge. Preparación de exámenes KET, PET y FCE. Grupos por nivel, no por edad.</div><div class="act-meta"><span class="act-meta-pill ages">4–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
-    <div class="act-card reveal reveal-delay-1"><div class="act-card-color" style="background:#c0392b"></div><span class="act-icon"></span><div class="act-name">Francés</div><div class="act-desc">Francés por inmersión. Conversación, gramática y cultura francesa. Preparación DELF según nivel.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
-    <div class="act-card reveal reveal-delay-2"><div class="act-card-color" style="background:#e74c3c"></div><span class="act-icon"></span><div class="act-name">Chino Mandarín</div><div class="act-desc">El idioma del futuro desde pequeños. Método visual con pictogramas. Pinyin y carácteres básicos.</div><div class="act-meta"><span class="act-meta-pill ages">7–16 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">60€/mes</span></div></div>
-  </div>
-  <div id="act-musica" class="act-panel">
-    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon"></span><div class="act-name">Piano</div><div class="act-desc">Clases individuales con método Suzuki y lectura musical. Desde primeras notas hasta nivel intermedio.</div><div class="act-meta"><span class="act-meta-pill ages">4–16 años</span><span class="act-meta-pill group">Individual</span><span class="act-meta-pill price">70€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon"></span><div class="act-name">Guitarra</div><div class="act-desc">Guitarra clásica, española y eléctrica. Grupos de 2–3 alumnos del mismo nivel. Teoría musical incluida.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Grupos 2–3</span><span class="act-meta-pill price">60€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--purple)"></div><span class="act-icon"></span><div class="act-name">Canto y Voz</div><div class="act-desc">Técnica vocal, proyección y repertorio. Desde canto coral hasta solos. Actuación en el festival anual.</div><div class="act-meta"><span class="act-meta-pill ages">7–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
-  </div>
-  <div id="act-deporte" class="act-panel">
-    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon"></span><div class="act-name">Fútbol</div><div class="act-desc">Técnica, táctica y trabajo en equipo. Torneos interacademia trimestrales. Categorías por edad.</div><div class="act-meta"><span class="act-meta-pill ages">4–16 años</span><span class="act-meta-pill group">Grupos 10–12</span><span class="act-meta-pill price">45€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon"></span><div class="act-name">Natación</div><div class="act-desc">Desde bebés y debutantes hasta perfeccionamiento. Piscina cubierta temperada a 28°C en el propio centro.</div><div class="act-meta"><span class="act-meta-pill ages">2–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">50€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--green)"></div><span class="act-icon"></span><div class="act-name">Gimnasia Rítmica</div><div class="act-desc">Coordinación, flexibilidad y ritmo. Con aro, pelota, cuerda y cinta. Exhibición anual de fin de curso.</div><div class="act-meta"><span class="act-meta-pill ages">4–14 años</span><span class="act-meta-pill group">Grupos 8–10</span><span class="act-meta-pill price">48€/mes</span></div></div>
-  </div>
-  <div id="act-arte" class="act-panel">
-    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon"></span><div class="act-name">Dibujo y Pintura</div><div class="act-desc">Técnicas de acuarela, acrílico, carboncillo y lápiz. Cada trimestre un proyecto artístico diferente.</div><div class="act-meta"><span class="act-meta-pill ages">4–18 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">48€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon"></span><div class="act-name">Teatro</div><div class="act-desc">Expresión corporal, voz, memorización y trabajo en equipo. Obra de teatro al final de cada curso.</div><div class="act-meta"><span class="act-meta-pill ages">5–16 años</span><span class="act-meta-pill group">Grupos 8–12</span><span class="act-meta-pill price">45€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--accent)"></div><span class="act-icon"></span><div class="act-name">Programación y Robótica</div><div class="act-desc">Scratch, Python básico y robótica con Arduino. Proyectos reales y presentación en feria de tecnología.</div><div class="act-meta"><span class="act-meta-pill ages">7–16 años</span><span class="act-meta-pill group">Máx. 8 alumnos</span><span class="act-meta-pill price">60€/mes</span></div></div>
-  </div>
-  <div id="act-refuerzo" class="act-panel">
-    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon"></span><div class="act-name">Refuerzo de Matemáticas</div><div class="act-desc">Resolución de dudas, consolidación de conceptos y preparación de exámenes. Grupos muy reducidos.</div><div class="act-meta"><span class="act-meta-pill ages">6–18 años</span><span class="act-meta-pill group">Máx. 4 alumnos</span><span class="act-meta-pill price">65€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon"></span><div class="act-name">Refuerzo Lengua y Lectura</div><div class="act-desc">Comprensión lectora, expresión escrita y ortografía. Técnicas de estudio para mejorar el rendimiento global.</div><div class="act-meta"><span class="act-meta-pill ages">6–16 años</span><span class="act-meta-pill group">Máx. 4 alumnos</span><span class="act-meta-pill price">65€/mes</span></div></div>
-    <div class="act-card"><div class="act-card-color" style="background:var(--blue)"></div><span class="act-icon"></span><div class="act-name">Técnicas de Estudio</div><div class="act-desc">Organización, planificación, mapas mentales y métodos de memorización. Para alumnos de primaria y secundaria.</div><div class="act-meta"><span class="act-meta-pill ages">9–18 años</span><span class="act-meta-pill group">Máx. 6 alumnos</span><span class="act-meta-pill price">55€/mes</span></div></div>
-  </div>
-</section>
-
-<!-- HORARIOS -->
-<section id="horarios">
-  <div class="section-head reveal">
-    <div class="section-label">Organización semanal</div>
-    <h2 class="section-title">Horarios</h2>
-    <p class="section-sub">Actividades de lunes a sábado en horario de tarde. Consulta disponibilidad por grupo y nivel.</p>
-  </div>
-  <div class="horarios-wrap reveal">
-    <table class="horarios-table">
-      <thead><tr><th>Actividad</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th></tr></thead>
-      <tbody>
-        <tr><td>Inglés (Primaria)</td><td><span class="h-pill blue">17:00</span></td><td>—</td><td><span class="h-pill blue">17:00</span></td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Inglés (Secundaria)</td><td>—</td><td><span class="h-pill blue">18:00</span></td><td>—</td><td><span class="h-pill blue">18:00</span></td><td>—</td><td>—</td></tr>
-        <tr><td>Piano</td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td><span class="h-pill purple">16:00</span></td><td>—</td></tr>
-        <tr><td>Guitarra</td><td>—</td><td><span class="h-pill purple">17:30</span></td><td>—</td><td><span class="h-pill purple">17:30</span></td><td>—</td><td><span class="h-pill purple">10:00</span></td></tr>
-        <tr><td>Fútbol</td><td>—</td><td><span class="h-pill green">17:00</span></td><td>—</td><td><span class="h-pill green">17:00</span></td><td>—</td><td><span class="h-pill green">10:00</span></td></tr>
-        <tr><td>Natación</td><td><span class="h-pill green">16:30</span></td><td>—</td><td><span class="h-pill green">16:30</span></td><td>—</td><td><span class="h-pill green">16:30</span></td><td><span class="h-pill green">11:00</span></td></tr>
-        <tr><td>Dibujo y Pintura</td><td>—</td><td>—</td><td><span class="h-pill">17:00</span></td><td>—</td><td>—</td><td><span class="h-pill">10:30</span></td></tr>
-        <tr><td>Programación</td><td>—</td><td><span class="h-pill blue">18:30</span></td><td>—</td><td><span class="h-pill blue">18:30</span></td><td>—</td><td>—</td></tr>
-        <tr><td>Refuerzo (Mat. / Lengua)</td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td><span class="h-pill blue">17:30</span></td><td>—</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- INSCRIPCIÓN -->
-<section id="inscripcion">
-  <div class="section-head reveal" style="text-align:center;max-width:520px;margin:0 auto 48px">
-    <div class="section-label" style="justify-content:center;display:flex">Sin burocracia</div>
-    <h2 class="section-title">Inscríbete</h2>
-    <p class="section-sub" style="margin:0 auto">Primera semana de prueba gratuita. Sin permanencia el primer trimestre.</p>
-  </div>
-  <div class="insc-grid reveal">
-    <div class="insc-form">
-      <div id="form-success" style="display:none" class="form-success">
-        <div class="form-success-icon"></div>
-        <div class="form-success-title">¡Solicitud enviada!</div>
-        <div class="form-success-text">Te hemos abierto WhatsApp con los datos. Contactamos en menos de 24h para confirmar plaza y semana de prueba.</div>
-      </div>
-      <div id="form-fields">
-        <div class="form-grid-2">
-          <div><span class="form-label">Nombre del alumno *</span><input type="text" class="form-input" id="f-alumno" placeholder="Nombre y apellidos" required/></div>
-          <div><span class="form-label">Edad *</span><input type="number" class="form-input" id="f-edad" placeholder="Ej: 8" min="3" max="18" required/></div>
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal" id="inscripcion">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Sevilla · Reina Mercedes · Desde 2003</span>
         </div>
-        <span class="form-label">Actividad de interés *</span>
-        <select class="form-select" id="f-actividad">
-          <option value="">Selecciona una actividad...</option>
-          <option>Inglés</option><option>Francés</option><option>Chino Mandarín</option>
-          <option>Piano</option><option>Guitarra</option><option>Canto</option>
-          <option>Fútbol</option><option>Natación</option><option>Gimnasia Rítmica</option>
-          <option>Dibujo y Pintura</option><option>Teatro</option><option>Programación</option>
-          <option>Refuerzo Matemáticas</option><option>Refuerzo Lengua</option>
-          <option>Técnicas de Estudio</option>
-        </select>
-        <span class="form-label">Teléfono del padre / madre *</span>
-        <input type="tel" class="form-input" id="f-tel" placeholder="+34 600 000 000" required/>
-        <span class="form-label">¿Cómo nos conocisteis?</span>
-        <select class="form-select" id="f-como">
-          <option value="">Selecciona...</option>
-          <option>Google</option><option>Instagram / Redes</option>
-          <option>Recomendación de otro padre</option><option>Colegio</option><option>Otro</option>
-        </select>
-        <button class="form-btn" onclick="submitInsc()">SOLICITAR PLAZA Y SEMANA DE PRUEBA</button>
+        <h1 class="hero-title">Donde los niños<br><em>crecen</em><br>aprendiendo.</h1>
+        <p class="hero-sub">
+          Extraescolares y actividades para niños y niñas de 4 a 14 años en Sevilla.
+          Inglés, robótica, música, deporte y refuerzo escolar.
+        </p>
+        <div class="hero-info-row">
+          <div class="hero-info-item">
+            <span class="hero-info-label">Edades</span>
+            <span class="hero-info-val">De 4 a 14 años</span>
+            <span class="hero-info-val muted">Grupos reducidos · Máx. 10 niños</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-val">Avda. Reina Mercedes 22</span>
+            <span class="hero-info-val muted">Sevilla</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Contacto</span>
+            <span class="hero-info-val">+34 954 550 321</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarInfo(event)">
+        <h3>Solicitar información</h3>
+        <div class="lead-form-sub">Cuéntanos qué necesitas y te enviamos toda la información de actividades, horarios y precios.</div>
+
+        <div class="lead-form-field">
+          <label class="lead-form-label">Tu nombre *</label>
+          <input id="aca-nombre" class="lead-form-input" type="text" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Email *</label>
+          <input id="aca-email" class="lead-form-input" type="email" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Teléfono *</label>
+          <input id="aca-tel" class="lead-form-input" type="tel" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Edad del niño/a *</label>
+          <select id="aca-edad" class="lead-form-select" required>
+            <option value="">Selecciona</option>
+            <option>4 – 6 años</option>
+            <option>7 – 9 años</option>
+            <option>10 – 12 años</option>
+            <option>13 – 14 años</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Actividad de interés</label>
+          <select id="aca-act" class="lead-form-select">
+            <option>Inglés</option>
+            <option>Robótica y programación</option>
+            <option>Música</option>
+            <option>Deportes</option>
+            <option>Refuerzo escolar</option>
+            <option>Varias / no lo tengo claro</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Mensaje (opcional)</label>
+          <textarea id="aca-msg" class="lead-form-textarea" placeholder="¿Tienes alguna pregunta?"></textarea>
+        </div>
+
+        <button type="submit" class="lead-form-btn" id="aca-btn">
+          <span id="aca-btn-txt">ENVIAR SOLICITUD</span>
+        </button>
+        <div class="lead-form-note">Te respondemos en menos de 24 horas con la información completa.</div>
+        <div class="lead-form-ok" id="aca-ok">✓ Solicitud recibida. Te contactaremos en menos de 24h.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="actividades" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Actividades</div>
+        <h2 class="section-title">Lo que ofrecemos</h2>
       </div>
     </div>
-    <div class="insc-info">
-      <p style="font-size:13px;font-weight:700;margin-bottom:24px">¿Cómo funciona la inscripción?</p>
-      <div class="info-step"><div class="info-step-num">1</div><div><div class="info-step-title">Rellena el formulario</div><div class="info-step-desc">Nos dices el nombre, edad y actividad. En 24h te confirmamos plaza disponible.</div></div></div>
-      <div class="info-step"><div class="info-step-num">2</div><div><div class="info-step-title">Semana de prueba gratuita</div><div class="info-step-desc">El alumno asiste una semana completa sin coste. Si no le convence, sin ningún compromiso.</div></div></div>
-      <div class="info-step"><div class="info-step-num">3</div><div><div class="info-step-title">Formalización</div><div class="info-step-desc">Si decide quedarse, firmamos el contrato y activamos la domiciliación bancaria del mes.</div></div></div>
-      <div class="info-step"><div class="info-step-num">4</div><div><div class="info-step-title">¡A aprender!</div><div class="info-step-desc">Seguimiento mensual de progreso y comunicación directa con los padres por WhatsApp.</div></div></div>
+    <div class="act-grid">
+      <div class="act-card reveal">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <div class="act-title">Inglés</div>
+        <div class="act-age">4–14 AÑOS</div>
+        <div class="act-desc">Aprendizaje natural y comunicativo. Cambridge English Course oficial.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>2x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>45€/mes</div>
+        </div>
+      </div>
+      <div class="act-card reveal reveal-delay-1">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg>
+        <div class="act-title">Robótica</div>
+        <div class="act-age">7–14 AÑOS</div>
+        <div class="act-desc">Programación, Arduino, LEGO Mindstorms. Por niveles según edad.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>1x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>40€/mes</div>
+        </div>
+      </div>
+      <div class="act-card reveal reveal-delay-2">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <div class="act-title">Música</div>
+        <div class="act-age">5–14 AÑOS</div>
+        <div class="act-desc">Iniciación musical, piano, guitarra y coro. Profesores titulados.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>2x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>55€/mes</div>
+        </div>
+      </div>
+      <div class="act-card reveal">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg>
+        <div class="act-title">Deportes</div>
+        <div class="act-age">4–14 AÑOS</div>
+        <div class="act-desc">Multideporte para los pequeños, fútbol y baloncesto para mayores.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>2x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>40€/mes</div>
+        </div>
+      </div>
+      <div class="act-card reveal reveal-delay-1">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <div class="act-title">Refuerzo escolar</div>
+        <div class="act-age">6–14 AÑOS</div>
+        <div class="act-desc">Apoyo en deberes y materias específicas. Grupos por curso.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>2-4x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>60€/mes</div>
+        </div>
+      </div>
+      <div class="act-card reveal reveal-delay-2">
+        <svg class="act-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        <div class="act-title">Arte y creatividad</div>
+        <div class="act-age">4–12 AÑOS</div>
+        <div class="act-desc">Pintura, manualidades, escultura. Libertad creativa con guía.</div>
+        <div class="act-meta">
+          <div class="act-meta-item"><span class="act-meta-label">FRECUENCIA</span>1x/sem</div>
+          <div class="act-meta-item"><span class="act-meta-label">DESDE</span>35€/mes</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- EQUIPO -->
-<section id="equipo">
-  <div class="section-head reveal">
-    <div class="section-label">Nuestros profesores</div>
-    <h2 class="section-title">El equipo</h2>
-    <p class="section-sub">Profesores titulados, con experiencia en educación y, sobre todo, vocación real por enseñar.</p>
-  </div>
-  <div class="equipo-grid">
-    <div class="equipo-card reveal"><div style="padding:20px 20px 0"><div class="equipo-initials">SR</div></div><div class="equipo-info"><div class="equipo-name">Sara Ramos</div><div class="equipo-role">Directora · Inglés</div><div class="equipo-bio">Licenciada en Filología Inglesa. CELTA. 12 años enseñando. Nativa bilingüe (mamá española, papá británico).</div></div></div>
-    <div class="equipo-card reveal reveal-delay-1"><div style="padding:20px 20px 0"><div class="equipo-initials">ML</div></div><div class="equipo-info"><div class="equipo-name">Marcos López</div><div class="equipo-role">Piano · Guitarra</div><div class="equipo-bio">Grado superior de Conservatorio. 10 años de docencia. Especialista en metodología Suzuki para menores.</div></div></div>
-    <div class="equipo-card reveal reveal-delay-2"><div style="padding:20px 20px 0"><div class="equipo-initials">PG</div></div><div class="equipo-info"><div class="equipo-name">Paula García</div><div class="equipo-role">Deporte · Natación</div><div class="equipo-bio">TAFAD y Grado en CCAFD. Monitora nacional de natación. Especialista en iniciación deportiva temprana.</div></div></div>
-    <div class="equipo-card reveal reveal-delay-3"><div style="padding:20px 20px 0"><div class="equipo-initials">DM</div></div><div class="equipo-info"><div class="equipo-name">Diego Martín</div><div class="equipo-role">Programación · Robótica</div><div class="equipo-bio">Ingeniero informático. Formador en el Programa de Competencias Digitales del Ministerio.</div></div></div>
-  </div>
-</section>
-
-<!-- UBICACIÓN -->
-<section id="ubicacion" style="padding:0">
-  <div class="ub-grid">
-    <div class="ub-map"><div class="ub-map-pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ub-map-addr">Calle San Fernando 18<br/>41004 Sevilla</div></div>
-    <div class="ub-info reveal">
-      <div class="ub-block"><div class="ub-label">Dónde estamos</div><div class="ub-text">Calle San Fernando 18 · 41004 Sevilla (Centro). A 5 min del Parque de María Luisa. Bus: líneas 3, 5 y 34.<br/><br/><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1px solid var(--accent)">Cómo llegar →</a></div></div>
-      <div class="ub-block"><div class="ub-label">Horario de atención</div><div class="ub-hor-row"><span class="ub-hor-day">Lunes – Viernes</span><span class="ub-hor-time">15:30 – 21:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Sábado</span><span class="ub-hor-time">09:30 – 14:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Domingo</span><span class="ub-hor-time closed">Cerrado</span></div></div>
-      <div class="ub-block"><div class="ub-label">Contacto directo</div><div class="ub-text"><strong style="font-size:18px"><a href="tel:+34954123456" style="color:var(--text);text-decoration:none">+34 954 123 456</a></strong><br/><span style="margin-top:4px;display:block">info@academitalento.es</span></div></div>
+<section id="horarios" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Horarios</div>
+        <h2 class="section-title">Cuándo venir</h2>
+      </div>
+    </div>
+    <div class="horario-table">
+      <div class="horario-row reveal">
+        <div class="horario-time">Lun y Mié · 17:00–18:00</div>
+        <div class="horario-acts">Inglés (4–6) · Inglés (10–12) · Multideporte</div>
+      </div>
+      <div class="horario-row reveal">
+        <div class="horario-time">Lun y Mié · 18:00–19:00</div>
+        <div class="horario-acts">Refuerzo escolar · Música (iniciación)</div>
+      </div>
+      <div class="horario-row reveal">
+        <div class="horario-time">Mar y Jue · 17:00–18:00</div>
+        <div class="horario-acts">Robótica nivel 1 · Inglés (7–9) · Arte</div>
+      </div>
+      <div class="horario-row reveal">
+        <div class="horario-time">Mar y Jue · 18:00–19:00</div>
+        <div class="horario-acts">Robótica nivel 2 · Música (piano) · Baloncesto</div>
+      </div>
+      <div class="horario-row reveal">
+        <div class="horario-time">Viernes · 17:00–19:00</div>
+        <div class="horario-acts">Talleres especiales · Eventos · Refuerzo intensivo</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section id="equipo" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Equipo</div>
+        <h2 class="section-title">Profesores titulados</h2>
+      </div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="team-photo"><img src="images/aca-team-sara.jpg" alt="Sara Jiménez" loading="lazy"></div><div class="team-name">Sara Jiménez</div><div class="team-role">Directora · Inglés Cambridge</div><p class="team-bio">Filóloga inglesa con +15 años de experiencia con niños.</p></div>
+      <div class="team-card reveal reveal-delay-1"><div class="team-photo"><img src="images/aca-team-marcos.jpg" alt="Marcos Romero" loading="lazy"></div><div class="team-name">Marcos Romero</div><div class="team-role">Robótica y programación</div><p class="team-bio">Ingeniero. Especialista en STEM y didáctica para niños.</p></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-photo"><img src="images/aca-team-paula.jpg" alt="Paula Vega" loading="lazy"></div><div class="team-name">Paula Vega</div><div class="team-role">Música · Piano</div><p class="team-bio">Licenciada en piano por el Conservatorio Superior de Sevilla.</p></div>
+      <div class="team-card reveal reveal-delay-3"><div class="team-photo"><img src="images/aca-team-diego.jpg" alt="Diego Castro" loading="lazy"></div><div class="team-name">Diego Castro</div><div class="team-role">Deportes y multiactividad</div><p class="team-bio">Licenciado INEF, monitor de deporte infantil titulado.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Dónde estamos</div>
+        <h2 class="section-title">Ubicación y contacto</h2>
+      </div>
+    </div>
+    <div class="location-grid">
+      <div class="location-map reveal">
+        <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="map-title">Academia Talento</div>
+          <div class="map-addr">Avda. Reina Mercedes 22 · Sevilla</div>
+        </div>
+        <a href="https://maps.google.com/?q=Reina+Mercedes+22+Sevilla" target="_blank" rel="noopener" class="btn-primary">VER EN MAPS &#8599;</a>
+      </div>
+      <div class="location-info reveal reveal-delay-1">
+        <div class="info-block">
+          <div class="info-label">Horario de atención</div>
+          <div class="schedule-row"><span class="schedule-day">Lun–Vie</span><span>16:00 – 20:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>10:00 – 13:00</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 954 550 321</div>
+          <div class="info-val">info@academiatalento.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-logo">Academia <span>Talento</span></div>
-      <div class="footer-desc">Extraescolares de calidad para niños y jóvenes en Sevilla. Grupos reducidos, profesores vocacionales y 15 años de experiencia.</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Academia <span>Talento</span></div>
+        <p class="footer-tagline">Extraescolares en Sevilla.<br>Desde 2003.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Actividades</div>
+        <div class="footer-links">
+          <a href="#actividades">Inglés</a>
+          <a href="#actividades">Robótica</a>
+          <a href="#actividades">Música</a>
+          <a href="#actividades">Deportes</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Avda. Reina Mercedes 22, Sevilla</li>
+          <li>+34 954 550 321</li>
+          <li>info@academiatalento.es</li>
+        </ul>
+      </div>
     </div>
-    <div><div class="footer-col-title">Actividades</div><ul class="footer-links"><li><a href="#actividades">Idiomas</a></li><li><a href="#actividades">Música</a></li><li><a href="#actividades">Deporte</a></li><li><a href="#actividades">Arte y Creatividad</a></li><li><a href="#actividades">Refuerzo Escolar</a></li></ul></div>
-    <div><div class="footer-col-title">Academia</div><ul class="footer-links"><li><a href="#equipo">Nuestro equipo</a></li><li><a href="#horarios">Horarios</a></li><li><a href="#inscripcion">Inscripción</a></li><li><a href="#ubicacion">Dónde estamos</a></li><li><a href="#">Política de privacidad</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Academia Talento S.L. · Todos los derechos reservados</div>
-    <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    <div class="footer-bottom">
+      <p>© 2026 Academia Talento · Web por <a href="/">Sitalia</a></p>
+      <div style="display:flex;gap:18px"><a href="#">Privacidad</a><a href="#">Aviso legal</a></div>
+    </div>
   </div>
 </footer>
 
-<a href="https://wa.me/34954123456?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20vuestras%20actividades%20extraescolares." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-</a>
-
-<script src="shared.js"></script>
-<script src="academia.js"></script>
+<script>
+async function enviarInfo(e) {
+  e.preventDefault();
+  var nombre = document.getElementById('aca-nombre').value.trim();
+  var email  = document.getElementById('aca-email').value.trim();
+  var tel    = document.getElementById('aca-tel').value.trim();
+  var edad   = document.getElementById('aca-edad').value.trim();
+  var act    = document.getElementById('aca-act').value.trim();
+  var msg    = document.getElementById('aca-msg').value.trim();
+  if (!nombre || !email || !tel || !edad) { alert('Rellena los campos obligatorios.'); return; }
+  var btn = document.getElementById('aca-btn');
+  var txt = document.getElementById('aca-btn-txt');
+  btn.disabled = true; txt.textContent = 'Enviando…';
+  try {
+    var r = await fetch('/api/contact', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nombre: nombre, apellido: '', email: email, telefono: tel,
+        tipo_negocio: 'Academia - ' + act + ' (' + edad + ')',
+        mensaje: msg
+      })
+    });
+    if (!r.ok) throw new Error('Error');
+    btn.style.display = 'none';
+    document.getElementById('aca-ok').style.display = 'block';
+  } catch (err) {
+    btn.disabled = false; txt.textContent = 'ENVIAR SOLICITUD';
+    alert('No se pudo enviar. Llámanos al +34 954 550 321 o escríbenos a info@academiatalento.es');
+  }
+}
+</script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>

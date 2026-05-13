@@ -1,268 +1,281 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Club Pádel Arena | Reserva de Pistas · Valencia</title>
-<meta name="description" content="Club de pádel en Valencia con 8 pistas cubiertas y 4 exteriores. Reserva online, clases con profesores, torneos y zona de socios. Hazte socio desde 35€/mes."/>
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="padel.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Club Pádel Arena — Pistas y Clases · Valencia</title>
+  <meta name="description" content="Club Pádel Arena en Valencia. 8 pistas indoor y outdoor, clases con profesores titulados, escuela infantil y torneos.">
+  <meta property="og:title" content="Club Pádel Arena — Valencia">
+  <meta property="og:description" content="Club de pádel en Valencia. Reserva tu pista.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://sitalia.es/images/pad-courts-indoor.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="theme-nordic.css">
+  <link rel="stylesheet" href="padel.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "SportsActivityLocation",
+    "name": "Club Pádel Arena",
+    "image": "https://sitalia.es/images/pad-courts-indoor.jpg",
+    "address": { "@type": "PostalAddress", "streetAddress": "Calle del Deporte 8", "addressLocality": "Valencia", "addressCountry": "ES" },
+    "telephone": "+34960550234",
+    "url": "https://sitalia.es/demo-padel"
+  }
+  </script>
 </head>
 <body>
 
-<div class="demo-banner">DEMO — Pádel Arena · Sitalia.es</div>
+<div class="demo-banner">DEMO — Club Pádel Arena · Sitalia.es</div>
+
 <a href="/" class="back-to-sitalia">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <div class="nav-logo-icon"></div>
-    <div class="nav-logo-text">Pádel <span>Arena</span></div>
+  <div class="nav-inner">
+    <div class="nav-logo">Pádel <span>Arena</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#instalaciones">Instalaciones</a>
+      <a href="#cuotas">Cuotas</a>
+      <a href="#clases">Clases</a>
+      <a href="#ubicacion">Contacto</a>
+    </div>
+    <a href="https://wa.me/34960550234" target="_blank" rel="noopener" class="nav-cta">RESERVAR PISTA</a>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
-  <ul class="nav-links" id="navlinks">
-    <li><a href="#instalaciones">Instalaciones</a></li>
-    <li><a href="#cuotas">Socios</a></li>
-    <li><a href="#reserva">Reservar</a></li>
-    <li><a href="#clases">Clases</a></li>
-    <li><a href="#ubicacion">Club</a></li>
-  </ul>
-  <a href="#reserva" class="nav-cta">Reservar pista</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menú">&#9776;</button>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding:0;position:relative">
-  <img src="images/pad-hero.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;z-index:0;pointer-events:none" alt="">
-  <div class="hero-content reveal" style="position:relative;z-index:1">
-    <div class="hero-tag">Valencia · 12 pistas · Abierto 7 días</div>
-    <h1 class="hero-title">Tu pista te<br/>espera.<br/><em>Resérvala ya.</em></h1>
-    <p class="hero-desc">8 pistas cubiertas y 4 exteriores con iluminación LED. Reserva online en 60 segundos. Club, clases y torneos para todos los niveles.</p>
-    <div class="hero-actions">
-      <a href="#reserva" class="btn-sport">Reservar pista ahora</a>
-      <a href="#cuotas" class="btn-ghost">Hacerme socio</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat reveal reveal-delay-1"><div class="hero-stat-num">12</div><div class="hero-stat-label">Pistas</div></div>
-      <div class="hero-stat reveal reveal-delay-2"><div class="hero-stat-num">7d</div><div class="hero-stat-label">08–23h</div></div>
-      <div class="hero-stat reveal reveal-delay-3"><div class="hero-stat-num">+1200</div><div class="hero-stat-label">Socios</div></div>
-      <div class="hero-stat reveal reveal-delay-4"><div class="hero-stat-num">18</div><div class="hero-stat-label">Profesores</div></div>
-    </div>
-  </div>
-  <div class="hero-visual reveal reveal-delay-2" style="position:relative;z-index:1">
-    <div class="hero-pistas-widget">
-      <div class="hw-header"><span class="hw-title">Estado pistas ahora</span><div class="hw-live"><div class="hw-live-dot"></div>En directo</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 1</div><div class="hw-pista-type">Cubierta · Cristal</div></div><div class="hw-pista-status free">Libre</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 2</div><div class="hw-pista-type">Cubierta · Cristal</div></div><div class="hw-pista-status busy">Ocupada</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 3</div><div class="hw-pista-type">Cubierta · Muro</div></div><div class="hw-pista-status free">Libre</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 4</div><div class="hw-pista-type">Cubierta · Muro</div></div><div class="hw-pista-status busy">Ocupada</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 5</div><div class="hw-pista-type">Exterior · LED</div></div><div class="hw-pista-status free">Libre</div></div>
-      <div class="hw-pista"><div><div class="hw-pista-name">Pista 6</div><div class="hw-pista-type">Exterior · LED</div></div><div class="hw-pista-status busy">Ocupada</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- INSTALACIONES -->
-<section id="instalaciones">
-  <div class="section-head reveal">
-    <div class="section-label">Nuestras instalaciones</div>
-    <h2 class="section-title">Un club completo</h2>
-    <p class="section-sub">Todo lo que necesitas para jugar al pádel en un mismo lugar, con las mejores instalaciones de Valencia.</p>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px" class="reveal">
-    <img src="images/pad-courts-indoor.jpg" style="width:100%;height:200px;object-fit:cover;border-radius:4px;display:block" alt="Pistas cubiertas">
-    <img src="images/pad-courts-outdoor.jpg" style="width:100%;height:200px;object-fit:cover;border-radius:4px;display:block" alt="Pistas exteriores">
-  </div>
-  <div class="inst-grid">
-    <div class="inst-card reveal"><div class="inst-icon"></div><div class="inst-title">8 Pistas Cubiertas</div><div class="inst-desc">Cristal y muro. Suelo de moqueta profesional. Temperatura controlada todo el año. Iluminación LED regulable.</div><span class="inst-tag">Cristal + Muro</span></div>
-    <div class="inst-card reveal reveal-delay-1"><div class="inst-icon"></div><div class="inst-title">4 Pistas Exteriores</div><div class="inst-desc">Orientación óptima. Iluminación LED de alto rendimiento para jugar de noche. Moqueta de última generación.</div><span class="inst-tag">Iluminación LED</span></div>
-    <div class="inst-card reveal reveal-delay-2"><div class="inst-icon"></div><div class="inst-title">Zona de Fitness</div><div class="inst-desc">Sala de musculación y cardio con máquinas modernas. Perfecta para el calentamiento y la recuperación.</div><span class="inst-tag">Cardio + Musculación</span></div>
-    <div class="inst-card reveal"><div class="inst-icon"></div><div class="inst-title">Vestuarios Premium</div><div class="inst-desc">Vestuarios amplios con taquillas individuales, duchas de agua caliente y zona de secado.</div><span class="inst-tag">Taquillas 24h</span></div>
-    <div class="inst-card reveal reveal-delay-1"><div class="inst-icon"></div><div class="inst-title">Bar y Restauración</div><div class="inst-desc">Cafetería con zona de descanso, menú del día para socios, bebidas energéticas y snacks saludables.</div><span class="inst-tag">Descuento socios</span></div>
-    <div class="inst-card reveal reveal-delay-2"><div class="inst-icon"></div><div class="inst-title">Pro Shop</div><div class="inst-desc">Tienda con las mejores marcas: Bullpadel, Head, Nox, Wilson. Encordado express, alquiler de material.</div><span class="inst-tag">Alquiler de palas</span></div>
-  </div>
-</section>
-
-<!-- CUOTAS / SOCIOS -->
-<section id="cuotas" style="padding:96px 6%">
-  <div class="section-head reveal" style="text-align:center;max-width:520px;margin:0 auto 52px">
-    <div class="section-label" style="justify-content:center;display:flex;color:rgba(255,255,255,.5)">Modalidades</div>
-    <h2 class="section-title" style="color:#fff">Hazte socio</h2>
-    <p class="section-sub" style="margin:0 auto;color:rgba(255,255,255,.45)">Reserva con descuento, acceso prioritario y beneficios exclusivos para socios del club.</p>
-  </div>
-  <div class="cuotas-grid">
-    <div class="cuota-card reveal">
-      <div class="cuota-name">Básico</div>
-      <div class="cuota-price">35€</div>
-      <div class="cuota-period">/ mes · Pago anual</div>
-      <ul class="cuota-features">
-        <li>10% dto. en reservas</li>
-        <li>Acceso vestuarios premium</li>
-        <li>1 clase grupal/mes incluida</li>
-        <li class="off">Reservas con 7 días de antelación</li>
-        <li class="off">Acceso zona fitness</li>
-        <li class="off">Torneos exclusivos socios</li>
-      </ul>
-      <button class="cuota-btn outline" onclick="window.open('https://wa.me/34961123456?text=Hola%2C%20quiero%20hacerme%20socio%20del%20plan%20B%C3%A1sico')">Hacerme socio</button>
-    </div>
-    <div class="cuota-card popular reveal reveal-delay-1">
-      <div class="cuota-pop-badge">&#9733; Más popular</div>
-      <div class="cuota-name">Premium</div>
-      <div class="cuota-price">59€</div>
-      <div class="cuota-period">/ mes · Pago anual</div>
-      <ul class="cuota-features">
-        <li>20% dto. en reservas</li>
-        <li>Acceso vestuarios premium</li>
-        <li>4 clases grupales/mes incluidas</li>
-        <li>Reservas con 7 días de antelación</li>
-        <li>Acceso zona fitness ilimitado</li>
-        <li>Torneos exclusivos socios</li>
-      </ul>
-      <button class="cuota-btn" onclick="window.open('https://wa.me/34961123456?text=Hola%2C%20quiero%20hacerme%20socio%20del%20plan%20Premium')">Hacerme socio</button>
-    </div>
-    <div class="cuota-card reveal reveal-delay-2">
-      <div class="cuota-name">Club Pro</div>
-      <div class="cuota-price">89€</div>
-      <div class="cuota-period">/ mes · Pago anual</div>
-      <ul class="cuota-features">
-        <li>30% dto. en reservas</li>
-        <li>Acceso vestuarios premium</li>
-        <li>8 clases incluidas (grupales o individuales)</li>
-        <li>Reservas con 14 días de antelación</li>
-        <li>Acceso zona fitness ilimitado</li>
-        <li>Acceso a ligas internas del club</li>
-      </ul>
-      <button class="cuota-btn outline" onclick="window.open('https://wa.me/34961123456?text=Hola%2C%20quiero%20hacerme%20socio%20del%20plan%20Club%20Pro')">Hacerme socio</button>
-    </div>
-  </div>
-</section>
-
-<!-- RESERVA DE PISTA -->
-<section id="reserva">
-  <div class="section-head reveal" style="text-align:center;max-width:520px;margin:0 auto 40px">
-    <div class="section-label" style="justify-content:center;display:flex">En 60 segundos</div>
-    <h2 class="section-title">Reservar pista</h2>
-    <p class="section-sub" style="margin:0 auto">Elige fecha, pista y hora. Confirmación inmediata por WhatsApp.</p>
-  </div>
-  <div class="res-wrap reveal">
-    <div class="res-header">
-      <div class="res-header-icon"></div>
-      <div><div class="res-header-title">Reserva online</div><div class="res-header-sub">Socios · precio especial · No socios · tarifa estándar</div></div>
-    </div>
-    <div class="res-body">
-      <div id="res-success" style="display:none" class="res-success">
-        <div class="res-success-icon"></div>
-        <div class="res-success-title">¡Reserva enviada!</div>
-        <div class="res-success-text">Te hemos abierto WhatsApp con los detalles. Confirmamos disponibilidad en pocos minutos.</div>
-        <button class="res-retry" onclick="resetRes()">Nueva reserva</button>
-      </div>
-      <div id="res-wizard">
-        <div class="res-steps">
-          <button class="res-step active" id="rstab1" onclick="resTo(1)">1 · Fecha</button>
-          <button class="res-step" id="rstab2" onclick="resTo(2)">2 · Pista y hora</button>
-          <button class="res-step" id="rstab3" onclick="resTo(3)">3 · Confirmar</button>
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Valencia · Zona Norte · Desde 2018</span>
         </div>
-        <!-- PASO 1 -->
-        <div class="res-panel active" id="rspanel1">
-          <div class="res-grid-2">
-            <div><span class="res-label">Fecha *</span><input type="date" class="res-input" id="res-date" onchange="resDateChange()"/></div>
-            <div><span class="res-label">Tipo de pista</span><select class="res-select" id="res-tipo" onchange="resTipoChange()"><option value="">Sin preferencia</option><option value="cubierta">Cubierta (cristal o muro)</option><option value="exterior">Exterior (LED)</option></select></div>
+        <h1 class="hero-title">Tu pista te espera.<br><em>Resérvala ya.</em></h1>
+        <p class="hero-sub">
+          8 pistas de pádel (indoor y outdoor), escuela para niños y adultos,
+          torneos cada mes y la mejor comunidad pádelera de Valencia.
+        </p>
+        <div class="hero-info-row">
+          <div class="hero-info-item">
+            <span class="hero-info-label">Horario</span>
+            <span class="hero-info-val">Lun–Vie 8:00–23:00</span>
+            <span class="hero-info-val muted">Sáb–Dom 9:00–22:00</span>
           </div>
-          <button class="res-btn" id="resbtn1" disabled onclick="resTo(2)">SIGUIENTE: ELEGIR PISTA Y HORA</button>
-        </div>
-        <!-- PASO 2 -->
-        <div class="res-panel" id="rspanel2">
-          <div class="res-field"><span class="res-label">Elige pista</span><div id="res-pistas-grid" class="res-pistas-grid"></div></div>
-          <div class="res-field" id="res-slots-wrap" style="display:none"><span class="res-label">Elige hora</span><div id="res-slots-grid" class="res-slots-grid"></div></div>
-          <button class="res-btn" id="resbtn2" disabled onclick="resTo(3)">SIGUIENTE: CONFIRMAR</button>
-          <button class="res-back" onclick="resTo(1)">&#8592; Cambiar fecha</button>
-        </div>
-        <!-- PASO 3 -->
-        <div class="res-panel" id="rspanel3">
-          <div class="res-grid-2">
-            <div><span class="res-label">Nombre *</span><input type="text" class="res-input" id="res-name" placeholder="Tu nombre" oninput="resCheckData()"/></div>
-            <div><span class="res-label">Teléfono *</span><input type="tel" class="res-input" id="res-phone" placeholder="+34 600 000 000" oninput="resCheckData()"/></div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-val">Calle del Deporte 8</span>
+            <span class="hero-info-val muted">Valencia Norte</span>
           </div>
-          <div class="res-field">
-            <span class="res-label">¿Eres socio?</span>
-            <select class="res-select" id="res-socio" style="margin-bottom:0"><option value="no">No soy socio</option><option value="basico">Socio Básico</option><option value="premium">Socio Premium</option><option value="pro">Socio Club Pro</option></select>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Contacto</span>
+            <span class="hero-info-val">+34 960 550 234</span>
           </div>
-          <div style="border:1px solid var(--border);padding:14px 18px;background:var(--bg);border-radius:4px;margin-bottom:18px" id="res-summary"></div>
-          <button class="res-wa-btn" id="resbtn3" disabled onclick="resWA()">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-            CONFIRMAR RESERVA
-          </button>
-          <button class="res-back" onclick="resTo(2)">&#8592; Cambiar pista u hora</button>
+        </div>
+      </div>
+
+      <div class="cta-card reveal reveal-delay-1">
+        <div class="cta-card-eyebrow">Reservar pista</div>
+        <div class="cta-card-title">Juega cuando quieras.</div>
+        <div class="cta-card-sub">Reserva por WhatsApp o desde Playtomic. Disponibilidad en tiempo real.</div>
+
+        <a href="https://playtomic.io" target="_blank" rel="noopener" class="cta-card-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          RESERVAR EN PLAYTOMIC
+        </a>
+        <a href="https://wa.me/34960550234?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20pista%20en%20P%C3%A1del%20Arena"
+           target="_blank" rel="noopener" class="cta-card-btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1-1.1 2.5s1.1 2.9 1.3 3.1c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M20.5 3.5C18.3 1.2 15.3 0 12 0 5.4 0 0 5.4 0 12c0 2.1.5 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.4-8.3zM12 21.8c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.5-1.5-5.3 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 9.9-10 9.9z"/></svg>
+          RESERVAR POR WHATSAPP
+        </a>
+
+        <div class="cta-card-divider"></div>
+        <div class="cta-card-info">
+          <div class="cta-card-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
+            <div>Pistas <strong>desde 18€/h</strong>. Tarifas según horario y tipo de pista.</div>
+          </div>
+          <div class="cta-card-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <div>¿No tienes pareja? Únete a partidos abiertos por WhatsApp.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CLASES Y TORNEOS -->
-<section id="clases">
-  <div class="section-head reveal">
-    <div class="section-label">Mejora tu juego</div>
-    <h2 class="section-title">Clases y torneos</h2>
-    <p class="section-sub">Aprende con nuestros profesores federados o compite con otros jugadores del club. Para todos los niveles.</p>
-  </div>
-  <div class="ct-grid">
-    <div class="ct-card reveal">
-      <div class="ct-card-header sport"><div class="ct-card-icon"></div><div><div class="ct-card-title">Clases y Escuela</div><div class="ct-card-sub">Profesores federados · Todos los niveles</div></div></div>
-      <div class="ct-card-body">
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Escuela infantil</div><div class="ct-item-desc">Para niños de 5 a 14 años. Iniciación al pádel con metodología lúdica. Grupos de 4–6 niños.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Clases grupales (adultos)</div><div class="ct-item-desc">Grupos de nivel (iniciación, intermedio, avanzado). 4 alumnos por pista. Horarios mañana y tarde.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Clase individual</div><div class="ct-item-desc">Sesión personalizada 1 a 1 con tu profesor. Análisis de técnica, táctica y vídeo. Desde 40€/hora.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Clínic en pareja</div><div class="ct-item-desc">Para parejas que quieren mejorar juntas. 2 alumnos, 1 hora. Ideal para parejas habituales.</div></div></div>
+<section id="instalaciones" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Instalaciones</div>
+        <h2 class="section-title">Un club completo</h2>
       </div>
     </div>
-    <div class="ct-card reveal reveal-delay-1">
-      <div class="ct-card-header orange"><div class="ct-card-icon"></div><div><div class="ct-card-title">Torneos y Ligas</div><div class="ct-card-sub">Competición interna y abierta · Todo el año</div></div></div>
-      <div class="ct-card-body">
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Liga interna mensual</div><div class="ct-item-desc">Para socios. Sistema de grupos + eliminatoria. Categorías: masculino, femenino y mixto por nivel.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon">️</div><div><div class="ct-item-title">Torneo open trimestral</div><div class="ct-item-desc">Abierto a no socios. Inscripción online. Premios en material deportivo y horas de pista.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Night Padel</div><div class="ct-item-desc">Evento nocturno mensual: pistas exteriores iluminadas, DJ, bebidas y buen ambiente.</div></div></div>
-        <div class="ct-item"><div class="ct-item-icon"></div><div><div class="ct-item-title">Veteranos 40+</div><div class="ct-item-desc">Liga específica para mayores de 40. Ritmo adaptado, fair play y mucha diversión.</div></div></div>
+    <div class="instalaciones-grid">
+      <div class="inst-card reveal">
+        <div class="inst-photo"><img src="images/pad-courts-indoor.jpg" alt="Pistas indoor cubiertas" loading="lazy"></div>
+        <div class="inst-body">
+          <div class="inst-eyebrow">Indoor · Cubiertas</div>
+          <div class="inst-title">4 pistas cubiertas</div>
+          <div class="inst-desc">Pistas premium con cristal panorámico, iluminación LED y temperatura controlada todo el año.</div>
+          <div class="inst-meta">
+            <div><strong>22€</strong>/hora</div>
+            <div><strong>Climatización</strong> todo el año</div>
+          </div>
+        </div>
+      </div>
+      <div class="inst-card reveal reveal-delay-1">
+        <div class="inst-photo"><img src="images/pad-courts-outdoor.jpg" alt="Pistas outdoor al aire libre" loading="lazy"></div>
+        <div class="inst-body">
+          <div class="inst-eyebrow">Outdoor · Aire libre</div>
+          <div class="inst-title">4 pistas exteriores</div>
+          <div class="inst-desc">Pistas al aire libre con césped artificial mundial y iluminación nocturna. Reserva hasta las 23:00.</div>
+          <div class="inst-meta">
+            <div><strong>18€</strong>/hora</div>
+            <div><strong>Hasta las 23:00</strong> con luz</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- UBICACIÓN -->
-<section id="ubicacion" style="padding:0">
-  <div class="ub-grid">
-    <div class="ub-map"><div class="ub-map-pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ub-map-addr">Av. de Aragón 120<br/>46021 Valencia</div></div>
-    <div class="ub-info reveal">
-      <div class="ub-block"><div class="ub-label">Dónde estamos</div><div class="ub-text">Av. de Aragón 120 · 46021 Valencia. Metro: Aragón (L5). Parking gratuito para socios. Autobús: 12, 79, 89.<br/><br/><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1px solid var(--accent)">Ver en Google Maps →</a></div></div>
-      <div class="ub-block"><div class="ub-label">Horario de apertura</div><div class="ub-hor-row"><span class="ub-hor-day">Lunes – Viernes</span><span class="ub-hor-time">08:00 – 23:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Sábado</span><span class="ub-hor-time">08:00 – 23:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Domingo</span><span class="ub-hor-time">09:00 – 21:00</span></div></div>
-      <div class="ub-block"><div class="ub-label">Contacto</div><div class="ub-text"><strong style="font-size:18px"><a href="tel:+34961123456" style="color:var(--text);text-decoration:none">+34 961 123 456</a></strong><br/><span style="display:block;margin-top:4px">info@padelarena.es</span></div></div>
+<section id="cuotas" class="cuotas-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Socios</div>
+        <h2 class="section-title">Hazte socio</h2>
+      </div>
+    </div>
+    <div class="cuotas-grid">
+      <div class="cuota-card reveal">
+        <div class="cuota-name">BÁSICA</div>
+        <div class="cuota-precio">29€<span class="cuota-precio-period">/mes</span></div>
+        <ul class="cuota-list">
+          <li>10% descuento en pistas</li>
+          <li>Reservas con 7 días de antelación</li>
+          <li>Acceso a partidos abiertos</li>
+        </ul>
+      </div>
+      <div class="cuota-card featured reveal reveal-delay-1">
+        <div class="cuota-name">PREMIUM</div>
+        <div class="cuota-precio">59€<span class="cuota-precio-period">/mes</span></div>
+        <ul class="cuota-list">
+          <li>20% descuento en pistas</li>
+          <li>Reservas con 14 días</li>
+          <li>1 clase grupal al mes incluida</li>
+          <li>Acceso a torneos sociales</li>
+          <li>Bolsa de equipaciones</li>
+        </ul>
+      </div>
+      <div class="cuota-card reveal reveal-delay-2">
+        <div class="cuota-name">FAMILIAR</div>
+        <div class="cuota-precio">89€<span class="cuota-precio-period">/mes</span></div>
+        <ul class="cuota-list">
+          <li>Hasta 4 miembros</li>
+          <li>25% descuento en pistas</li>
+          <li>Escuela infantil incluida</li>
+          <li>Acceso prioritario en torneos</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section id="clases" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Clases y torneos</div>
+        <h2 class="section-title">Mejora tu juego</h2>
+      </div>
+    </div>
+    <div class="clases-list">
+      <div class="clase-row reveal"><div class="clase-info"><div class="clase-name">Clase individual</div><div class="clase-desc">Sesión personalizada con profesor titulado.</div></div><div class="clase-meta"><div class="clase-precio">40€</div><div class="clase-dur">60 MIN</div></div></div>
+      <div class="clase-row reveal reveal-delay-1"><div class="clase-info"><div class="clase-name">Clase en pareja</div><div class="clase-desc">2 personas, mismo profesor. Sale a 22,50€ por persona.</div></div><div class="clase-meta"><div class="clase-precio">45€</div><div class="clase-dur">60 MIN</div></div></div>
+      <div class="clase-row reveal"><div class="clase-info"><div class="clase-name">Clase grupal</div><div class="clase-desc">Hasta 4 personas, por niveles. Para empezar.</div></div><div class="clase-meta"><div class="clase-precio">15€/p</div><div class="clase-dur">75 MIN</div></div></div>
+      <div class="clase-row reveal reveal-delay-1"><div class="clase-info"><div class="clase-name">Escuela infantil</div><div class="clase-desc">De 6 a 14 años, 2 días/semana. Cuotas mensuales.</div></div><div class="clase-meta"><div class="clase-precio">75€/mes</div><div class="clase-dur">8 SESIONES</div></div></div>
+      <div class="clase-row reveal"><div class="clase-info"><div class="clase-name">Torneo social</div><div class="clase-desc">Un fin de semana al mes. Por categorías y niveles. Premios.</div></div><div class="clase-meta"><div class="clase-precio">25€/p</div><div class="clase-dur">FIN DE SEMANA</div></div></div>
+      <div class="clase-row reveal reveal-delay-1"><div class="clase-info"><div class="clase-name">Liga interna</div><div class="clase-desc">Liga continua entre socios. Inscripción cada 3 meses.</div></div><div class="clase-meta"><div class="clase-precio">40€</div><div class="clase-dur">3 MESES</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Dónde estamos</div>
+        <h2 class="section-title">Ubicación y horario</h2>
+      </div>
+    </div>
+    <div class="location-grid">
+      <div class="location-map reveal">
+        <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="map-title">Club Pádel Arena</div>
+          <div class="map-addr">Calle del Deporte 8 · Valencia Norte</div>
+        </div>
+        <a href="https://maps.google.com/?q=Calle+del+Deporte+8+Valencia" target="_blank" rel="noopener" class="btn-primary">VER EN MAPS &#8599;</a>
+      </div>
+      <div class="location-info reveal reveal-delay-1">
+        <div class="info-block">
+          <div class="info-label">Horario de pistas</div>
+          <div class="schedule-row"><span class="schedule-day">Lun–Vie</span><span>8:00 – 23:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sáb–Dom</span><span>9:00 – 22:00</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 960 550 234</div>
+          <div class="info-val">info@padelarena.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-logo"><div class="footer-logo-icon"></div><div class="footer-logo-text">Pádel <span>Arena</span></div></div>
-      <div class="footer-desc">Club de pádel en Valencia con 12 pistas. Socios, clases, torneos y reserva online en 60 segundos. Abierto todos los días.</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Pádel <span>Arena</span></div>
+        <p class="footer-tagline">Club de pádel en Valencia.<br>Desde 2018.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Club</div>
+        <div class="footer-links">
+          <a href="#instalaciones">Instalaciones</a>
+          <a href="#cuotas">Cuotas</a>
+          <a href="#clases">Clases</a>
+          <a href="#ubicacion">Ubicación</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Calle del Deporte 8, Valencia</li>
+          <li>+34 960 550 234</li>
+          <li>info@padelarena.es</li>
+        </ul>
+      </div>
     </div>
-    <div><div class="footer-col-title">Club</div><ul class="footer-links"><li><a href="#instalaciones">Instalaciones</a></li><li><a href="#cuotas">Hazte socio</a></li><li><a href="#reserva">Reservar pista</a></li><li><a href="#clases">Clases</a></li><li><a href="#clases">Torneos</a></li></ul></div>
-    <div><div class="footer-col-title">Info</div><ul class="footer-links"><li><a href="#ubicacion">Cómo llegar</a></li><li><a href="#ubicacion">Horarios</a></li><li><a href="#">Reglamento interno</a></li><li><a href="#">Política de privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Pádel Arena Club S.L. · Todos los derechos reservados · Valencia</div>
-    <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Aviso legal</a></div>
+    <div class="footer-bottom">
+      <p>© 2026 Club Pádel Arena · Web por <a href="/">Sitalia</a></p>
+      <div style="display:flex;gap:18px"><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
   </div>
 </footer>
 
-<a href="https://wa.me/34961123456?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20club%20P%C3%A1del%20Arena." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp Pádel Arena">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-</a>
-
-<script src="shared.js"></script>
-<script src="padel.js"></script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>

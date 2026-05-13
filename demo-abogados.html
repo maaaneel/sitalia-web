@@ -1,220 +1,326 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Vidal & Asociados | Bufete de Abogados · Madrid</title>
-<meta name="description" content="Bufete de abogados en Madrid especializado en derecho mercantil, laboral, civil y penal. Más de 20 años de experiencia. Consulta gratuita."/>
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="abogados.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vidal &amp; Asociados — Bufete de Abogados · Madrid</title>
+  <meta name="description" content="Bufete de abogados en Madrid. Derecho mercantil, civil, laboral y penal. Primera consulta gratuita y respuesta en 24h.">
+  <meta property="og:title" content="Vidal & Asociados — Abogados · Madrid">
+  <meta property="og:description" content="Defensa jurídica con resultados. Primera consulta gratuita.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://sitalia.es/images/abo-team-antonio.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="theme-nordic.css">
+  <link rel="stylesheet" href="abogados.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "LegalService",
+    "name": "Vidal & Asociados",
+    "image": "https://sitalia.es/images/abo-team-antonio.jpg",
+    "address": { "@type": "PostalAddress", "streetAddress": "Paseo de la Castellana 95", "addressLocality": "Madrid", "addressCountry": "ES" },
+    "telephone": "+34915550234",
+    "priceRange": "€€€",
+    "url": "https://sitalia.es/demo-abogados"
+  }
+  </script>
 </head>
 <body>
 
 <div class="demo-banner">DEMO — Vidal &amp; Asociados · Sitalia.es</div>
+
 <a href="/" class="back-to-sitalia">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
 <nav>
-  <div class="nav-logo">
-    <div class="nav-logo-emblem"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
-    <div class="nav-logo-text">Vidal <span>&amp;</span> Asociados</div>
+  <div class="nav-inner">
+    <div class="nav-logo">Vidal <span>&amp; Asociados</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#consulta">Consulta</a>
+      <a href="#areas">Áreas</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#ubicacion">Contacto</a>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('consulta').scrollIntoView({behavior:'smooth'})">CONSULTA GRATUITA</button>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
-  <ul class="nav-links" id="navlinks">
-    <li><a href="#areas">Áreas</a></li>
-    <li><a href="#equipo">Equipo</a></li>
-    <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#ubicacion">Despacho</a></li>
-  </ul>
-  <a href="#consulta" class="nav-cta">Consulta gratuita</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding:0">
-  <div class="hero-content reveal">
-    <div class="hero-tag">Despacho de abogados · Madrid · Desde 2001</div>
-    <h1 class="hero-title">Defendemos<br/>sus derechos<em>con resultados.</em></h1>
-    <p class="hero-desc">Más de 20 años asesorando a empresas y particulares en derecho mercantil, laboral, civil y penal. Soluciones legales precisas, transparentes y efectivas.</p>
-    <div class="hero-actions">
-      <a href="#consulta" class="btn-gold">Consulta gratuita</a>
-      <a href="#areas" class="btn-ghost">Ver áreas de práctica</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat-item reveal reveal-delay-1"><div class="hero-stat-num">+4.800</div><div class="hero-stat-label">Clientes</div></div>
-      <div class="hero-stat-item reveal reveal-delay-2"><div class="hero-stat-num">23</div><div class="hero-stat-label">Años activos</div></div>
-      <div class="hero-stat-item reveal reveal-delay-3"><div class="hero-stat-num">94%</div><div class="hero-stat-label">Casos resueltos</div></div>
-      <div class="hero-stat-item reveal reveal-delay-4"><div class="hero-stat-num">12</div><div class="hero-stat-label">Letrados</div></div>
-    </div>
-  </div>
-  <div class="hero-visual reveal reveal-delay-2">
-    <div class="hero-visual-card">
-      <div class="hero-visual-title">Áreas de práctica</div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Mercantil</div><div class="hero-visual-area-tag">Empresa</div></div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Laboral</div><div class="hero-visual-area-tag">Trabajadores · RRHH</div></div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Civil</div><div class="hero-visual-area-tag">Familia · Herencias</div></div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Penal</div><div class="hero-visual-area-tag">Defensa penal</div></div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Fiscal</div><div class="hero-visual-area-tag">AEAT · Hacienda</div></div>
-      <div class="hero-visual-area"><div class="hero-visual-area-dot"></div><div class="hero-visual-area-name">Derecho Inmobiliario</div><div class="hero-visual-area-tag">Compraventa · Arrendamiento</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ÁREAS DE PRÁCTICA -->
-<section id="areas">
-  <div class="section-head reveal">
-    <div class="section-label">Especialización legal</div>
-    <h2 class="section-title">Áreas de práctica</h2>
-    <p class="section-sub">Contamos con letrados especializados en cada área del derecho, garantizando la máxima profundidad técnica en cada caso.</p>
-  </div>
-  <div class="areas-grid">
-    <div class="area-card reveal"><span class="area-icon"></span><div class="area-title">Derecho Mercantil y Societario</div><div class="area-desc">Asesoramiento integral a empresas: constitución de sociedades, contratos mercantiles, fusiones, adquisiciones y resolución de conflictos societarios.</div><ul class="area-items"><li>Constitución y modificación de sociedades</li><li>Contratos mercantiles y distribución</li><li>M&amp;A y due diligence</li><li>Concurso de acreedores</li></ul></div>
-    <div class="area-card reveal reveal-delay-1"><span class="area-icon"></span><div class="area-title">Derecho Laboral</div><div class="area-desc">Defensa de trabajadores y empresas en conflictos laborales, despidos, ERTEs, accidentes de trabajo y negociación colectiva.</div><ul class="area-items"><li>Despidos improcedentes y nulos</li><li>Acoso laboral y discriminación</li><li>EREs y ERTEs</li><li>Contratos y convenios colectivos</li></ul></div>
-    <div class="area-card reveal reveal-delay-2"><span class="area-icon"></span><div class="area-title">Derecho Civil y Familia</div><div class="area-desc">Divorcios, separaciones, custodia de hijos, herencias y sucesiones, contratos civiles y responsabilidad civil extracontractual.</div><ul class="area-items"><li>Divorcios y separaciones</li><li>Custodia y régimen de visitas</li><li>Herencias y partición de bienes</li><li>Reclamaciones civiles</li></ul></div>
-    <div class="area-card reveal"><span class="area-icon">️</span><div class="area-title">Derecho Penal</div><div class="area-desc">Defensa penal en todo tipo de procesos: delitos económicos, violencia, delitos informáticos, tráfico y cualquier causa penal.</div><ul class="area-items"><li>Defensa en juicio oral</li><li>Delitos económicos y fraude</li><li>Violencia de género y doméstica</li><li>Responsabilidad penal empresarial</li></ul></div>
-    <div class="area-card reveal reveal-delay-1"><span class="area-icon"></span><div class="area-title">Derecho Fiscal y Tributario</div><div class="area-desc">Planificación fiscal, defensa ante la AEAT, recursos contra liquidaciones tributarias y representación en procedimientos sancionadores.</div><ul class="area-items"><li>Planificación fiscal empresarial</li><li>Recursos ante AEAT y TEAC</li><li>Inspecciones tributarias</li><li>IVA, IRPF, IS y patrimonio</li></ul></div>
-    <div class="area-card reveal reveal-delay-2"><span class="area-icon"></span><div class="area-title">Derecho Inmobiliario</div><div class="area-desc">Compraventa de inmuebles, arrendamientos, desahucios, reclamaciones a promotoras y conflictos urbanísticos y de propiedad horizontal.</div><ul class="area-items"><li>Compraventa y due diligence</li><li>Arrendamientos y desahucios</li><li>Comunidades de propietarios</li><li>Reclamaciones a promotoras</li></ul></div>
-  </div>
-</section>
-
-<!-- POR QUÉ ELEGIRNOS -->
-<section id="diferenciadores" style="padding:96px 6%">
-  <div class="dif-grid">
-    <div class="dif-left reveal">
-      <div class="section-label" style="color:var(--gold)">Por qué elegirnos</div>
-      <h2 class="section-title" style="color:#fff">Compromiso con<br/>el resultado.</h2>
-      <p class="section-sub" style="color:rgba(255,255,255,.45)">No somos un despacho más. Somos el despacho que estudia tu caso en profundidad y te dice la verdad, aunque no siempre sea lo que quieres oír.</p>
-    </div>
-    <div class="dif-items">
-      <div class="dif-item reveal"><div class="dif-item-num">23</div><div class="dif-item-title">Años de experiencia</div><div class="dif-item-text">Más de dos décadas resolviendo casos complejos para empresas y particulares en toda España.</div></div>
-      <div class="dif-item reveal reveal-delay-1"><div class="dif-item-num">94%</div><div class="dif-item-title">Tasa de éxito</div><div class="dif-item-text">Estudiamos cada caso antes de aceptarlo. Solo litigamos cuando tenemos argumentos sólidos.</div></div>
-      <div class="dif-item reveal reveal-delay-2"><div class="dif-item-num">24h</div><div class="dif-item-title">Respuesta garantizada</div><div class="dif-item-text">Respondemos a toda consulta en menos de 24 horas. Sabemos que el tiempo en cuestiones legales es crítico.</div></div>
-      <div class="dif-item reveal reveal-delay-3"><div class="dif-item-num">0€</div><div class="dif-item-title">Primera consulta</div><div class="dif-item-text">La primera consulta es gratuita y sin compromiso. Evaluamos tu caso y te explicamos las opciones reales.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- EQUIPO -->
-<section id="equipo">
-  <div class="section-head reveal">
-    <div class="section-label">Letrados y socios</div>
-    <h2 class="section-title">Nuestro equipo</h2>
-    <p class="section-sub">Un equipo de abogados colegiados, especializados y con experiencia contrastada en litigación y asesoramiento.</p>
-  </div>
-  <div class="equipo-grid">
-    <div class="equipo-card reveal"><div class="equipo-photo"><div class="equipo-initials">AV</div></div><div class="equipo-info"><div class="equipo-name">Antonio Vidal Moreno</div><div class="equipo-role">Socio Director</div><div class="equipo-bio">25 años de trayectoria. Especialista en Derecho Mercantil y M&amp;A. Profesor asociado de Derecho Mercantil en la UAM.</div><div class="equipo-col">Col. ICAM nº 28-XXXXX</div><div class="equipo-spec-tags"><span class="equipo-tag">Mercantil</span><span class="equipo-tag">M&amp;A</span></div></div></div>
-    <div class="equipo-card reveal reveal-delay-1"><div class="equipo-photo"><div class="equipo-initials">CM</div></div><div class="equipo-info"><div class="equipo-name">Carmen Molina Rivas</div><div class="equipo-role">Socia · Derecho Laboral</div><div class="equipo-bio">18 años en litigación laboral. Especialista en negociación colectiva y conflictos de empresa. Ex-asesora sindical.</div><div class="equipo-col">Col. ICAM nº 28-XXXXX</div><div class="equipo-spec-tags"><span class="equipo-tag">Laboral</span><span class="equipo-tag">EREs</span></div></div></div>
-    <div class="equipo-card reveal reveal-delay-2"><div class="equipo-photo"><div class="equipo-initials">JP</div></div><div class="equipo-info"><div class="equipo-name">Javier Palomino Serra</div><div class="equipo-role">Socio · Derecho Penal</div><div class="equipo-bio">Criminalista de referencia. 15 años especializándose en defensa penal de alta complejidad y delitos económicos.</div><div class="equipo-col">Col. ICAM nº 28-XXXXX</div><div class="equipo-spec-tags"><span class="equipo-tag">Penal</span><span class="equipo-tag">Económico</span></div></div></div>
-    <div class="equipo-card reveal reveal-delay-3"><div class="equipo-photo"><div class="equipo-initials">LG</div></div><div class="equipo-info"><div class="equipo-name">Laura García Fuentes</div><div class="equipo-role">Asociada · Civil y Familia</div><div class="equipo-bio">Especialista en derecho de familia, herencias y mediación civil. Máster en Derecho de Familia por la UCM.</div><div class="equipo-col">Col. ICAM nº 28-XXXXX</div><div class="equipo-spec-tags"><span class="equipo-tag">Familia</span><span class="equipo-tag">Herencias</span></div></div></div>
-  </div>
-</section>
-
-<!-- PROCESO -->
-<section id="proceso">
-  <div class="section-head reveal">
-    <div class="section-label">Metodología de trabajo</div>
-    <h2 class="section-title">Cómo trabajamos</h2>
-    <p class="section-sub">Un proceso claro y transparente desde el primer contacto hasta la resolución de su caso.</p>
-  </div>
-  <div class="proceso-timeline">
-    <div class="proceso-item reveal" data-arrow="→"><div class="proceso-step">01</div><div class="proceso-title">Consulta inicial</div><div class="proceso-desc">Primera reunión gratuita de 30–45 minutos. Analizamos su situación, le explicamos las opciones legales disponibles y los tiempos estimados.</div></div>
-    <div class="proceso-item reveal reveal-delay-1" data-arrow="→"><div class="proceso-step">02</div><div class="proceso-title">Estudio del caso</div><div class="proceso-desc">El letrado especialista estudia en profundidad la documentación, jurisprudencia aplicable y elabora un informe de viabilidad y estrategia.</div></div>
-    <div class="proceso-item reveal reveal-delay-2" data-arrow="→"><div class="proceso-step">03</div><div class="proceso-title">Defensa y gestión</div><div class="proceso-desc">Actuamos en su nombre con total diligencia. Le mantenemos informado en cada fase del procedimiento con comunicación directa y clara.</div></div>
-    <div class="proceso-item reveal reveal-delay-3"><div class="proceso-step">04</div><div class="proceso-title">Resolución</div><div class="proceso-desc">Obtenemos el mejor resultado posible para su caso. Si hay recurso, le asesoramos sobre la conveniencia y el coste-beneficio de continuarlo.</div></div>
-  </div>
-</section>
-
-<!-- CONSULTA GRATUITA -->
-<section id="consulta">
-  <div class="section-head reveal" style="text-align:center;max-width:560px;margin:0 auto 52px">
-    <div class="section-label" style="justify-content:center;display:flex">Sin coste ni compromiso</div>
-    <h2 class="section-title">Consulta gratuita</h2>
-    <p class="section-sub" style="margin:0 auto">Cuéntenos su caso. Le respondemos en menos de 24 horas con una valoración honesta de sus opciones legales.</p>
-  </div>
-  <div class="consulta-wrap reveal">
-    <div class="consulta-form">
-      <div id="form-success" style="display:none" class="form-success">
-        <div class="form-success-icon">️</div>
-        <div class="form-success-title">Consulta recibida</div>
-        <div class="form-success-text">Le hemos abierto WhatsApp con los datos de su consulta. Un letrado le contactará en menos de 24 horas.</div>
-      </div>
-      <div id="form-fields">
-        <div class="form-grid-2">
-          <div><span class="form-label">Nombre y apellidos *</span><input type="text" class="form-input" id="f-name" placeholder="Ej: Juan García López" required/></div>
-          <div><span class="form-label">Teléfono *</span><input type="tel" class="form-input" id="f-phone" placeholder="+34 600 000 000" required/></div>
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal" id="consulta">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Madrid · Castellana · Desde 1995</span>
         </div>
-        <span class="form-label">Email</span>
-        <input type="email" class="form-input" id="f-email" placeholder="juan@empresa.com"/>
-        <span class="form-label">Área legal</span>
-        <select class="form-select" id="f-area">
-          <option value="">Seleccione el área...</option>
-          <option>Derecho Mercantil y Societario</option>
-          <option>Derecho Laboral</option>
-          <option>Derecho Civil y Familia</option>
-          <option>Derecho Penal</option>
-          <option>Derecho Fiscal y Tributario</option>
-          <option>Derecho Inmobiliario</option>
-          <option>No sé / Consultar</option>
-        </select>
-        <span class="form-label">Describa brevemente su caso *</span>
-        <textarea class="form-textarea" id="f-caso" rows="4" placeholder="Cuéntenos los hechos principales. Toda la información es confidencial." required></textarea>
-        <div style="font-size:11px;color:var(--text-soft);margin-bottom:18px;padding:10px 14px;border-left:2px solid var(--border);line-height:1.6"> Sus datos están protegidos por el secreto profesional y la normativa RGPD.</div>
-        <button class="form-btn" onclick="submitLead()">ENVIAR CONSULTA GRATUITA</button>
+        <h1 class="hero-title">Defendemos sus derechos<br><em>con resultados.</em></h1>
+        <p class="hero-sub">
+          Bufete con más de 25 años de experiencia en derecho mercantil, civil,
+          laboral y penal. Primera consulta gratuita y respuesta en 24 horas.
+        </p>
+        <div class="hero-info-row">
+          <div class="hero-info-item">
+            <span class="hero-info-label">Horario</span>
+            <span class="hero-info-val">Lun–Jue 9:00–19:00</span>
+            <span class="hero-info-val muted">Viernes 9:00–15:00</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-val">Paseo Castellana 95</span>
+            <span class="hero-info-val muted">Madrid · Tetuán</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Contacto</span>
+            <span class="hero-info-val">+34 915 550 234</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
+        <h3>Consulta gratuita</h3>
+        <div class="lead-form-sub">Cuéntenos brevemente su caso. Le contactaremos en menos de 24 horas para una primera valoración sin compromiso.</div>
+
+        <div class="lead-form-field">
+          <label class="lead-form-label">Nombre completo *</label>
+          <input id="abo-nombre" class="lead-form-input" type="text" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Email *</label>
+          <input id="abo-email" class="lead-form-input" type="email" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Teléfono</label>
+          <input id="abo-tel" class="lead-form-input" type="tel">
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Área *</label>
+          <select id="abo-area" class="lead-form-select" required>
+            <option value="">Selecciona el área</option>
+            <option>Mercantil</option>
+            <option>Civil</option>
+            <option>Laboral</option>
+            <option>Penal</option>
+            <option>Familiar</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Describa su consulta</label>
+          <textarea id="abo-msg" class="lead-form-textarea" placeholder="Cuéntenos brevemente..."></textarea>
+        </div>
+
+        <button type="submit" class="lead-form-btn" id="abo-btn">
+          <span id="abo-btn-txt">ENVIAR CONSULTA</span>
+        </button>
+        <div class="lead-form-note">Su información es estrictamente confidencial. Cumplimos con la LOPDGDD.</div>
+        <div class="lead-form-ok" id="abo-ok">✓ Consulta recibida. Le contactaremos en menos de 24 horas.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="areas" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Áreas de práctica</div>
+        <h2 class="section-title">Especialización jurídica</h2>
       </div>
     </div>
-    <div class="consulta-promo">
-      <div class="promo-title">¿Por qué elegirnos?</div>
-      <div class="promo-headline">Primera consulta<br/><em>completamente gratuita.</em></div>
-      <ul class="promo-items">
-        <li><div class="promo-item-check"></div>Valoración honesta de sus opciones reales, sin compromiso de contratación.</li>
-        <li><div class="promo-item-check"></div>Respuesta de un letrado especialista en menos de 24 horas.</li>
-        <li><div class="promo-item-check"></div>Presupuesto cerrado antes de empezar. Sin sorpresas en los honorarios.</li>
-        <li><div class="promo-item-check"></div>Secreto profesional garantizado desde el primer contacto.</li>
-        <li><div class="promo-item-check"></div>Atención personal del letrado responsable, no de un asistente.</li>
-      </ul>
-      <div class="promo-contact">
-        <div class="promo-contact-label">También puede llamarnos directamente</div>
-        <div class="promo-contact-phone"><a href="tel:+34914123456">+34 914 123 456</a></div>
-        <div class="promo-contact-email">consultas@vidalasociados.es</div>
+    <div class="areas-grid">
+      <div class="area-card reveal">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        <div class="area-title">Mercantil</div>
+        <div class="area-desc">Constitución de sociedades, contratos, concursal, fusiones y adquisiciones.</div>
+      </div>
+      <div class="area-card reveal reveal-delay-1">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+        <div class="area-title">Civil</div>
+        <div class="area-desc">Herencias, contratos, responsabilidad civil, propiedad horizontal, arrendamientos.</div>
+      </div>
+      <div class="area-card reveal reveal-delay-2">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <div class="area-title">Laboral</div>
+        <div class="area-desc">Despidos, indemnizaciones, conciliaciones, contratos laborales, prevención de riesgos.</div>
+      </div>
+      <div class="area-card reveal">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="area-title">Penal</div>
+        <div class="area-desc">Asistencia letrada, defensa en juicios, delitos económicos, violencia doméstica.</div>
+      </div>
+      <div class="area-card reveal reveal-delay-1">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+        <div class="area-title">Familiar</div>
+        <div class="area-desc">Divorcios, custodias, separaciones, pensiones, mediación familiar.</div>
+      </div>
+      <div class="area-card reveal reveal-delay-2">
+        <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <div class="area-title">Fiscal</div>
+        <div class="area-desc">Asesoramiento tributario, reclamaciones a Hacienda, inspecciones, herencias.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- UBICACIÓN -->
-<section id="ubicacion" style="padding:0">
-  <div class="ub-grid">
-    <div class="ub-map"><div class="ub-map-pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ub-map-addr">Paseo de la Castellana 89, 4ª planta<br/>28046 Madrid</div></div>
-    <div class="ub-info reveal">
-      <div class="ub-block"><div class="ub-label">Despacho central</div><div class="ub-text">Paseo de la Castellana 89, 4ª planta · 28046 Madrid<br/>Metro: Nuevos Ministerios (L6, L8, L10). Parking en el edificio.<br/><br/><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:700;border-bottom:1px solid var(--gold)">Cómo llegar →</a></div></div>
-      <div class="ub-block"><div class="ub-label">Horario de atención</div><div class="ub-hor-row"><span class="ub-hor-day">Lunes – Jueves</span><span class="ub-hor-time">09:00 – 19:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Viernes</span><span class="ub-hor-time">09:00 – 15:00</span></div><div class="ub-hor-row"><span class="ub-hor-day">Sábado – Domingo</span><span class="ub-hor-time closed">Cerrado</span></div></div>
-      <div class="ub-block"><div class="ub-label">Urgencias legales</div><div class="ub-text">Para asuntos urgentes fuera de horario (detenciones, medidas cautelares) disponemos de un número de guardia 24h para clientes.</div></div>
+<section id="diferenciadores" class="dif-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Compromiso</div>
+        <h2 class="section-title">Resultados que hablan</h2>
+      </div>
+    </div>
+    <div class="dif-stats">
+      <div class="reveal">
+        <div class="dif-stat-num">25+</div>
+        <div class="dif-stat-label">Años de experiencia en los tribunales de Madrid.</div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="dif-stat-num">800+</div>
+        <div class="dif-stat-label">Casos resueltos con éxito para particulares y empresas.</div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="dif-stat-num">24h</div>
+        <div class="dif-stat-label">De respuesta a su consulta inicial, sin excepciones.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section id="equipo" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Equipo</div>
+        <h2 class="section-title">Nuestros abogados</h2>
+      </div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="team-photo"><img src="images/abo-team-antonio.jpg" alt="Antonio Vidal" loading="lazy"></div><div class="team-name">Antonio Vidal</div><div class="team-role">Socio director · Mercantil</div><p class="team-bio">Especialista en derecho de sociedades y reestructuraciones empresariales.</p></div>
+      <div class="team-card reveal reveal-delay-1"><div class="team-photo"><img src="images/abo-team-carmen.jpg" alt="Carmen Ortega" loading="lazy"></div><div class="team-name">Carmen Ortega</div><div class="team-role">Socia · Laboral</div><p class="team-bio">Litigios laborales complejos, conciliaciones y prevención.</p></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-photo"><img src="images/abo-team-javier.jpg" alt="Javier Marín" loading="lazy"></div><div class="team-name">Javier Marín</div><div class="team-role">Abogado · Penal</div><p class="team-bio">Defensa penal, delitos económicos y procesos complejos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Proceso</div>
+        <h2 class="section-title">Cómo trabajamos</h2>
+      </div>
+    </div>
+    <div class="proceso-grid">
+      <div class="proceso-step reveal"><div class="proceso-num">01 · CONTACTO</div><div class="proceso-step-title">Consulta inicial</div><div class="proceso-step-desc">Recibimos su caso y le contactamos en menos de 24h para una primera valoración gratuita.</div></div>
+      <div class="proceso-step reveal reveal-delay-1"><div class="proceso-num">02 · ESTRATEGIA</div><div class="proceso-step-title">Plan de acción</div><div class="proceso-step-desc">Le presentamos opciones, riesgos y honorarios por escrito antes de empezar.</div></div>
+      <div class="proceso-step reveal reveal-delay-2"><div class="proceso-num">03 · TRABAJO</div><div class="proceso-step-title">Defensa y representación</div><div class="proceso-step-desc">Le mantenemos informado de cada hito y decisión importante.</div></div>
+      <div class="proceso-step reveal reveal-delay-3"><div class="proceso-num">04 · RESOLUCIÓN</div><div class="proceso-step-title">Cierre del caso</div><div class="proceso-step-desc">Documentación completa archivada y disponible para usted siempre que la necesite.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Dónde estamos</div>
+        <h2 class="section-title">Ubicación y contacto</h2>
+      </div>
+    </div>
+    <div class="location-grid">
+      <div class="location-map reveal">
+        <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="map-title">Vidal &amp; Asociados</div>
+          <div class="map-addr">Paseo de la Castellana 95 · Madrid</div>
+        </div>
+        <a href="https://maps.google.com/?q=Castellana+95+Madrid" target="_blank" rel="noopener" class="btn-primary">VER EN MAPS &#8599;</a>
+      </div>
+      <div class="location-info reveal reveal-delay-1">
+        <div class="info-block">
+          <div class="info-label">Horario</div>
+          <div class="schedule-row"><span class="schedule-day">Lun–Jue</span><span>9:00 – 19:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Viernes</span><span>9:00 – 15:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Fin de semana</span><span class="schedule-closed">Cerrado</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contacto</div>
+          <div class="info-val" style="margin-bottom:6px">+34 915 550 234</div>
+          <div class="info-val">contacto@vidalasociados.es</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand"><div class="footer-brand-emblem"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div><div class="footer-brand-name">Vidal <span>&amp;</span> Asociados</div></div>
-      <div class="footer-desc">Despacho de abogados en Madrid especializado en derecho mercantil, laboral, civil y penal. Más de 20 años de trayectoria.</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Vidal <span>&amp; Asociados</span></div>
+        <p class="footer-tagline">Bufete de abogados.<br>Madrid · Desde 1995.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Áreas</div>
+        <div class="footer-links">
+          <a href="#areas">Mercantil</a>
+          <a href="#areas">Civil</a>
+          <a href="#areas">Laboral</a>
+          <a href="#areas">Penal</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Paseo de la Castellana 95, Madrid</li>
+          <li>+34 915 550 234</li>
+          <li>contacto@vidalasociados.es</li>
+        </ul>
+      </div>
     </div>
-    <div><div class="footer-col-title">Áreas legales</div><ul class="footer-links"><li><a href="#areas">Derecho Mercantil</a></li><li><a href="#areas">Derecho Laboral</a></li><li><a href="#areas">Derecho Civil</a></li><li><a href="#areas">Derecho Penal</a></li><li><a href="#areas">Derecho Fiscal</a></li></ul></div>
-    <div><div class="footer-col-title">Despacho</div><ul class="footer-links"><li><a href="#equipo">El equipo</a></li><li><a href="#proceso">Cómo trabajamos</a></li><li><a href="#consulta">Consulta gratuita</a></li><li><a href="#ubicacion">Ubicación</a></li></ul></div>
-    <div><div class="footer-col-title">Legal</div><ul class="footer-links"><li><a href="#">Aviso legal</a></li><li><a href="#">Política de privacidad</a></li><li><a href="#">Política de cookies</a></li><li><a href="#">Honorarios</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Vidal &amp; Asociados S.L.P. · Todos los derechos reservados · ICAM nº 28-XXXXX</div>
-    <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Aviso legal</a></div>
+    <div class="footer-bottom">
+      <p>© 2026 Vidal &amp; Asociados · Web por <a href="/">Sitalia</a></p>
+      <div style="display:flex;gap:18px"><a href="#">Privacidad</a><a href="#">Aviso legal</a></div>
+    </div>
   </div>
 </footer>
 
-<a href="https://wa.me/34914123456?text=Buenas%2C%20quisiera%20informaci%C3%B3n%20sobre%20una%20consulta%20legal%20gratuita." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp Vidal &amp; Asociados">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-</a>
-
-<script src="shared.js"></script>
-<script src="abogados.js"></script>
+<script>
+// Envío de consulta: usa /api/contact con tipo_negocio = 'Bufete de abogados'.
+async function enviarConsulta(e) {
+  e.preventDefault();
+  var nombre = document.getElementById('abo-nombre').value.trim();
+  var email  = document.getElementById('abo-email').value.trim();
+  var tel    = document.getElementById('abo-tel').value.trim();
+  var area   = document.getElementById('abo-area').value.trim();
+  var msg    = document.getElementById('abo-msg').value.trim();
+  if (!nombre || !email || !area) { alert('Rellene los campos obligatorios.'); return; }
+  var btn = document.getElementById('abo-btn');
+  var txt = document.getElementById('abo-btn-txt');
+  btn.disabled = true; txt.textContent = 'Enviando…';
+  try {
+    var r = await fetch('/api/contact', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ nombre: nombre, apellido: '', email: email,
+        telefono: tel, tipo_negocio: 'Abogados - ' + area, mensaje: msg })
+    });
+    if (!r.ok) throw new Error('Error');
+    btn.style.display = 'none';
+    document.getElementById('abo-ok').style.display = 'block';
+  } catch (err) {
+    btn.disabled = false; txt.textContent = 'ENVIAR CONSULTA';
+    alert('No se pudo enviar. Inténtelo de nuevo o llámenos al +34 915 550 234.');
+  }
+}
+</script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>

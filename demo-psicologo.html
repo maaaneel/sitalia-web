@@ -1,187 +1,293 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elena Vidal · Psicóloga Madrid</title>
-<meta name="description" content="Psicóloga clínica en Madrid. Terapia cognitivo-conductual, ansiedad, depresión, trauma, terapia de pareja. Primera consulta sin compromiso.">
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="psicologo.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elena Vidal — Psicóloga · Madrid</title>
+  <meta name="description" content="Elena Vidal, psicóloga sanitaria en Madrid. Terapia para ansiedad, depresión y procesos personales. Primera consulta confidencial.">
+  <meta property="og:title" content="Elena Vidal — Psicóloga · Madrid">
+  <meta property="og:description" content="Psicología sanitaria en Madrid.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://sitalia.es/images/psi-profile.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="theme-nordic.css">
+  <link rel="stylesheet" href="psicologo.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "Psychologist",
+    "name": "Elena Vidal — Psicóloga",
+    "image": "https://sitalia.es/images/psi-profile.jpg",
+    "address": { "@type": "PostalAddress", "streetAddress": "Calle Goya 78", "addressLocality": "Madrid", "addressCountry": "ES" },
+    "telephone": "+34915550789",
+    "priceRange": "€€",
+    "url": "https://sitalia.es/demo-psicologo"
+  }
+  </script>
 </head>
 <body>
 
-<div class="demo-banner">DEMO — Elena Vidal · Psicóloga · Sitalia.es</div>
+<div class="demo-banner">DEMO — Elena Vidal · Sitalia.es</div>
 
-<a href="/" class="back-to-sitalia" style="font-family:-apple-system,sans-serif">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
+<a href="/" class="back-to-sitalia">
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L3 6l5 5"/></svg>
   Sitalia
 </a>
 
 <nav>
-  <div class="nav-name">Elena <span>Vidal</span> · Psicóloga</div>
-  <ul class="nav-links" id="navlinks">
-    <li><a href="#especialidades">Especialidades</a></li>
-    <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#faq">Preguntas</a></li>
-    <li><a href="#ubicacion">Consulta</a></li>
-  </ul>
-  <a href="#contacto" class="nav-cta">Pedir cita</a>
-  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+  <div class="nav-inner">
+    <div class="nav-logo">Elena <span>Vidal</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#especialidades">Especialidades</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">PEDIR CITA</button>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+  </div>
 </nav>
 
-<section class="hero" style="padding:0">
-  <div class="hero-content reveal">
-    <div class="hero-eyebrow">Psicóloga Colegiada · M-XXXXX · Madrid</div>
-    <h1 class="hero-title">Un espacio seguro<br><strong>para volver a ti.</strong></h1>
-    <p class="hero-quote">No tienes que estar en crisis para pedir ayuda.<br>A veces simplemente necesitas alguien con quien pensar.</p>
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">Pedir primera cita</a>
-      <a href="#especialidades" class="btn-outline">Ver especialidades</a>
-    </div>
-    <div class="hero-trust">
-      <div class="hero-trust-item"><div class="hero-trust-check"></div><span>Colegiada y certificada</span></div>
-      <div class="hero-trust-item"><div class="hero-trust-check"></div><span>Presencial y online</span></div>
-      <div class="hero-trust-item"><div class="hero-trust-check"></div><span>Total confidencialidad</span></div>
-    </div>
-  </div>
-  <div class="hero-image">
-    <div class="hero-portrait"><img src="images/psi-profile.jpg" alt="Elena Vidal Psicóloga"></div>
-    <div class="hero-credentials">
-      <div class="hero-cred-pill">Psicología Clínica · UAM</div>
-      <div class="hero-cred-pill">Terapia Cognitivo-Conductual</div>
-      <div class="hero-cred-pill"> +10 años de experiencia</div>
-    </div>
-  </div>
-</section>
-
-<section id="especialidades">
-  <div class="section-head reveal">
-    <div class="section-label">En qué puedo ayudarte</div>
-    <h2 class="section-title"><strong>Especialidades</strong></h2>
-    <p class="section-sub">Trabajo con personas adultas en un marco cognitivo-conductual adaptado a cada persona.</p>
-  </div>
-  <div class="espec-grid">
-    <div class="espec-card reveal reveal-delay-1"><span class="espec-icon"></span><div class="espec-title">Ansiedad y Estrés</div><div class="espec-desc">Ataques de pánico, ansiedad generalizada, fobia social, hipocondría, TOC.</div><div class="espec-tags"><span class="espec-tag">Pánico</span><span class="espec-tag">TOC</span><span class="espec-tag">Fobia social</span></div></div>
-    <div class="espec-card reveal reveal-delay-2"><span class="espec-icon"></span><div class="espec-title">Depresión y Estado de Ánimo</div><div class="espec-desc">Depresión mayor, distimia, tristeza persistente, pérdida de motivación.</div><div class="espec-tags"><span class="espec-tag">Depresión</span><span class="espec-tag">Duelo</span><span class="espec-tag">Distimia</span></div></div>
-    <div class="espec-card reveal reveal-delay-3"><span class="espec-icon"></span><div class="espec-title">Terapia de Pareja</div><div class="espec-desc">Conflictos de comunicación, crisis de convivencia, infidelidad, pérdida de conexión.</div><div class="espec-tags"><span class="espec-tag">Comunicación</span><span class="espec-tag">Crisis</span></div></div>
-    <div class="espec-card reveal"><span class="espec-icon"></span><div class="espec-title">Trauma y TEPT</div><div class="espec-desc">Trauma complejo, TEPT, abuso. Trabajo con EMDR y técnicas de procesamiento.</div><div class="espec-tags"><span class="espec-tag">EMDR</span><span class="espec-tag">Abuso</span><span class="espec-tag">Duelo</span></div></div>
-    <div class="espec-card reveal reveal-delay-1"><span class="espec-icon"></span><div class="espec-title">Crecimiento Personal</div><div class="espec-desc">Autoestima, asertividad, toma de decisiones, bloqueos vitales e identidad.</div><div class="espec-tags"><span class="espec-tag">Autoestima</span><span class="espec-tag">Identidad</span></div></div>
-    <div class="espec-card reveal reveal-delay-2"><span class="espec-icon"></span><div class="espec-title">Conducta Alimentaria</div><div class="espec-desc">TCA, relación disfuncional con la comida, imagen corporal. Trabajo multidisciplinar.</div><div class="espec-tags"><span class="espec-tag">TCA</span><span class="espec-tag">Imagen corporal</span></div></div>
-  </div>
-</section>
-
-<section id="proceso">
-  <div class="section-head reveal">
-    <div class="section-label">Cómo funciona</div>
-    <h2 class="section-title">El <strong>proceso terapéutico</strong></h2>
-    <p class="section-sub">La terapia no tiene duración fija. Avanzamos al ritmo que cada persona necesita.</p>
-  </div>
-  <div class="proceso-grid">
-    <div class="proceso-step reveal reveal-delay-1"><div class="proceso-num">01</div><div class="proceso-title">Primera consulta</div><div class="proceso-desc">60 minutos para conocernos sin compromiso. Cuéntame qué te trae y qué esperas de la terapia. Sin juicios.</div></div>
-    <div class="proceso-step reveal reveal-delay-2"><div class="proceso-num">02</div><div class="proceso-title">Evaluación y plan</div><div class="proceso-desc">Analizo tu situación y diseñamos juntos un plan personalizado con objetivos claros y ritmo adaptado.</div></div>
-    <div class="proceso-step reveal reveal-delay-3"><div class="proceso-num">03</div><div class="proceso-title">Sesiones y seguimiento</div><div class="proceso-desc">Sesiones semanales o quincenales. Seguimiento continuo y ajuste del plan según tu evolución.</div></div>
-  </div>
-</section>
-
-<section id="sobre-mi" style="padding:0">
-  <div class="sobre-grid">
-    <div class="sobre-foto"><img src="images/psi-sobre.jpg" alt="Consulta Elena Vidal"></div>
-    <div class="sobre-content reveal">
-      <div class="section-label">Sobre mí</div>
-      <div class="sobre-name">Elena Vidal Sánchez</div>
-      <div class="sobre-role">Psicóloga Clínica · Col. M-XXXXX</div>
-      <div class="sobre-bio">Llevo más de 10 años acompañando a personas en sus procesos de cambio. Mi enfoque es principalmente cognitivo-conductual, pero siempre adaptado a la persona que tengo delante, porque no hay dos historias iguales.<br><br>Creo en una terapia humana, colaborativa y basada en la evidencia. Mi objetivo es que termines con herramientas reales que puedas usar el resto de tu vida.</div>
-      <div class="sobre-formacion">
-        <div class="sobre-formacion-title">Formación</div>
-        <div class="sobre-formacion-item"><span class="sobre-formacion-year">2008</span><span>Licenciatura en Psicología — UAM</span></div>
-        <div class="sobre-formacion-item"><span class="sobre-formacion-year">2010</span><span>Máster en Terapia Cognitivo-Conductual — UCM</span></div>
-        <div class="sobre-formacion-item"><span class="sobre-formacion-year">2015</span><span>Formación en EMDR — Nivel I y II</span></div>
-        <div class="sobre-formacion-item"><span class="sobre-formacion-year">2020</span><span>Certificación en Terapia ACT</span></div>
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal" id="contacto">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="label">Madrid · Salamanca · Colegiada M-12345</span>
+        </div>
+        <h1 class="hero-title">Un espacio seguro<br><em>para volver a ti.</em></h1>
+        <p class="hero-sub">
+          Terapia psicológica para adultos. Acompañamiento profesional, escucha
+          sin juicio y herramientas para entenderte mejor. Presencial u online.
+        </p>
+        <div class="hero-info-row">
+          <div class="hero-info-item">
+            <span class="hero-info-label">Sesiones</span>
+            <span class="hero-info-val">50 minutos · 70€</span>
+            <span class="hero-info-val muted">Presencial u online</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-val">Calle Goya 78</span>
+            <span class="hero-info-val muted">Madrid · Salamanca</span>
+          </div>
+          <div class="hero-info-item">
+            <span class="hero-info-label">Contacto</span>
+            <span class="hero-info-val">+34 915 550 789</span>
+          </div>
+        </div>
       </div>
-      <div class="sobre-cols">
-        <div><div class="sobre-col-label">Colegio oficial</div><div class="sobre-col-value">Col. Oficial de Psicólogos de Madrid</div></div>
-        <div><div class="sobre-col-label">Modalidad</div><div class="sobre-col-value">Presencial · Online · Seguimiento WhatsApp</div></div>
-      </div>
+
+      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
+        <h3>Primera consulta</h3>
+        <div class="lead-form-sub">Escríbeme y te respondo personalmente en menos de 48h. Todo lo que me cuentes es estrictamente confidencial.</div>
+
+        <div class="lead-form-field">
+          <label class="lead-form-label">Nombre *</label>
+          <input id="psi-nombre" class="lead-form-input" type="text" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Email *</label>
+          <input id="psi-email" class="lead-form-input" type="email" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Teléfono (opcional)</label>
+          <input id="psi-tel" class="lead-form-input" type="tel">
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Modalidad preferida</label>
+          <select id="psi-modo" class="lead-form-select">
+            <option>Presencial en Madrid</option>
+            <option>Online por videollamada</option>
+            <option>Aún no lo sé</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">¿Qué te lleva a buscar ayuda? (opcional)</label>
+          <textarea id="psi-msg" class="lead-form-textarea" placeholder="Solo lo justo para entender cómo puedo ayudarte..."></textarea>
+        </div>
+
+        <button type="submit" class="lead-form-btn" id="psi-btn">
+          <span id="psi-btn-txt">ENVIAR MENSAJE</span>
+        </button>
+        <div class="lead-form-note">Tu mensaje llega solo a Elena. No comparto datos con terceros.</div>
+        <div class="lead-form-ok" id="psi-ok">✓ Mensaje recibido. Te responderé personalmente en menos de 48h.</div>
+      </form>
     </div>
   </div>
 </section>
 
-<section id="faq">
-  <div class="section-head reveal">
-    <div class="section-label">Resuelve tus dudas</div>
-    <h2 class="section-title">Preguntas <strong>frecuentes</strong></h2>
-  </div>
-  <div class="faq-list reveal">
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Es confidencial todo lo que diga en consulta?<span class="faq-chevron"></span></button><div class="faq-a"><p>Sí, absolutamente. El secreto profesional está protegido por el Código Deontológico del Colegio Oficial de Psicólogos y por la Ley de Ordenación de las Profesiones Sanitarias. Todo es estrictamente confidencial.</p></div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cuánto dura y cuántas sesiones necesitaré?<span class="faq-chevron"></span></button><div class="faq-a"><p>Cada sesión dura 50–60 minutos. La duración depende del motivo de consulta, historia personal y frecuencia. En media, los procesos oscilan entre 8 y 30 sesiones. Doy una estimación honesta en la primera sesión.</p></div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cuál es el precio de las sesiones?<span class="faq-chevron"></span></button><div class="faq-a"><p>El precio varía según el tipo (individual, pareja) y la modalidad. Consúltame directamente por WhatsApp. Primera consulta individual a precio reducido para que puedas conocerme sin compromiso.</p></div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cómo funciona la terapia online?<span class="faq-chevron"></span></button><div class="faq-a"><p>Por videollamada (Google Meet o Zoom) en horario acordado. Misma estructura que las presenciales. Necesitas un espacio tranquilo y con privacidad. Muchos pacientes alternan ambas modalidades.</p></div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Tengo que estar en crisis para venir?<span class="faq-chevron"></span></button><div class="faq-a"><p>En absoluto. Muchas personas vienen para conocerse mejor, mejorar su autoestima o tomar decisiones importantes. No necesitas un diagnóstico ni estar en el peor momento para merecer apoyo profesional.</p></div></div>
-  </div>
-</section>
-
-<section id="contacto" style="background:var(--bg-warm)">
-  <div class="section-head reveal" style="text-align:center;max-width:560px;margin:0 auto 56px">
-    <div class="section-label" style="justify-content:center">Primer paso</div>
-    <h2 class="section-title"><strong>Pide tu primera cita</strong></h2>
-    <p class="section-sub" style="margin:0 auto">Me pongo en contacto contigo en menos de 24h para confirmar fecha y hora.</p>
-  </div>
-  <div class="contacto-wrap">
-    <div class="contacto-form reveal">
-      <div id="form-success" style="display:none" class="form-success"><div class="form-success-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="form-success-title">Mensaje enviado</div><div class="form-success-text">Te respondo en menos de 24 horas. Gracias por dar este paso.</div></div>
-      <div id="form-fields">
-        <span class="form-label">Tu nombre *</span>
-        <input type="text" class="form-input" id="f-name" placeholder="Ej: María García">
-        <span class="form-label">Teléfono o email *</span>
-        <input type="text" class="form-input" id="f-contact" placeholder="600 000 000 · o · tu@email.com">
-        <span class="form-label">Tipo de sesión</span>
-        <select class="form-select" id="f-type"><option value="">Selecciona...</option><option>Primera consulta individual</option><option>Terapia individual (continuación)</option><option>Terapia de pareja</option><option>Sesión online</option></select>
-        <span class="form-label">Preferencia de horario</span>
-        <select class="form-select" id="f-horario"><option value="">Sin preferencia</option><option>Mañanas (9:00–13:00)</option><option>Tardes (16:00–20:00)</option></select>
-        <span class="form-label">Cuéntame brevemente qué te trae (opcional)</span>
-        <textarea class="form-textarea" id="f-msg" rows="3" placeholder="No tienes que escribir mucho, solo lo que quieras compartir..."></textarea>
-        <div class="form-privacy"> Tu información es completamente confidencial.</div>
-        <button class="form-btn" onclick="submitForm()">ENVIAR SOLICITUD DE CITA</button>
+<section id="especialidades" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Especialidades</div>
+        <h2 class="section-title">En qué puedo acompañarte</h2>
       </div>
     </div>
-    <div class="contacto-info reveal reveal-delay-2">
-      <div><div class="info-label">Teléfono / WhatsApp</div><div class="info-value"><a href="tel:+34912345678">+34 912 345 678</a></div><div class="info-sub">Respondo en menos de 24 horas.</div></div>
-      <div><div class="info-label">Email</div><div class="info-value" style="font-size:15px"><a href="mailto:elena@psicologiavidal.es">elena@psicologiavidal.es</a></div></div>
-      <div><div class="info-label">Modalidades</div><div class="modality-pills"><div class="modality-pill"> Presencial · Madrid</div><div class="modality-pill"> Videollamada online</div><div class="modality-pill"> Seguimiento WhatsApp</div></div></div>
-      <div><div class="info-label">Horario de consulta</div>
-        <div class="ub-hor-row"><span class="ub-hor-day">Lunes – Jueves</span><span>09:00 – 20:00</span></div>
-        <div class="ub-hor-row"><span class="ub-hor-day">Viernes</span><span>09:00 – 15:00</span></div>
-        <div class="ub-hor-row"><span class="ub-hor-day">Sábado – Domingo</span><span class="closed">Cerrado</span></div>
+    <div class="especialidades-grid">
+      <div class="esp-card reveal"><div class="esp-card-title">Ansiedad y estrés</div><div class="esp-card-desc">Aprender a regular el sistema nervioso, identificar disparadores y construir recursos para no vivir en alerta constante.</div></div>
+      <div class="esp-card reveal reveal-delay-1"><div class="esp-card-title">Depresión y bajo estado de ánimo</div><div class="esp-card-desc">Recuperar la motivación, salir del bucle de pensamientos negativos y encontrar sentido a lo cotidiano.</div></div>
+      <div class="esp-card reveal"><div class="esp-card-title">Autoestima</div><div class="esp-card-desc">Trabajar la voz interior crítica, los límites y construir una relación más amable con quien eres.</div></div>
+      <div class="esp-card reveal reveal-delay-1"><div class="esp-card-title">Duelos y procesos de cambio</div><div class="esp-card-desc">Acompañamiento ante pérdidas, rupturas, cambios vitales o etapas difíciles que necesitan ser elaboradas.</div></div>
+      <div class="esp-card reveal"><div class="esp-card-title">Relaciones y vínculos</div><div class="esp-card-desc">Patrones repetidos, dependencia emocional, conflictos de pareja o familiares.</div></div>
+      <div class="esp-card reveal reveal-delay-1"><div class="esp-card-title">Crisis vitales</div><div class="esp-card-desc">Momentos de "ya no sé quién soy ni qué quiero" — clarificar valores y construir un nuevo rumbo.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Proceso</div>
+        <h2 class="section-title">Cómo trabajamos juntos</h2>
+      </div>
+    </div>
+    <div class="proceso-list">
+      <div class="proceso-step reveal">
+        <div class="proceso-num">01 · PRIMERA SESIÓN</div>
+        <div class="proceso-title">Conocernos</div>
+        <div class="proceso-desc">Espacio para que me cuentes qué te ha traído. Sin presión, sin diagnósticos rápidos. Decidimos si encajamos.</div>
+      </div>
+      <div class="proceso-step reveal reveal-delay-1">
+        <div class="proceso-num">02 · TRABAJO TERAPÉUTICO</div>
+        <div class="proceso-title">Construir y entender</div>
+        <div class="proceso-desc">Sesiones de 50 min, normalmente semanales. Combino enfoque cognitivo-conductual con trabajo emocional.</div>
+      </div>
+      <div class="proceso-step reveal reveal-delay-2">
+        <div class="proceso-num">03 · AUTONOMÍA</div>
+        <div class="proceso-title">Cierre</div>
+        <div class="proceso-desc">El objetivo es que no me necesites. Cuando hayas integrado los recursos, espaciamos las sesiones y cerramos.</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="ubicacion" style="padding:0">
-  <div class="ubicacion-grid">
-    <div class="mapa"><div class="mapa-pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="mapa-addr">Calle de Fuencarral 72, 2º A<br>28004 Madrid</div></div>
-    <div class="ubicacion-info reveal">
-      <div><div class="ub-label">Consulta presencial</div><div class="ub-text">Calle de Fuencarral 72, 2º A · 28004 Madrid<br>Metro: Tribunal (L10) o Gran Vía (L1, L5).<br><br><a href="https://maps.google.com" target="_blank" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-bottom:1px solid var(--accent);font-family:-apple-system,sans-serif">Abrir en Google Maps →</a></div></div>
-      <div><div class="ub-label">Accesibilidad</div><div class="ub-text">Edificio con ascensor. Sala de espera privada. Entrada independiente para mayor discreción.</div></div>
-      <div><div class="ub-label">Seguro médico</div><div class="ub-text">Acepto pacientes de Sanitas, Adeslas y Asisa. También atención privada sin seguro.</div></div>
+<section id="sobre-mi" class="section-pad-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Sobre mí</div>
+        <h2 class="section-title">Elena Vidal</h2>
+      </div>
+    </div>
+    <div class="sobre-grid">
+      <div class="sobre-photo reveal"><img src="images/psi-profile.jpg" alt="Elena Vidal, psicóloga" loading="lazy"></div>
+      <div class="sobre-bio reveal reveal-delay-1">
+        <p>Soy psicóloga sanitaria colegiada con <strong>más de 10 años de experiencia</strong> acompañando procesos de adultos en consulta privada.</p>
+        <p>Mi enfoque combina la <strong>terapia cognitivo-conductual</strong> con herramientas de mindfulness y trabajo emocional. Lo que me importa no es aplicar técnicas, sino que <strong>tú salgas de cada sesión con algo que te sirva</strong>.</p>
+        <p>Creo en la terapia como un espacio donde no hay que rendir, ni "estar bien rápido". Ir a un ritmo que te respete es parte del trabajo.</p>
+        <div class="sobre-creds">
+          <div class="sobre-cred-item"><span class="sobre-cred-label">Formación</span><span>Licenciada en Psicología, UCM. Máster Psicología Sanitaria.</span></div>
+          <div class="sobre-cred-item"><span class="sobre-cred-label">Colegiado</span><span>COP Madrid · M-12345</span></div>
+          <div class="sobre-cred-item"><span class="sobre-cred-label">Modalidad</span><span>Presencial en Madrid u online por videollamada.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">FAQ</div>
+        <h2 class="section-title">Preguntas frecuentes</h2>
+      </div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q">¿Cuánto dura una sesión?</div>
+        <div class="faq-a">50 minutos. Es el tiempo estándar y suficiente para trabajar sin agotar.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">¿Cuánto cuesta?</div>
+        <div class="faq-a">La sesión individual cuesta 70€. Existen bonos de 4 sesiones (260€) para procesos continuados.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">¿Cada cuánto tendría que venir?</div>
+        <div class="faq-a">Lo más habitual es una vez por semana, especialmente al principio. Según avancemos, se puede espaciar a cada 15 días.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">¿Cómo sé si necesito terapia?</div>
+        <div class="faq-a">No hace falta estar "muy mal". Si algo te pesa, te limita, o llevas tiempo sintiéndote estancada, ya es razón suficiente.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">¿Es confidencial?</div>
+        <div class="faq-a">Todo lo que se trabaja en consulta es estrictamente confidencial. El secreto profesional está protegido por el Código Deontológico.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <div><div class="footer-name">Elena <span>Vidal</span> · Psicóloga</div><div class="footer-tagline">Un espacio seguro y confidencial para acompañarte en tu proceso de cambio. Colegiada M-XXXXX.</div></div>
-    <div><div class="footer-col-title">Especialidades</div><ul class="footer-links"><li><a href="#especialidades">Ansiedad y estrés</a></li><li><a href="#especialidades">Depresión</a></li><li><a href="#especialidades">Terapia de pareja</a></li><li><a href="#especialidades">Trauma y TEPT</a></li></ul></div>
-    <div><div class="footer-col-title">Consulta</div><ul class="footer-links"><li><a href="#sobre-mi">Sobre mí</a></li><li><a href="#faq">Preguntas frecuentes</a></li><li><a href="#contacto">Pedir cita</a></li><li><a href="/" style="color:rgba(255,255,255,.4)">Web por Sitalia</a></li></ul></div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Elena <span>Vidal</span></div>
+        <p class="footer-tagline">Psicología sanitaria.<br>Madrid · M-12345</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegación</div>
+        <div class="footer-links">
+          <a href="#especialidades">Especialidades</a>
+          <a href="#sobre-mi">Sobre mí</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-contact">
+          <li>Calle Goya 78, Madrid</li>
+          <li>+34 915 550 789</li>
+          <li>consulta@elenavidalpsicologa.es</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Elena Vidal · Web por <a href="/">Sitalia</a></p>
+      <div style="display:flex;gap:18px"><a href="#">Privacidad</a><a href="#">Aviso legal</a></div>
+    </div>
   </div>
-  <div class="footer-bottom"><div class="footer-copy">© 2026 Elena Vidal Sánchez · Psicóloga Col. M-XXXXX</div><div class="footer-legal"><a href="#">Privacidad</a><a href="#">Cookies</a></div></div>
 </footer>
 
-<a href="https://wa.me/34912345678" class="wa-float" target="_blank" style="font-size:0">
-  <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.122 1.525 5.862L.057 23.57a.75.75 0 00.914.914l5.73-1.473A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-1.95 0-3.79-.512-5.378-1.408l-.386-.222-3.998 1.027 1.049-3.878-.25-.403A10.44 10.44 0 011.5 12C1.5 6.21 6.21 1.5 12 1.5S22.5 6.21 22.5 12 17.79 22.5 12 22.5z"/></svg>
-</a>
-
-<script src="shared.js"></script>
-<script src="psicologo.js"></script>
+<script>
+async function enviarConsulta(e) {
+  e.preventDefault();
+  var nombre = document.getElementById('psi-nombre').value.trim();
+  var email  = document.getElementById('psi-email').value.trim();
+  var tel    = document.getElementById('psi-tel').value.trim();
+  var modo   = document.getElementById('psi-modo').value.trim();
+  var msg    = document.getElementById('psi-msg').value.trim();
+  if (!nombre || !email) { alert('Rellena al menos nombre y email.'); return; }
+  var btn = document.getElementById('psi-btn');
+  var txt = document.getElementById('psi-btn-txt');
+  btn.disabled = true; txt.textContent = 'Enviando…';
+  try {
+    var r = await fetch('/api/contact', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nombre: nombre, apellido: '', email: email, telefono: tel,
+        tipo_negocio: 'Psicología - ' + modo,
+        mensaje: msg
+      })
+    });
+    if (!r.ok) throw new Error('Error');
+    btn.style.display = 'none';
+    document.getElementById('psi-ok').style.display = 'block';
+  } catch (err) {
+    btn.disabled = false; txt.textContent = 'ENVIAR MENSAJE';
+    alert('No se pudo enviar. Llámame al +34 915 550 789 o escríbeme directamente a consulta@elenavidalpsicologa.es');
+  }
+}
+</script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>
