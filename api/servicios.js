@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
 
       const { data, error } = await sb()
         .from('servicios')
-        .select('id, nombre, duracion_min, duracion_display, precio, pop, orden')
+        .select('id, nombre, duracion_min, duracion_display, precio, pop, orden, imagen_url, categoria')
         .eq('negocio', negocio)
         .eq('activo', true)
         .order('orden', { ascending: true })
@@ -52,7 +52,8 @@ module.exports = async function handler(req, res) {
     if (req.method === 'POST') {
       const {
         negocio, nombre, duracion_min, duracion_display,
-        precio, pop, orden, id
+        precio, pop, orden, id,
+        imagen_url, categoria
       } = req.body || {};
 
       if (!negocio || !nombre || !duracion_min) {
@@ -66,7 +67,9 @@ module.exports = async function handler(req, res) {
         duracion_display: duracion_display ? String(duracion_display).trim() : null,
         precio:           (precio === '' || precio === null || precio === undefined) ? null : parseFloat(precio),
         pop:              !!pop,
-        orden:            orden !== undefined ? parseInt(orden) : 0
+        orden:            orden !== undefined ? parseInt(orden) : 0,
+        imagen_url:       imagen_url ? String(imagen_url).trim() : null,
+        categoria:        categoria  ? String(categoria).trim()  : null
       };
 
       let result;
