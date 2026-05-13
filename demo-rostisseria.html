@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rostisseria Cal Pere — Pollo a l'ast · Sant Feliu de Llobregat</title>
-  <meta name="description" content="Rostisseria Cal Pere en Sant Feliu de Llobregat. Pollo a l'ast tradicional, carnes a la brasa y pedido online con recogida en tienda. Desde 1985.">
+  <meta name="description" content="Rostisseria Cal Pere en Sant Feliu de Llobregat. Pollo a l'ast tradicional, carnes a la brasa. Reserva tu pedido online y pasa a recogerlo. Desde 1985.">
   <meta property="og:title" content="Rostisseria Cal Pere — Sant Feliu">
-  <meta property="og:description" content="Pollo a l'ast desde 1985. Pide online y recoge cuando quieras.">
+  <meta property="og:description" content="Pollo a l'ast desde 1985. Reserva online y pasa a recogerlo.">
   <meta property="og:type" content="restaurant">
   <meta property="og:locale" content="es_ES">
   <meta property="og:image" content="https://sitalia.es/images/rost-hero.jpg">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="theme-nordic.css?v=4">
   <link rel="stylesheet" href="theme-warm.css?v=4">
   <link rel="stylesheet" href="theme-luxury.css?v=4">
-  <link rel="stylesheet" href="rostisseria.css?v=4">
+  <link rel="stylesheet" href="rostisseria.css?v=5">
 
   <script type="application/ld+json">
   {
@@ -52,27 +52,29 @@
   <div class="nav-inner">
     <div class="nav-logo">Cal <span>Pere</span></div>
     <div class="nav-links" id="navlinks">
-      <a href="#pedir">Pedir online</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#carta">Carta</a>
       <a href="#sobre">Sobre Cal Pere</a>
-      <a href="#ubicacion">Dónde estamos</a>
+      <a href="#ubicacion">Ubicación</a>
     </div>
-    <a href="#pedir" class="nav-cta">HACER PEDIDO</a>
+    <button class="nav-cta" onclick="document.getElementById('reservar').scrollIntoView({behavior:'smooth'})">RESERVAR PEDIDO</button>
     <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
 </nav>
 
+<!-- HERO con widget de reservas -->
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
-      <div class="reveal">
+      <div class="reveal" id="reservar">
         <div class="hero-eyebrow">
           <div class="hero-eyebrow-line"></div>
           <span class="label">Sant Feliu de Llobregat · Carrer Major · Desde 1985</span>
         </div>
         <h1 class="hero-title">El pollo a l'ast<br><em>de toda la vida.</em></h1>
         <p class="hero-sub">
-          Pollo a l'ast asado al carbón, carnes a la brasa y los acompañamientos
-          de casa. Pide online, paga con tarjeta y pasa a recogerlo cuando esté listo.
+          Pollo a l'ast asado al carbón, carnes a la brasa y los acompañamientos de casa.
+          Reserva tu pedido online, elige hora de recogida y pasa a buscarlo calentito.
         </p>
         <div class="hero-info-row">
           <div class="hero-info-item">
@@ -92,61 +94,72 @@
         </div>
       </div>
 
-      <div class="hero-img reveal reveal-delay-1">
-        <img src="images/rost-hero.jpg" alt="Pollo a l'ast Cal Pere" loading="eager">
+      <!-- Widget de reservas: mismo flujo que peluquería pero con "Pedido" -->
+      <div class="booking-wrap reveal reveal-delay-1">
+        <div class="booking-steps">
+          <button class="bk-step active" data-s="1" onclick="Sitalia.bkTo(1)">1 Pedido</button>
+          <button class="bk-step" data-s="2" onclick="Sitalia.bkTo(2)">2 Día</button>
+          <button class="bk-step" data-s="3" onclick="Sitalia.bkTo(3)">3 Hora</button>
+          <button class="bk-step" data-s="4" onclick="Sitalia.bkTo(4)">4 Confirmar</button>
+        </div>
+        <div class="bk-panel active" id="bp1"><div class="bk-panel-label">Elige tu pedido</div><div id="bk-svcs"></div><button class="bk-btn" id="bkbtn1" disabled onclick="Sitalia.bkTo(2)">SIGUIENTE: ELEGIR DÍA</button></div>
+        <div class="bk-panel" id="bp2"><div class="bk-panel-label">Selecciona el día</div><div class="bk-cal-hdr"><button class="bk-cal-nav" onclick="Sitalia.bkMon(-1)">&#8249;</button><span class="bk-cal-month" id="bk-month"></span><button class="bk-cal-nav" onclick="Sitalia.bkMon(1)">&#8250;</button></div><div class="bk-cal-grid" id="bk-dow"></div><div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div><div id="bk-full-msg" style="display:none;text-align:center;padding:10px 0 2px;font-size:12px;color:#ef4444">Este día está completo — elige otra fecha</div><button class="bk-btn" id="bkbtn2" disabled onclick="Sitalia.bkTo(3)">SIGUIENTE: VER HORAS</button><button class="bk-back" onclick="Sitalia.bkTo(1)">&#8592; Volver</button></div>
+        <div class="bk-panel" id="bp3"><div class="bk-panel-label">Hora de recogida</div><div class="bk-slots-info" id="bk-sinfo"></div><div class="bk-slots-grid" id="bk-slots"></div><button class="bk-btn" id="bkbtn3" disabled onclick="Sitalia.bkTo(4)">SIGUIENTE: CONFIRMAR</button><button class="bk-back" onclick="Sitalia.bkTo(2)">&#8592; Volver</button></div>
+        <div class="bk-panel" id="bp4"><div class="bk-panel-label">Confirma tu pedido</div><div id="bk-confirm"></div><div style="margin-top:18px;display:flex;flex-direction:column;gap:8px"><input id="bk-nombre" class="bk-form-input" type="text" placeholder="Nombre y apellido *"><input id="bk-tel" class="bk-form-input" type="tel" placeholder="Teléfono *"><input id="bk-email" class="bk-form-input" type="email" placeholder="Email para confirmación *"></div><button id="bk-submit" class="bk-btn" onclick="confirmarReserva()"><span id="bk-submit-txt">CONFIRMAR PEDIDO</span></button><div id="bk-ok" style="display:none;margin-top:14px;padding:14px;background:#fafafa;border:1px solid #eaeaea;border-radius:6px;color:#0a0a0a;font-size:13px;text-align:center">✓ Pedido confirmado. Te hemos enviado un email con los detalles.</div><button class="bk-back" onclick="Sitalia.bkTo(3)">&#8592; Cambiar hora</button></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     PEDIDO ONLINE — corazón de la demo
-     ═══════════════════════════════════════════════════ -->
-<section id="pedir" class="section-pad-bg">
+<!-- CARTA VISUAL (informativa, sin compra) -->
+<section id="carta" class="section-pad-bg">
   <div class="container">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Pedido online</div>
-        <h2 class="section-title">Pide y recoge cuando esté listo</h2>
+        <div class="section-eyebrow">Carta</div>
+        <h2 class="section-title">Nuestros productos</h2>
       </div>
     </div>
 
-    <!-- Tabs de categorías -->
-    <div class="cat-tabs reveal" id="cat-tabs">
-      <button class="cat-tab active" data-cat="pollos">Pollos</button>
-      <button class="cat-tab" data-cat="carnes">Carnes</button>
-      <button class="cat-tab" data-cat="acomp">Acompañamientos</button>
-      <button class="cat-tab" data-cat="postres">Postres</button>
-      <button class="cat-tab" data-cat="bebidas">Bebidas</button>
+    <div class="carta-grid">
+      <!-- POLLOS -->
+      <div class="carta-col reveal">
+        <div class="carta-col-title">Pollos a l'ast</div>
+        <div class="carta-item"><div class="carta-name">Pollo entero</div><div class="carta-price">14,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Medio pollo</div><div class="carta-price">8,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Cuarto de pollo</div><div class="carta-price">5,50€</div></div>
+        <div class="carta-item popular"><div class="carta-name">Pack familiar<span class="carta-tag">Popular</span></div><div class="carta-price">22,00€</div></div>
+        <div class="carta-item-desc">El pack familiar incluye pollo entero + 2 raciones de patatas + ensalada.</div>
+      </div>
+
+      <!-- CARNES Y ACOMPAÑAMIENTOS -->
+      <div class="carta-col reveal reveal-delay-1">
+        <div class="carta-col-title">Carnes y acompañamientos</div>
+        <div class="carta-item"><div class="carta-name">Costilla de cerdo adobada</div><div class="carta-price">9,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Butifarra a la brasa (2 ud.)</div><div class="carta-price">6,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Patatas asadas</div><div class="carta-price">4,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Patatas bravas</div><div class="carta-price">5,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Ensalada de la casa</div><div class="carta-price">4,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Pimientos del padrón</div><div class="carta-price">5,50€</div></div>
+      </div>
+
+      <!-- POSTRES Y BEBIDAS -->
+      <div class="carta-col reveal reveal-delay-2">
+        <div class="carta-col-title">Postres y bebidas</div>
+        <div class="carta-item"><div class="carta-name">Crema catalana</div><div class="carta-price">4,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Coca de llardons</div><div class="carta-price">4,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Flan casero</div><div class="carta-price">3,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Agua 1,5L</div><div class="carta-price">1,50€</div></div>
+        <div class="carta-item"><div class="carta-name">Vino tinto Penedès</div><div class="carta-price">8,00€</div></div>
+        <div class="carta-item"><div class="carta-name">Cava brut nature</div><div class="carta-price">12,00€</div></div>
+      </div>
     </div>
 
-    <!-- Productos por categoría -->
-    <div class="cat-group active" data-cat="pollos">
-      <div class="cat-group-title">Pollos a l'ast</div>
-      <div class="prod-grid" id="grid-pollos"></div>
-    </div>
-    <div class="cat-group" data-cat="carnes">
-      <div class="cat-group-title">Otras carnes a la brasa</div>
-      <div class="prod-grid" id="grid-carnes"></div>
-    </div>
-    <div class="cat-group" data-cat="acomp">
-      <div class="cat-group-title">Acompañamientos</div>
-      <div class="prod-grid" id="grid-acomp"></div>
-    </div>
-    <div class="cat-group" data-cat="postres">
-      <div class="cat-group-title">Postres caseros</div>
-      <div class="prod-grid" id="grid-postres"></div>
-    </div>
-    <div class="cat-group" data-cat="bebidas">
-      <div class="cat-group-title">Bebidas</div>
-      <div class="prod-grid" id="grid-bebidas"></div>
-    </div>
+    <p class="carta-note reveal">Los precios pueden incluir packs especiales según el día. Para pedir, usa el formulario de reserva del principio.</p>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     SOBRE — por qué Cal Pere
-     ═══════════════════════════════════════════════════ -->
+<!-- SOBRE -->
 <section id="sobre" class="section-pad">
   <div class="container">
     <div class="section-header reveal">
@@ -168,16 +181,14 @@
       </div>
       <div class="feat-item reveal reveal-delay-2">
         <div class="feat-num">03 · COMODIDAD</div>
-        <div class="feat-title">Pide y recoge</div>
-        <div class="feat-desc">Pago online seguro. Reserva tu hora de recogida y te lo tenemos listo, calentito y empaquetado para llevar a casa.</div>
+        <div class="feat-title">Reserva y recoge</div>
+        <div class="feat-desc">Reserva online tu pedido, elige hora de recogida y te lo tenemos listo. Sin colas, sin esperas, sin tener que llamar.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     UBICACIÓN
-     ═══════════════════════════════════════════════════ -->
+<!-- UBICACIÓN -->
 <section id="ubicacion" class="section-pad-bg">
   <div class="container">
     <div class="section-header reveal">
@@ -212,9 +223,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════════════ -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -225,7 +233,8 @@
       <div>
         <div class="footer-col-title">Navegación</div>
         <div class="footer-links">
-          <a href="#pedir">Pedir online</a>
+          <a href="#reservar">Reservar</a>
+          <a href="#carta">Carta</a>
           <a href="#sobre">Sobre Cal Pere</a>
           <a href="#ubicacion">Ubicación</a>
         </div>
@@ -250,81 +259,8 @@
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════
-     FAB del carrito (aparece cuando hay items)
-     ═══════════════════════════════════════════════════ -->
-<button class="cart-fab" id="cart-fab" type="button" onclick="abrirCheckout()">
-  <span class="cart-fab-count" id="cart-count">0</span>
-  <span>Ver pedido</span>
-  <span class="cart-fab-total" id="cart-total-fab">0,00€</span>
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-</button>
-
-<!-- ═══════════════════════════════════════════════════
-     Modal de checkout
-     ═══════════════════════════════════════════════════ -->
-<div class="modal-overlay" id="modal-checkout">
-  <div class="modal">
-    <button class="modal-close" onclick="cerrarCheckout()" aria-label="Cerrar">✕</button>
-
-    <!-- Contenido principal: pedido + datos + pago -->
-    <div class="modal-checkout-content" id="checkout-step">
-      <h3>Tu pedido</h3>
-      <p class="modal-sub">Revisa lo que vas a pedir, elige hora de recogida y paga online.</p>
-
-      <div class="cart-list" id="cart-list"></div>
-
-      <div class="cart-total">
-        <span class="cart-total-label">Total</span>
-        <span class="cart-total-amount" id="cart-total-modal">0,00€</span>
-      </div>
-
-      <form onsubmit="pagar(event)">
-        <div class="modal-form-field">
-          <label class="modal-form-label">Tu nombre *</label>
-          <input id="ck-nombre" class="modal-form-input" type="text" required>
-        </div>
-        <div class="modal-form-field">
-          <label class="modal-form-label">Teléfono *</label>
-          <input id="ck-tel" class="modal-form-input" type="tel" required>
-        </div>
-        <div class="modal-form-field">
-          <label class="modal-form-label">Email (para confirmación)</label>
-          <input id="ck-email" class="modal-form-input" type="email">
-        </div>
-        <div class="modal-form-field">
-          <label class="modal-form-label">Hora de recogida *</label>
-          <select id="ck-hora" class="modal-form-select" required></select>
-        </div>
-
-        <button type="submit" class="modal-pay-btn" id="ck-pay-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span id="ck-pay-text">Pagar <span id="ck-pay-amount">0,00€</span></span>
-        </button>
-        <div class="modal-pay-note">Pago seguro con tarjeta. Recibirás la confirmación por email.</div>
-      </form>
-    </div>
-
-    <!-- Pantalla de éxito (oculto al inicio) -->
-    <div class="modal-success" id="success-step">
-      <div class="modal-success-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div class="modal-success-title">¡Pedido confirmado!</div>
-      <div class="modal-success-msg">
-        Tu pedido por <strong id="success-total">0,00€</strong> está confirmado.<br>
-        Pasa a recogerlo en <strong id="success-hora">—</strong>.<br>
-        Te hemos enviado la confirmación a tu email.
-      </div>
-      <div class="modal-success-actions">
-        <button onclick="cerrarCheckout()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="shared.js?v=3"></script>
-<script src="rostisseria.js?v=4"></script>
+<script src="rostisseria-config.js?v=5"></script>
 <script src="cookie-banner.js" defer></script>
 <script src="theme-switcher.js" defer></script>
 </body>

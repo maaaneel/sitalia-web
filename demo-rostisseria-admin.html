@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Panel Admin — Rostisseria Cal Pere</title>
+  <link rel="stylesheet" href="admin.css?v=2">
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════════════════════════════════ -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">C</div>
+    <h1>Rostisseria Cal Pere</h1>
+    <p>Panel de administración</p>
+    <input id="pwd-input" class="login-input" type="password" placeholder="Contraseña"
+           onkeydown="if(event.key==='Enter')login()">
+    <button class="btn-primary" onclick="login()">Entrar</button>
+    <p id="login-error" class="error-msg" style="display:none">Contraseña incorrecta</p>
+  </div>
+</div>
+
+<!-- ══ PANEL ═══════════════════════════════════════════════════════════════ -->
+<div id="admin-screen" style="display:none">
+
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-logo">C</div>
+      <h1>Rostisseria Cal Pere</h1>
+    </div>
+    <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" data-view="day"    onclick="setView('day')">Día</button>
+    <button class="tab"        data-view="week"   onclick="setView('week')">Semana</button>
+    <button class="tab"        data-view="month"  onclick="setView('month')">Mes</button>
+    <button class="tab"        data-view="equipo"     onclick="setView('equipo')">Equipo</button>
+    <button class="tab"        data-view="servicios"  onclick="setView('servicios')">Carta</button>
+    <div class="tab-bar-right" id="nav-controls">
+      <button class="nav-btn" onclick="navigate(-1)">← Ant.</button>
+      <button class="nav-btn today-btn" onclick="irHoy()">Hoy</button>
+      <button class="nav-btn" onclick="navigate(1)">Sig. →</button>
+      <input id="fecha-input" class="date-input" type="date" onchange="onDateChange()" title="Ir a fecha">
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="date-heading" id="date-heading"></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-val" id="s-total">—</div><div class="stat-lbl">Pedidos hoy</div><div class="stat-sub" id="s-total-sub"></div></div>
+      <div class="stat"><div class="stat-val" id="s-prox">—</div><div class="stat-lbl">Próxima recogida</div><div class="stat-sub" id="s-prox-sub"></div></div>
+      <div class="stat"><div class="stat-val" id="s-ing">—</div><div class="stat-lbl">Ingresos hoy</div><div class="stat-sub" id="s-ing-sub">estimados</div></div>
+      <div class="stat"><div class="stat-val" id="s-week">—</div><div class="stat-lbl">Esta semana</div><div class="stat-sub" id="s-week-sub">pedidos</div></div>
+    </div>
+    <div id="view-content"></div>
+  </div>
+</div>
+
+<!-- Configuración del negocio -->
+<script>
+  window.NEGOCIO_ID     = 'rostisseria';
+  window.NEGOCIO_NOMBRE = 'Rostisseria Cal Pere';
+</script>
+<script src="admin.js?v=2"></script>
+
+</body>
+</html>
