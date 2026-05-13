@@ -43,27 +43,32 @@
     <div class="nav-links" id="navlinks">
       <a href="#especialidades">Especialidades</a>
       <a href="#proceso">Proceso</a>
-      <a href="#sobre-mi">Sobre mí</a>
       <a href="#faq">FAQ</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">PEDIR CITA</button>
+    <a href="#contacto" class="nav-cta">PEDIR CITA</a>
     <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
 </nav>
 
+<!-- Hero: foto a la derecha, presentación personal a la izquierda -->
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
-      <div class="reveal" id="contacto">
+      <div class="reveal">
         <div class="hero-eyebrow">
           <div class="hero-eyebrow-line"></div>
-          <span class="label">Madrid · Salamanca · Colegiada M-12345</span>
+          <span class="label">Psicóloga sanitaria · Madrid · M-12345</span>
         </div>
-        <h1 class="hero-title">Un espacio seguro<br><em>para volver a ti.</em></h1>
+        <h1 class="hero-title">Hola, soy<br><em>Elena Vidal.</em></h1>
         <p class="hero-sub">
-          Terapia psicológica para adultos. Acompañamiento profesional, escucha
-          sin juicio y herramientas para entenderte mejor. Presencial u online.
+          Llevo más de <strong>10 años</strong> acompañando procesos de adultos en consulta privada.
+          Trabajo desde un enfoque cognitivo-conductual combinado con mindfulness y trabajo emocional.
+          Lo que me importa no es aplicar técnicas: es que <strong>salgas de cada sesión con algo que te sirva</strong>.
+        </p>
+        <p class="hero-sub" style="margin-top:-20px">
+          Creo en la terapia como un espacio donde no hay que rendir,
+          ni "estar bien rápido". Ir a tu propio ritmo es parte del trabajo.
         </p>
         <div class="hero-info-row">
           <div class="hero-info-item">
@@ -72,7 +77,7 @@
             <span class="hero-info-val muted">Presencial u online</span>
           </div>
           <div class="hero-info-item">
-            <span class="hero-info-label">Dirección</span>
+            <span class="hero-info-label">Consulta</span>
             <span class="hero-info-val">Calle Goya 78</span>
             <span class="hero-info-val muted">Madrid · Salamanca</span>
           </div>
@@ -83,41 +88,9 @@
         </div>
       </div>
 
-      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
-        <h3>Primera consulta</h3>
-        <div class="lead-form-sub">Escríbeme y te respondo personalmente en menos de 48h. Todo lo que me cuentes es estrictamente confidencial.</div>
-
-        <div class="lead-form-field">
-          <label class="lead-form-label">Nombre *</label>
-          <input id="psi-nombre" class="lead-form-input" type="text" required>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Email *</label>
-          <input id="psi-email" class="lead-form-input" type="email" required>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Teléfono (opcional)</label>
-          <input id="psi-tel" class="lead-form-input" type="tel">
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Modalidad preferida</label>
-          <select id="psi-modo" class="lead-form-select">
-            <option>Presencial en Madrid</option>
-            <option>Online por videollamada</option>
-            <option>Aún no lo sé</option>
-          </select>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">¿Qué te lleva a buscar ayuda? (opcional)</label>
-          <textarea id="psi-msg" class="lead-form-textarea" placeholder="Solo lo justo para entender cómo puedo ayudarte..."></textarea>
-        </div>
-
-        <button type="submit" class="lead-form-btn" id="psi-btn">
-          <span id="psi-btn-txt">ENVIAR MENSAJE</span>
-        </button>
-        <div class="lead-form-note">Tu mensaje llega solo a Elena. No comparto datos con terceros.</div>
-        <div class="lead-form-ok" id="psi-ok">✓ Mensaje recibido. Te responderé personalmente en menos de 48h.</div>
-      </form>
+      <div class="hero-img reveal reveal-delay-1">
+        <img src="images/psi-profile.jpg" alt="Elena Vidal, psicóloga sanitaria" loading="eager">
+      </div>
     </div>
   </div>
 </section>
@@ -169,31 +142,7 @@
   </div>
 </section>
 
-<section id="sobre-mi" class="section-pad-bg">
-  <div class="container">
-    <div class="section-header reveal">
-      <div>
-        <div class="section-eyebrow">Sobre mí</div>
-        <h2 class="section-title">Elena Vidal</h2>
-      </div>
-    </div>
-    <div class="sobre-grid">
-      <div class="sobre-photo reveal"><img src="images/psi-profile.jpg" alt="Elena Vidal, psicóloga" loading="lazy"></div>
-      <div class="sobre-bio reveal reveal-delay-1">
-        <p>Soy psicóloga sanitaria colegiada con <strong>más de 10 años de experiencia</strong> acompañando procesos de adultos en consulta privada.</p>
-        <p>Mi enfoque combina la <strong>terapia cognitivo-conductual</strong> con herramientas de mindfulness y trabajo emocional. Lo que me importa no es aplicar técnicas, sino que <strong>tú salgas de cada sesión con algo que te sirva</strong>.</p>
-        <p>Creo en la terapia como un espacio donde no hay que rendir, ni "estar bien rápido". Ir a un ritmo que te respete es parte del trabajo.</p>
-        <div class="sobre-creds">
-          <div class="sobre-cred-item"><span class="sobre-cred-label">Formación</span><span>Licenciada en Psicología, UCM. Máster Psicología Sanitaria.</span></div>
-          <div class="sobre-cred-item"><span class="sobre-cred-label">Colegiado</span><span>COP Madrid · M-12345</span></div>
-          <div class="sobre-cred-item"><span class="sobre-cred-label">Modalidad</span><span>Presencial en Madrid u online por videollamada.</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="faq" class="section-pad">
+<section id="faq" class="section-pad-bg">
   <div class="container">
     <div class="section-header reveal">
       <div>
@@ -226,6 +175,51 @@
   </div>
 </section>
 
+<!-- Formulario de contacto al final -->
+<section id="contacto" class="cta-section">
+  <div class="container">
+    <div class="cta-section-inner">
+      <div class="cta-section-header reveal">
+        <div class="section-eyebrow">Pedir primera cita</div>
+        <h2 class="section-title">Hablemos.</h2>
+        <p>Escríbeme y te respondo personalmente en menos de 48h. Todo lo que me cuentes es estrictamente confidencial.</p>
+      </div>
+      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
+        <div class="lead-form-field">
+          <label class="lead-form-label">Nombre *</label>
+          <input id="psi-nombre" class="lead-form-input" type="text" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Email *</label>
+          <input id="psi-email" class="lead-form-input" type="email" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Teléfono (opcional)</label>
+          <input id="psi-tel" class="lead-form-input" type="tel">
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Modalidad preferida</label>
+          <select id="psi-modo" class="lead-form-select">
+            <option>Presencial en Madrid</option>
+            <option>Online por videollamada</option>
+            <option>Aún no lo sé</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">¿Qué te lleva a buscar ayuda? (opcional)</label>
+          <textarea id="psi-msg" class="lead-form-textarea" placeholder="Solo lo justo para entender cómo puedo ayudarte..."></textarea>
+        </div>
+
+        <button type="submit" class="lead-form-btn" id="psi-btn">
+          <span id="psi-btn-txt">ENVIAR MENSAJE</span>
+        </button>
+        <div class="lead-form-note">Tu mensaje llega solo a Elena. No comparto datos con terceros.</div>
+        <div class="lead-form-ok" id="psi-ok">✓ Mensaje recibido. Te responderé personalmente en menos de 48h.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -237,7 +231,7 @@
         <div class="footer-col-title">Navegación</div>
         <div class="footer-links">
           <a href="#especialidades">Especialidades</a>
-          <a href="#sobre-mi">Sobre mí</a>
+          <a href="#proceso">Proceso</a>
           <a href="#faq">FAQ</a>
           <a href="#contacto">Contacto</a>
         </div>

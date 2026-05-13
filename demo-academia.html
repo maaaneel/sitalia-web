@@ -45,29 +45,35 @@
       <a href="#equipo">Equipo</a>
       <a href="#inscripcion">Inscripción</a>
     </div>
-    <button class="nav-cta" onclick="document.getElementById('inscripcion').scrollIntoView({behavior:'smooth'})">SOLICITAR INFO</button>
+    <a href="#inscripcion" class="nav-cta">SOLICITAR INFO</a>
     <button class="nav-toggle" id="nav-toggle">&#9776;</button>
   </div>
 </nav>
 
+<!-- Hero: foto a la derecha, presentación de la academia a la izquierda -->
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
-      <div class="reveal" id="inscripcion">
+      <div class="reveal">
         <div class="hero-eyebrow">
           <div class="hero-eyebrow-line"></div>
           <span class="label">Sevilla · Reina Mercedes · Desde 2003</span>
         </div>
         <h1 class="hero-title">Donde los niños<br><em>crecen</em><br>aprendiendo.</h1>
         <p class="hero-sub">
-          Extraescolares y actividades para niños y niñas de 4 a 14 años en Sevilla.
-          Inglés, robótica, música, deporte y refuerzo escolar.
+          Llevamos <strong>más de 20 años</strong> acompañando a niños y niñas de 4 a 14 años
+          en su crecimiento. Inglés Cambridge, robótica, música, deportes y refuerzo escolar
+          con <strong>grupos reducidos</strong> y profesores titulados.
+        </p>
+        <p class="hero-sub" style="margin-top:-20px">
+          Nuestro objetivo no es solo enseñar contenido, sino que cada niño descubra
+          <strong>lo que disfruta y se le da bien</strong>, en un ambiente cercano.
         </p>
         <div class="hero-info-row">
           <div class="hero-info-item">
             <span class="hero-info-label">Edades</span>
             <span class="hero-info-val">De 4 a 14 años</span>
-            <span class="hero-info-val muted">Grupos reducidos · Máx. 10 niños</span>
+            <span class="hero-info-val muted">Grupos de máx. 10 niños</span>
           </div>
           <div class="hero-info-item">
             <span class="hero-info-label">Dirección</span>
@@ -81,54 +87,9 @@
         </div>
       </div>
 
-      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarInfo(event)">
-        <h3>Solicitar información</h3>
-        <div class="lead-form-sub">Cuéntanos qué necesitas y te enviamos toda la información de actividades, horarios y precios.</div>
-
-        <div class="lead-form-field">
-          <label class="lead-form-label">Tu nombre *</label>
-          <input id="aca-nombre" class="lead-form-input" type="text" required>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Email *</label>
-          <input id="aca-email" class="lead-form-input" type="email" required>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Teléfono *</label>
-          <input id="aca-tel" class="lead-form-input" type="tel" required>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Edad del niño/a *</label>
-          <select id="aca-edad" class="lead-form-select" required>
-            <option value="">Selecciona</option>
-            <option>4 – 6 años</option>
-            <option>7 – 9 años</option>
-            <option>10 – 12 años</option>
-            <option>13 – 14 años</option>
-          </select>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Actividad de interés</label>
-          <select id="aca-act" class="lead-form-select">
-            <option>Inglés</option>
-            <option>Robótica y programación</option>
-            <option>Música</option>
-            <option>Deportes</option>
-            <option>Refuerzo escolar</option>
-            <option>Varias / no lo tengo claro</option>
-          </select>
-        </div>
-        <div class="lead-form-field">
-          <label class="lead-form-label">Mensaje (opcional)</label>
-          <textarea id="aca-msg" class="lead-form-textarea" placeholder="¿Tienes alguna pregunta?"></textarea>
-        </div>
-
-        <button type="submit" class="lead-form-btn" id="aca-btn">
-          <span id="aca-btn-txt">ENVIAR SOLICITUD</span>
-        </button>
-        <div class="lead-form-note">Te respondemos en menos de 24 horas con la información completa.</div>
-        <div class="lead-form-ok" id="aca-ok">✓ Solicitud recibida. Te contactaremos en menos de 24h.</div>
-      </form>
+      <div class="hero-img reveal reveal-delay-1">
+        <img src="images/aca-hero.jpg" alt="Academia Talento" loading="eager">
+      </div>
     </div>
   </div>
 </section>
@@ -261,7 +222,7 @@
     <div class="section-header reveal">
       <div>
         <div class="section-eyebrow">Dónde estamos</div>
-        <h2 class="section-title">Ubicación y contacto</h2>
+        <h2 class="section-title">Ubicación</h2>
       </div>
     </div>
     <div class="location-grid">
@@ -285,6 +246,64 @@
           <div class="info-val">info@academiatalento.es</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Formulario al final -->
+<section id="inscripcion" class="cta-section">
+  <div class="container">
+    <div class="cta-section-inner">
+      <div class="cta-section-header reveal">
+        <div class="section-eyebrow">Solicitar información</div>
+        <h2 class="section-title">Cuéntanos qué necesitas.</h2>
+        <p>Te enviamos toda la información de actividades, horarios y precios. Te respondemos en menos de 24h.</p>
+      </div>
+      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarInfo(event)">
+        <div class="lead-form-field">
+          <label class="lead-form-label">Tu nombre *</label>
+          <input id="aca-nombre" class="lead-form-input" type="text" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Email *</label>
+          <input id="aca-email" class="lead-form-input" type="email" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Teléfono *</label>
+          <input id="aca-tel" class="lead-form-input" type="tel" required>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Edad del niño/a *</label>
+          <select id="aca-edad" class="lead-form-select" required>
+            <option value="">Selecciona</option>
+            <option>4 – 6 años</option>
+            <option>7 – 9 años</option>
+            <option>10 – 12 años</option>
+            <option>13 – 14 años</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Actividad de interés</label>
+          <select id="aca-act" class="lead-form-select">
+            <option>Inglés</option>
+            <option>Robótica y programación</option>
+            <option>Música</option>
+            <option>Deportes</option>
+            <option>Refuerzo escolar</option>
+            <option>Varias / no lo tengo claro</option>
+          </select>
+        </div>
+        <div class="lead-form-field">
+          <label class="lead-form-label">Mensaje (opcional)</label>
+          <textarea id="aca-msg" class="lead-form-textarea" placeholder="¿Tienes alguna pregunta?"></textarea>
+        </div>
+
+        <button type="submit" class="lead-form-btn" id="aca-btn">
+          <span id="aca-btn-txt">ENVIAR SOLICITUD</span>
+        </button>
+        <div class="lead-form-note">Te respondemos en menos de 24 horas con la información completa.</div>
+        <div class="lead-form-ok" id="aca-ok">✓ Solicitud recibida. Te contactaremos en menos de 24h.</div>
+      </form>
     </div>
   </div>
 </section>

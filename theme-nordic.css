@@ -355,6 +355,52 @@ nav.scrolled {
 .bk-back:hover { color: var(--text); }
 
 /* ═══════════════════════════════════════════════════════
+   HERO IMG — foto grande para la columna derecha del hero
+   (cuando no hay widget, formulario ni CTA card)
+   ═══════════════════════════════════════════════════════ */
+.hero-img {
+  aspect-ratio: 4/5;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: sticky; top: 100px;
+}
+@media (max-width: 980px) { .hero-img { position: static; aspect-ratio: 16/10; } }
+.hero-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center center;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CTA SECTION — sección al final con CTA centrado
+   Wrapper estándar para meter una cta-card o lead-form
+   al final de la página (Reservar mesa, Pedir cita, etc.)
+   ═══════════════════════════════════════════════════════ */
+.cta-section {
+  padding: 100px 0;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+}
+.cta-section-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.cta-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.cta-section-header .section-eyebrow { text-align: center; }
+.cta-section-header .section-title { font-size: clamp(28px, 4vw, 38px); }
+.cta-section-header p {
+  margin-top: 14px; font-size: 14px; color: var(--text-muted); line-height: 1.6;
+}
+/* Cuando metemos cta-card o lead-form dentro de cta-section, quitamos sticky */
+.cta-section .cta-card,
+.cta-section .lead-form { position: static; top: auto; }
+
+/* ═══════════════════════════════════════════════════════
    CTA CARD — tarjeta de acción para nichos sin reservas online.
    Vive en la columna derecha del hero (mismo hueco que el widget).
    ═══════════════════════════════════════════════════════ */
