@@ -466,7 +466,10 @@ function renderEquipo() {
 }
 
 function loadWorkers() {
-  fetchWorkers().then(function (ws) {
+  // Precargamos trabajadores y ausencias en paralelo. Las ausencias se usan
+  // para pintar el badge con el contador junto al nombre del trabajador.
+  Promise.all([fetchWorkers(), fetchAusencias()]).then(function (results) {
+    var ws = results[0];
     _workers = ws;
     var el = document.getElementById('workers-list');
     if (!el) return;
@@ -622,46 +625,86 @@ function deleteWorker(id, nombre) {
 
 /* ════════════════════════════════════════════════════════════
    MÓDULO: AUSENCIAS DE TRABAJADORES
-   Almacenamiento: localStorage  (producción → endpoint API)
+   Almacenamiento: Supabase via /api/ausencias
+   (antes era localStorage — ver REVISION-CODIGO.md punto #1)
+
+   - _ausencias funciona como caché en memoria: { "workerId": ["YYYY-MM-DD", ...] }
+   - Se precarga en loadWorkers() junto con los trabajadores (en paralelo).
+   - toggleAusencia hace optimistic update en la UI y luego llama a la API.
+     Si la API falla, revierte el cambio y avisa.
    ════════════════════════════════════════════════════════════ */
 
-var _ausencias             = null;   // { workerId: ['2025-07-01', ...], ... }
+var _ausencias             = null;   // { workerId: ['2026-07-01', ...], ... }
 var _viewingAusenciasId    = null;   // id del trabajador cuyo calendario está abierto
 var _ausCalMonth           = new Date(); // mes que muestra el calendario de ausencias
 
-function ausKey() { return NEGOCIO + '_ausencias'; }
-
-function loadAusencias() {
-  if (_ausencias !== null) return _ausencias;
-  try { _ausencias = JSON.parse(localStorage.getItem(ausKey()) || '{}'); }
-  catch (e) { _ausencias = {}; }
-  return _ausencias;
-}
-
-function saveAusencias() {
-  try { localStorage.setItem(ausKey(), JSON.stringify(_ausencias)); }
-  catch (e) { console.warn('[admin] localStorage no disponible:', e); }
+// Carga inicial desde Supabase. Devuelve una promesa.
+// loadWorkers() la invoca en paralelo a fetchWorkers().
+function fetchAusencias() {
+  return fetch('/api/ausencias?negocio=' + NEGOCIO)
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      _ausencias = d.ausencias || {};
+      return _ausencias;
+    })
+    .catch(function () {
+      _ausencias = {};
+      return _ausencias;
+    });
 }
 
 function getWorkerAusList(wid) {
-  return loadAusencias()[String(wid)] || [];
+  if (_ausencias === null) return [];          // todavía no se ha cargado
+  return _ausencias[String(wid)] || [];
 }
 
 function getWorkerAusTotal(wid) {
   return getWorkerAusList(wid).length;
 }
 
+// Toggle con optimistic update: cambiamos la UI al momento y luego confirmamos
+// contra la API. Si falla, revertimos.
 function toggleAusencia(wid, dateStr) {
+  if (_ausencias === null) _ausencias = {};
   var key = String(wid);
-  var aus = loadAusencias();
-  if (!aus[key]) aus[key] = [];
-  var idx = aus[key].indexOf(dateStr);
-  if (idx > -1) aus[key].splice(idx, 1);
-  else          aus[key].push(dateStr);
-  _ausencias = aus;
-  saveAusencias();
-  renderAusCalendar(wid);          // re-render solo el calendario
+  if (!_ausencias[key]) _ausencias[key] = [];
+
+  var idx       = _ausencias[key].indexOf(dateStr);
+  var wasAbsent = idx > -1;
+
+  // 1. Optimistic update en memoria + UI
+  if (wasAbsent) _ausencias[key].splice(idx, 1);
+  else           _ausencias[key].push(dateStr);
+  renderAusCalendar(wid);
   refreshAusBadge(wid);
+
+  // 2. Confirmar contra la API
+  fetch('/api/ausencias', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      negocio:       NEGOCIO,
+      trabajador_id: wid,
+      fecha:         dateStr,
+      accion:        'toggle',
+      token:         _token
+    })
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.ok) throw new Error(d.error || 'Error desconocido');
+    })
+    .catch(function (e) {
+      // Revertir el cambio si la API falla
+      if (wasAbsent) _ausencias[key].push(dateStr);
+      else {
+        var i = _ausencias[key].indexOf(dateStr);
+        if (i > -1) _ausencias[key].splice(i, 1);
+      }
+      renderAusCalendar(wid);
+      refreshAusBadge(wid);
+      alert('No se pudo guardar el cambio: ' + e.message);
+    });
 }
 
 function refreshAusBadge(wid) {
@@ -780,73 +823,36 @@ function renderAusCalendar(wid) {
 
 /* ════════════════════════════════════════════════════════════
    MÓDULO: GESTIÓN DE SERVICIOS
-   Almacenamiento: localStorage  (producción → endpoint API)
+   Almacenamiento: Supabase via /api/servicios
+   (antes era localStorage — ver REVISION-CODIGO.md punto #1)
 
    Cada servicio tiene:
+     - id              : number   ← lo asigna Supabase
      - nombre          : string
-     - duracion_display: string  ← lo que ve el cliente ("3 horas", "45 min")
-     - duracion_min    : number  ← minutos que bloquea el calendario
-     - precio          : number  (opcional)
+     - duracion_display: string   ← lo que ve el cliente ("3 horas", "45 min")
+     - duracion_min    : number   ← minutos que bloquea el calendario
+     - precio          : number   (opcional)
+     - pop             : boolean  (marca "POPULAR" en la web pública)
+     - orden           : number   (orden manual; lo gestiona Supabase por id)
+
+   Patrón:
+     - _svcs es caché en memoria. La primera vez se carga async.
+     - saveSvc / deleteSvc hacen fetch a la API y luego refrescan _svcs.
    ════════════════════════════════════════════════════════════ */
 
-var _svcs        = null;
+var _svcs         = null;
 var _editingSvcId = null;
 
-function svcKey() { return NEGOCIO + '_services'; }
-
-function loadSvcs() {
-  if (_svcs !== null) return _svcs;
-  try { _svcs = JSON.parse(localStorage.getItem(svcKey()) || 'null'); }
-  catch (e) { _svcs = null; }
-  if (!_svcs) {
-    // Servicios de ejemplo para peluquería
-    _svcs = [
-      { id: 1, nombre: 'Corte de pelo',        duracion_display: '30 min',  duracion_min: 30, precio: 15 },
-      { id: 2, nombre: 'Corte + barba',         duracion_display: '45 min',  duracion_min: 45, precio: 20 },
-      { id: 3, nombre: 'Afeitado clásico',      duracion_display: '30 min',  duracion_min: 30, precio: 12 },
-      { id: 4, nombre: 'Tinte completo',        duracion_display: '3 horas', duracion_min: 30, precio: 55 },
-      { id: 5, nombre: 'Mechas / highlights',   duracion_display: '2 horas', duracion_min: 45, precio: 70 },
-      { id: 6, nombre: 'Tratamiento capilar',   duracion_display: '1 hora',  duracion_min: 45, precio: 35 }
-    ];
-    saveSvcs();
-  }
-  return _svcs;
-}
-
-function saveSvcs() {
-  try { localStorage.setItem(svcKey(), JSON.stringify(_svcs)); }
-  catch (e) { console.warn('[admin] localStorage no disponible:', e); }
+// Carga inicial async. Devuelve una promesa con la lista cacheada.
+function fetchSvcs() {
+  return fetch('/api/servicios?negocio=' + NEGOCIO)
+    .then(function (r) { return r.json(); })
+    .then(function (d) { _svcs = d.servicios || []; return _svcs; })
+    .catch(function () { _svcs = []; return _svcs; });
 }
 
 function renderServicios() {
   document.getElementById('date-heading').textContent = 'Catálogo de servicios';
-  var svcs = loadSvcs();
-
-  var listHtml = svcs.length === 0
-    ? '<div class="empty-state">Sin servicios. Añade el primero.</div>'
-    : svcs.map(function (s) {
-        var sameTime = (s.duracion_display === s.duracion_min + ' min');
-        return '<div class="svc-card" id="scard-' + s.id + '">' +
-          '<div class="svc-info">' +
-            '<div class="svc-name">' + s.nombre + '</div>' +
-            '<div class="svc-pills">' +
-              '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + s.duracion_display + '</span>' +
-              (!sameTime
-                ? '<span class="svc-pill svc-pill-agenda" title="Tiempo que ocupa en la agenda del trabajador">' + s.duracion_min + ' min agenda</span>'
-                : '') +
-              (s.precio ? '<span class="svc-pill svc-pill-price">' + s.precio + '€</span>' : '') +
-            '</div>' +
-            (!sameTime
-              ? '<div class="svc-note-inline">El cliente espera ' + s.duracion_display + ' pero el trabajador queda libre tras ' + s.duracion_min + ' min</div>'
-              : '') +
-          '</div>' +
-          '<div class="worker-actions">' +
-            '<button class="btn-sm" onclick="showSvcForm(' + JSON.stringify(s).replace(/"/g, '&quot;') + ')">Editar</button>' +
-            '<button class="btn-sm btn-danger" onclick="deleteSvc(' + s.id + ',\'' + s.nombre.replace(/'/g, "\\'") + '\')">Eliminar</button>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-
   document.getElementById('view-content').innerHTML =
     '<div class="equipo-header">' +
       '<div class="equipo-title">Servicios</div>' +
@@ -854,7 +860,46 @@ function renderServicios() {
     '</div>' +
     '<div class="svc-intro">Define los servicios que ofrece el negocio. Para servicios con tiempo de espera (tinte, mechas…) puedes indicar una duración visible diferente a la duración real en agenda.</div>' +
     '<div id="svc-form-wrap" style="display:none"></div>' +
-    '<div id="svcs-list">' + listHtml + '</div>';
+    '<div id="svcs-list"><div class="loading-state">Cargando…</div></div>';
+
+  fetchSvcs().then(renderSvcsList);
+}
+
+// Pinta solo la parte del listado (sin tocar el formulario). Se usa también
+// tras guardar/eliminar para refrescar sin parpadeo.
+function renderSvcsList() {
+  var el = document.getElementById('svcs-list');
+  if (!el) return;
+  var svcs = _svcs || [];
+
+  if (svcs.length === 0) {
+    el.innerHTML = '<div class="empty-state">Sin servicios. Añade el primero.</div>';
+    return;
+  }
+
+  el.innerHTML = svcs.map(function (s) {
+    var sameTime = (s.duracion_display === s.duracion_min + ' min') || !s.duracion_display;
+    var displayLabel = s.duracion_display || (s.duracion_min + ' min');
+    return '<div class="svc-card" id="scard-' + s.id + '">' +
+      '<div class="svc-info">' +
+        '<div class="svc-name">' + s.nombre + '</div>' +
+        '<div class="svc-pills">' +
+          '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + displayLabel + '</span>' +
+          (!sameTime
+            ? '<span class="svc-pill svc-pill-agenda" title="Tiempo que ocupa en la agenda del trabajador">' + s.duracion_min + ' min agenda</span>'
+            : '') +
+          (s.precio ? '<span class="svc-pill svc-pill-price">' + s.precio + '€</span>' : '') +
+        '</div>' +
+        (!sameTime
+          ? '<div class="svc-note-inline">El cliente espera ' + displayLabel + ' pero el trabajador queda libre tras ' + s.duracion_min + ' min</div>'
+          : '') +
+      '</div>' +
+      '<div class="worker-actions">' +
+        '<button class="btn-sm" onclick="showSvcForm(' + JSON.stringify(s).replace(/"/g, '&quot;') + ')">Editar</button>' +
+        '<button class="btn-sm btn-danger" onclick="deleteSvc(' + s.id + ',\'' + s.nombre.replace(/'/g, "\\'") + '\')">Eliminar</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 }
 
 function showSvcForm(svc) {
@@ -949,29 +994,59 @@ function saveSvc() {
   if (!display) { alert('La duración visible al cliente es obligatoria.'); return; }
   if (!durMin)  { alert('Los minutos en agenda son obligatorios (mínimo 5).'); return; }
 
-  var svcs = loadSvcs();
-  if (_editingSvcId !== null) {
-    for (var i = 0; i < svcs.length; i++) {
-      if (svcs[i].id === _editingSvcId) {
-        svcs[i] = { id: _editingSvcId, nombre: nombre, duracion_display: display, duracion_min: durMin, precio: precio };
-        break;
+  var body = {
+    negocio:          NEGOCIO,
+    nombre:           nombre,
+    duracion_display: display,
+    duracion_min:     durMin,
+    precio:           precio || null,
+    token:            _token
+  };
+  if (_editingSvcId !== null) body.id = _editingSvcId;
+
+  // Deshabilitar el botón mientras guardamos para evitar dobles envíos.
+  var btn = document.querySelector('.svc-form .btn-save');
+  if (btn) { btn.disabled = true; btn.textContent = 'Guardando…'; }
+
+  fetch('/api/servicios', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(body)
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.ok) throw new Error(d.error || 'Error desconocido');
+
+      // Actualizar caché local con la respuesta del servidor (que incluye el id real)
+      if (!_svcs) _svcs = [];
+      if (_editingSvcId !== null) {
+        for (var i = 0; i < _svcs.length; i++) {
+          if (_svcs[i].id === _editingSvcId) { _svcs[i] = d.servicio; break; }
+        }
+      } else {
+        _svcs.push(d.servicio);
       }
-    }
-  } else {
-    var maxId = svcs.length
-      ? svcs.reduce(function (mx, s) { return s.id > mx ? s.id : mx; }, 0)
-      : 0;
-    svcs.push({ id: maxId + 1, nombre: nombre, duracion_display: display, duracion_min: durMin, precio: precio });
-  }
-  _svcs = svcs;
-  saveSvcs();
-  hideSvcForm();
-  renderServicios();
+
+      hideSvcForm();
+      renderSvcsList();
+    })
+    .catch(function (e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardar servicio'; }
+      alert('No se pudo guardar el servicio: ' + e.message);
+    });
 }
 
 function deleteSvc(id, nombre) {
   if (!confirm('¿Eliminar el servicio "' + nombre + '"?')) return;
-  _svcs = loadSvcs().filter(function (s) { return s.id !== id; });
-  saveSvcs();
-  renderServicios();
+
+  fetch('/api/servicios?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.ok) throw new Error(d.error || 'Error desconocido');
+      _svcs = (_svcs || []).filter(function (s) { return s.id !== id; });
+      renderSvcsList();
+    })
+    .catch(function (e) {
+      alert('No se pudo eliminar el servicio: ' + e.message);
+    });
 }

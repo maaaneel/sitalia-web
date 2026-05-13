@@ -1,14 +1,20 @@
 /* ============================================================
    SITALIA — peluqueria-config.js
-   Configuración de Barberia El Rincón.
-   Lee servicios y ausencias del localStorage (panel admin)
-   y cae al catálogo por defecto si no hay datos guardados.
+   Configuración del widget de reservas de Barberia El Rincón.
+
+   Cambio (mayo 2026): los servicios y ausencias se leen de Supabase
+   a través de /api/servicios y /api/ausencias. Antes se leían de
+   localStorage, lo que significaba que los visitantes NUNCA veían
+   el catálogo real configurado en el panel admin — solo el fallback.
    ============================================================ */
 
 (function () {
   var NEGOCIO = 'peluqueria';
 
-  /* ── Catálogo por defecto ──────────────────────────────── */
+  /* ── Catálogo por defecto ──────────────────────────────────
+     Solo se usa si la API falla o si la tabla `servicios` está
+     vacía para este negocio. Es la red de seguridad para que la
+     demo nunca aparezca sin contenido. */
   var defaultSvcs = [
     { n: 'Corte de pelo',       d: 30, p: '18' },
     { n: 'Arreglo de barba',    d: 20, p: '12' },
@@ -18,72 +24,77 @@
     { n: 'Tratamiento capilar', d: 20, p: '15' }
   ];
 
-  /* ── Leer servicios editados en el admin ───────────────── */
-  var svcs = defaultSvcs;
-  var isAdmin = false;
-  try {
-    var raw = localStorage.getItem(NEGOCIO + '_services');
-    if (raw) {
-      var parsed = JSON.parse(raw);
-      if (parsed && parsed.length) {
-        svcs = parsed.map(function (s) {
-          return {
-            n:       s.nombre,
-            d:       s.duracion_min,      // minutos que bloquea la agenda
-            display: s.duracion_display,  // texto que ve el cliente ("3 horas", "45 min"…)
-            p:       String(s.precio || '0'),
-            pop:     !!s.pop
-          };
-        });
-        isAdmin = true;
-      }
-    }
-  } catch (e) { svcs = defaultSvcs; }
+  /* ── Carga en paralelo: servicios + ausencias desde la API ── */
+  Promise.all([
+    fetch('/api/servicios?negocio=' + NEGOCIO)
+      .then(function (r) { return r.json(); })
+      .catch(function () { return { servicios: [] }; }),
+    fetch('/api/ausencias?negocio=' + NEGOCIO)
+      .then(function (r) { return r.json(); })
+      .catch(function () { return { ausencias: {} }; })
+  ]).then(function (results) {
+    var svcsApi  = (results[0] && results[0].servicios) || [];
+    var ausByWid = (results[1] && results[1].ausencias) || {};
 
-  /* ── Leer ausencias del admin → bloquear días en el calendario ── */
-  // Formato en localStorage: { "workerId": ["2025-07-01", "2025-07-04", …], … }
-  // Si un día está marcado como ausente en CUALQUIER trabajador → se bloquea.
-  // (Para barberías de un solo trabajador esto es lo correcto.)
-  var absentDates = null;
-  try {
-    var ausRaw = localStorage.getItem(NEGOCIO + '_ausencias');
-    if (ausRaw) {
-      var aus = JSON.parse(ausRaw);
-      var dateMap = {};
-      Object.keys(aus).forEach(function (wid) {
-        (aus[wid] || []).forEach(function (d) { dateMap[d] = true; });
+    /* ── Mapear servicios a la forma que espera shared.js ────
+       shared.js usa { n, d, display, p, pop } */
+    var svcs;
+    var isAdmin;
+    if (svcsApi.length > 0) {
+      svcs = svcsApi.map(function (s) {
+        return {
+          n:       s.nombre,
+          d:       s.duracion_min,                                              // minutos que bloquea agenda
+          display: s.duracion_display,                                          // texto visible al cliente
+          p:       (s.precio !== null && s.precio !== undefined) ? String(s.precio) : '0',
+          pop:     !!s.pop
+        };
       });
-      if (Object.keys(dateMap).length > 0) absentDates = dateMap;
+      isAdmin = true;     // hay datos reales del admin → preseleccionar el primero
+    } else {
+      svcs    = defaultSvcs;
+      isAdmin = false;
     }
-  } catch (e) {}
 
-  /* ── Inicializar booking widget ────────────────────────── */
-  Sitalia.loadScheduleAndInit({
+    /* ── Convertir ausencias a mapa de fechas bloqueadas ──────
+       Para barberías de un solo trabajador, si CUALQUIER trabajador
+       activo está ausente ese día, ese día se considera no disponible.
+       (La lógica fina de capacidad por trabajadores la calcula la API
+       de booking; aquí solo bloqueamos los días "obvios" en el calendario.) */
+    var dateMap = {};
+    Object.keys(ausByWid).forEach(function (wid) {
+      (ausByWid[wid] || []).forEach(function (d) { dateMap[d] = true; });
+    });
+    var absentDates = Object.keys(dateMap).length > 0 ? dateMap : null;
 
-    negocio: NEGOCIO,
+    /* ── Inicializar booking widget ─────────────────────────── */
+    Sitalia.loadScheduleAndInit({
 
-    /* Si hay servicios del admin, preseleccionar el primero;
-       si no, preseleccionar "Corte + Barba" (índice 2 del default). */
-    preselectSvc: isAdmin ? 0 : 2,
+      negocio: NEGOCIO,
 
-    /* Horario por defecto (se sobrescribe con la API si está disponible) */
-    sched: [
-      null,           // Lunes    — cerrado
-      [540, 1200],    // Martes   — 9:00–20:00
-      [540, 1200],    // Miércoles
-      [540, 1200],    // Jueves
-      [540, 1200],    // Viernes
-      [540, 1080],    // Sábado   — 9:00–18:00
-      null            // Domingo  — cerrado
-    ],
+      /* Si hay servicios del admin, preseleccionar el primero;
+         si no, preseleccionar "Corte + Barba" (índice 2 del default). */
+      preselectSvc: isAdmin ? 0 : 2,
 
-    svcs: svcs,
+      /* Horario por defecto (se sobrescribe con la API si está disponible) */
+      sched: [
+        null,           // Lunes    — cerrado
+        [540, 1200],    // Martes   — 9:00–20:00
+        [540, 1200],    // Miércoles
+        [540, 1200],    // Jueves
+        [540, 1200],    // Viernes
+        [540, 1080],    // Sábado   — 9:00–18:00
+        null            // Domingo  — cerrado
+      ],
 
-    /* Días bloqueados por ausencias del admin */
-    absentDates: absentDates,
+      svcs: svcs,
 
-    phone: '34612345678'
+      /* Días bloqueados por ausencias del admin */
+      absentDates: absentDates,
 
+      phone: '34612345678'
+
+    });
   });
 
 })();
