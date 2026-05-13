@@ -12,7 +12,9 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:url" content="https://sitalia.es/demo-peluqueria">
+  <meta property="og:image" content="https://sitalia.es/images/pel-gallery-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://sitalia.es/images/pel-gallery-1.jpg">
 
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="peluqueria.css">
@@ -23,7 +25,7 @@
     "@context": "https://schema.org",
     "@type": "HairSalon",
     "name": "Barberia El Rincón",
-    "image": "https://sitalia.es/images/pel-hero.jpg",
+    "image": "https://sitalia.es/images/pel-gallery-1.jpg",
     "description": "Barberia tradicional en Barcelona. Cortes clásicos, afeitados con navaja y reservas online.",
     "address": {
       "@type": "PostalAddress",
@@ -34,8 +36,8 @@
     },
     "telephone": "+34612345678",
     "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "20:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "18:00" }
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "15:00" }
     ],
     "priceRange": "€€",
     "url": "https://sitalia.es/demo-peluqueria"
@@ -89,8 +91,8 @@
         <div class="hero-info-row">
           <div class="hero-info-item">
             <span class="hero-info-label">Horario</span>
-            <span class="hero-info-val">Mar–Vie 9:00–20:00</span>
-            <span class="hero-info-val muted">Sáb 9:00–18:00</span>
+            <span class="hero-info-val">Lun–Vie 10:00–20:00</span>
+            <span class="hero-info-val muted">Sáb 10:00–15:00</span>
           </div>
           <div class="hero-info-item">
             <span class="hero-info-label">Dirección</span>
@@ -246,7 +248,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     EQUIPO — placeholders elegantes hasta tener fotos
+     EQUIPO
      ═══════════════════════════════════════════════════ -->
 <section id="equipo">
   <div class="container">
@@ -259,21 +261,21 @@
 
     <div class="team-grid">
       <div class="team-card reveal">
-        <div class="team-photo placeholder"></div>
+        <div class="team-photo"><img src="images/pel-team-pepe.jpg" alt="Pepe Martínez, fundador y master barber" loading="lazy"></div>
         <div class="team-name">Pepe Martínez</div>
         <div class="team-role">Fundador · Master Barber</div>
         <p class="team-bio">25 años de experiencia. Especialista en cortes clásicos y afeitado con navaja.</p>
       </div>
 
       <div class="team-card reveal reveal-delay-1">
-        <div class="team-photo placeholder"></div>
+        <div class="team-photo"><img src="images/pel-team-carlos.jpg" alt="Carlos Ruiz, barber" loading="lazy"></div>
         <div class="team-name">Carlos Ruiz</div>
         <div class="team-role">Barber</div>
         <p class="team-bio">Especializado en estilos modernos y degradados. Campeón provincial 2022.</p>
       </div>
 
       <div class="team-card reveal reveal-delay-2">
-        <div class="team-photo placeholder"></div>
+        <div class="team-photo"><img src="images/pel-team-marc.jpg" alt="Marc Sánchez, barber y colorista" loading="lazy"></div>
         <div class="team-name">Marc Sánchez</div>
         <div class="team-role">Barber · Colorista</div>
         <p class="team-bio">Experto en coloración y técnicas de decoloración para hombre.</p>
@@ -283,7 +285,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     GALERÍA — placeholders en grid
+     GALERÍA
      ═══════════════════════════════════════════════════ -->
 <section id="galeria">
   <div class="container">
@@ -295,10 +297,10 @@
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item placeholder reveal"></div>
-      <div class="gallery-item placeholder reveal reveal-delay-1"></div>
-      <div class="gallery-item placeholder reveal reveal-delay-2"></div>
-      <div class="gallery-item placeholder reveal reveal-delay-3"></div>
+      <div class="gallery-item reveal"><img src="images/pel-gallery-1.jpg" alt="Corte clásico" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-1"><img src="images/pel-gallery-2.jpg" alt="Afeitado con navaja" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-2"><img src="images/pel-gallery-3.jpg" alt="Degradado / skin fade" loading="lazy"></div>
+      <div class="gallery-item reveal reveal-delay-3"><img src="images/pel-gallery-4.jpg" alt="Herramientas de barbería" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -331,9 +333,8 @@
       <div class="location-info reveal reveal-delay-1">
         <div class="info-block">
           <div class="info-label">Horario</div>
-          <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-closed">Cerrado</span></div>
-          <div class="schedule-row"><span class="schedule-day">Mar – Vie</span><span>9:00 – 20:00</span></div>
-          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>9:00 – 18:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Lun – Vie</span><span>10:00 – 20:00</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sábado</span><span>10:00 – 15:00</span></div>
           <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
         </div>
         <div class="info-block">
