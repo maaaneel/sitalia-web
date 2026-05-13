@@ -81,7 +81,7 @@ section{padding:80px 0}
 .nichos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 @media(max-width:900px){.nichos-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.nichos-grid{grid-template-columns:1fr}}
-.nicho-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .25s;position:relative;overflow:hidden}
+.nicho-card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
 .nicho-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--nicho-color,var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .nicho-card:hover{border-color:var(--nicho-color,var(--accent));box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px)}
 .nicho-card:hover::before{transform:scaleX(1)}
