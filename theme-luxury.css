@@ -347,5 +347,19 @@
 [data-theme="luxury"] .dif-stat-num { color: var(--accent); }
 [data-theme="luxury"] .dif-stat-label { color: var(--text-muted); }
 
+/* Carta de la rostisseria (visual, sin botones) */
+[data-theme="luxury"] .carta-col-title { color: var(--accent); border-bottom-color: var(--border); }
+[data-theme="luxury"] .carta-name { color: #fff; }
+[data-theme="luxury"] .carta-name .carta-tag { color: var(--accent); border-color: var(--accent); }
+[data-theme="luxury"] .carta-price { color: var(--accent); }
+[data-theme="luxury"] .carta-item-desc { color: var(--text-muted); }
+[data-theme="luxury"] .carta-note { color: var(--text-soft); }
+
+/* Features de la rostisseria */
+[data-theme="luxury"] .feat-item { border-top-color: var(--accent); }
+[data-theme="luxury"] .feat-num { color: var(--accent); }
+[data-theme="luxury"] .feat-title { color: #fff; }
+[data-theme="luxury"] .feat-desc { color: var(--text-muted); }
+
 /* Selección de texto */
 [data-theme="luxury"] ::selection { background: var(--accent); color: #0a0a0a; }

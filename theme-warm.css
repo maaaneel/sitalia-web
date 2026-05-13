@@ -163,6 +163,18 @@
 [data-theme="warm"] .menu-dia-card { background: var(--bg-soft); border-color: var(--border); }
 [data-theme="warm"] .menu-section-title { border-bottom-color: var(--border); }
 
+/* ── Carta de la rostisseria ──────────────────────────── */
+[data-theme="warm"] .carta-col-title { color: var(--text-soft); border-bottom-color: var(--border); }
+[data-theme="warm"] .carta-name { color: var(--text); }
+[data-theme="warm"] .carta-name .carta-tag { color: var(--accent); border-color: var(--accent); }
+[data-theme="warm"] .carta-price { color: var(--accent); }
+[data-theme="warm"] .carta-item-desc { color: var(--text-muted); }
+[data-theme="warm"] .carta-note { color: var(--text-soft); }
+
+/* Features de la rostisseria */
+[data-theme="warm"] .feat-item { border-top-color: var(--accent); }
+[data-theme="warm"] .feat-num { color: var(--accent); }
+
 /* ── Demo banner + switcher ───────────────────────────── */
 [data-theme="warm"] .demo-banner { background: var(--bg-dark); color: #f5ede0; }
 [data-theme="warm"] .demo-banner-themes-label { color: rgba(245,237,224,.5); }
