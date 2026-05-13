@@ -1,13 +1,18 @@
 // api/trabajadores.js
-// GET  ?negocio=peluqueria&token=XXX          → lista trabajadores activos
-// POST { negocio, nombre, horario, id?, token } → crear o actualizar
-// DELETE ?id=X&token=XXX                       → desactivar (soft delete)
+//
+// Auth: header `Authorization: Bearer <ADMIN_TOKEN>` (preferido).
+//       Se mantiene compatibilidad temporal con ?token= y body.token.
+//
+// GET    ?negocio=peluqueria              → lista trabajadores activos
+// POST   { negocio, nombre, horario, id? } → crear o actualizar
+// DELETE ?id=X                             → desactivar (soft delete)
 //
 // Horario format (JSONB array):
 //   [{ dow: 0, inicio: 540, fin: 1200 }, ...]   dow 0=Lun … 6=Dom
 //   inicio/fin en minutos desde medianoche · null = no trabaja ese día
 
 const { createClient } = require('@supabase/supabase-js');
+const { requireAdmin, setCors } = require('./_lib');
 
 function sb() {
   return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -16,15 +21,12 @@ function sb() {
 module.exports = async function handler(req, res) {
   // Siempre responder JSON — nunca dejar que Vercel devuelva HTML de error
   try {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // Endpoint de administración → CORS restringido a sitalia.es / previews.
+    setCors(res, req, { mode: 'admin', methods: 'GET, POST, DELETE, OPTIONS' });
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const token = req.query.token || (req.body && req.body.token);
-    if (!token || token !== process.env.ADMIN_TOKEN) {
-      return res.status(401).json({ error: 'No autorizado — token incorrecto o ADMIN_TOKEN no configurado' });
-    }
+    // Token vía header Authorization (con fallback legado a query/body).
+    if (!requireAdmin(req, res)) return;
 
     // ── GET: listar trabajadores ──────────────────────────────────────────
     if (req.method === 'GET') {

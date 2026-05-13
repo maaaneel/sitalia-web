@@ -21,10 +21,25 @@ var MONTHS_LONG = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Ago
 var MONTHS_C    = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 /* ── Auth ─────────────────────────────────────────────── */
+// Helpers para no repetir el header Authorization en cada fetch.
+// Uso:
+//   fetch(url, { headers: authHeaders() })                          → GET
+//   fetch(url, { method:'POST', headers: authHeaders({json:true}),  → POST
+//                body: JSON.stringify(payload) })
+function authHeaders(opts) {
+  var h = { 'Authorization': 'Bearer ' + _token };
+  if (opts && opts.json) h['Content-Type'] = 'application/json';
+  return h;
+}
+
 function login() {
   var pwd = document.getElementById('pwd-input').value.trim();
   if (!pwd) return;
-  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + isoDate(_baseDate) + '&token=' + enc(pwd))
+  // Probamos el token con un GET inocuo. El token va en el header Authorization
+  // — ya no en la query string para que no quede en logs/historial.
+  fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + isoDate(_baseDate), {
+    headers: { 'Authorization': 'Bearer ' + pwd }
+  })
     .then(function (r) {
       if (r.ok) {
         _token = pwd;
@@ -82,12 +97,12 @@ function longDate(d) {
 
 /* ── Fetch helpers ────────────────────────────────────── */
 function fetchDay(fecha) {
-  return fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha + '&token=' + enc(_token))
+  return fetch('/api/admin-reservas?negocio=' + NEGOCIO + '&fecha=' + fecha, { headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) { return d.reservas || []; });
 }
 function fetchWorkers() {
-  return fetch('/api/trabajadores?negocio=' + NEGOCIO + '&token=' + enc(_token))
+  return fetch('/api/trabajadores?negocio=' + NEGOCIO, { headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) { return d.trabajadores || []; });
 }
@@ -415,7 +430,7 @@ function goToDay(dateStr) {
 /* ── Cancelar reserva ─────────────────────────────────── */
 function cancelar(id) {
   if (!confirm('¿Cancelar esta reserva? Se enviará un email de aviso al cliente.')) return;
-  fetch('/api/admin-reservas?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+  fetch('/api/admin-reservas?id=' + id, { method: 'DELETE', headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) {
       if (d.ok) {
@@ -596,12 +611,12 @@ function saveWorker() {
     horario.push({ dow: i, inicio: works ? timeToMins(document.getElementById('dini-' + i).value) : null, fin: works ? timeToMins(document.getElementById('dfin-' + i).value) : null });
   }
 
-  var body = { negocio: NEGOCIO, nombre: nombre, horario: horario, token: _token };
+  var body = { negocio: NEGOCIO, nombre: nombre, horario: horario };
   if (_editingId) body.id = _editingId;
 
   fetch('/api/trabajadores', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders({ json: true }),
     body: JSON.stringify(body)
   }).then(function (r) {
     return r.text().then(function (txt) {
@@ -618,7 +633,7 @@ function saveWorker() {
 
 function deleteWorker(id, nombre) {
   if (!confirm('¿Eliminar a ' + nombre + ' del equipo?')) return;
-  fetch('/api/trabajadores?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+  fetch('/api/trabajadores?id=' + id, { method: 'DELETE', headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) { if (d.ok) { loadWorkers(); } else { alert('Error: ' + (d.error || '')); } });
 }
@@ -626,20 +641,26 @@ function deleteWorker(id, nombre) {
 /* ════════════════════════════════════════════════════════════
    MÓDULO: AUSENCIAS DE TRABAJADORES
    Almacenamiento: Supabase via /api/ausencias
-   (antes era localStorage — ver REVISION-CODIGO.md punto #1)
 
-   - _ausencias funciona como caché en memoria: { "workerId": ["YYYY-MM-DD", ...] }
-   - Se precarga en loadWorkers() junto con los trabajadores (en paralelo).
-   - toggleAusencia hace optimistic update en la UI y luego llama a la API.
-     Si la API falla, revierte el cambio y avisa.
+   Flujo NUEVO (mayo 2026): los cambios NO se guardan al instante.
+   - Cada clic en un día se acumula en _ausPending por trabajador.
+   - Aparece una barra "Guardar (N cambios)" / "Descartar".
+   - Al pulsar Guardar se envían todos los cambios en paralelo a la API.
+     Si alguno falla, se reintroduce en la lista de pendientes.
+
+   Estados visuales de cada día:
+     aus-work     → día trabajable, sin cambios
+     aus-absent   → día ausente guardado (estado real en BD)
+     aus-pending-add    → día que se quiere marcar como ausente
+     aus-pending-remove → día actualmente ausente que se quiere quitar
    ════════════════════════════════════════════════════════════ */
 
-var _ausencias             = null;   // { workerId: ['2026-07-01', ...], ... }
+var _ausencias             = null;   // { workerId: ['2026-07-01', ...], ... } (estado guardado)
+var _ausPending            = {};     // { workerId: { 'YYYY-MM-DD': 'add' | 'remove' } } cambios pendientes
 var _viewingAusenciasId    = null;   // id del trabajador cuyo calendario está abierto
 var _ausCalMonth           = new Date(); // mes que muestra el calendario de ausencias
 
-// Carga inicial desde Supabase. Devuelve una promesa.
-// loadWorkers() la invoca en paralelo a fetchWorkers().
+// Carga inicial desde Supabase.
 function fetchAusencias() {
   return fetch('/api/ausencias?negocio=' + NEGOCIO)
     .then(function (r) { return r.json(); })
@@ -654,64 +675,149 @@ function fetchAusencias() {
 }
 
 function getWorkerAusList(wid) {
-  if (_ausencias === null) return [];          // todavía no se ha cargado
+  if (_ausencias === null) return [];
   return _ausencias[String(wid)] || [];
 }
 
+// Total que VA A QUEDAR si se guardan los pendientes (lo usamos para el badge).
 function getWorkerAusTotal(wid) {
-  return getWorkerAusList(wid).length;
+  var key      = String(wid);
+  var current  = (_ausencias && _ausencias[key]) ? _ausencias[key].length : 0;
+  var pending  = _ausPending[key] || {};
+  var delta    = 0;
+  for (var d in pending) {
+    if (!Object.prototype.hasOwnProperty.call(pending, d)) continue;
+    if (pending[d] === 'add')    delta++;
+    if (pending[d] === 'remove') delta--;
+  }
+  return current + delta;
 }
 
-// Toggle con optimistic update: cambiamos la UI al momento y luego confirmamos
-// contra la API. Si falla, revertimos.
+// Cuenta de cambios pendientes para un trabajador.
+function pendingCount(wid) {
+  var p = _ausPending[String(wid)] || {};
+  return Object.keys(p).length;
+}
+
+// Estado efectivo de un día tras aplicar pendientes:
+//   'absent'         → ausencia confirmada o pendiente de añadir
+//   'absent-pending' → idem pero todavía sin guardar
+//   'work'           → trabaja
+//   'work-pending'   → estaba ausente, se ha pedido quitar
+function dayState(wid, dateStr) {
+  var key       = String(wid);
+  var isSaved   = (_ausencias && _ausencias[key] || []).indexOf(dateStr) > -1;
+  var pendOp    = (_ausPending[key] || {})[dateStr];
+
+  if (pendOp === 'add')    return 'absent-pending';
+  if (pendOp === 'remove') return 'work-pending';
+  return isSaved ? 'absent' : 'work';
+}
+
+// Clic en un día: toggle en el buffer de pendientes.
 function toggleAusencia(wid, dateStr) {
-  if (_ausencias === null) _ausencias = {};
   var key = String(wid);
-  if (!_ausencias[key]) _ausencias[key] = [];
+  if (!_ausPending[key]) _ausPending[key] = {};
 
-  var idx       = _ausencias[key].indexOf(dateStr);
-  var wasAbsent = idx > -1;
+  var isSaved = (_ausencias && _ausencias[key] || []).indexOf(dateStr) > -1;
+  var pendOp  = _ausPending[key][dateStr];
 
-  // 1. Optimistic update en memoria + UI
-  if (wasAbsent) _ausencias[key].splice(idx, 1);
-  else           _ausencias[key].push(dateStr);
+  if (pendOp) {
+    // Ya había un cambio pendiente: cancelarlo (volver al estado guardado).
+    delete _ausPending[key][dateStr];
+  } else {
+    // No había cambio pendiente: añadir el opuesto al estado guardado.
+    _ausPending[key][dateStr] = isSaved ? 'remove' : 'add';
+  }
+
   renderAusCalendar(wid);
   refreshAusBadge(wid);
+}
 
-  // 2. Confirmar contra la API
-  fetch('/api/ausencias', {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      negocio:       NEGOCIO,
-      trabajador_id: wid,
-      fecha:         dateStr,
-      accion:        'toggle',
-      token:         _token
+// Persiste todos los cambios pendientes del trabajador. Llama a la API
+// en paralelo. Si alguno falla, se mantiene en pendientes y se avisa.
+function saveAusencias(wid) {
+  var key     = String(wid);
+  var pending = _ausPending[key] || {};
+  var entries = Object.keys(pending).map(function (date) {
+    return { date: date, op: pending[date] };
+  });
+  if (entries.length === 0) return;
+
+  // Bloquear los botones de la barra de acciones mientras guardamos.
+  var saveBtn = document.getElementById('aus-save-' + wid);
+  var discBtn = document.getElementById('aus-discard-' + wid);
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Guardando…'; }
+  if (discBtn) { discBtn.disabled = true; }
+
+  var promises = entries.map(function (e) {
+    return fetch('/api/ausencias', {
+      method:  'POST',
+      headers: authHeaders({ json: true }),
+      body: JSON.stringify({
+        negocio:       NEGOCIO,
+        trabajador_id: wid,
+        fecha:         e.date,
+        accion:        e.op   // 'add' o 'remove'
+      })
     })
-  })
-    .then(function (r) { return r.json(); })
-    .then(function (d) {
-      if (!d.ok) throw new Error(d.error || 'Error desconocido');
-    })
-    .catch(function (e) {
-      // Revertir el cambio si la API falla
-      if (wasAbsent) _ausencias[key].push(dateStr);
-      else {
-        var i = _ausencias[key].indexOf(dateStr);
-        if (i > -1) _ausencias[key].splice(i, 1);
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) throw new Error(d.error || 'Error');
+        return e;
+      });
+  });
+
+  Promise.allSettled(promises).then(function (results) {
+    // Aplicar los cambios exitosos al estado "guardado" en memoria
+    // y dejar los fallidos en _ausPending para reintento manual.
+    if (!_ausencias)         _ausencias = {};
+    if (!_ausencias[key])    _ausencias[key] = [];
+    if (!_ausPending[key])   _ausPending[key] = {};
+
+    var failed = [];
+    results.forEach(function (r, i) {
+      var e = entries[i];
+      if (r.status === 'fulfilled') {
+        if (e.op === 'add' && _ausencias[key].indexOf(e.date) === -1) {
+          _ausencias[key].push(e.date);
+        } else if (e.op === 'remove') {
+          var idx = _ausencias[key].indexOf(e.date);
+          if (idx > -1) _ausencias[key].splice(idx, 1);
+        }
+        delete _ausPending[key][e.date];
+      } else {
+        failed.push(e.date);
       }
-      renderAusCalendar(wid);
-      refreshAusBadge(wid);
-      alert('No se pudo guardar el cambio: ' + e.message);
     });
+
+    renderAusCalendar(wid);
+    refreshAusBadge(wid);
+
+    if (failed.length > 0) {
+      alert('No se pudieron guardar ' + failed.length + ' cambio(s). Inténtalo de nuevo.');
+    }
+  });
+}
+
+// Descarta TODOS los cambios pendientes del trabajador.
+function discardAusencias(wid) {
+  var key = String(wid);
+  if (!_ausPending[key] || Object.keys(_ausPending[key]).length === 0) return;
+  if (!confirm('¿Descartar los cambios pendientes de este trabajador?')) return;
+  _ausPending[key] = {};
+  renderAusCalendar(wid);
+  refreshAusBadge(wid);
 }
 
 function refreshAusBadge(wid) {
   var btn = document.getElementById('aus-btn-' + wid);
   if (!btn) return;
   var count = getWorkerAusTotal(wid);
-  btn.innerHTML = 'Ausencias' + (count > 0 ? ' <span class="aus-badge">' + count + '</span>' : '');
+  var pend  = pendingCount(wid);
+  // Si hay cambios pendientes, los marcamos visualmente con un asterisco.
+  var suffix = (count > 0 ? ' <span class="aus-badge">' + count + (pend > 0 ? '*' : '') + '</span>' : '');
+  btn.innerHTML = 'Ausencias' + suffix;
 }
 
 function showAusencias(wid) {
@@ -757,7 +863,6 @@ function renderAusCalendar(wid) {
     .filter(function (d) { return d.inicio !== null; })
     .map(function (d) { return d.dow; });
 
-  var aus      = getWorkerAusList(wid);
   var firstDay = new Date(year, month, 1);
   var lastDay  = new Date(year, month + 1, 0);
   var startOff = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
@@ -768,23 +873,32 @@ function renderAusCalendar(wid) {
   for (var e = 0; e < startOff; e++) cells += '<div class="aus-cell aus-empty"></div>';
 
   for (var d = 1; d <= lastDay.getDate(); d++) {
-    var dt       = new Date(year, month, d);
-    var dowJS    = dt.getDay();                        // 0=Dom JS
-    var dow      = dowJS === 0 ? 6 : dowJS - 1;       // 0=Lun interno
-    var key      = isoDate(dt);
-    var isWork   = workingDows.indexOf(dow) > -1;
-    var isAbsent = aus.indexOf(key) > -1;
-    var isTod    = isToday(dt);
+    var dt    = new Date(year, month, d);
+    var dowJS = dt.getDay();
+    var dow   = dowJS === 0 ? 6 : dowJS - 1;
+    var key   = isoDate(dt);
+    var isWork  = workingDows.indexOf(dow) > -1;
+    var isTod   = isToday(dt);
+    var state   = dayState(wid, key);   // 'absent' | 'absent-pending' | 'work' | 'work-pending'
 
     var cls = 'aus-cell';
-    if (!isWork)       cls += ' aus-nowork';
-    else if (isAbsent) cls += ' aus-absent';
-    else               cls += ' aus-work';
-    if (isTod)         cls += ' aus-today';
+    if (!isWork)                      cls += ' aus-nowork';
+    else if (state === 'absent')      cls += ' aus-absent';
+    else if (state === 'absent-pending') cls += ' aus-absent aus-pending';
+    else if (state === 'work-pending')   cls += ' aus-work aus-pending';
+    else                              cls += ' aus-work';
+    if (isTod) cls += ' aus-today';
+
+    var title;
+    if (!isWork)                          title = 'Día libre habitual';
+    else if (state === 'absent')          title = 'Ausente (clic para quitar)';
+    else if (state === 'absent-pending')  title = 'Se marcará ausente al guardar';
+    else if (state === 'work-pending')    title = 'Se quitará la ausencia al guardar';
+    else                                  title = 'Marcar ausente';
 
     var click = isWork
-      ? 'onclick="toggleAusencia(\'' + wid + '\',\'' + key + '\')" title="' + (isAbsent ? 'Quitar ausencia' : 'Marcar ausente') + '"'
-      : 'title="Día libre habitual"';
+      ? 'onclick="toggleAusencia(\'' + wid + '\',\'' + key + '\')" title="' + title + '"'
+      : 'title="' + title + '"';
 
     cells += '<div class="' + cls + '" ' + click + '>' + d + '</div>';
   }
@@ -793,9 +907,32 @@ function renderAusCalendar(wid) {
   var rem   = total % 7;
   if (rem > 0) for (var f = rem; f < 7; f++) cells += '<div class="aus-cell aus-empty"></div>';
 
-  var monthAus = aus.filter(function (s) {
-    return s.startsWith(year + '-' + pad(month + 1));
-  }).length;
+  // Contar ausencias del mes (estado efectivo tras pendientes).
+  var monthStr = year + '-' + pad(month + 1);
+  var monthSaved   = (getWorkerAusList(wid) || []).filter(function (s) { return s.indexOf(monthStr) === 0; });
+  var monthPending = _ausPending[String(wid)] || {};
+  var monthEffective = monthSaved.slice();
+  Object.keys(monthPending).forEach(function (date) {
+    if (date.indexOf(monthStr) !== 0) return;
+    if (monthPending[date] === 'add' && monthEffective.indexOf(date) === -1) monthEffective.push(date);
+    if (monthPending[date] === 'remove') {
+      var i = monthEffective.indexOf(date);
+      if (i > -1) monthEffective.splice(i, 1);
+    }
+  });
+  var monthAus = monthEffective.length;
+
+  // Barra de acciones — solo aparece si hay cambios pendientes.
+  var pendN = pendingCount(wid);
+  var actionsBar = pendN > 0
+    ? '<div class="aus-actions">' +
+        '<div class="aus-pending-info">' + pendN + ' cambio' + (pendN > 1 ? 's' : '') + ' sin guardar</div>' +
+        '<div class="aus-actions-btns">' +
+          '<button class="btn-sm" id="aus-discard-' + wid + '" onclick="discardAusencias(\'' + wid + '\')">Descartar</button>' +
+          '<button class="btn-save" id="aus-save-' + wid + '" onclick="saveAusencias(\'' + wid + '\')">Guardar (' + pendN + ')</button>' +
+        '</div>' +
+      '</div>'
+    : '';
 
   el.innerHTML =
     '<div class="aus-header">' +
@@ -812,13 +949,15 @@ function renderAusCalendar(wid) {
     '<div class="aus-legend">' +
       '<span class="aus-leg"><span class="aus-dot aus-dot-work"></span>Trabaja</span>' +
       '<span class="aus-leg"><span class="aus-dot aus-dot-absent"></span>Ausente / vacaciones</span>' +
+      '<span class="aus-leg"><span class="aus-dot aus-dot-pending"></span>Cambio sin guardar</span>' +
       '<span class="aus-leg"><span class="aus-dot aus-dot-nowork"></span>Libre habitual</span>' +
     '</div>' +
     '<div class="aus-grid-wrap">' +
       '<div class="aus-dow-row">' + dowRow + '</div>' +
       '<div class="aus-weeks">' + cells + '</div>' +
     '</div>' +
-    '<div class="aus-footer-note">Haz clic en un día de trabajo para marcarlo como ausente (vacaciones, baja, etc.). Su horario no cambia; ese día simplemente no aparece disponible para reservas.</div>';
+    actionsBar +
+    '<div class="aus-footer-note">Haz clic en los días para marcarlos/desmarcarlos como ausencia. Los cambios aparecen rayados hasta que pulses <strong>Guardar</strong>.</div>';
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -999,8 +1138,7 @@ function saveSvc() {
     nombre:           nombre,
     duracion_display: display,
     duracion_min:     durMin,
-    precio:           precio || null,
-    token:            _token
+    precio:           precio || null
   };
   if (_editingSvcId !== null) body.id = _editingSvcId;
 
@@ -1010,7 +1148,7 @@ function saveSvc() {
 
   fetch('/api/servicios', {
     method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders({ json: true }),
     body:    JSON.stringify(body)
   })
     .then(function (r) { return r.json(); })
@@ -1039,7 +1177,7 @@ function saveSvc() {
 function deleteSvc(id, nombre) {
   if (!confirm('¿Eliminar el servicio "' + nombre + '"?')) return;
 
-  fetch('/api/servicios?id=' + id + '&token=' + enc(_token), { method: 'DELETE' })
+  fetch('/api/servicios?id=' + id, { method: 'DELETE', headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) {
       if (!d.ok) throw new Error(d.error || 'Error desconocido');

@@ -239,6 +239,51 @@ body {
 .aus-cell.aus-absent:hover { background:#fde68a; }
 .aus-cell.aus-today  { outline:2px solid #111; outline-offset:1px; }
 
+/* ── Cambios pendientes (sin guardar todavía) ──────────────
+   Mantenemos el color base del estado al que va a ir el día
+   (verde si pasa a trabajar, ámbar si pasa a ausente) pero le
+   añadimos un patrón rayado para que se vea que aún no es real. */
+.aus-cell.aus-pending {
+  background-image: repeating-linear-gradient(
+    45deg, transparent 0 4px, rgba(37,99,235,.18) 4px 6px
+  );
+  outline: 1px dashed #2563eb;
+  outline-offset: -2px;
+  position: relative;
+}
+.aus-cell.aus-pending::after {
+  content: '';
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 5px; height: 5px;
+  background: #2563eb;
+  border-radius: 50%;
+}
+
+.aus-dot-pending { background:#fff; border:1px dashed #2563eb; }
+
+/* ── Barra de acciones (aparece solo si hay cambios pendientes) ── */
+.aus-actions {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px;
+  padding:10px 14px; margin-top:14px; flex-wrap:wrap;
+}
+.aus-pending-info {
+  font-size:13px; color:#1d4ed8; font-weight:500;
+}
+.aus-actions-btns { display:flex; gap:8px; }
+.aus-actions-btns .btn-sm {
+  background:#fff; color:#1d4ed8; border:1px solid #bfdbfe;
+}
+.aus-actions-btns .btn-sm:hover:not(:disabled) { background:#dbeafe; }
+.aus-actions-btns .btn-save {
+  background:#2563eb; color:#fff; border:none;
+  font-weight:600; padding:7px 16px; border-radius:6px; font-size:13px;
+  cursor:pointer;
+}
+.aus-actions-btns .btn-save:hover:not(:disabled) { background:#1d4ed8; }
+.aus-actions-btns button:disabled { opacity:.6; cursor:wait; }
+
 .aus-footer-note { font-size:11px; color:#a1a1aa; margin-top:12px; line-height:1.6; max-width:440px; }
 
 /* ── Servicios tab ───────────────────────────────────────── */

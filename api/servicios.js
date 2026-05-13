@@ -13,6 +13,7 @@
 //          al nombre del servicio (texto) así que no se pierde nada.
 
 const { createClient } = require('@supabase/supabase-js');
+const { requireAdmin, setCors } = require('./_lib');
 
 function sb() {
   return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -20,11 +21,10 @@ function sb() {
 
 module.exports = async function handler(req, res) {
   try {
-    // CORS — el GET es público (lo lee el widget de cualquier dominio del cliente);
-    // el POST/DELETE va con token y debería restringirse a sitalia.es a futuro.
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // CORS condicional: el GET es público (lo consume el widget desde el
+    // dominio del cliente); el POST/DELETE solo desde sitalia.es.
+    var mode = (req.method === 'GET' || req.method === 'OPTIONS') ? 'public' : 'admin';
+    setCors(res, req, { mode: mode, methods: 'GET, POST, DELETE, OPTIONS' });
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     // ── GET: listar servicios ─────────────────────────────────────────────
@@ -45,11 +45,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ servicios: data || [] });
     }
 
-    // ── Resto de métodos requieren token ──────────────────────────────────
-    const token = req.query.token || (req.body && req.body.token);
-    if (!token || token !== process.env.ADMIN_TOKEN) {
-      return res.status(401).json({ error: 'No autorizado' });
-    }
+    // ── Resto de métodos requieren token (Authorization: Bearer XXX) ──────
+    if (!requireAdmin(req, res)) return;
 
     // ── POST: crear o actualizar ──────────────────────────────────────────
     if (req.method === 'POST') {

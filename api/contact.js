@@ -5,11 +5,10 @@
 
 const { createClient } = require('@supabase/supabase-js');
 const { Resend }       = require('resend');
+const { esc, setCors } = require('./_lib');
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(res, req, { mode: 'public', methods: 'POST, OPTIONS' });
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') {
@@ -21,6 +20,16 @@ module.exports = async function handler(req, res) {
   if (!nombre || !apellido || !email || !tipo_negocio) {
     return res.status(400).json({ error: 'Faltan campos requeridos' });
   }
+
+  // ── Versiones escapadas para inyectar con seguridad en el HTML del email.
+  //    El formulario es público, lo rellenan también bots — sin escape, un
+  //    mensaje con <script>...</script> llegaría interpretado al inbox del dueño.
+  const sNombre   = esc(nombre);
+  const sApellido = esc(apellido);
+  const sEmail    = esc(email);
+  const sTelefono = esc(telefono);
+  const sTipo     = esc(tipo_negocio);
+  const sMensaje  = esc(mensaje);
 
   // ── 1. Guardar en Supabase ──────────────────────────────────────────────
   try {
@@ -56,19 +65,19 @@ module.exports = async function handler(req, res) {
           <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
           <table style="width:100%;border-collapse:collapse">
             <tr><td style="padding:8px 0;color:#6b7280;font-size:13px;width:130px">Nombre</td>
-                <td style="padding:8px 0;font-weight:600">${nombre} ${apellido}</td></tr>
+                <td style="padding:8px 0;font-weight:600">${sNombre} ${sApellido}</td></tr>
             <tr><td style="padding:8px 0;color:#6b7280;font-size:13px">Email</td>
-                <td style="padding:8px 0;font-weight:600"><a href="mailto:${email}" style="color:#2563eb">${email}</a></td></tr>
+                <td style="padding:8px 0;font-weight:600"><a href="mailto:${sEmail}" style="color:#2563eb">${sEmail}</a></td></tr>
             ${telefono ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:13px">Teléfono</td>
-                <td style="padding:8px 0;font-weight:600">${telefono}</td></tr>` : ''}
+                <td style="padding:8px 0;font-weight:600">${sTelefono}</td></tr>` : ''}
             <tr><td style="padding:8px 0;color:#6b7280;font-size:13px">Sector</td>
-                <td style="padding:8px 0;font-weight:600">${tipo_negocio}</td></tr>
+                <td style="padding:8px 0;font-weight:600">${sTipo}</td></tr>
             ${mensaje ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:13px;vertical-align:top">Mensaje</td>
-                <td style="padding:8px 0">${mensaje}</td></tr>` : ''}
+                <td style="padding:8px 0">${sMensaje}</td></tr>` : ''}
           </table>
           <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
-          <a href="mailto:${email}" style="display:inline-block;background:#2563eb;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:500">
-            Responder a ${nombre}
+          <a href="mailto:${sEmail}" style="display:inline-block;background:#2563eb;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:500">
+            Responder a ${sNombre}
           </a>
           <p style="font-size:12px;color:#9ca3af;margin-top:16px">Recibido desde sitalia.es</p>
         </div>
@@ -100,7 +109,7 @@ module.exports = async function handler(req, res) {
           </div>
 
           <div style="background:#fff;padding:32px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px">
-            <p style="font-size:16px;margin-top:0">Hola <strong>${nombre}</strong>,</p>
+            <p style="font-size:16px;margin-top:0">Hola <strong>${sNombre}</strong>,</p>
             <p style="color:#374151;line-height:1.6">
               Hemos recibido tu mensaje y nos pondremos en contacto contigo en las próximas <strong>24 horas</strong>.
             </p>
@@ -110,8 +119,8 @@ module.exports = async function handler(req, res) {
 
             <div style="background:#f9fafb;border-radius:8px;padding:20px;margin:24px 0">
               <p style="margin:0 0 8px;font-size:13px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Tu solicitud</p>
-              <p style="margin:0;color:#111"><strong>Sector:</strong> ${tipo_negocio}</p>
-              ${mensaje ? `<p style="margin:8px 0 0;color:#111"><strong>Mensaje:</strong> ${mensaje}</p>` : ''}
+              <p style="margin:0;color:#111"><strong>Sector:</strong> ${sTipo}</p>
+              ${mensaje ? `<p style="margin:8px 0 0;color:#111"><strong>Mensaje:</strong> ${sMensaje}</p>` : ''}
             </div>
 
             <a href="https://sitalia.es" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:24px">

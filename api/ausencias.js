@@ -13,6 +13,7 @@
 //        accion = 'toggle' (default) → si existe la quita, si no la añade
 
 const { createClient } = require('@supabase/supabase-js');
+const { requireAdmin, setCors } = require('./_lib');
 
 function sb() {
   return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -20,9 +21,9 @@ function sb() {
 
 module.exports = async function handler(req, res) {
   try {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // CORS condicional: GET es público (widget); POST solo desde sitalia.es.
+    var mode = (req.method === 'GET' || req.method === 'OPTIONS') ? 'public' : 'admin';
+    setCors(res, req, { mode: mode, methods: 'GET, POST, OPTIONS' });
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     // ── GET: listar ausencias del negocio ─────────────────────────────────
@@ -51,10 +52,8 @@ module.exports = async function handler(req, res) {
 
     // ── POST: añadir/quitar/toggle ausencia ───────────────────────────────
     if (req.method === 'POST') {
-      const token = req.body && req.body.token;
-      if (!token || token !== process.env.ADMIN_TOKEN) {
-        return res.status(401).json({ error: 'No autorizado' });
-      }
+      // Token vía header Authorization (con fallback legado a body.token).
+      if (!requireAdmin(req, res)) return;
 
       const { negocio, trabajador_id, fecha } = req.body || {};
       const accion = (req.body && req.body.accion) || 'toggle';
