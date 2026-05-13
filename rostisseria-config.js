@@ -1,16 +1,13 @@
 /* ============================================================
-   SITALIA — rostisseria-config.js   (v2 — carrito + 4 pasos)
+   SITALIA — rostisseria-config.js   (v3 — catálogo visual + modal)
 
-   El flujo:
-   - Paso 1 (custom): catálogo con stepper +/- por producto → mini-carrito
-   - Paso 2-3-4: día / hora / confirmar (widget estándar de shared.js)
-   - En el paso 4 inyectamos el desglose del pedido
-
-   Truco técnico: el widget de shared.js trabaja con UN "servicio"
-   seleccionado por reserva. Cuando el carrito cambia, generamos un
-   "pseudo-servicio" virtual con el resumen del carrito (nombre
-   concatenado, precio total, duración máxima) y se lo pasamos al
-   widget. shared.js no necesita saber que es un carrito real.
+   Flujo:
+   - Catálogo visual en el cuerpo de la página, agrupado por
+     categorías (tabs). Cada producto tiene imagen, nombre y
+     precio con botón "+ Añadir" / stepper.
+   - Cuando hay items en el carrito, aparece un FAB flotante.
+   - Al pulsar FAB → modal con widget de 4 pasos.
+   - Paso 1 (carrito) → 2 (día) → 3 (hora) → 4 (confirmar).
    ============================================================ */
 
 (function () {
@@ -20,16 +17,21 @@
 
   /* Catálogo por defecto (fallback si la API no devuelve nada) */
   var defaultProducts = [
-    { id: 'pol-ent', n: 'Pollo a l\'ast entero',     d: 30, p: '14.50', display: 'Listo en 30 min' },
-    { id: 'pol-med', n: 'Medio pollo a l\'ast',      d: 25, p: '8.00',  display: 'Listo en 25 min' },
-    { id: 'pol-cua', n: 'Cuarto de pollo',           d: 20, p: '5.50',  display: 'Listo en 20 min' },
-    { id: 'pol-fam', n: 'Pack familiar',             d: 30, p: '22.00', display: 'Pollo + 2 patatas + ensalada', pop: true },
-    { id: 'car-cos', n: 'Costilla de cerdo adobada', d: 25, p: '9.00' },
-    { id: 'car-but', n: 'Butifarra a la brasa',      d: 15, p: '6.00', display: '2 unidades' }
+    { id: 'd1', n: 'Pollo a l\'ast entero',     d: 30, p: '14.50', display: 'Listo en 30 min',                              categoria: 'Pollos' },
+    { id: 'd2', n: 'Medio pollo a l\'ast',      d: 25, p: '8.00',  display: 'Listo en 25 min',                              categoria: 'Pollos' },
+    { id: 'd3', n: 'Cuarto de pollo',           d: 20, p: '5.50',  display: 'Listo en 20 min',                              categoria: 'Pollos' },
+    { id: 'd4', n: 'Pack familiar',             d: 30, p: '22.00', display: 'Pollo + 2 patatas + ensalada',  pop: true,    categoria: 'Pollos' },
+    { id: 'd5', n: 'Costilla de cerdo adobada', d: 25, p: '9.00',  display: 'Asada lentamente',                             categoria: 'Carnes' },
+    { id: 'd6', n: 'Butifarra a la brasa',      d: 15, p: '6.00',  display: '2 unidades',                                   categoria: 'Carnes' },
+    { id: 'd7', n: 'Patatas asadas',            d: 10, p: '4.50',  display: 'Asadas con jugos del pollo',                   categoria: 'Guarniciones' },
+    { id: 'd8', n: 'Ensalada de la casa',       d: 10, p: '4.50',  display: 'Lechuga, tomate, atún, olivas',                categoria: 'Guarniciones' },
+    { id: 'd9', n: 'Crema catalana',            d: 5,  p: '4.00',  display: 'Receta tradicional',                           categoria: 'Postres' },
+    { id: 'd10', n: 'Vino tinto Penedès',       d: 5,  p: '8.00',  display: 'Botella 75cl',                                 categoria: 'Bebidas' }
   ];
 
   var allProducts = [];
-  var cart = {};   // { id: { product, qty } }
+  var cart = {};      // { id: { product, qty } }
+  var activeCat = ''; // categoría activa (vacío = todas)
 
   /* ── Carga inicial ──────────────────────────────────── */
   Promise.all([
@@ -46,12 +48,14 @@
     if (svcsApi.length > 0) {
       allProducts = svcsApi.map(function (s) {
         return {
-          id:      'p' + s.id,
-          n:       s.nombre,
-          d:       s.duracion_min,
-          display: s.duracion_display,
-          p:       (s.precio !== null && s.precio !== undefined) ? String(s.precio) : '0',
-          pop:     !!s.pop
+          id:         'p' + s.id,
+          n:          s.nombre,
+          d:          s.duracion_min,
+          display:    s.duracion_display,
+          p:          (s.precio !== null && s.precio !== undefined) ? String(s.precio) : '0',
+          pop:        !!s.pop,
+          imagen_url: s.imagen_url || null,
+          categoria:  s.categoria  || 'Otros'
         };
       });
     } else {
@@ -64,73 +68,103 @@
     });
     var absentDates = Object.keys(dateMap).length > 0 ? dateMap : null;
 
-    /* Iniciar el widget con svcs vacíos.
-       Cuando el carrito tenga items, le pasaremos un pseudo-servicio. */
+    /* Inicializar widget con svcs vacíos (los pondremos según el carrito) */
     Sitalia.loadScheduleAndInit({
-      negocio:      NEGOCIO,
+      negocio: NEGOCIO,
       preselectSvc: null,
       sched: [
         null,           // Lunes — cerrado
-        [690, 930],     // Martes  11:30–15:30
-        [690, 930],     // Miércoles
-        [690, 930],     // Jueves
-        [690, 930],     // Viernes
-        [690, 930],     // Sábado
-        [690, 930]      // Domingo
+        [690, 930],     // Mar  11:30–15:30
+        [690, 930],     // Mié
+        [690, 930],     // Jue
+        [690, 930],     // Vie
+        [690, 930],     // Sáb
+        [690, 930]      // Dom
       ],
       svcs: [],
       absentDates: absentDates,
       phone: '34936661234'
     });
 
+    renderTabs();
     renderProducts();
     setupPaso4Hook();
   });
 
-  /* ── Renderizado del catálogo (paso 1) ──────────────── */
+  /* ── Tabs de categorías ─────────────────────────────── */
+  function renderTabs() {
+    var tabsEl = document.getElementById('rost-cat-tabs');
+    if (!tabsEl) return;
+    var cats = [];
+    allProducts.forEach(function (p) {
+      if (cats.indexOf(p.categoria) === -1) cats.push(p.categoria);
+    });
+    if (cats.length <= 1) { tabsEl.hidden = true; return; }
+
+    var html = '<button class="rost-cat-tab' + (activeCat === '' ? ' active' : '') + '" type="button" data-cat="">Todo</button>';
+    html += cats.map(function (c) {
+      return '<button class="rost-cat-tab' + (activeCat === c ? ' active' : '') + '" type="button" data-cat="' + c + '">' + c + '</button>';
+    }).join('');
+    tabsEl.innerHTML = html;
+
+    tabsEl.querySelectorAll('.rost-cat-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        activeCat = btn.getAttribute('data-cat');
+        renderTabs();
+        renderProducts();
+      });
+    });
+  }
+
+  /* ── Grid visual de productos ───────────────────────── */
   function renderProducts() {
-    var wrap = document.getElementById('rost-products');
-    if (!wrap) return;
+    var grid = document.getElementById('rost-product-grid');
+    if (!grid) return;
+    var prods = activeCat === ''
+      ? allProducts
+      : allProducts.filter(function (p) { return p.categoria === activeCat; });
 
-    wrap.innerHTML = allProducts.map(function (p) {
+    grid.innerHTML = prods.map(function (p) {
       var qty = (cart[p.id] || {}).qty || 0;
-      var stepperHtml = qty > 0
-        ? '<div class="rost-stepper">' +
-            '<button type="button" aria-label="Quitar uno" onclick="window.RostCart.dec(\'' + p.id + '\')">−</button>' +
-            '<span class="rost-stepper-qty">' + qty + '</span>' +
-            '<button type="button" aria-label="Añadir uno" onclick="window.RostCart.inc(\'' + p.id + '\')">+</button>' +
-          '</div>'
-        : '<button class="rost-add" type="button" onclick="window.RostCart.inc(\'' + p.id + '\')">+ Añadir</button>';
+      var imgHtml = p.imagen_url
+        ? '<div class="rost-card-img"><img src="' + p.imagen_url + '" alt="' + p.n + '" loading="lazy"></div>'
+        : '<div class="rost-card-img rost-card-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><polyline points="3 17 8 12 14 18"/></svg></div>';
 
-      return (
-        '<div class="rost-product' + (qty > 0 ? ' in-cart' : '') + (p.pop ? ' popular' : '') + '">' +
-          '<div class="rost-product-info">' +
-            '<div class="rost-product-name">' + p.n + (p.pop ? ' <span class="rost-pop">Popular</span>' : '') + '</div>' +
-            (p.display ? '<div class="rost-product-sub">' + p.display + '</div>' : '') +
+      var actionHtml = qty > 0
+        ? '<div class="rost-card-stepper">' +
+            '<button type="button" onclick="window.RostCart.dec(\'' + p.id + '\')" aria-label="Quitar uno">−</button>' +
+            '<span class="rost-card-stepper-qty">' + qty + '</span>' +
+            '<button type="button" onclick="window.RostCart.inc(\'' + p.id + '\')" aria-label="Añadir uno">+</button>' +
+          '</div>'
+        : '<button class="rost-card-add" type="button" onclick="window.RostCart.inc(\'' + p.id + '\')">+ Añadir</button>';
+
+      return '<div class="rost-card' + (qty > 0 ? ' in-cart' : '') + (p.pop ? ' popular' : '') + '">' +
+          imgHtml +
+          '<div class="rost-card-body">' +
+            (p.pop ? '<span class="rost-card-pop">Popular</span>' : '') +
+            '<div class="rost-card-name">' + p.n + '</div>' +
+            (p.display ? '<div class="rost-card-desc">' + p.display + '</div>' : '') +
+            '<div class="rost-card-bottom">' +
+              '<span class="rost-card-price">' + formatPrice(p.p) + '</span>' +
+              actionHtml +
+            '</div>' +
           '</div>' +
-          '<div class="rost-product-right">' +
-            '<div class="rost-product-price">' + formatPrice(p.p) + '</div>' +
-            stepperHtml +
-          '</div>' +
-        '</div>'
-      );
+        '</div>';
     }).join('');
   }
 
-  /* ── Renderizado del mini-carrito en el paso 1 ──────── */
+  /* ── Mini-carrito (dentro del modal) ─────────────────── */
   function renderCart() {
-    var cartEl  = document.getElementById('rost-cart');
     var listEl  = document.getElementById('rost-cart-list');
     var totalEl = document.getElementById('rost-cart-total');
-    if (!cartEl || !listEl || !totalEl) return;
+    if (!listEl || !totalEl) return;
 
     var ids = Object.keys(cart);
     if (ids.length === 0) {
-      cartEl.hidden = true;
+      listEl.innerHTML = '<div class="rost-cart-empty">El pedido está vacío. Añade productos desde la carta.</div>';
+      totalEl.textContent = '0,00€';
       return;
     }
-    cartEl.hidden = false;
-
     listEl.innerHTML = ids.map(function (id) {
       var item = cart[id];
       var subtotal = parseFloat(item.product.p) * item.qty;
@@ -138,10 +172,13 @@
         '<span class="rost-cart-name">' + item.product.n +
           ' <span class="rost-cart-qty">× ' + item.qty + '</span>' +
         '</span>' +
+        '<div class="rost-cart-mini-stepper">' +
+          '<button type="button" onclick="window.RostCart.dec(\'' + id + '\')">−</button>' +
+          '<button type="button" onclick="window.RostCart.inc(\'' + id + '\')">+</button>' +
+        '</div>' +
         '<span class="rost-cart-amt">' + formatPrice(subtotal) + '</span>' +
       '</div>';
     }).join('');
-
     totalEl.textContent = formatPrice(totalCart());
   }
 
@@ -152,11 +189,27 @@
     });
     return t;
   }
+  function countCart() {
+    var n = 0;
+    Object.keys(cart).forEach(function (id) { n += cart[id].qty; });
+    return n;
+  }
 
-  /* ── Sincronizar el carrito con el widget de shared.js ─
-     Genera un pseudo-servicio con el resumen del pedido y lo
-     mete en bkConfig.svcs. shared.js cree que hay UN servicio
-     seleccionado y trabaja con él para los siguientes pasos. */
+  /* ── FAB flotante ───────────────────────────────────── */
+  function updateFab() {
+    var fab = document.getElementById('rost-fab');
+    if (!fab) return;
+    var count = countCart();
+    if (count === 0) {
+      fab.classList.remove('visible');
+      return;
+    }
+    fab.classList.add('visible');
+    document.getElementById('rost-fab-count').textContent = count;
+    document.getElementById('rost-fab-total').textContent = formatPrice(totalCart());
+  }
+
+  /* ── Pseudo-servicio para el widget ─────────────────── */
   function updatePseudoSvc() {
     var ids = Object.keys(cart);
     var btn = document.getElementById('bkbtn1');
@@ -185,32 +238,34 @@
       p:       total.toFixed(2),
       pop:     false
     };
-
     Sitalia.setBkConfig({ svcs: [pseudo] });
-    Sitalia.getBkState().svc = 0;   // forzamos selección del pseudo
+    Sitalia.getBkState().svc = 0;
     btn.disabled = false;
   }
 
-  /* ── API expuesta para los onclick del HTML ─────────── */
+  /* ── API expuesta para los onclick ───────────────────── */
   window.RostCart = {
     inc: function (id) {
       var p = findProduct(id);
       if (!p) return;
       cart[id] = cart[id] || { product: p, qty: 0 };
       cart[id].qty++;
-      renderProducts();
-      renderCart();
-      updatePseudoSvc();
+      onCartChange();
     },
     dec: function (id) {
       if (!cart[id]) return;
       cart[id].qty--;
       if (cart[id].qty <= 0) delete cart[id];
-      renderProducts();
-      renderCart();
-      updatePseudoSvc();
+      onCartChange();
     }
   };
+
+  function onCartChange() {
+    renderProducts();   // refresca botones/steppers en el catálogo
+    renderCart();       // refresca lista en el modal
+    updateFab();        // FAB visible/oculto
+    updatePseudoSvc();  // pasa al widget
+  }
 
   function findProduct(id) {
     for (var i = 0; i < allProducts.length; i++) {
@@ -225,7 +280,36 @@
     return n.toFixed(2).replace('.', ',') + '€';
   }
 
-  /* ── Hook del paso 4: mostrar desglose bonito ───────── */
+  /* ── Modal de reserva ────────────────────────────────── */
+  window.abrirReserva = function () {
+    var modal = document.getElementById('rost-modal');
+    if (!modal) return;
+    renderCart();
+    Sitalia.bkTo(1);
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.cerrarReserva = function () {
+    var modal = document.getElementById('rost-modal');
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  };
+
+  /* Cerrar con ESC */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var modal = document.getElementById('rost-modal');
+      if (modal && !modal.hidden) cerrarReserva();
+    }
+  });
+  /* Cerrar al hacer click en el overlay (no en el contenido) */
+  document.addEventListener('click', function (e) {
+    if (e.target.id === 'rost-modal') cerrarReserva();
+  });
+
+  /* ── Hook del paso 4 para mostrar desglose bonito ───── */
   function setupPaso4Hook() {
     var origBkTo = Sitalia.bkTo;
     Sitalia.bkTo = function (n) {

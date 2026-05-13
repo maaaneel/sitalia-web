@@ -289,7 +289,10 @@ body {
 /* ── Servicios tab ───────────────────────────────────────── */
 .svc-intro     { font-size:13px; color:#71717a; margin-bottom:20px; max-width:600px; line-height:1.6; }
 
-.svc-card      { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:16px 20px; margin-bottom:10px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.svc-card      { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:14px 18px; margin-bottom:10px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.svc-thumb     { width:60px; height:60px; border-radius:8px; overflow:hidden; background:#f4f4f5; flex-shrink:0; border:1px solid #e4e4e7; }
+.svc-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.svc-pill-cat  { background:#f3e8ff; color:#6b21a8; }
 .svc-info      { flex:1; min-width:160px; }
 .svc-name      { font-size:15px; font-weight:600; margin-bottom:7px; }
 .svc-pills     { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; }

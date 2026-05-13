@@ -347,7 +347,78 @@
 [data-theme="luxury"] .dif-stat-num { color: var(--accent); }
 [data-theme="luxury"] .dif-stat-label { color: var(--text-muted); }
 
-/* Catálogo y carrito del widget de rostisseria */
+/* Catálogo visual full-width (cards con imagen) */
+[data-theme="luxury"] .rost-cat-tab {
+  background: rgba(255,255,255,0.04); color: var(--text-muted);
+  border-color: var(--border);
+}
+[data-theme="luxury"] .rost-cat-tab:hover { color: #fff; border-color: var(--accent); }
+[data-theme="luxury"] .rost-cat-tab.active {
+  background: var(--accent); color: #0a0a0a; border-color: var(--accent);
+}
+[data-theme="luxury"] .rost-cat-help { color: var(--text-soft); }
+
+[data-theme="luxury"] .rost-card {
+  background: var(--bg-card); border-color: var(--border);
+}
+[data-theme="luxury"] .rost-card:hover {
+  border-color: var(--accent); box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+[data-theme="luxury"] .rost-card.in-cart { border-color: var(--accent); }
+[data-theme="luxury"] .rost-card-img { background: rgba(255,255,255,0.04); }
+[data-theme="luxury"] .rost-card-pop { background: var(--accent); color: #0a0a0a; }
+[data-theme="luxury"] .rost-card-name { color: #fff; }
+[data-theme="luxury"] .rost-card-desc { color: var(--text-muted); }
+[data-theme="luxury"] .rost-card-bottom { border-top-color: var(--border); }
+[data-theme="luxury"] .rost-card-price { color: var(--accent); }
+[data-theme="luxury"] .rost-card-add {
+  background: var(--accent); color: #0a0a0a;
+}
+[data-theme="luxury"] .rost-card-add:hover { background: #d4b682; }
+[data-theme="luxury"] .rost-card-stepper {
+  border-color: var(--accent);
+}
+[data-theme="luxury"] .rost-card-stepper button {
+  background: transparent; color: var(--accent);
+}
+[data-theme="luxury"] .rost-card-stepper button:hover { background: rgba(201,168,110,0.1); }
+[data-theme="luxury"] .rost-card-stepper-qty { color: #fff; }
+
+/* FAB y modal */
+[data-theme="luxury"] .rost-fab {
+  background: var(--accent); color: #0a0a0a;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+[data-theme="luxury"] .rost-fab:hover { background: #d4b682; }
+[data-theme="luxury"] .rost-fab-count {
+  background: rgba(10,10,10,0.2); color: #0a0a0a;
+}
+
+[data-theme="luxury"] .rost-modal {
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+[data-theme="luxury"] .rost-modal-title { color: #fff; }
+[data-theme="luxury"] .rost-modal-close { color: var(--text-soft); }
+[data-theme="luxury"] .rost-modal-close:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+/* Mini carrito dentro del modal */
+[data-theme="luxury"] .rost-cart { background: rgba(255,255,255,0.04); }
+[data-theme="luxury"] .rost-cart-name { color: #fff; }
+[data-theme="luxury"] .rost-cart-amt { color: var(--accent); }
+[data-theme="luxury"] .rost-cart-total-amt { color: var(--accent); }
+[data-theme="luxury"] .rost-cart-empty { color: var(--text-soft); }
+[data-theme="luxury"] .rost-cart-mini-stepper { border-color: var(--border); }
+[data-theme="luxury"] .rost-cart-mini-stepper button { background: transparent; color: var(--accent); }
+[data-theme="luxury"] .rost-cart-mini-stepper button:hover { background: rgba(201,168,110,0.1); }
+
+/* Desglose paso 4 */
+[data-theme="luxury"] .rost-confirm-item { border-bottom-color: var(--border); }
+[data-theme="luxury"] .rost-confirm-name { color: #fff; }
+[data-theme="luxury"] .rost-confirm-sub { color: var(--accent); }
+[data-theme="luxury"] .rost-confirm-total { border-top-color: var(--accent); }
+[data-theme="luxury"] .rost-confirm-total-amt { color: var(--accent); }
+
+/* Carta de la rostisseria (visual, sin botones) */
 [data-theme="luxury"] .rost-product {
   background: rgba(255,255,255,0.03);
 }

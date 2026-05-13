@@ -1020,9 +1020,13 @@ function renderSvcsList() {
     var sameTime = (s.duracion_display === s.duracion_min + ' min') || !s.duracion_display;
     var displayLabel = s.duracion_display || (s.duracion_min + ' min');
     return '<div class="svc-card" id="scard-' + s.id + '">' +
+      (s.imagen_url
+        ? '<div class="svc-thumb"><img src="' + s.imagen_url + '" alt="" loading="lazy"></div>'
+        : '') +
       '<div class="svc-info">' +
         '<div class="svc-name">' + s.nombre + '</div>' +
         '<div class="svc-pills">' +
+          (s.categoria ? '<span class="svc-pill svc-pill-cat">' + s.categoria + '</span>' : '') +
           '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + displayLabel + '</span>' +
           (!sameTime
             ? '<span class="svc-pill svc-pill-agenda" title="Tiempo que ocupa en la agenda del trabajador">' + s.duracion_min + ' min agenda</span>'
@@ -1077,6 +1081,34 @@ function showSvcForm(svc) {
         '</div>' +
       '</div>' +
       '<div class="svc-example" id="sv-example"></div>' +
+
+      '<div class="form-row" style="margin-top:8px">' +
+        '<div class="form-group" style="flex:1">' +
+          '<label class="form-label">Categoría <span style="font-weight:400;color:#9ca3af">(opcional)</span></label>' +
+          '<input type="text" id="sv-categoria" class="form-input" list="sv-cat-list" ' +
+            'placeholder="Pollos · Carnes · Guarniciones · Postres · Bebidas" ' +
+            'value="' + (svc && svc.categoria ? svc.categoria : '') + '" style="width:100%">' +
+          '<datalist id="sv-cat-list">' +
+            '<option value="Pollos">' +
+            '<option value="Carnes">' +
+            '<option value="Guarniciones">' +
+            '<option value="Postres">' +
+            '<option value="Bebidas">' +
+            '<option value="Otros">' +
+          '</datalist>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="form-row">' +
+        '<div class="form-group" style="flex:1">' +
+          '<label class="form-label">URL de imagen <span style="font-weight:400;color:#9ca3af">(opcional)</span></label>' +
+          '<input type="url" id="sv-imagen" class="form-input" ' +
+            'placeholder="https://… (enlace a la foto del producto)" ' +
+            'value="' + (svc && svc.imagen_url ? svc.imagen_url : '') + '" style="width:100%">' +
+          '<div class="svc-dur-hint">Pega aquí la URL pública de una foto del producto. Aparecerá en la carta del cliente.</div>' +
+        '</div>' +
+      '</div>' +
+
       '<div class="form-actions">' +
         '<button class="btn-save" onclick="saveSvc()">Guardar servicio</button>' +
         '<button class="btn-cancel-form" onclick="hideSvcForm()">Cancelar</button>' +
@@ -1133,12 +1165,17 @@ function saveSvc() {
   if (!display) { alert('La duración visible al cliente es obligatoria.'); return; }
   if (!durMin)  { alert('Los minutos en agenda son obligatorios (mínimo 5).'); return; }
 
+  var categoria = ((document.getElementById('sv-categoria') || {}).value || '').trim();
+  var imagenUrl = ((document.getElementById('sv-imagen')    || {}).value || '').trim();
+
   var body = {
     negocio:          NEGOCIO,
     nombre:           nombre,
     duracion_display: display,
     duracion_min:     durMin,
-    precio:           precio || null
+    precio:           precio || null,
+    categoria:        categoria || null,
+    imagen_url:       imagenUrl || null
   };
   if (_editingSvcId !== null) body.id = _editingSvcId;
 

@@ -1,160 +1,277 @@
 /* ============================================================
-   SITALIA — rostisseria.css
-   Estilos específicos del nicho rostisseria / pollo a l'ast.
+   SITALIA — rostisseria.css   (v3)
+   Estilos del catálogo visual + FAB + modal de reserva.
    El grueso del look viene de theme-nordic.css.
-
-   La rostisseria usa el booking widget estándar (igual que peluquería)
-   para reservar pedidos. Aquí solo definimos la "Carta" visual:
-   un listado de productos por categorías sin botones de añadir.
    ============================================================ */
 
-/* ── Carta — 3 columnas con secciones (Pollos, Carnes, Postres) ── */
-.carta-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 32px 48px;
-  margin-top: 56px;
+/* ═══════════════════════════════════════════════════════
+   HERO full-width (sin widget al lado)
+   ═══════════════════════════════════════════════════════ */
+.rost-hero {
+  padding: 140px 0 80px;
+  background: var(--bg);
 }
-@media (max-width: 880px) { .carta-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .carta-grid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .rost-hero { padding: 110px 0 60px; } }
 
-.carta-col {
-  display: flex; flex-direction: column;
+.rost-hero-inner {
+  max-width: 880px;
 }
-.carta-col-title {
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--text-soft); font-weight: 500;
-  margin-bottom: 16px;
-  padding-bottom: 12px; border-bottom: 1px solid var(--border);
-}
-
-.carta-item {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 10px 0; gap: 16px;
-}
-.carta-name { font-size: 15px; font-weight: 500; color: var(--text); }
-.carta-name .carta-tag {
-  display: inline-block; margin-left: 10px;
-  font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--text); border: 1px solid var(--text);
-  padding: 2px 6px; border-radius: 3px; font-weight: 600;
-  vertical-align: middle;
-}
-.carta-price {
-  font-size: 14px; font-weight: 600; color: var(--text);
-  flex-shrink: 0;
-}
-.carta-item.popular .carta-name { font-weight: 600; }
-
-.carta-item-desc {
-  margin: 6px 0 0;
-  font-size: 12px; color: var(--text-muted); line-height: 1.5;
-  font-style: italic;
-}
-
-.carta-note {
-  text-align: center;
-  margin: 48px auto 0; max-width: 540px;
-  font-size: 13px; color: var(--text-soft); line-height: 1.6;
+.rost-hero-inner .hero-info-row {
+  margin-top: 8px;
 }
 
 /* ═══════════════════════════════════════════════════════
-   CATÁLOGO + CARRITO dentro del widget de reservas (paso 1)
+   TABS de categorías
    ═══════════════════════════════════════════════════════ */
-
-.rost-products {
-  display: flex; flex-direction: column; gap: 6px;
-  max-height: 320px; overflow-y: auto;
-  margin-bottom: 12px;
-  padding-right: 2px;
+.rost-cat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 32px;
+}
+.rost-cat-tab {
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 9px 16px;
+  font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  border-radius: 100px;
+  cursor: pointer; font-family: inherit;
+  transition: all .15s;
+}
+.rost-cat-tab:hover { color: var(--text); border-color: var(--text); }
+.rost-cat-tab.active {
+  background: var(--text); color: #fff; border-color: var(--text);
 }
 
-.rost-product {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 12px;
+.rost-cat-help {
+  font-size: 13px; color: var(--text-muted);
+  max-width: 380px; line-height: 1.5;
+  text-align: right;
+}
+@media (max-width: 720px) { .rost-cat-help { text-align: left; } }
+
+/* ═══════════════════════════════════════════════════════
+   GRID de productos visuales (cards con imagen)
+   ═══════════════════════════════════════════════════════ */
+.rost-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 980px) { .rost-product-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .rost-product-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+.rost-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all .15s;
+}
+.rost-card:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+.rost-card.in-cart { border-color: var(--text); }
+.rost-card.popular { /* marca discreta */ }
+
+.rost-card-img {
+  width: 100%; aspect-ratio: 4/3;
   background: var(--bg-soft);
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  gap: 12px;
-  transition: all .12s;
+  overflow: hidden; position: relative;
 }
-.rost-product.in-cart {
-  background: #fff; border-color: var(--text);
+.rost-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.rost-card:hover .rost-card-img img { transform: scale(1.04); }
+
+.rost-card-img-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  color: #d4d4d4;
 }
-.rost-product-info { flex: 1; min-width: 0; }
-.rost-product-name {
-  font-size: 13px; font-weight: 500; color: var(--text);
-  line-height: 1.3;
+.rost-card-img-placeholder svg { width: 36px; height: 36px; }
+
+.rost-card-body {
+  padding: 18px 18px 16px;
+  display: flex; flex-direction: column;
+  flex: 1;
+  position: relative;
 }
-.rost-pop {
-  display: inline-block; margin-left: 6px;
-  font-size: 9px; letter-spacing: .1em;
-  color: var(--text); background: rgba(0,0,0,0.06);
-  padding: 1px 6px; border-radius: 3px; font-weight: 600;
-  vertical-align: middle;
-}
-.rost-product-sub {
-  font-size: 10px; color: var(--text-soft);
-  margin-top: 2px;
-}
-.rost-product-right {
-  display: flex; flex-direction: column; align-items: flex-end;
-  gap: 6px; flex-shrink: 0;
-}
-.rost-product-price {
-  font-size: 14px; font-weight: 600; color: var(--text);
-  white-space: nowrap;
-}
-.rost-add {
+.rost-card-pop {
+  position: absolute; top: -10px; right: 14px;
   background: var(--text); color: #fff;
-  border: none; padding: 5px 11px;
-  font-size: 11px; font-weight: 600; letter-spacing: .04em;
-  border-radius: var(--radius-sm);
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+  padding: 4px 10px; border-radius: 3px;
+}
+.rost-card-name {
+  font-size: 16px; font-weight: 500; color: var(--text);
+  letter-spacing: -.005em;
+  margin-bottom: 6px;
+}
+.rost-card-desc {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.5; margin-bottom: 14px;
+  flex: 1;
+}
+.rost-card-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+}
+.rost-card-price {
+  font-size: 17px; font-weight: 700; color: var(--text);
+}
+.rost-card-add {
+  background: var(--text); color: #fff;
+  border: none; padding: 8px 16px;
+  font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  border-radius: var(--radius-md);
   cursor: pointer; font-family: inherit;
   transition: background .15s;
 }
-.rost-add:hover { background: #2a2a2a; }
+.rost-card-add:hover { background: #2a2a2a; }
 
-.rost-stepper {
+.rost-card-stepper {
   display: inline-flex; align-items: center;
-  border: 1px solid var(--text);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--text); border-radius: var(--radius-md);
   overflow: hidden;
 }
-.rost-stepper button {
+.rost-card-stepper button {
   background: #fff; border: none; color: var(--text);
-  padding: 4px 9px;
-  font-size: 13px; font-weight: 600;
+  padding: 6px 12px;
+  font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit; line-height: 1;
 }
-.rost-stepper button:hover { background: var(--bg-soft); }
-.rost-stepper-qty {
-  min-width: 22px; text-align: center;
-  font-size: 11px; font-weight: 600;
-  padding: 0 4px; color: var(--text);
+.rost-card-stepper button:hover { background: var(--bg-soft); }
+.rost-card-stepper-qty {
+  min-width: 28px; text-align: center;
+  font-size: 13px; font-weight: 600; padding: 0 4px;
 }
 
-/* Mini carrito dentro del widget */
+/* ═══════════════════════════════════════════════════════
+   FAB del carrito (flotante abajo-derecha)
+   ═══════════════════════════════════════════════════════ */
+.rost-fab {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 200;
+  background: var(--text); color: #fff;
+  border: none; border-radius: 100px;
+  padding: 14px 22px 14px 18px;
+  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  font-family: inherit; cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  display: flex; align-items: center; gap: 12px;
+  transform: translateY(120px); opacity: 0;
+  transition: transform .25s ease, opacity .2s ease, background .15s;
+}
+.rost-fab.visible { transform: translateY(0); opacity: 1; }
+.rost-fab:hover { background: #2a2a2a; }
+.rost-fab-count {
+  background: rgba(255,255,255,.18); color: #fff;
+  border-radius: 100px; padding: 3px 9px;
+  font-size: 11px; font-weight: 700;
+  min-width: 22px; text-align: center;
+}
+.rost-fab-total { font-weight: 700; }
+.rost-fab-label { white-space: nowrap; }
+@media (max-width: 540px) {
+  .rost-fab {
+    left: 16px; right: 16px; bottom: 16px;
+    justify-content: center; padding: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MODAL de reserva
+   ═══════════════════════════════════════════════════════ */
+.rost-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 300;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+.rost-modal-overlay[hidden] { display: none; }
+
+.rost-modal {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  width: 100%; max-width: 480px;
+  padding: 28px 28px 22px;
+  position: relative;
+  animation: rost-modal-in .25s ease;
+}
+@keyframes rost-modal-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rost-modal-close {
+  position: absolute; top: 14px; right: 14px;
+  background: none; border: none;
+  width: 32px; height: 32px;
+  font-size: 18px; cursor: pointer;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+}
+.rost-modal-close:hover { background: var(--bg-soft); color: var(--text); }
+.rost-modal-title {
+  font-size: 18px; font-weight: 500; letter-spacing: -.01em;
+  color: var(--text); margin-bottom: 18px;
+}
+
+/* El widget dentro del modal: sin sticky, sin borde extra */
+.rost-modal-widget { position: static; box-shadow: none; }
+
+@media (max-width: 540px) {
+  .rost-modal-overlay { padding: 20px 12px; }
+  .rost-modal { padding: 22px 18px 18px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Carrito dentro del paso 1 del modal
+   ═══════════════════════════════════════════════════════ */
 .rost-cart {
   background: var(--bg-soft);
   border-radius: var(--radius-md);
-  padding: 12px 14px;
-  margin-bottom: 4px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
 }
 .rost-cart-list {
-  display: flex; flex-direction: column; gap: 5px;
-  margin-bottom: 8px;
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 10px;
 }
 .rost-cart-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 12px; color: var(--text);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
   gap: 10px;
+  font-size: 13px; color: var(--text);
 }
-.rost-cart-name { flex: 1; min-width: 0; line-height: 1.4; }
-.rost-cart-qty { color: var(--text-soft); font-size: 11px; margin-left: 2px; }
-.rost-cart-amt { font-weight: 600; flex-shrink: 0; }
+.rost-cart-name { line-height: 1.4; min-width: 0; }
+.rost-cart-qty { color: var(--text-soft); font-size: 11px; }
+.rost-cart-amt { font-weight: 600; min-width: 60px; text-align: right; }
+.rost-cart-mini-stepper {
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.rost-cart-mini-stepper button {
+  background: #fff; border: none; color: var(--text);
+  padding: 3px 9px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; line-height: 1;
+}
+.rost-cart-mini-stepper button:hover { background: var(--bg-soft); }
+.rost-cart-empty {
+  font-size: 13px; color: var(--text-soft); text-align: center;
+  padding: 12px 0;
+}
 .rost-cart-total-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
 }
 .rost-cart-total-lbl {
@@ -162,20 +279,19 @@
   color: var(--text-soft); font-weight: 500;
 }
 .rost-cart-total-amt {
-  font-size: 17px; font-weight: 700; color: var(--text);
+  font-size: 18px; font-weight: 700; color: var(--text);
 }
 
-/* ── Desglose en paso 4 (confirmar) ───────────────────── */
+/* ═══════════════════════════════════════════════════════
+   Desglose en paso 4 (confirmar)
+   ═══════════════════════════════════════════════════════ */
 .rost-confirm-section {
   font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
   color: var(--text-soft); font-weight: 500;
   margin: 14px 0 8px;
 }
 .rost-confirm-section:first-child { margin-top: 0; }
-.rost-confirm-list {
-  display: flex; flex-direction: column;
-  margin-bottom: 4px;
-}
+.rost-confirm-list { display: flex; flex-direction: column; margin-bottom: 4px; }
 .rost-confirm-item {
   display: flex; justify-content: space-between; align-items: baseline;
   font-size: 13px; padding: 6px 0;
@@ -190,8 +306,7 @@
   display: flex; justify-content: space-between; align-items: baseline;
   padding: 10px 0 6px;
   border-top: 2px solid var(--text);
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin: 4px 0;
 }
 .rost-confirm-total-lbl {
   font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
@@ -201,13 +316,14 @@
   font-size: 20px; font-weight: 700; color: var(--text);
 }
 
-/* ── Features (sección "Sobre Cal Pere") ───────────────── */
+/* ═══════════════════════════════════════════════════════
+   Features (sección "Sobre Cal Pere")
+   ═══════════════════════════════════════════════════════ */
 .feat-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 32px; margin-top: 56px;
 }
 @media (max-width: 720px) { .feat-grid { grid-template-columns: 1fr; gap: 24px; } }
-
 .feat-item { padding-top: 16px; border-top: 2px solid var(--text); }
 .feat-num {
   font-size: 11px; letter-spacing: .2em;

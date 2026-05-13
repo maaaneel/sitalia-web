@@ -163,6 +163,31 @@
 [data-theme="warm"] .menu-dia-card { background: var(--bg-soft); border-color: var(--border); }
 [data-theme="warm"] .menu-section-title { border-bottom-color: var(--border); }
 
+/* ── Catálogo visual + FAB + modal de rostisseria ──── */
+[data-theme="warm"] .rost-cat-tab { background: #fff; color: var(--text-muted); }
+[data-theme="warm"] .rost-cat-tab:hover { color: var(--accent); border-color: var(--accent); }
+[data-theme="warm"] .rost-cat-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+[data-theme="warm"] .rost-card { background: #fff; }
+[data-theme="warm"] .rost-card:hover { border-color: var(--accent); }
+[data-theme="warm"] .rost-card.in-cart { border-color: var(--accent); }
+[data-theme="warm"] .rost-card-pop { background: var(--accent); color: #fff; }
+[data-theme="warm"] .rost-card-price { color: var(--accent); }
+[data-theme="warm"] .rost-card-add { background: var(--text); }
+[data-theme="warm"] .rost-card-add:hover { background: var(--accent); }
+[data-theme="warm"] .rost-card-stepper { border-color: var(--accent); }
+
+[data-theme="warm"] .rost-fab { background: var(--accent); }
+[data-theme="warm"] .rost-fab:hover { background: #8b4a20; }
+
+[data-theme="warm"] .rost-modal { background: #fff; }
+[data-theme="warm"] .rost-cart-amt { color: var(--accent); }
+[data-theme="warm"] .rost-cart-total-amt { color: var(--accent); }
+
+[data-theme="warm"] .rost-confirm-total { border-top-color: var(--accent); }
+[data-theme="warm"] .rost-confirm-total-amt { color: var(--accent); }
+[data-theme="warm"] .rost-confirm-sub { color: var(--accent); }
+
 /* ── Catálogo y carrito del widget de rostisseria ──── */
 [data-theme="warm"] .rost-product { background: var(--bg-soft); }
 [data-theme="warm"] .rost-product.in-cart { border-color: var(--accent); }
