@@ -163,6 +163,18 @@
 [data-theme="warm"] .menu-dia-card { background: var(--bg-soft); border-color: var(--border); }
 [data-theme="warm"] .menu-section-title { border-bottom-color: var(--border); }
 
+/* ── Catálogo y carrito del widget de rostisseria ──── */
+[data-theme="warm"] .rost-product { background: var(--bg-soft); }
+[data-theme="warm"] .rost-product.in-cart { border-color: var(--accent); }
+[data-theme="warm"] .rost-add { background: var(--text); }
+[data-theme="warm"] .rost-add:hover { background: var(--accent); }
+[data-theme="warm"] .rost-stepper { border-color: var(--accent); }
+[data-theme="warm"] .rost-stepper button { color: var(--text); }
+[data-theme="warm"] .rost-cart { background: var(--bg-soft); }
+[data-theme="warm"] .rost-cart-total-amt { color: var(--accent); }
+[data-theme="warm"] .rost-confirm-total { border-top-color: var(--accent); }
+[data-theme="warm"] .rost-confirm-total-amt { color: var(--accent); }
+
 /* ── Carta de la rostisseria ──────────────────────────── */
 [data-theme="warm"] .carta-col-title { color: var(--text-soft); border-bottom-color: var(--border); }
 [data-theme="warm"] .carta-name { color: var(--text); }

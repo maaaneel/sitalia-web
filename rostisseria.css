@@ -57,6 +57,150 @@
   font-size: 13px; color: var(--text-soft); line-height: 1.6;
 }
 
+/* ═══════════════════════════════════════════════════════
+   CATÁLOGO + CARRITO dentro del widget de reservas (paso 1)
+   ═══════════════════════════════════════════════════════ */
+
+.rost-products {
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 320px; overflow-y: auto;
+  margin-bottom: 12px;
+  padding-right: 2px;
+}
+
+.rost-product {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--bg-soft);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  gap: 12px;
+  transition: all .12s;
+}
+.rost-product.in-cart {
+  background: #fff; border-color: var(--text);
+}
+.rost-product-info { flex: 1; min-width: 0; }
+.rost-product-name {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  line-height: 1.3;
+}
+.rost-pop {
+  display: inline-block; margin-left: 6px;
+  font-size: 9px; letter-spacing: .1em;
+  color: var(--text); background: rgba(0,0,0,0.06);
+  padding: 1px 6px; border-radius: 3px; font-weight: 600;
+  vertical-align: middle;
+}
+.rost-product-sub {
+  font-size: 10px; color: var(--text-soft);
+  margin-top: 2px;
+}
+.rost-product-right {
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 6px; flex-shrink: 0;
+}
+.rost-product-price {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  white-space: nowrap;
+}
+.rost-add {
+  background: var(--text); color: #fff;
+  border: none; padding: 5px 11px;
+  font-size: 11px; font-weight: 600; letter-spacing: .04em;
+  border-radius: var(--radius-sm);
+  cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.rost-add:hover { background: #2a2a2a; }
+
+.rost-stepper {
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--text);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.rost-stepper button {
+  background: #fff; border: none; color: var(--text);
+  padding: 4px 9px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; line-height: 1;
+}
+.rost-stepper button:hover { background: var(--bg-soft); }
+.rost-stepper-qty {
+  min-width: 22px; text-align: center;
+  font-size: 11px; font-weight: 600;
+  padding: 0 4px; color: var(--text);
+}
+
+/* Mini carrito dentro del widget */
+.rost-cart {
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 4px;
+}
+.rost-cart-list {
+  display: flex; flex-direction: column; gap: 5px;
+  margin-bottom: 8px;
+}
+.rost-cart-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 12px; color: var(--text);
+  gap: 10px;
+}
+.rost-cart-name { flex: 1; min-width: 0; line-height: 1.4; }
+.rost-cart-qty { color: var(--text-soft); font-size: 11px; margin-left: 2px; }
+.rost-cart-amt { font-weight: 600; flex-shrink: 0; }
+.rost-cart-total-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.rost-cart-total-lbl {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500;
+}
+.rost-cart-total-amt {
+  font-size: 17px; font-weight: 700; color: var(--text);
+}
+
+/* ── Desglose en paso 4 (confirmar) ───────────────────── */
+.rost-confirm-section {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500;
+  margin: 14px 0 8px;
+}
+.rost-confirm-section:first-child { margin-top: 0; }
+.rost-confirm-list {
+  display: flex; flex-direction: column;
+  margin-bottom: 4px;
+}
+.rost-confirm-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+.rost-confirm-item:last-child { border-bottom: none; }
+.rost-confirm-name { color: var(--text); flex: 1; }
+.rost-confirm-qty { color: var(--text-soft); font-size: 12px; }
+.rost-confirm-sub { font-weight: 600; color: var(--text); flex-shrink: 0; }
+.rost-confirm-total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 0 6px;
+  border-top: 2px solid var(--text);
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.rost-confirm-total-lbl {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 500;
+}
+.rost-confirm-total-amt {
+  font-size: 20px; font-weight: 700; color: var(--text);
+}
+
 /* ── Features (sección "Sobre Cal Pere") ───────────────── */
 .feat-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);

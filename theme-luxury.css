@@ -347,6 +347,49 @@
 [data-theme="luxury"] .dif-stat-num { color: var(--accent); }
 [data-theme="luxury"] .dif-stat-label { color: var(--text-muted); }
 
+/* Catálogo y carrito del widget de rostisseria */
+[data-theme="luxury"] .rost-product {
+  background: rgba(255,255,255,0.03);
+}
+[data-theme="luxury"] .rost-product.in-cart {
+  background: rgba(201, 168, 110, 0.08);
+  border-color: var(--accent);
+}
+[data-theme="luxury"] .rost-product-name { color: #fff; }
+[data-theme="luxury"] .rost-product-sub { color: var(--text-soft); }
+[data-theme="luxury"] .rost-product-price { color: var(--accent); }
+[data-theme="luxury"] .rost-pop {
+  background: rgba(201, 168, 110, 0.2);
+  color: var(--accent);
+}
+[data-theme="luxury"] .rost-add {
+  background: var(--accent); color: #0a0a0a;
+}
+[data-theme="luxury"] .rost-add:hover { background: #d4b682; }
+[data-theme="luxury"] .rost-stepper {
+  border-color: var(--accent);
+}
+[data-theme="luxury"] .rost-stepper button {
+  background: transparent; color: var(--accent);
+}
+[data-theme="luxury"] .rost-stepper button:hover { background: rgba(201,168,110,0.1); }
+[data-theme="luxury"] .rost-stepper-qty { color: #fff; }
+
+[data-theme="luxury"] .rost-cart {
+  background: rgba(255,255,255,0.04);
+}
+[data-theme="luxury"] .rost-cart-row { color: #fff; }
+[data-theme="luxury"] .rost-cart-amt { color: var(--accent); }
+[data-theme="luxury"] .rost-cart-total-amt { color: var(--accent); }
+[data-theme="luxury"] .rost-cart-total-row { border-top-color: var(--border); }
+
+/* Desglose paso 4 */
+[data-theme="luxury"] .rost-confirm-item { border-bottom-color: var(--border); }
+[data-theme="luxury"] .rost-confirm-name { color: #fff; }
+[data-theme="luxury"] .rost-confirm-sub { color: var(--accent); }
+[data-theme="luxury"] .rost-confirm-total { border-top-color: var(--accent); }
+[data-theme="luxury"] .rost-confirm-total-amt { color: var(--accent); }
+
 /* Carta de la rostisseria (visual, sin botones) */
 [data-theme="luxury"] .carta-col-title { color: var(--accent); border-bottom-color: var(--border); }
 [data-theme="luxury"] .carta-name { color: #fff; }

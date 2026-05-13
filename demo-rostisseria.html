@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="theme-nordic.css?v=4">
   <link rel="stylesheet" href="theme-warm.css?v=4">
   <link rel="stylesheet" href="theme-luxury.css?v=4">
-  <link rel="stylesheet" href="rostisseria.css?v=5">
+  <link rel="stylesheet" href="rostisseria.css?v=6">
 
   <script type="application/ld+json">
   {
@@ -102,7 +102,18 @@
           <button class="bk-step" data-s="3" onclick="Sitalia.bkTo(3)">3 Hora</button>
           <button class="bk-step" data-s="4" onclick="Sitalia.bkTo(4)">4 Confirmar</button>
         </div>
-        <div class="bk-panel active" id="bp1"><div class="bk-panel-label">Elige tu pedido</div><div id="bk-svcs"></div><button class="bk-btn" id="bkbtn1" disabled onclick="Sitalia.bkTo(2)">SIGUIENTE: ELEGIR DÍA</button></div>
+        <div class="bk-panel active" id="bp1">
+          <div class="bk-panel-label">Elige tu pedido</div>
+          <div class="rost-products" id="rost-products"></div>
+          <div class="rost-cart" id="rost-cart" hidden>
+            <div class="rost-cart-list" id="rost-cart-list"></div>
+            <div class="rost-cart-total-row">
+              <span class="rost-cart-total-lbl">Total</span>
+              <span class="rost-cart-total-amt" id="rost-cart-total">0,00€</span>
+            </div>
+          </div>
+          <button class="bk-btn" id="bkbtn1" disabled onclick="Sitalia.bkTo(2)">SIGUIENTE: ELEGIR DÍA</button>
+        </div>
         <div class="bk-panel" id="bp2"><div class="bk-panel-label">Selecciona el día</div><div class="bk-cal-hdr"><button class="bk-cal-nav" onclick="Sitalia.bkMon(-1)">&#8249;</button><span class="bk-cal-month" id="bk-month"></span><button class="bk-cal-nav" onclick="Sitalia.bkMon(1)">&#8250;</button></div><div class="bk-cal-grid" id="bk-dow"></div><div class="bk-cal-grid" id="bk-cal" style="margin-top:2px"></div><div id="bk-full-msg" style="display:none;text-align:center;padding:10px 0 2px;font-size:12px;color:#ef4444">Este día está completo — elige otra fecha</div><button class="bk-btn" id="bkbtn2" disabled onclick="Sitalia.bkTo(3)">SIGUIENTE: VER HORAS</button><button class="bk-back" onclick="Sitalia.bkTo(1)">&#8592; Volver</button></div>
         <div class="bk-panel" id="bp3"><div class="bk-panel-label">Hora de recogida</div><div class="bk-slots-info" id="bk-sinfo"></div><div class="bk-slots-grid" id="bk-slots"></div><button class="bk-btn" id="bkbtn3" disabled onclick="Sitalia.bkTo(4)">SIGUIENTE: CONFIRMAR</button><button class="bk-back" onclick="Sitalia.bkTo(2)">&#8592; Volver</button></div>
         <div class="bk-panel" id="bp4"><div class="bk-panel-label">Confirma tu pedido</div><div id="bk-confirm"></div><div style="margin-top:18px;display:flex;flex-direction:column;gap:8px"><input id="bk-nombre" class="bk-form-input" type="text" placeholder="Nombre y apellido *"><input id="bk-tel" class="bk-form-input" type="tel" placeholder="Teléfono *"><input id="bk-email" class="bk-form-input" type="email" placeholder="Email para confirmación *"></div><button id="bk-submit" class="bk-btn" onclick="confirmarReserva()"><span id="bk-submit-txt">CONFIRMAR PEDIDO</span></button><div id="bk-ok" style="display:none;margin-top:14px;padding:14px;background:#fafafa;border:1px solid #eaeaea;border-radius:6px;color:#0a0a0a;font-size:13px;text-align:center">✓ Pedido confirmado. Te hemos enviado un email con los detalles.</div><button class="bk-back" onclick="Sitalia.bkTo(3)">&#8592; Cambiar hora</button></div>
@@ -260,7 +271,7 @@
 </footer>
 
 <script src="shared.js?v=3"></script>
-<script src="rostisseria-config.js?v=5"></script>
+<script src="rostisseria-config.js?v=6"></script>
 <script src="cookie-banner.js" defer></script>
 <script src="theme-switcher.js" defer></script>
 </body>
