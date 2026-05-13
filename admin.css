@@ -293,6 +293,33 @@ body {
 .svc-thumb     { width:60px; height:60px; border-radius:8px; overflow:hidden; background:#f4f4f5; flex-shrink:0; border:1px solid #e4e4e7; }
 .svc-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 .svc-pill-cat  { background:#f3e8ff; color:#6b21a8; }
+
+/* Capacidad por slot (rostisseria, take-away) */
+.cap-box {
+  background: #fff; border: 1px solid #e4e4e7; border-radius: 12px;
+  padding: 20px 22px; margin-bottom: 20px;
+}
+.cap-box-head { margin-bottom: 16px; }
+.cap-box-title { font-size: 15px; font-weight: 600; color: #18181b; margin-bottom: 4px; }
+.cap-box-sub   { font-size: 12px; color: #71717a; line-height: 1.5; max-width: 560px; }
+.cap-box-form {
+  display: flex; align-items: end; gap: 14px; flex-wrap: wrap;
+  padding-top: 14px; border-top: 1px solid #e4e4e7;
+}
+.cap-field { display: flex; flex-direction: column; gap: 6px; }
+.cap-label { font-size: 11px; letter-spacing: .04em; color: #71717a; font-weight: 600; }
+.cap-input {
+  width: 110px; padding: 8px 12px;
+  border: 1px solid #e4e4e7; border-radius: 6px;
+  font-size: 14px; font-family: inherit; outline: none;
+}
+.cap-input:focus { border-color: #111; }
+.cap-save { padding: 9px 18px; font-size: 12px; }
+.cap-msg {
+  margin-top: 12px; padding: 10px 14px;
+  background: #ecfdf5; border: 1px solid #a7f3d0;
+  border-radius: 8px; font-size: 12px; color: #065f46;
+}
 .svc-info      { flex:1; min-width:160px; }
 .svc-name      { font-size:15px; font-weight:600; margin-bottom:7px; }
 .svc-pills     { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; }

@@ -471,6 +471,7 @@ var _editingId = null;
 function renderEquipo() {
   document.getElementById('date-heading').textContent = 'Gestión del equipo';
   document.getElementById('view-content').innerHTML =
+    '<div id="capacidad-box"></div>' +
     '<div class="equipo-header">' +
       '<div class="equipo-title">Trabajadores</div>' +
       '<button class="btn-add" onclick="showWorkerForm(null)">+ Añadir trabajador</button>' +
@@ -481,6 +482,9 @@ function renderEquipo() {
 }
 
 function loadWorkers() {
+  // Cargar capacidad del negocio (si está configurada → modo rostisseria)
+  loadCapacidad();
+
   // Precargamos trabajadores y ausencias en paralelo. Las ausencias se usan
   // para pintar el badge con el contador junto al nombre del trabajador.
   Promise.all([fetchWorkers(), fetchAusencias()]).then(function (results) {
@@ -636,6 +640,93 @@ function deleteWorker(id, nombre) {
   fetch('/api/trabajadores?id=' + id, { method: 'DELETE', headers: authHeaders() })
     .then(function (r) { return r.json(); })
     .then(function (d) { if (d.ok) { loadWorkers(); } else { alert('Error: ' + (d.error || '')); } });
+}
+
+/* ════════════════════════════════════════════════════════════
+   MÓDULO: CAPACIDAD POR SLOT (rostisserias, take-away, etc.)
+   Solo aparece si el negocio tiene una entrada en negocio_capacidad.
+   ════════════════════════════════════════════════════════════ */
+
+function loadCapacidad() {
+  fetch('/api/capacidad?negocio=' + NEGOCIO)
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var box = document.getElementById('capacidad-box');
+      if (!box) return;
+      if (!d.capacidad) {
+        // El negocio NO tiene capacidad configurada → no mostramos nada
+        box.innerHTML = '';
+        return;
+      }
+      renderCapacidadBox(d.capacidad);
+    })
+    .catch(function () {});
+}
+
+function renderCapacidadBox(cap) {
+  var box = document.getElementById('capacidad-box');
+  if (!box) return;
+  box.innerHTML =
+    '<div class="cap-box">' +
+      '<div class="cap-box-head">' +
+        '<div>' +
+          '<div class="cap-box-title">Capacidad por slot</div>' +
+          '<div class="cap-box-sub">' +
+            'Cuántos pedidos puedes asumir en cada franja horaria. ' +
+            'Útil para negocios donde la cocina prepara en paralelo (rostisseria, take-away).' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cap-box-form">' +
+        '<div class="cap-field">' +
+          '<label class="cap-label">Pedidos por slot</label>' +
+          '<input id="cap-pedidos" class="cap-input" type="number" min="1" step="1" value="' + cap.capacidad_por_slot + '">' +
+        '</div>' +
+        '<div class="cap-field">' +
+          '<label class="cap-label">Duración slot (min)</label>' +
+          '<input id="cap-duracion" class="cap-input" type="number" min="5" step="5" value="' + cap.duracion_slot_min + '">' +
+        '</div>' +
+        '<button class="btn-save cap-save" onclick="saveCapacidad()">Guardar</button>' +
+      '</div>' +
+      '<div id="cap-msg" class="cap-msg" hidden></div>' +
+    '</div>';
+}
+
+function saveCapacidad() {
+  var pedidos  = parseInt((document.getElementById('cap-pedidos')  || {}).value);
+  var duracion = parseInt((document.getElementById('cap-duracion') || {}).value);
+  if (!pedidos || pedidos < 1) { alert('Pedidos por slot debe ser un número >= 1'); return; }
+  if (!duracion || duracion < 5) { alert('Duración mínima 5 min'); return; }
+
+  var btn = document.querySelector('.cap-save');
+  if (btn) { btn.disabled = true; btn.textContent = 'Guardando…'; }
+
+  fetch('/api/capacidad', {
+    method: 'POST',
+    headers: authHeaders({ json: true }),
+    body: JSON.stringify({
+      negocio: NEGOCIO,
+      capacidad_por_slot: pedidos,
+      duracion_slot_min: duracion
+    })
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.ok) throw new Error(d.error || 'Error');
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardado ✓'; }
+      var msg = document.getElementById('cap-msg');
+      if (msg) {
+        msg.hidden = false;
+        msg.textContent = 'Configuración actualizada. Los cambios se aplican inmediatamente.';
+      }
+      setTimeout(function () {
+        if (btn) btn.textContent = 'Guardar';
+      }, 2500);
+    })
+    .catch(function (e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardar'; }
+      alert('No se pudo guardar: ' + e.message);
+    });
 }
 
 /* ════════════════════════════════════════════════════════════

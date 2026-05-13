@@ -25,6 +25,13 @@ module.exports = async function handler(req, res) {
     const { negocio } = req.query;
     if (!negocio) return res.status(400).json({ error: 'Falta negocio' });
 
+    // Configuración de capacidad por slot (si existe)
+    const { data: capCfg } = await sb()
+      .from('negocio_capacidad')
+      .select('capacidad_por_slot, duracion_slot_min')
+      .eq('negocio', negocio)
+      .maybeSingle();
+
     const { data: workers, error } = await sb()
       .from('trabajadores')
       .select('horario')
@@ -36,7 +43,8 @@ module.exports = async function handler(req, res) {
     if (!workers || workers.length === 0) {
       return res.status(200).json({
         hasWorkers: false,
-        sched: [null, null, null, null, null, null, null]
+        sched: [null, null, null, null, null, null, null],
+        capacidad: capCfg || null
       });
     }
 
@@ -59,7 +67,7 @@ module.exports = async function handler(req, res) {
       sched.push(covered ? [minStart, maxEnd] : null);
     }
 
-    return res.status(200).json({ hasWorkers: true, sched });
+    return res.status(200).json({ hasWorkers: true, sched, capacidad: capCfg || null });
 
   } catch (err) {
     return res.status(500).json({ error: 'Error interno: ' + err.message });

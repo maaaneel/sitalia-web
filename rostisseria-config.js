@@ -32,6 +32,7 @@
   var allProducts = [];
   var cart = {};      // { id: { product, qty } }
   var activeCat = ''; // categoría activa (vacío = todas)
+  var slotDur = 30;   // duración del slot (se sobreescribe desde /api/schedule si el negocio tiene capacidad)
 
   /* ── Carga inicial ──────────────────────────────────── */
   Promise.all([
@@ -85,6 +86,17 @@
       absentDates: absentDates,
       phone: '34936661234'
     });
+
+    /* Leer capacidad del negocio (si está configurada) — define la duración
+       del slot que usaremos para todas las reservas. Independiente del producto. */
+    fetch('/api/schedule?negocio=' + NEGOCIO)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.capacidad && d.capacidad.duracion_slot_min) {
+          slotDur = d.capacidad.duracion_slot_min;
+        }
+      })
+      .catch(function () { /* fallback al default de 30 */ });
 
     renderTabs();
     renderProducts();
@@ -223,18 +235,18 @@
     }
 
     var total  = totalCart();
-    var maxDur = 0;
     var desglose = [];
     ids.forEach(function (id) {
       var item = cart[id];
-      if (item.product.d > maxDur) maxDur = item.product.d;
       desglose.push(item.product.n + ' × ' + item.qty);
     });
 
+    /* IMPORTANTE: en modo "capacidad" la duración del slot es FIJA (slotDur).
+       No depende de los productos del carrito — el asador prepara en paralelo. */
     var pseudo = {
       n:       'Pedido: ' + desglose.join(', '),
-      d:       maxDur,
-      display: 'Recogida en ' + maxDur + ' min',
+      d:       slotDur,
+      display: 'Recogida a la hora elegida',
       p:       total.toFixed(2),
       pop:     false
     };
@@ -326,10 +338,6 @@
 
     var bk = Sitalia.getBkState();
     var dateStr = bk.date ? bk.date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
-    var maxDur = 0;
-    ids.forEach(function (id) {
-      if (cart[id].product.d > maxDur) maxDur = cart[id].product.d;
-    });
     var total = totalCart();
 
     var rows = ids.map(function (id) {
@@ -351,7 +359,6 @@
       '</div>' +
       '<div class="rost-confirm-section">Recogida</div>' +
       '<div class="bk-confirm-row"><span class="bk-confirm-label">Fecha</span><span class="bk-confirm-val">' + dateStr + '</span></div>' +
-      '<div class="bk-confirm-row"><span class="bk-confirm-label">Hora</span><span class="bk-confirm-val">' + bk.st + ' &mdash; ' + bk.se + '</span></div>' +
-      '<div class="bk-confirm-row"><span class="bk-confirm-label">Preparación</span><span class="bk-confirm-val">' + maxDur + ' min</span></div>';
+      '<div class="bk-confirm-row"><span class="bk-confirm-label">Hora</span><span class="bk-confirm-val">' + bk.st + '</span></div>';
   }
 })();

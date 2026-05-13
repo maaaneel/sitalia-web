@@ -47,6 +47,13 @@ module.exports = async function handler(req, res) {
     const { negocio, fecha, rango_ini, rango_fin, duracion } = req.query;
     if (!negocio || !fecha) return res.status(400).json({ error: 'Faltan parámetros' });
 
+    // Comprobar si el negocio usa modo "capacidad fija" (rostisseria, take-away…)
+    const { data: capacityConfig } = await sb()
+      .from('negocio_capacidad')
+      .select('capacidad_por_slot, duracion_slot_min')
+      .eq('negocio', negocio)
+      .maybeSingle();
+
     // Reservas confirmadas del día (necesitamos hora_inicio Y duracion_min para el chequeo de solapamiento)
     const { data: bookings, error: bErr } = await sb()
       .from('reservas')
@@ -57,7 +64,50 @@ module.exports = async function handler(req, res) {
 
     if (bErr) return res.status(500).json({ error: bErr.message });
 
-    // Trabajadores activos
+    // ── MODO CAPACIDAD: simple, no depende de trabajadores ─────────────
+    //    Cada slot tiene una capacidad fija. Se cuentan las reservas
+    //    cuya hora_inicio coincide con el slot.
+    if (capacityConfig) {
+      const cap = capacityConfig.capacidad_por_slot;
+      const slotMin = capacityConfig.duracion_slot_min;
+
+      // Agrupar reservas por hora_inicio
+      const counts = {};
+      (bookings || []).forEach(b => {
+        counts[b.hora_inicio] = (counts[b.hora_inicio] || 0) + 1;
+      });
+
+      // Si nos dan rango, recorremos los slots
+      if (rango_ini && rango_fin) {
+        const ini = parseInt(rango_ini);
+        const fin = parseInt(rango_fin);
+        const reservados = [];
+        for (let t = ini; t + slotMin <= fin; t += slotMin) {
+          if ((counts[t] || 0) >= cap) reservados.push(t);
+        }
+        return res.status(200).json({
+          hasWorkers: true,
+          mode: 'capacity',
+          capacidad_por_slot: cap,
+          duracion_slot_min: slotMin,
+          reservados
+        });
+      }
+
+      // Sin rango: devolvemos solo las horas saturadas
+      const reservados = Object.keys(counts)
+        .filter(t => counts[t] >= cap)
+        .map(t => parseInt(t));
+      return res.status(200).json({
+        hasWorkers: true,
+        mode: 'capacity',
+        capacidad_por_slot: cap,
+        duracion_slot_min: slotMin,
+        reservados
+      });
+    }
+
+    // ── MODO TRABAJADORES (clásico, peluquería/fisio/etc.) ─────────────
     const { data: workers } = await sb()
       .from('trabajadores')
       .select('horario')
@@ -121,12 +171,16 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'El email introducido no es válido.' });
     }
 
-    // ── Llamada atómica a la función crear_reserva (migración 002).
-    //    Internamente: lock de la fecha + recalcula solapamiento contra
-    //    capacidad de trabajadores + INSERT, todo en una transacción.
-    //    Si dos clientes intentan reservar el mismo slot a la vez, el
-    //    segundo recibe la excepción SLOT_TAKEN.
-    const { data: reservaId, error } = await sb().rpc('crear_reserva', {
+    // ── Decidir qué función RPC usar (modo capacidad o modo trabajadores)
+    const { data: capCfg } = await sb()
+      .from('negocio_capacidad')
+      .select('negocio')
+      .eq('negocio', negocio)
+      .maybeSingle();
+
+    const rpcFn = capCfg ? 'crear_reserva_capacidad' : 'crear_reserva';
+
+    const { data: reservaId, error } = await sb().rpc(rpcFn, {
       p_negocio:      negocio,
       p_servicio:     servicio,
       p_duracion_min: duracion_min || 30,
