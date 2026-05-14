@@ -13,6 +13,8 @@ var _token    = '';
 var _view     = 'day';
 var _baseDate = new Date();
 var _workers  = [];                  // caché de trabajadores cargados
+var _capacidad = null;               // { capacidad_por_slot, duracion_slot_min } | null
+var _isCapacityMode = false;         // true → modo "rostisseria" (capacidad por slot)
 
 var DAYS_SHORT  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
 var DAYS_LONG   = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
@@ -48,6 +50,7 @@ function login() {
         document.getElementById('admin-screen').style.display  = 'block';
         document.getElementById('fecha-input').value = isoDate(_baseDate);
         loadTodayStats();
+        loadCapacidad();   // detecta si el negocio es modo capacidad y muestra la pestaña
         render();
       } else {
         document.getElementById('login-error').style.display = 'block';
@@ -156,7 +159,7 @@ function setView(v) {
   document.querySelectorAll('.tab').forEach(function (t) {
     t.classList.toggle('active', t.dataset.view === v);
   });
-  var isManagement = (v === 'equipo' || v === 'servicios');
+  var isManagement = (v === 'equipo' || v === 'servicios' || v === 'capacidad');
   document.getElementById('nav-controls').style.display = isManagement ? 'none' : '';
   var statsEl = document.querySelector('.stats');
   if (statsEl) statsEl.style.display = isManagement ? 'none' : '';
@@ -193,6 +196,7 @@ function render() {
   else if (_view === 'month')  renderMonth();
   else if (_view === 'equipo')    renderEquipo();
   else if (_view === 'servicios') renderServicios();
+  else if (_view === 'capacidad') renderCapacidad();
 }
 
 /* ── Vista diaria ─────────────────────────────────────── */
@@ -471,7 +475,6 @@ var _editingId = null;
 function renderEquipo() {
   document.getElementById('date-heading').textContent = 'Gestión del equipo';
   document.getElementById('view-content').innerHTML =
-    '<div id="capacidad-box"></div>' +
     '<div class="equipo-header">' +
       '<div class="equipo-title">Trabajadores</div>' +
       '<button class="btn-add" onclick="showWorkerForm(null)">+ Añadir trabajador</button>' +
@@ -482,9 +485,6 @@ function renderEquipo() {
 }
 
 function loadWorkers() {
-  // Cargar capacidad del negocio (si está configurada → modo rostisseria)
-  loadCapacidad();
-
   // Precargamos trabajadores y ausencias en paralelo. Las ausencias se usan
   // para pintar el badge con el contador junto al nombre del trabajador.
   Promise.all([fetchWorkers(), fetchAusencias()]).then(function (results) {
@@ -644,52 +644,92 @@ function deleteWorker(id, nombre) {
 
 /* ════════════════════════════════════════════════════════════
    MÓDULO: CAPACIDAD POR SLOT (rostisserias, take-away, etc.)
-   Solo aparece si el negocio tiene una entrada en negocio_capacidad.
+
+   - loadCapacidad: se llama al login. Lee la config y, si existe,
+     activa el modo capacidad (_isCapacityMode=true) y muestra la
+     pestaña "Pedidos máx." en la nav superior.
+   - renderCapacidad: vista completa cuando se entra en esa pestaña.
    ════════════════════════════════════════════════════════════ */
 
 function loadCapacidad() {
   fetch('/api/capacidad?negocio=' + NEGOCIO)
     .then(function (r) { return r.json(); })
     .then(function (d) {
-      var box = document.getElementById('capacidad-box');
-      if (!box) return;
-      if (!d.capacidad) {
-        // El negocio NO tiene capacidad configurada → no mostramos nada
-        box.innerHTML = '';
-        return;
+      var tab = document.getElementById('tab-capacidad');
+      if (d.capacidad) {
+        _capacidad = d.capacidad;
+        _isCapacityMode = true;
+        if (tab) tab.style.display = '';
+      } else {
+        _capacidad = null;
+        _isCapacityMode = false;
+        if (tab) tab.style.display = 'none';
       }
-      renderCapacidadBox(d.capacidad);
     })
     .catch(function () {});
 }
 
-function renderCapacidadBox(cap) {
-  var box = document.getElementById('capacidad-box');
-  if (!box) return;
-  box.innerHTML =
+function renderCapacidad() {
+  document.getElementById('date-heading').textContent = 'Pedidos máximos por slot';
+  if (!_capacidad) {
+    document.getElementById('view-content').innerHTML =
+      '<div class="empty-state">Este negocio no tiene capacidad configurada. Contacta con soporte para activar el modo "pedidos por slot".</div>';
+    return;
+  }
+
+  document.getElementById('view-content').innerHTML =
     '<div class="cap-box">' +
       '<div class="cap-box-head">' +
         '<div>' +
-          '<div class="cap-box-title">Capacidad por slot</div>' +
+          '<div class="cap-box-title">¿Cuántos pedidos puedes preparar a la vez?</div>' +
           '<div class="cap-box-sub">' +
-            'Cuántos pedidos puedes asumir en cada franja horaria. ' +
-            'Útil para negocios donde la cocina prepara en paralelo (rostisseria, take-away).' +
+            'Define la capacidad máxima de tu cocina por franja horaria. ' +
+            'Cuando un slot se llena, los clientes ya no pueden reservar para esa hora — ' +
+            'tendrán que elegir otra franja.' +
           '</div>' +
         '</div>' +
       '</div>' +
+
       '<div class="cap-box-form">' +
         '<div class="cap-field">' +
           '<label class="cap-label">Pedidos por slot</label>' +
-          '<input id="cap-pedidos" class="cap-input" type="number" min="1" step="1" value="' + cap.capacidad_por_slot + '">' +
+          '<input id="cap-pedidos" class="cap-input" type="number" min="1" step="1" value="' + _capacidad.capacidad_por_slot + '">' +
+          '<div class="cap-hint">Ej: 10 → admites 10 pedidos cada media hora.</div>' +
         '</div>' +
         '<div class="cap-field">' +
-          '<label class="cap-label">Duración slot (min)</label>' +
-          '<input id="cap-duracion" class="cap-input" type="number" min="5" step="5" value="' + cap.duracion_slot_min + '">' +
+          '<label class="cap-label">Duración del slot</label>' +
+          '<select id="cap-duracion" class="cap-input">' +
+            optHora(15) +
+            optHora(20) +
+            optHora(30) +
+            optHora(45) +
+            optHora(60) +
+          '</select>' +
+          '<div class="cap-hint">Cada cuánto se abre un nuevo slot para reservar.</div>' +
         '</div>' +
-        '<button class="btn-save cap-save" onclick="saveCapacidad()">Guardar</button>' +
+        '<button class="btn-save cap-save" onclick="saveCapacidad()">Guardar cambios</button>' +
       '</div>' +
+
       '<div id="cap-msg" class="cap-msg" hidden></div>' +
+
+      '<div class="cap-example">' +
+        '<div class="cap-example-title">Cómo funciona</div>' +
+        '<div class="cap-example-body">' +
+          'Con la configuración actual (<strong>' + _capacidad.capacidad_por_slot + ' pedidos cada ' + _capacidad.duracion_slot_min + ' minutos</strong>), ' +
+          'tu cliente verá slots de recogida cada ' + _capacidad.duracion_slot_min + ' min. ' +
+          'Cuando recibas ' + _capacidad.capacidad_por_slot + ' pedidos para un slot concreto, ' +
+          'ese slot quedará marcado como "completo" en la web y no se podrán hacer más reservas para esa hora.' +
+        '</div>' +
+      '</div>' +
     '</div>';
+
+  // Seleccionar el valor actual del select
+  var sel = document.getElementById('cap-duracion');
+  if (sel) sel.value = String(_capacidad.duracion_slot_min);
+}
+
+function optHora(mins) {
+  return '<option value="' + mins + '">' + mins + ' min</option>';
 }
 
 function saveCapacidad() {
@@ -714,17 +754,17 @@ function saveCapacidad() {
     .then(function (d) {
       if (!d.ok) throw new Error(d.error || 'Error');
       if (btn) { btn.disabled = false; btn.textContent = 'Guardado ✓'; }
+      _capacidad = { capacidad_por_slot: pedidos, duracion_slot_min: duracion };
       var msg = document.getElementById('cap-msg');
       if (msg) {
         msg.hidden = false;
-        msg.textContent = 'Configuración actualizada. Los cambios se aplican inmediatamente.';
+        msg.textContent = 'Configuración actualizada. Los cambios se aplican inmediatamente en la web pública.';
       }
-      setTimeout(function () {
-        if (btn) btn.textContent = 'Guardar';
-      }, 2500);
+      setTimeout(function () { if (btn) btn.textContent = 'Guardar cambios'; }, 2500);
+      renderCapacidad();  // re-render para actualizar el bloque de "Cómo funciona"
     })
     .catch(function (e) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Guardar'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardar cambios'; }
       alert('No se pudo guardar: ' + e.message);
     });
 }
@@ -1082,13 +1122,19 @@ function fetchSvcs() {
 }
 
 function renderServicios() {
-  document.getElementById('date-heading').textContent = 'Catálogo de servicios';
+  var titulo = _isCapacityMode ? 'Catálogo de productos' : 'Catálogo de servicios';
+  var labelBoton = _isCapacityMode ? '+ Añadir producto' : '+ Añadir servicio';
+  var intro = _isCapacityMode
+    ? 'Define los productos que vendes. La capacidad de pedidos por hora se configura en la pestaña "Pedidos máx.".'
+    : 'Define los servicios que ofrece el negocio. Para servicios con tiempo de espera (tinte, mechas…) puedes indicar una duración visible diferente a la duración real en agenda.';
+
+  document.getElementById('date-heading').textContent = titulo;
   document.getElementById('view-content').innerHTML =
     '<div class="equipo-header">' +
-      '<div class="equipo-title">Servicios</div>' +
-      '<button class="btn-add" onclick="showSvcForm(null)">+ Añadir servicio</button>' +
+      '<div class="equipo-title">' + (_isCapacityMode ? 'Productos' : 'Servicios') + '</div>' +
+      '<button class="btn-add" onclick="showSvcForm(null)">' + labelBoton + '</button>' +
     '</div>' +
-    '<div class="svc-intro">Define los servicios que ofrece el negocio. Para servicios con tiempo de espera (tinte, mechas…) puedes indicar una duración visible diferente a la duración real en agenda.</div>' +
+    '<div class="svc-intro">' + intro + '</div>' +
     '<div id="svc-form-wrap" style="display:none"></div>' +
     '<div id="svcs-list"><div class="loading-state">Cargando…</div></div>';
 
@@ -1110,6 +1156,9 @@ function renderSvcsList() {
   el.innerHTML = svcs.map(function (s) {
     var sameTime = (s.duracion_display === s.duracion_min + ' min') || !s.duracion_display;
     var displayLabel = s.duracion_display || (s.duracion_min + ' min');
+    // En modo capacidad ocultamos las pills de duración (no aplican)
+    var hideDur = _isCapacityMode;
+
     return '<div class="svc-card" id="scard-' + s.id + '">' +
       (s.imagen_url
         ? '<div class="svc-thumb"><img src="' + s.imagen_url + '" alt="" loading="lazy"></div>'
@@ -1118,13 +1167,14 @@ function renderSvcsList() {
         '<div class="svc-name">' + s.nombre + '</div>' +
         '<div class="svc-pills">' +
           (s.categoria ? '<span class="svc-pill svc-pill-cat">' + s.categoria + '</span>' : '') +
-          '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + displayLabel + '</span>' +
-          (!sameTime
+          (!hideDur ? '<span class="svc-pill svc-pill-client" title="Duración que ve el cliente">' + displayLabel + '</span>' : '') +
+          (!hideDur && !sameTime
             ? '<span class="svc-pill svc-pill-agenda" title="Tiempo que ocupa en la agenda del trabajador">' + s.duracion_min + ' min agenda</span>'
             : '') +
+          (hideDur && s.duracion_display ? '<span class="svc-pill svc-pill-client">' + s.duracion_display + '</span>' : '') +
           (s.precio ? '<span class="svc-pill svc-pill-price">' + s.precio + '€</span>' : '') +
         '</div>' +
-        (!sameTime
+        (!hideDur && !sameTime
           ? '<div class="svc-note-inline">El cliente espera ' + displayLabel + ' pero el trabajador queda libre tras ' + s.duracion_min + ' min</div>'
           : '') +
       '</div>' +
@@ -1141,13 +1191,18 @@ function showSvcForm(svc) {
   var wrap = document.getElementById('svc-form-wrap');
   if (!wrap) return;
 
+  // En modo capacidad (rostisseria, take-away…) la duración del producto NO
+  // tiene sentido: la "capacidad" la controla la pestaña "Pedidos máx.".
+  // Ocultamos los campos de duración y los mandamos con valores por defecto.
+  var ocultarDuracion = _isCapacityMode;
+
   wrap.innerHTML =
     '<div class="worker-form svc-form">' +
-      '<h3>' + (svc ? 'Editar servicio' : 'Nuevo servicio') + '</h3>' +
+      '<h3>' + (svc ? 'Editar producto' : 'Nuevo producto') + '</h3>' +
       '<div class="form-row">' +
         '<div class="form-group" style="flex:1">' +
-          '<label class="form-label">Nombre del servicio *</label>' +
-          '<input type="text" id="sv-nombre" class="form-input" placeholder="Ej: Tinte + corte" ' +
+          '<label class="form-label">Nombre *</label>' +
+          '<input type="text" id="sv-nombre" class="form-input" placeholder="Ej: Pollo a l\'ast entero" ' +
             'value="' + (svc ? svc.nombre : '') + '" style="width:100%">' +
         '</div>' +
         '<div class="form-group">' +
@@ -1156,22 +1211,33 @@ function showSvcForm(svc) {
             'value="' + (svc ? (svc.precio || '') : '') + '" style="width:90px">' +
         '</div>' +
       '</div>' +
-      '<div class="svc-dur-section">' +
-        '<div class="svc-dur-col">' +
-          '<label class="form-label">Duración visible al cliente *</label>' +
-          '<input type="text" id="sv-display" class="form-input" placeholder="Ej: 3 horas, 45 min…" ' +
-            'value="' + (svc ? svc.duracion_display : '') + '" oninput="updateSvcExample()">' +
-          '<div class="svc-dur-hint">Texto libre que verá el cliente al reservar</div>' +
-        '</div>' +
-        '<div class="svc-dur-arrow">→</div>' +
-        '<div class="svc-dur-col">' +
-          '<label class="form-label">Minutos que ocupa en agenda *</label>' +
-          '<input type="number" id="sv-durmin" class="form-input" placeholder="30" min="5" step="5" ' +
-            'value="' + (svc ? svc.duracion_min : '') + '" oninput="updateSvcExample()" style="width:90px">' +
-          '<div class="svc-dur-hint">Tiempo que se bloquea en el calendario del trabajador</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="svc-example" id="sv-example"></div>' +
+
+      (ocultarDuracion
+        ? '<div class="form-row">' +
+            '<div class="form-group" style="flex:1">' +
+              '<label class="form-label">Descripción visible <span style="font-weight:400;color:#9ca3af">(opcional)</span></label>' +
+              '<input type="text" id="sv-display" class="form-input" placeholder="Ej: Pollo + 2 patatas + ensalada" ' +
+                'value="' + (svc && svc.duracion_display ? svc.duracion_display : '') + '" style="width:100%">' +
+              '<div class="svc-dur-hint">Texto corto que el cliente verá bajo el nombre.</div>' +
+            '</div>' +
+          '</div>'
+        : '<div class="svc-dur-section">' +
+            '<div class="svc-dur-col">' +
+              '<label class="form-label">Duración visible al cliente *</label>' +
+              '<input type="text" id="sv-display" class="form-input" placeholder="Ej: 3 horas, 45 min…" ' +
+                'value="' + (svc ? svc.duracion_display : '') + '" oninput="updateSvcExample()">' +
+              '<div class="svc-dur-hint">Texto libre que verá el cliente al reservar</div>' +
+            '</div>' +
+            '<div class="svc-dur-arrow">→</div>' +
+            '<div class="svc-dur-col">' +
+              '<label class="form-label">Minutos que ocupa en agenda *</label>' +
+              '<input type="number" id="sv-durmin" class="form-input" placeholder="30" min="5" step="5" ' +
+                'value="' + (svc ? svc.duracion_min : '') + '" oninput="updateSvcExample()" style="width:90px">' +
+              '<div class="svc-dur-hint">Tiempo que se bloquea en el calendario del trabajador</div>' +
+            '</div>' +
+          '</div>') +
+
+      (ocultarDuracion ? '' : '<div class="svc-example" id="sv-example"></div>') +
 
       '<div class="form-row" style="margin-top:8px">' +
         '<div class="form-group" style="flex:1">' +
@@ -1252,9 +1318,17 @@ function saveSvc() {
   var durMin  = parseInt((document.getElementById('sv-durmin')  || {}).value) || 0;
   var precio  = parseFloat((document.getElementById('sv-precio') || {}).value) || 0;
 
-  if (!nombre)  { alert('El nombre del servicio es obligatorio.'); return; }
-  if (!display) { alert('La duración visible al cliente es obligatoria.'); return; }
-  if (!durMin)  { alert('Los minutos en agenda son obligatorios (mínimo 5).'); return; }
+  if (!nombre)  { alert('El nombre del producto es obligatorio.'); return; }
+
+  // En modo capacidad la duración la marca la pestaña "Pedidos máx.", no el producto.
+  // Usamos la duración del slot del negocio como placeholder en la BD (que requiere NOT NULL).
+  if (_isCapacityMode) {
+    durMin = (_capacidad && _capacidad.duracion_slot_min) ? _capacidad.duracion_slot_min : 30;
+    // display puede estar vacío, sin problema
+  } else {
+    if (!display) { alert('La duración visible al cliente es obligatoria.'); return; }
+    if (!durMin)  { alert('Los minutos en agenda son obligatorios (mínimo 5).'); return; }
+  }
 
   var categoria = ((document.getElementById('sv-categoria') || {}).value || '').trim();
   var imagenUrl = ((document.getElementById('sv-imagen')    || {}).value || '').trim();
