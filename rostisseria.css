@@ -56,11 +56,11 @@
    ═══════════════════════════════════════════════════════ */
 .rost-product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
-@media (max-width: 980px) { .rost-product-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .rost-product-grid { grid-template-columns: 1fr; gap: 14px; } }
+@media (max-width: 1100px) { .rost-product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px)  { .rost-product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
 
 .rost-card {
   background: #fff;
@@ -70,12 +70,12 @@
   display: flex; flex-direction: column;
   transition: all .15s;
 }
-.rost-card:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+.rost-card:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.05); }
 .rost-card.in-cart { border-color: var(--text); }
 .rost-card.popular { /* marca discreta */ }
 
 .rost-card-img {
-  width: 100%; aspect-ratio: 4/3;
+  width: 100%; aspect-ratio: 1/1;
   background: var(--bg-soft);
   overflow: hidden; position: relative;
 }
@@ -86,46 +86,58 @@
   display: flex; align-items: center; justify-content: center;
   color: #d4d4d4;
 }
-.rost-card-img-placeholder svg { width: 36px; height: 36px; }
+.rost-card-img-placeholder svg { width: 28px; height: 28px; }
 
 .rost-card-body {
-  padding: 18px 18px 16px;
+  padding: 10px 12px 12px;
   display: flex; flex-direction: column;
   flex: 1;
   position: relative;
 }
 .rost-card-pop {
-  position: absolute; top: -10px; right: 14px;
+  position: absolute; top: -9px; right: 10px;
   background: var(--text); color: #fff;
-  font-size: 9px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
-  padding: 4px 10px; border-radius: 3px;
+  font-size: 8px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
+  padding: 3px 7px; border-radius: 3px;
 }
 .rost-card-name {
-  font-size: 16px; font-weight: 500; color: var(--text);
+  font-size: 13.5px; font-weight: 500; color: var(--text);
   letter-spacing: -.005em;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+  line-height: 1.3;
+  /* limitar a 2 líneas para mantener altura uniforme */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(1.3em * 2);
 }
 .rost-card-desc {
-  font-size: 12px; color: var(--text-muted);
-  line-height: 1.5; margin-bottom: 14px;
-  flex: 1;
+  font-size: 11px; color: var(--text-muted);
+  line-height: 1.4; margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .rost-card-bottom {
   display: flex; align-items: center; justify-content: space-between;
-  padding-top: 12px;
+  margin-top: auto;
+  padding-top: 8px;
   border-top: 1px solid var(--border);
-  gap: 12px;
+  gap: 8px;
 }
 .rost-card-price {
-  font-size: 17px; font-weight: 700; color: var(--text);
+  font-size: 14px; font-weight: 700; color: var(--text);
 }
 .rost-card-add {
   background: var(--text); color: #fff;
-  border: none; padding: 8px 16px;
-  font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  border: none; padding: 5px 10px;
+  font-size: 11px; font-weight: 600; letter-spacing: .03em;
   border-radius: var(--radius-md);
   cursor: pointer; font-family: inherit;
   transition: background .15s;
+  white-space: nowrap;
 }
 .rost-card-add:hover { background: #2a2a2a; }
 
@@ -136,38 +148,43 @@
 }
 .rost-card-stepper button {
   background: #fff; border: none; color: var(--text);
-  padding: 6px 12px;
-  font-size: 14px; font-weight: 600;
+  padding: 3px 9px;
+  font-size: 13px; font-weight: 600;
   cursor: pointer; font-family: inherit; line-height: 1;
 }
 .rost-card-stepper button:hover { background: var(--bg-soft); }
 .rost-card-stepper-qty {
-  min-width: 28px; text-align: center;
-  font-size: 13px; font-weight: 600; padding: 0 4px;
+  min-width: 22px; text-align: center;
+  font-size: 12px; font-weight: 600; padding: 0 2px;
 }
 
 /* ═══════════════════════════════════════════════════════
-   FAB del carrito (flotante abajo-derecha)
+   Barra sticky del carrito (anclada arriba, debajo del header)
    ═══════════════════════════════════════════════════════ */
 .rost-fab {
   position: fixed;
-  bottom: 24px; right: 24px;
+  top: 104px; left: 50%;
   z-index: 200;
   background: var(--text); color: #fff;
   border: none; border-radius: 100px;
-  padding: 14px 22px 14px 18px;
-  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  padding: 11px 18px 11px 14px;
+  font-size: 13px; font-weight: 600; letter-spacing: .03em;
   font-family: inherit; cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,.18);
-  display: flex; align-items: center; gap: 12px;
-  transform: translateY(120px); opacity: 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  display: flex; align-items: center; gap: 10px;
+  transform: translate(-50%, -120%); opacity: 0;
+  pointer-events: none;
   transition: transform .25s ease, opacity .2s ease, background .15s;
 }
-.rost-fab.visible { transform: translateY(0); opacity: 1; }
+.rost-fab.visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
 .rost-fab:hover { background: #2a2a2a; }
 .rost-fab-count {
   background: rgba(255,255,255,.18); color: #fff;
-  border-radius: 100px; padding: 3px 9px;
+  border-radius: 100px; padding: 3px 8px;
   font-size: 11px; font-weight: 700;
   min-width: 22px; text-align: center;
 }
@@ -175,9 +192,12 @@
 .rost-fab-label { white-space: nowrap; }
 @media (max-width: 540px) {
   .rost-fab {
-    left: 16px; right: 16px; bottom: 16px;
-    justify-content: center; padding: 16px;
+    top: 126px;
+    padding: 10px 14px 10px 12px;
+    font-size: 12.5px;
+    gap: 8px;
   }
+  .rost-fab-count { padding: 2px 7px; min-width: 20px; font-size: 10.5px; }
 }
 
 /* ═══════════════════════════════════════════════════════
