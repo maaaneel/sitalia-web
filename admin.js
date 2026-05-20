@@ -1258,11 +1258,23 @@ function showSvcForm(svc) {
 
       '<div class="form-row">' +
         '<div class="form-group" style="flex:1">' +
-          '<label class="form-label">URL de imagen <span style="font-weight:400;color:#9ca3af">(opcional)</span></label>' +
-          '<input type="url" id="sv-imagen" class="form-input" ' +
-            'placeholder="https://… (enlace a la foto del producto)" ' +
-            'value="' + (svc && svc.imagen_url ? svc.imagen_url : '') + '" style="width:100%">' +
-          '<div class="svc-dur-hint">Pega aquí la URL pública de una foto del producto. Aparecerá en la carta del cliente.</div>' +
+          '<label class="form-label">Foto del producto <span style="font-weight:400;color:#9ca3af">(opcional)</span></label>' +
+          '<div class="img-uploader">' +
+            '<div class="img-preview" id="sv-img-preview">' +
+              (svc && svc.imagen_url
+                ? '<img src="' + svc.imagen_url + '" alt="">'
+                : '<div class="img-preview-empty">Sin imagen</div>') +
+            '</div>' +
+            '<div class="img-uploader-actions">' +
+              '<input type="file" id="sv-imagen-file" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="uploadSvcImagen(this)">' +
+              '<button type="button" class="btn-sm" onclick="document.getElementById(\'sv-imagen-file\').click()">Subir imagen…</button>' +
+              '<button type="button" class="btn-sm btn-ghost" id="sv-imagen-clear" onclick="clearSvcImagen()" ' +
+                (svc && svc.imagen_url ? '' : 'style="display:none"') + '>Quitar</button>' +
+              '<div class="img-upload-status" id="sv-img-status"></div>' +
+            '</div>' +
+          '</div>' +
+          '<input type="hidden" id="sv-imagen" value="' + (svc && svc.imagen_url ? svc.imagen_url : '') + '">' +
+          '<div class="svc-dur-hint">JPG, PNG o WebP. Máx. 4 MB. Aparecerá en la carta del cliente.</div>' +
         '</div>' +
       '</div>' +
 
@@ -1310,6 +1322,86 @@ function hideSvcForm() {
   var wrap = document.getElementById('svc-form-wrap');
   if (wrap) wrap.style.display = 'none';
   _editingSvcId = null;
+}
+
+/* ====================================================================
+   Subida de imagen del producto al endpoint /api/upload-imagen.
+   El input file dispara este handler. Lee el archivo como base64 y lo
+   manda al server, que lo guarda en Supabase Storage y devuelve la URL
+   publica. Esa URL se mete en el hidden #sv-imagen para que saveSvc
+   la persista junto al resto del producto.
+   ==================================================================== */
+function uploadSvcImagen(input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+
+  var status  = document.getElementById('sv-img-status');
+  var preview = document.getElementById('sv-img-preview');
+  var hidden  = document.getElementById('sv-imagen');
+  var clearBtn = document.getElementById('sv-imagen-clear');
+
+  if (!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type)) {
+    status.textContent = 'Solo JPG, PNG o WebP.';
+    status.className = 'img-upload-status err';
+    input.value = '';
+    return;
+  }
+  if (file.size > 4 * 1024 * 1024) {
+    status.textContent = 'Maximo 4 MB.';
+    status.className = 'img-upload-status err';
+    input.value = '';
+    return;
+  }
+
+  status.textContent = 'Subiendo…';
+  status.className = 'img-upload-status info';
+
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var dataUrl = e.target.result;
+    fetch('/api/upload-imagen', {
+      method:  'POST',
+      headers: authHeaders({ json: true }),
+      body: JSON.stringify({
+        negocio:     NEGOCIO,
+        filename:    file.name,
+        contentType: file.type,
+        dataBase64:  dataUrl
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .catch(function () { return { error: 'Error de red' }; })
+      .then(function (d) {
+        if (!d || !d.ok || !d.url) {
+          status.textContent = d && d.error ? d.error : 'Error al subir.';
+          status.className = 'img-upload-status err';
+          input.value = '';
+          return;
+        }
+        hidden.value = d.url;
+        preview.innerHTML = '<img src="' + d.url + '" alt="">';
+        if (clearBtn) clearBtn.style.display = '';
+        status.textContent = 'Imagen subida ✓';
+        status.className = 'img-upload-status ok';
+        input.value = '';
+      });
+  };
+  reader.onerror = function () {
+    status.textContent = 'No se pudo leer el archivo.';
+    status.className = 'img-upload-status err';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearSvcImagen() {
+  var preview = document.getElementById('sv-img-preview');
+  var hidden  = document.getElementById('sv-imagen');
+  var status  = document.getElementById('sv-img-status');
+  var clearBtn = document.getElementById('sv-imagen-clear');
+  if (preview) preview.innerHTML = '<div class="img-preview-empty">Sin imagen</div>';
+  if (hidden)  hidden.value = '';
+  if (status)  { status.textContent = ''; status.className = 'img-upload-status'; }
+  if (clearBtn) clearBtn.style.display = 'none';
 }
 
 function saveSvc() {

@@ -294,6 +294,20 @@ body {
 .svc-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 .svc-pill-cat  { background:#f3e8ff; color:#6b21a8; }
 
+/* Uploader de imagen en form de servicio */
+.img-uploader            { display:flex; gap:14px; align-items:flex-start; }
+.img-preview             { width:96px; height:96px; border-radius:8px; overflow:hidden; background:#f4f4f5; border:1px dashed #d4d4d8; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.img-preview img         { width:100%; height:100%; object-fit:cover; display:block; }
+.img-preview-empty       { font-size:11px; color:#9ca3af; text-align:center; padding:8px; }
+.img-uploader-actions    { display:flex; flex-direction:column; gap:6px; align-items:flex-start; flex:1; }
+.img-uploader-actions .btn-sm { padding:6px 12px; font-size:12px; cursor:pointer; border:1px solid #d4d4d8; background:#fff; border-radius:6px; color:#111; }
+.img-uploader-actions .btn-sm:hover { background:#fafafa; }
+.img-uploader-actions .btn-ghost { background:transparent; color:#6b7280; border-color:#e5e7eb; }
+.img-upload-status       { font-size:11px; color:#9ca3af; min-height:14px; }
+.img-upload-status.info  { color:#2563eb; }
+.img-upload-status.ok    { color:#16a34a; }
+.img-upload-status.err   { color:#dc2626; }
+
 /* Capacidad por slot (rostisseria, take-away) */
 .cap-box {
   background: #fff; border: 1px solid #e4e4e7; border-radius: 12px;
