@@ -14,11 +14,11 @@
 
   <script>try{var t=localStorage.getItem('sitalia_theme');if(t&&t!=='nordic')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 
-  <link rel="stylesheet" href="shared.css">
-  <link rel="stylesheet" href="theme-nordic.css">
-  <link rel="stylesheet" href="theme-warm.css">
-  <link rel="stylesheet" href="theme-luxury.css">
-  <link rel="stylesheet" href="abogados.css">
+  <link rel="stylesheet" href="shared.css?v=4">
+  <link rel="stylesheet" href="theme-nordic.css?v=4">
+  <link rel="stylesheet" href="theme-warm.css?v=4">
+  <link rel="stylesheet" href="theme-luxury.css?v=4">
+  <link rel="stylesheet" href="abogados.css?v=4">
 
   <script type="application/ld+json">
   {
@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
+      <form id="abo-form" class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
         <h3>Consulta gratuita</h3>
         <div class="lead-form-sub">Cuéntenos brevemente su caso. Le contactaremos en menos de 24 horas para una primera valoración sin compromiso.</div>
 
@@ -315,23 +315,24 @@ async function enviarConsulta(e) {
   if (consent && !consent.checked) { alert('Debe aceptar la política de privacidad.'); consent.focus(); return; }
   var btn = document.getElementById('abo-btn');
   var txt = document.getElementById('abo-btn-txt');
-  btn.disabled = true; txt.textContent = 'Enviando…';
+  btn.disabled = true; txt.textContent = 'Enviando...';
   try {
-    var r = await fetch('/api/contact', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ nombre: nombre, apellido: '', email: email,
-        telefono: tel, tipo_negocio: 'Abogados - ' + area, mensaje: msg })
+    var resp = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ negocio: 'abogados', nombre: nombre, email: email, telefono: tel, area: area, mensaje: msg })
     });
-    if (!r.ok) throw new Error('Error');
-    btn.style.display = 'none';
+    var data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Error');
+    document.getElementById('abo-form').style.display = 'none';
     document.getElementById('abo-ok').style.display = 'block';
   } catch (err) {
-    btn.disabled = false; txt.textContent = 'ENVIAR CONSULTA';
-    alert('No se pudo enviar. Inténtelo de nuevo o llámenos al +34 915 550 234.');
+    alert('No se pudo enviar: ' + err.message);
+    btn.disabled = false; txt.textContent = 'ENVIAR';
   }
 }
 </script>
-<script src="shared.js?v=3"></script>
+
 <script src="cookie-banner.js" defer></script>
 <script src="theme-switcher.js" defer></script>
 </body>

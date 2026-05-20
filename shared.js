@@ -424,16 +424,23 @@
       var horaInicio = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
       var horaFin    = horaInicio + svc.d;
 
+      // Timeout de seguridad: si el server tarda demasiado, abortamos la
+      // petición para que el botón no se quede congelado en "Enviando..."
+      var ctrl = new AbortController();
+      var timeoutId = setTimeout(function () { ctrl.abort(); }, 15000);
+
       try {
         var resp = await fetch('/api/booking', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal:  ctrl.signal,
           body: JSON.stringify({
             negocio: negocio, servicio: svc.n, duracion_min: svc.d, precio: svc.p,
             fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin,
             nombre: nombre, telefono: tel, email: email
           })
         });
+        clearTimeout(timeoutId);
         var data = await resp.json();
         if (!resp.ok) {
           alert(data.error || 'Error al confirmar la reserva.');
@@ -444,7 +451,12 @@
         document.getElementById('bk-ok').style.display = 'block';
         document.querySelector('.bk-back').style.display = 'none';
       } catch (e) {
-        alert('Error de conexión. Inténtalo de nuevo.');
+        clearTimeout(timeoutId);
+        if (e && e.name === 'AbortError') {
+          alert('El servidor tarda demasiado en responder. Tu reserva puede haberse creado igualmente — revisa tu email en unos minutos.');
+        } else {
+          alert('Error de conexión. Inténtalo de nuevo.');
+        }
         btn.disabled = false; btnTxt.textContent = 'CONFIRMAR RESERVA';
       }
     };

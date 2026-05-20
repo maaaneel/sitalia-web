@@ -14,11 +14,11 @@
 
   <script>try{var t=localStorage.getItem('sitalia_theme');if(t&&t!=='nordic')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 
-  <link rel="stylesheet" href="shared.css">
-  <link rel="stylesheet" href="theme-nordic.css">
-  <link rel="stylesheet" href="theme-warm.css">
-  <link rel="stylesheet" href="theme-luxury.css">
-  <link rel="stylesheet" href="academia.css">
+  <link rel="stylesheet" href="shared.css?v=4">
+  <link rel="stylesheet" href="theme-nordic.css?v=4">
+  <link rel="stylesheet" href="theme-warm.css?v=4">
+  <link rel="stylesheet" href="theme-luxury.css?v=4">
+  <link rel="stylesheet" href="academia.css?v=4">
 
   <script type="application/ld+json">
   {
@@ -263,7 +263,7 @@
         <h2 class="section-title">Cuéntanos qué necesitas.</h2>
         <p>Te enviamos toda la información de actividades, horarios y precios. Te respondemos en menos de 24h.</p>
       </div>
-      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarInfo(event)">
+      <form id="aca-form" class="lead-form reveal reveal-delay-1" onsubmit="enviarInfo(event)">
         <div class="lead-form-field">
           <label class="lead-form-label">Tu nombre *</label>
           <input id="aca-nombre" class="lead-form-input" type="text" required>
@@ -362,26 +362,24 @@ async function enviarInfo(e) {
   if (consent && !consent.checked) { alert('Debes aceptar la política de privacidad.'); consent.focus(); return; }
   var btn = document.getElementById('aca-btn');
   var txt = document.getElementById('aca-btn-txt');
-  btn.disabled = true; txt.textContent = 'Enviando…';
+  btn.disabled = true; txt.textContent = 'Enviando...';
   try {
-    var r = await fetch('/api/contact', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        nombre: nombre, apellido: '', email: email, telefono: tel,
-        tipo_negocio: 'Academia - ' + act + ' (' + edad + ')',
-        mensaje: msg
-      })
+    var resp = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ negocio: 'academia', nombre: nombre, email: email, telefono: tel, edad: edad, actividad: act, mensaje: msg })
     });
-    if (!r.ok) throw new Error('Error');
-    btn.style.display = 'none';
+    var data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Error');
+    document.getElementById('aca-form').style.display = 'none';
     document.getElementById('aca-ok').style.display = 'block';
   } catch (err) {
-    btn.disabled = false; txt.textContent = 'ENVIAR SOLICITUD';
-    alert('No se pudo enviar. Llámanos al +34 954 550 321 o escríbenos a info@academiatalento.es');
+    alert('No se pudo enviar: ' + err.message);
+    btn.disabled = false; txt.textContent = 'ENVIAR';
   }
 }
 </script>
-<script src="shared.js?v=3"></script>
+
 <script src="cookie-banner.js" defer></script>
 <script src="theme-switcher.js" defer></script>
 </body>

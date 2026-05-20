@@ -14,11 +14,11 @@
 
   <script>try{var t=localStorage.getItem('sitalia_theme');if(t&&t!=='nordic')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 
-  <link rel="stylesheet" href="shared.css">
-  <link rel="stylesheet" href="theme-nordic.css">
-  <link rel="stylesheet" href="theme-warm.css">
-  <link rel="stylesheet" href="theme-luxury.css">
-  <link rel="stylesheet" href="psicologo.css">
+  <link rel="stylesheet" href="shared.css?v=4">
+  <link rel="stylesheet" href="theme-nordic.css?v=4">
+  <link rel="stylesheet" href="theme-warm.css?v=4">
+  <link rel="stylesheet" href="theme-luxury.css?v=4">
+  <link rel="stylesheet" href="psicologo.css?v=4">
 
   <script type="application/ld+json">
   {
@@ -188,7 +188,7 @@
         <h2 class="section-title">Hablemos.</h2>
         <p>Escríbeme y te respondo personalmente en menos de 48h. Todo lo que me cuentes es estrictamente confidencial.</p>
       </div>
-      <form class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
+      <form id="psi-form" class="lead-form reveal reveal-delay-1" onsubmit="enviarConsulta(event)">
         <div class="lead-form-field">
           <label class="lead-form-label">Nombre *</label>
           <input id="psi-nombre" class="lead-form-input" type="text" required>
@@ -273,26 +273,24 @@ async function enviarConsulta(e) {
   if (consent && !consent.checked) { alert('Debes aceptar la política de privacidad.'); consent.focus(); return; }
   var btn = document.getElementById('psi-btn');
   var txt = document.getElementById('psi-btn-txt');
-  btn.disabled = true; txt.textContent = 'Enviando…';
+  btn.disabled = true; txt.textContent = 'Enviando...';
   try {
-    var r = await fetch('/api/contact', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        nombre: nombre, apellido: '', email: email, telefono: tel,
-        tipo_negocio: 'Psicología - ' + modo,
-        mensaje: msg
-      })
+    var resp = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ negocio: 'psicologo', nombre: nombre, email: email, telefono: tel, modalidad: modo, mensaje: msg })
     });
-    if (!r.ok) throw new Error('Error');
-    btn.style.display = 'none';
+    var data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Error');
+    document.getElementById('psi-form').style.display = 'none';
     document.getElementById('psi-ok').style.display = 'block';
   } catch (err) {
-    btn.disabled = false; txt.textContent = 'ENVIAR MENSAJE';
-    alert('No se pudo enviar. Llámame al +34 915 550 789 o escríbeme directamente a consulta@elenavidalpsicologa.es');
+    alert('No se pudo enviar: ' + err.message);
+    btn.disabled = false; txt.textContent = 'ENVIAR';
   }
 }
 </script>
-<script src="shared.js?v=3"></script>
+
 <script src="cookie-banner.js" defer></script>
 <script src="theme-switcher.js" defer></script>
 </body>
