@@ -1,0 +1,12 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo cálido -->
+  <rect width="32" height="32" fill="#2A241E" rx="4"/>
+  
+  <!-- Marco arquitectónico minimalista -->
+  <path d="M 8 10 L 8 22 L 12 22 L 12 10 Z" stroke="#C97B5B" stroke-width="1.5" fill="none"/>
+  
+  <!-- Letras ADM en dorado -->
+  <text x="16" y="22" font-family="Georgia, serif" font-size="10" font-weight="600" fill="#C97B5B" text-anchor="middle" letter-spacing="0">
+    ADM
+  </text>
+</svg>

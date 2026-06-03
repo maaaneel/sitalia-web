@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto · Estudio Reformas BCN</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Pide tu presupuesto sin compromiso. Respondemos en menos de 24 horas. Reformas en Barcelona y área metropolitana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="adm-styles.css">
+<style>
+  .page-hero{padding:180px 40px 40px;max-width:1200px;margin:0 auto;text-align:center;position:relative}
+  .page-hero::before{content:"";position:absolute;top:120px;right:10%;width:400px;height:400px;background:radial-gradient(circle,var(--clay) 0%,transparent 70%);opacity:.12;border-radius:50%;filter:blur(40px);z-index:-1}
+  .page-hero h1{font-size:clamp(48px,7vw,88px);font-weight:400;margin:20px 0 28px}
+  .page-hero h1 .accent{font-style:italic;color:var(--clay);font-weight:300}
+  .page-hero p{font-size:18px;line-height:1.7;color:var(--ink-soft);max-width:600px;margin:0 auto}
+  .page-hero .eyebrow{justify-content:center}
+
+  /* ============ LAYOUT CONTACTO ============ */
+  .contact-layout{
+    max-width:1200px;margin:0 auto;
+    padding:60px 40px 120px;
+    display:grid;grid-template-columns:1.3fr 1fr;gap:80px;
+  }
+
+  /* ============ FORMULARIO ============ */
+  .form-card{
+    background:var(--cream);
+    padding:50px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+  }
+  .form-card h2{font-size:32px;font-weight:500;margin-bottom:10px}
+  .form-card > p{color:var(--ink-soft);margin-bottom:36px;font-size:15px}
+
+  .form-group{margin-bottom:22px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-row .form-group{margin-bottom:22px}
+  label{
+    display:block;
+    font-size:13px;font-weight:500;
+    margin-bottom:8px;
+    color:var(--ink);
+    letter-spacing:.02em;
+  }
+  label .req{color:var(--clay)}
+  input[type=text],
+  input[type=email],
+  input[type=tel],
+  select,
+  textarea{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid var(--line-strong);
+    background:var(--bg);
+    border-radius:12px;
+    font-family:'Manrope',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    transition:all .3s ease;
+  }
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--clay);
+    background:var(--cream);
+    box-shadow:0 0 0 4px rgba(201,123,91,.12);
+  }
+  textarea{min-height:140px;resize:vertical;font-family:'Manrope',sans-serif}
+  select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A4F43' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:44px}
+
+  .checkbox-row{
+    display:flex;align-items:flex-start;gap:12px;
+    margin:28px 0;font-size:13px;color:var(--ink-soft);line-height:1.6;
+  }
+  .checkbox-row input{
+    width:18px;height:18px;
+    margin-top:2px;
+    cursor:pointer;
+    accent-color:var(--clay);
+  }
+  .checkbox-row a{color:var(--clay);text-decoration:underline}
+
+  .submit-btn{
+    width:100%;
+    padding:18px;
+    background:var(--ink);color:var(--cream);
+    border:none;border-radius:999px;
+    font-family:'Manrope',sans-serif;
+    font-size:15px;font-weight:500;
+    letter-spacing:.02em;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    transition:all .4s ease;
+  }
+  .submit-btn:hover{
+    background:var(--clay);
+    transform:translateY(-2px);
+    box-shadow:0 15px 40px -10px rgba(201,123,91,.5);
+  }
+  .submit-btn .arrow{transition:transform .4s}
+  .submit-btn:hover .arrow{transform:translateX(4px)}
+
+  .form-success{
+    display:none;
+    background:var(--olive);color:var(--cream);
+    padding:20px 24px;border-radius:16px;
+    margin-top:24px;font-size:14px;
+  }
+  .form-success.visible{display:block}
+
+  /* ============ INFO LATERAL ============ */
+  .contact-side{display:flex;flex-direction:column;gap:30px}
+  .side-card{
+    background:var(--bg-warm);
+    padding:32px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+  }
+  .side-card h3{font-size:20px;font-weight:500;margin-bottom:18px}
+  .side-card .eyebrow{margin-bottom:10px}
+  .contact-line{
+    display:flex;align-items:center;gap:14px;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+  }
+  .contact-line:last-child{border-bottom:none}
+  .contact-line strong{display:block;font-weight:500;margin-bottom:2px}
+  .contact-line span{color:var(--ink-soft);font-size:13px}
+  .contact-icon{
+    width:40px;height:40px;border-radius:12px;
+    background:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--clay);font-size:16px;flex-shrink:0;
+  }
+
+  .zones{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .zone{
+    font-size:12px;
+    padding:6px 12px;
+    background:var(--cream);
+    border-radius:999px;color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+
+  /* ============ FAQ ============ */
+  .faq-section{
+    background:var(--bg-warm);
+    padding:100px 40px;
+  }
+  .faq-inner{max-width:800px;margin:0 auto}
+  .faq-header{text-align:center;margin-bottom:60px}
+  .faq-header h2{font-size:clamp(36px,4.5vw,56px);margin:20px 0;font-weight:400}
+  .faq-header h2 .italic{color:var(--clay)}
+  .faq-header .eyebrow{justify-content:center}
+
+  .faq-item{
+    background:var(--cream);
+    border-radius:18px;
+    border:1px solid var(--line);
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .faq-q{
+    width:100%;text-align:left;
+    padding:22px 28px;
+    background:transparent;border:none;
+    font-family:'Manrope',sans-serif;
+    font-size:16px;font-weight:500;color:var(--ink);
+    cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+  }
+  .faq-q::after{content:"+";font-size:24px;color:var(--clay);transition:transform .3s ease;font-weight:300}
+  .faq-item.open .faq-q::after{transform:rotate(45deg)}
+  .faq-a{
+    max-height:0;overflow:hidden;
+    transition:max-height .4s ease,padding .4s ease;
+    padding:0 28px;
+    color:var(--ink-soft);font-size:14px;line-height:1.7;
+  }
+  .faq-item.open .faq-a{max-height:400px;padding:0 28px 22px}
+
+  @media (max-width:900px){
+    .contact-layout{grid-template-columns:1fr;gap:40px;padding:40px 20px 80px}
+    .form-card{padding:36px 28px}
+    .form-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<style>
+/* Sitalia overlay (banner + back) - no toca estilos de EST */
+.s-demo-banner{background:#111;color:#fff;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;font-weight:600;}
+.s-demo-banner a{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+.s-back{position:fixed;top:42px;left:14px;z-index:9999;background:rgba(255,255,255,.96);color:#111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:600;padding:7px 13px 7px 11px;border-radius:100px;border:1px solid rgba(0,0,0,.1);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s;}
+.s-back:hover{transform:translateX(-2px);}
+@media(max-width:520px){.s-back .s-back-txt{display:none;}.s-back{padding:7px 10px;}}
+</style>
+<div class="s-demo-banner">DEMO — Estudio Reformas BCN · Sitalia.es · <a href="/">Ver otros sectores</a></div>
+<a href="/" class="s-back" aria-label="Volver a Sitalia"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 1L3 6l5 5"/></svg><span class="s-back-txt">Sitalia</span></a>
+
+
+<nav class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Estudio Reformas BCN">
+    <img src="logo-adm-bcn-v2.svg" alt="Estudio Reformas BCN" style="height:50px;width:auto;display:block">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Sobre nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="contacto.html" class="btn btn-primary">Presupuesto <span class="arrow">→</span></a>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="eyebrow reveal">Contacto</div>
+  <h1 class="reveal delay-1">
+    Cuéntanos <span class="accent">tu proyecto</span>.
+  </h1>
+  <p class="reveal delay-2">
+    Te respondemos en menos de 24 horas con una propuesta clara: cómo abordaríamos tu reforma, qué calendario proponemos y un presupuesto orientativo.
+  </p>
+</section>
+
+<section class="contact-layout">
+  <!-- ============ FORM ============ -->
+  <form class="form-card reveal" id="contact-form" novalidate>
+    <h2>Pide tu presupuesto</h2>
+    <p>Rellena el formulario y te llamamos cuando te vaya bien. También puedes escribirnos por WhatsApp.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nombre">Nombre <span class="req">*</span></label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email <span class="req">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="tipo">Tipo de proyecto <span class="req">*</span></label>
+        <select id="tipo" name="tipo" required>
+          <option value="">Selecciona una opción</option>
+          <option>Reforma integral de piso</option>
+          <option>Cocina</option>
+          <option>Baño</option>
+          <option>Local comercial</option>
+          <option>Oficinas</option>
+          <option>Decoración / interiorismo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="zona">Zona / Barrio</label>
+        <input type="text" id="zona" name="zona" placeholder="Ej: Eixample, Gràcia, Sarrià...">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="metros">Superficie aproximada</label>
+        <select id="metros" name="metros">
+          <option value="">No lo sé</option>
+          <option>Menos de 40 m²</option>
+          <option>40 – 80 m²</option>
+          <option>80 – 120 m²</option>
+          <option>120 – 200 m²</option>
+          <option>Más de 200 m²</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="plazo">¿Cuándo quieres empezar?</label>
+        <select id="plazo" name="plazo">
+          <option value="">No tengo fecha cerrada</option>
+          <option>Lo antes posible</option>
+          <option>En 1 – 3 meses</option>
+          <option>En 3 – 6 meses</option>
+          <option>Estoy valorando opciones</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="mensaje">Cuéntanos tu proyecto <span class="req">*</span></label>
+      <textarea id="mensaje" name="mensaje" required placeholder="Describe brevemente el espacio y qué te gustaría hacer. Cuanto más nos cuentes, más precisa será nuestra primera propuesta."></textarea>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="privacy" name="privacy" required>
+      <label for="privacy" style="margin:0;font-weight:400">
+        He leído y acepto la <a href="#">política de privacidad</a>. Mis datos se usan únicamente para responder a esta consulta.
+      </label>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Enviar solicitud
+      <span class="arrow">→</span>
+    </button>
+
+    <div class="form-success" id="form-success">
+      ✓ Gracias, hemos recibido tu solicitud. Te contactaremos en menos de 24 horas hábiles.
+    </div>
+  </form>
+
+  <!-- ============ INFO SIDEBAR ============ -->
+  <aside class="contact-side">
+    <div class="side-card reveal delay-1">
+      <div class="eyebrow">Contacto directo</div>
+      <h3>Habla con nosotros</h3>
+      <div class="contact-line">
+        <div class="contact-icon">✉</div>
+        <div>
+          <strong><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></strong>
+          <span>Respondemos en menos de 24h</span>
+        </div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-icon">☎</div>
+        <div>
+          <strong><a href="tel:+34">+34 XXX XXX XXX</a></strong>
+          <span>Lun a vie · 9:00 – 19:00</span>
+        </div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4z"/></svg>
+        </div>
+        <div>
+          <strong><a href="https://wa.me/34000000000" target="_blank">WhatsApp</a></strong>
+          <span>Para consultas rápidas</span>
+        </div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-icon">⌂</div>
+        <div>
+          <strong>Barcelona, España</strong>
+          <span>Visitas previa cita</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-card reveal delay-2">
+      <div class="eyebrow">Zonas de trabajo</div>
+      <h3>Reformamos en Barcelona y alrededores</h3>
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.6;margin-top:10px">Todos los barrios de Barcelona ciudad y área metropolitana. Si tu zona no aparece, consúltanos.</p>
+      <div class="zones">
+        <span class="zone">Eixample</span>
+        <span class="zone">Gràcia</span>
+        <span class="zone">Sarrià–Sant Gervasi</span>
+        <span class="zone">Les Corts</span>
+        <span class="zone">Poblenou · 22@</span>
+        <span class="zone">Born · Ciutat Vella</span>
+        <span class="zone">Sants</span>
+        <span class="zone">Horta–Guinardó</span>
+        <span class="zone">Sant Cugat</span>
+        <span class="zone">L'Hospitalet</span>
+        <span class="zone">Badalona</span>
+        <span class="zone">Esplugues</span>
+      </div>
+    </div>
+
+    <div class="side-card reveal delay-3" style="background:var(--ink);color:var(--cream);border-color:var(--ink)">
+      <div class="eyebrow" style="color:var(--clay)">Nuestro compromiso</div>
+      <h3 style="color:var(--cream)">24 horas de respuesta</h3>
+      <p style="font-size:14px;color:rgba(250,246,239,.7);line-height:1.7;margin-top:10px">
+        Te respondemos en menos de 24 horas laborables con una primera aproximación. Si prefieres hablar directamente, llámanos o escríbenos por WhatsApp.
+      </p>
+    </div>
+  </aside>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="eyebrow reveal">Preguntas frecuentes</div>
+      <h2 class="reveal delay-1">Lo que nos <span class="italic">preguntan siempre</span>.</h2>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Es gratuita la visita técnica y el presupuesto?</button>
+      <div class="faq-a">Sí. La primera visita y la elaboración del presupuesto no tienen ningún coste ni compromiso. Vamos a tu casa, medimos, escuchamos lo que buscas y preparamos una propuesta con precios desglosados.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Cuánto tarda una reforma integral?</button>
+      <div class="faq-a">Depende del tamaño y alcance. Un piso de 80–100 m² suele estar entre 10 y 14 semanas. Una cocina completa 3–5 semanas. Un baño 2–4 semanas. En el presupuesto te damos siempre un calendario detallado.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Os encargáis de pedir la licencia de obra?</button>
+      <div class="faq-a">Sí. Gestionamos la comunicación previa o licencia de obra según corresponda ante el Ayuntamiento, y también la licencia de actividad si es un local comercial. Tú no tienes que hacer trámites.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Qué garantía ofrecéis?</button>
+      <div class="faq-a">Dos años de garantía en acabados y diez años en elementos estructurales, como marca la normativa LOE. Todo por escrito y firmado en el acta final de obra.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Puedo vivir en casa durante la reforma?</button>
+      <div class="faq-a">Solo en reformas muy parciales (un baño, pintura, etc.). En reformas integrales es recomendable no estar: hay ruido, polvo y cortes de servicios frecuentes. Te ayudamos a planificarlo.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">¿Cómo se paga una reforma?</button>
+      <div class="faq-a">Por hitos, nunca todo por adelantado. Normalmente: un pago inicial al firmar el contrato, pagos parciales a medida que se completan fases (estructura, instalaciones, acabados), y el último pago a la entrega final de llaves.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Estudio Reformas<span style="color:var(--clay);font-family:'Manrope';font-size:10px;letter-spacing:.3em;margin-top:4px">REFORMAS</span></div>
+      <p>Empresa de reformas integrales y decoración en Barcelona. Llave en mano, con trato cercano y acabados de calidad.</p>
+      <div class="socials">
+        <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+        <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5.02 2.5 2.5 0 0 1 .02-5.02zM3 8.98h4v12H3zM9 8.98h3.8v1.6h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6v6.5h-4v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Navega</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="sobre-nosotros.html">Sobre nosotros</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div class="footer-col"><h4>Servicios</h4><ul><li><a href="servicios.html">Reformas integrales</a></li><li><a href="servicios.html">Cocinas</a></li><li><a href="servicios.html">Baños</a></li><li><a href="servicios.html">Locales y oficinas</a></li><li><a href="servicios.html">Decoración</a></li></ul></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="#">Barcelona, España</a></li><li><a href="tel:+34">+34 XXX XXX XXX</a></li><li><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></li><li><a href="#">Lun–Vie · 9:00–19:00</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Estudio Reformas BCN, SLU. Todos los derechos reservados.</div>
+    <div><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/34000000000" class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm5.9 15.9a8.3 8.3 0 0 1-12.6 1l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 17.9 17.9z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>{if(window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled')});
+  const observer = new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));
+
+  // FAQ
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click',()=>{
+      item.classList.toggle('open');
+    });
+  });
+
+  // Formulario (demo - requiere backend para enviar emails real)
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    // TODO: aquí se conecta con el endpoint real de envío (FormSpree, Netlify Forms, API propia, etc.)
+    // De momento muestra mensaje de éxito visual y resetea el form
+    success.classList.add('visible');
+    form.reset();
+    setTimeout(()=>success.scrollIntoView({behavior:'smooth',block:'center'}),100);
+  });
+
+  function toggleMenu(){const links = document.querySelector('.nav-links');if(links.style.display === 'flex'){links.style.display='none'}else{links.style.display='flex';links.style.position='absolute';links.style.top='100%';links.style.left='0';links.style.right='0';links.style.background='var(--cream)';links.style.flexDirection='column';links.style.padding='30px';links.style.gap='20px'}}
+</script>
+
+
+<div style="background:#111;color:rgba(255,255,255,.5);text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;padding:14px 16px;letter-spacing:.05em;">
+  Web por <a href="/" style="color:#fff;text-decoration:none;font-weight:600;">Sitalia</a>
+  <span style="margin:0 10px;opacity:.4;">·</span>
+  <a href="/privacidad.html" style="color:rgba(255,255,255,.7);">Privacidad</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/aviso-legal.html" style="color:rgba(255,255,255,.7);">Aviso legal</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/cookies.html" style="color:rgba(255,255,255,.7);">Cookies</a>
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

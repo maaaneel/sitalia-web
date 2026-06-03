@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyectos · Estudio Reformas BCN</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Algunos de nuestros proyectos de reforma en Barcelona: pisos en Eixample, cocinas en Sarrià, locales en Gràcia, oficinas en Poblenou y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="adm-styles.css">
+<style>
+  .page-hero{padding:180px 40px 60px;max-width:1400px;margin:0 auto;text-align:center;position:relative}
+  .page-hero::before{content:"";position:absolute;top:120px;right:10%;width:400px;height:400px;background:radial-gradient(circle,var(--clay) 0%,transparent 70%);opacity:.12;border-radius:50%;filter:blur(40px);z-index:-1}
+  .page-hero h1{font-size:clamp(48px,7vw,88px);font-weight:400;margin:20px 0 28px}
+  .page-hero h1 .accent{font-style:italic;color:var(--clay);font-weight:300}
+  .page-hero p{font-size:18px;line-height:1.7;color:var(--ink-soft);max-width:640px;margin:0 auto}
+  .page-hero .eyebrow{justify-content:center}
+
+  /* ============ FILTROS ============ */
+  .filters{
+    max-width:1400px;margin:0 auto;
+    padding:20px 40px 60px;
+    display:flex;justify-content:center;flex-wrap:wrap;gap:10px;
+  }
+  .filter-btn{
+    padding:10px 22px;
+    border:1px solid var(--line-strong);
+    background:transparent;color:var(--ink);
+    border-radius:999px;
+    font-family:'Manrope',sans-serif;
+    font-size:14px;font-weight:500;
+    cursor:pointer;
+    transition:all .3s ease;
+  }
+  .filter-btn:hover{border-color:var(--clay);color:var(--clay)}
+  .filter-btn.active{
+    background:var(--ink);color:var(--cream);border-color:var(--ink);
+  }
+
+  /* ============ GRID PROYECTOS ============ */
+  .projects{
+    max-width:1400px;margin:0 auto;
+    padding:20px 40px 120px;
+  }
+  .projects-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .project-card{
+    display:flex;flex-direction:column;
+    border-radius:var(--radius);overflow:hidden;
+    background:var(--cream);
+    border:1px solid var(--line);
+    transition:all .5s ease;
+  }
+  .project-card.hidden{display:none}
+  .project-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow);
+    border-color:var(--clay);
+  }
+  .project-img{
+    aspect-ratio:4/5;
+    overflow:hidden;position:relative;
+  }
+  .project-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+  .project-card:hover .project-img img{transform:scale(1.06)}
+  .project-cat{
+    position:absolute;top:20px;left:20px;
+    background:var(--cream);
+    padding:6px 14px;border-radius:999px;
+    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--clay);font-weight:600;
+  }
+  .project-info{padding:28px 24px}
+  .project-info h3{font-size:22px;font-weight:500;margin-bottom:6px}
+  .project-info .location{
+    font-size:13px;color:var(--ink-soft);
+    margin-bottom:16px;
+    text-transform:uppercase;letter-spacing:.1em;
+  }
+  .project-info p{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px}
+  .project-meta{
+    display:flex;flex-wrap:wrap;gap:8px;
+    padding-top:16px;border-top:1px solid var(--line);
+  }
+  .meta-pill{
+    font-size:11px;
+    padding:5px 10px;
+    background:var(--bg);
+    border-radius:999px;color:var(--ink-soft);
+  }
+
+  /* ============ STATS ============ */
+  .stats-strip{
+    background:var(--ink);color:var(--cream);
+    padding:80px 40px;
+  }
+  .stats-inner{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:40px;
+  }
+  .stat-block{text-align:center}
+  .stat-block .num{
+    font-family:'Fraunces',serif;
+    font-size:clamp(40px,5vw,68px);font-weight:400;
+    color:var(--cream);line-height:1;margin-bottom:10px;
+  }
+  .stat-block .num .italic{color:var(--clay)}
+  .stat-block .label{
+    font-size:13px;color:rgba(250,246,239,.7);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* ============ CTA ============ */
+  .cta-final{padding:140px 40px;text-align:center;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-warm) 100%)}
+  .cta-final-inner{max-width:720px;margin:0 auto}
+  .cta-final h2{font-size:clamp(40px,5vw,72px);font-weight:400;margin:24px 0 28px}
+  .cta-final h2 .italic{color:var(--clay)}
+  .cta-final p{font-size:18px;color:var(--ink-soft);line-height:1.7;max-width:540px;margin:0 auto 44px}
+  .cta-big{display:inline-flex;align-items:center;gap:16px;padding:22px 44px;background:var(--ink);color:var(--cream);border-radius:999px;font-size:16px;font-weight:500;transition:all .4s ease}
+  .cta-big:hover{background:var(--clay);transform:translateY(-3px);box-shadow:0 20px 50px -15px rgba(201,123,91,.5)}
+  .cta-big span{transition:transform .4s}
+  .cta-big:hover span{transform:translateX(6px)}
+
+  @media (max-width:1000px){.projects-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:700px){
+    .projects-grid{grid-template-columns:1fr}
+    .stats-inner{grid-template-columns:1fr 1fr;gap:30px}
+  }
+</style>
+</head>
+<body>
+<style>
+/* Sitalia overlay (banner + back) - no toca estilos de EST */
+.s-demo-banner{background:#111;color:#fff;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;font-weight:600;}
+.s-demo-banner a{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+.s-back{position:fixed;top:42px;left:14px;z-index:9999;background:rgba(255,255,255,.96);color:#111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:600;padding:7px 13px 7px 11px;border-radius:100px;border:1px solid rgba(0,0,0,.1);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s;}
+.s-back:hover{transform:translateX(-2px);}
+@media(max-width:520px){.s-back .s-back-txt{display:none;}.s-back{padding:7px 10px;}}
+</style>
+<div class="s-demo-banner">DEMO — Estudio Reformas BCN · Sitalia.es · <a href="/">Ver otros sectores</a></div>
+<a href="/" class="s-back" aria-label="Volver a Sitalia"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 1L3 6l5 5"/></svg><span class="s-back-txt">Sitalia</span></a>
+
+
+<nav class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Estudio Reformas BCN">
+    <img src="logo-adm-bcn-v2.svg" alt="Estudio Reformas BCN" style="height:50px;width:auto;display:block">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Sobre nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="contacto.html" class="btn btn-primary">Presupuesto <span class="arrow">→</span></a>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="eyebrow reveal">Proyectos</div>
+  <h1 class="reveal delay-1">
+    Una selección de <span class="accent">reformas recientes</span><br>
+    en Barcelona.
+  </h1>
+  <p class="reveal delay-2">
+    Desde pisos en el Eixample hasta oficinas en 22@. Cada proyecto cuenta una historia distinta, pero todos comparten el mismo cuidado por los detalles.
+  </p>
+</section>
+
+<!-- ============ FILTROS ============ -->
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">Todos</button>
+  <button class="filter-btn" data-filter="integral">Reformas integrales</button>
+  <button class="filter-btn" data-filter="cocina">Cocinas</button>
+  <button class="filter-btn" data-filter="bano">Baños</button>
+  <button class="filter-btn" data-filter="local">Locales</button>
+  <button class="filter-btn" data-filter="oficina">Oficinas</button>
+</div>
+
+<!-- ============ PROYECTOS ============ -->
+<section class="projects">
+  <div class="projects-grid">
+
+    <article class="project-card reveal" data-cat="integral">
+      <div class="project-img">
+        <img src="imagenes/proyecto-eixample.jpg" alt="Reforma integral en Eixample">
+        <span class="project-cat">Reforma integral</span>
+      </div>
+      <div class="project-info">
+        <h3>Piso Eixample</h3>
+        <div class="location">Barcelona · 120 m²</div>
+        <p>Rehabilitación completa conservando molduras originales y mosaico hidráulico. Cocina abierta al salón y baño principal con ducha a ras de suelo.</p>
+        <div class="project-meta">
+          <span class="meta-pill">14 semanas</span>
+          <span class="meta-pill">Eixample Dret</span>
+          <span class="meta-pill">2025</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal delay-1" data-cat="local">
+      <div class="project-img">
+        <img src="imagenes/local-gracia.jpg" alt="Local reformado en Gràcia">
+        <span class="project-cat">Local</span>
+      </div>
+      <div class="project-info">
+        <h3>Tienda Gràcia</h3>
+        <div class="location">Barcelona · 65 m²</div>
+        <p>Adaptación de local para comercio de moda independiente. Microcemento continuo, estanterías a medida en roble y escaparate renovado.</p>
+        <div class="project-meta">
+          <span class="meta-pill">6 semanas</span>
+          <span class="meta-pill">Vila de Gràcia</span>
+          <span class="meta-pill">2025</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal delay-2" data-cat="cocina">
+      <div class="project-img">
+        <img src="imagenes/cocina-sarria.jpg" alt="Cocina reformada en Sarrià">
+        <span class="project-cat">Cocina</span>
+      </div>
+      <div class="project-info">
+        <h3>Cocina Sarrià</h3>
+        <div class="location">Barcelona · 18 m²</div>
+        <p>Cocina abierta con isla central, muebles en roble natural aceitado, encimera de cuarzo compacto y electrodomésticos integrados.</p>
+        <div class="project-meta">
+          <span class="meta-pill">4 semanas</span>
+          <span class="meta-pill">Sarrià</span>
+          <span class="meta-pill">2024</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal" data-cat="oficina">
+      <div class="project-img">
+        <img src="imagenes/oficinas-poblenou.jpg" alt="Oficinas reformadas en Poblenou">
+        <span class="project-cat">Oficinas</span>
+      </div>
+      <div class="project-info">
+        <h3>Oficinas Poblenou</h3>
+        <div class="location">Barcelona · 280 m²</div>
+        <p>Sede creativa para estudio de branding. Zona de trabajo abierta, dos salas de reunión con mamparas acústicas y zona café con office.</p>
+        <div class="project-meta">
+          <span class="meta-pill">10 semanas</span>
+          <span class="meta-pill">22@ · Poblenou</span>
+          <span class="meta-pill">2025</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal delay-1" data-cat="bano">
+      <div class="project-img">
+        <img src="imagenes/bano-lescorts.jpg" alt="Baño reformado en Les Corts">
+        <span class="project-cat">Baño</span>
+      </div>
+      <div class="project-info">
+        <h3>Baño Les Corts</h3>
+        <div class="location">Barcelona · 8 m²</div>
+        <p>Baño principal con ducha walk-in, porcelánico gran formato travertino, mueble volado en nogal y espejo retroiluminado.</p>
+        <div class="project-meta">
+          <span class="meta-pill">3 semanas</span>
+          <span class="meta-pill">Les Corts</span>
+          <span class="meta-pill">2025</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal delay-2" data-cat="integral">
+      <div class="project-img">
+        <img src="imagenes/atico-diagonal.jpg" alt="Ático reformado cerca de Diagonal">
+        <span class="project-cat">Reforma integral</span>
+      </div>
+      <div class="project-info">
+        <h3>Ático Diagonal</h3>
+        <div class="location">Barcelona · 95 m² + terraza 40 m²</div>
+        <p>Ático con integración interior-terraza mediante ventanales correderos. Parquet de roble, paleta neutra y vistas a los tejados.</p>
+        <div class="project-meta">
+          <span class="meta-pill">12 semanas</span>
+          <span class="meta-pill">Sant Gervasi</span>
+          <span class="meta-pill">2024</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal" data-cat="cocina">
+      <div class="project-img">
+        <img src="imagenes/cocina-nordica.jpg" alt="Cocina estilo nórdico en Gràcia">
+        <span class="project-cat">Cocina</span>
+      </div>
+      <div class="project-info">
+        <h3>Cocina nórdica</h3>
+        <div class="location">Barcelona · 12 m²</div>
+        <p>Cocina en línea en piso antiguo de Gràcia. Frentes en fresno claro, azulejo blanco cuadrado artesanal y pequeños detalles en latón.</p>
+        <div class="project-meta">
+          <span class="meta-pill">3 semanas</span>
+          <span class="meta-pill">Vila de Gràcia</span>
+          <span class="meta-pill">2024</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card reveal delay-1" data-cat="bano">
+      <div class="project-img">
+        <img src="imagenes/suite-sarria.jpg" alt="Suite con baño en Sarrià">
+        <span class="project-cat">Baño</span>
+      </div>
+      <div class="project-info">
+        <h3>Suite Sarrià</h3>
+        <div class="location">Barcelona · 14 m²</div>
+        <p>Baño en suite con ducha de gran formato, bañera exenta, doble lavabo en nogal y pavimento continuo de porcelánico gran formato.</p>
+        <div class="project-meta">
+          <span class="meta-pill">4 semanas</span>
+          <span class="meta-pill">Sarrià</span>
+          <span class="meta-pill">2025</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-block reveal">
+      <div class="num">+150</div>
+      <div class="label">Proyectos entregados</div>
+    </div>
+    <div class="stat-block reveal delay-1">
+      <div class="num">+12.000<span class="italic">m²</span></div>
+      <div class="label">Reformados</div>
+    </div>
+    <div class="stat-block reveal delay-2">
+      <div class="num">24</div>
+      <div class="label">Barrios de Barcelona</div>
+    </div>
+    <div class="stat-block reveal delay-3">
+      <div class="num">98<span class="italic">%</span></div>
+      <div class="label">Recomendación</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <div class="eyebrow reveal" style="justify-content:center">Tu proyecto</div>
+    <h2 class="reveal delay-1">¿Quieres ver tu casa <span class="italic">en esta galería</span>?</h2>
+    <p class="reveal delay-2">
+      Cuéntanos qué tienes en mente. Te damos presupuesto, calendario y referencias reales en menos de 24 horas.
+    </p>
+    <a href="contacto.html" class="cta-big reveal delay-3">
+      Pedir presupuesto gratuito
+      <span>→</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Estudio Reformas<span style="color:var(--clay);font-family:'Manrope';font-size:10px;letter-spacing:.3em;margin-top:4px">REFORMAS</span></div>
+      <p>Empresa de reformas integrales y decoración en Barcelona. Llave en mano, con trato cercano y acabados de calidad.</p>
+      <div class="socials">
+        <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+        <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5.02 2.5 2.5 0 0 1 .02-5.02zM3 8.98h4v12H3zM9 8.98h3.8v1.6h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6v6.5h-4v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Navega</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="sobre-nosotros.html">Sobre nosotros</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div class="footer-col"><h4>Servicios</h4><ul><li><a href="servicios.html">Reformas integrales</a></li><li><a href="servicios.html">Cocinas</a></li><li><a href="servicios.html">Baños</a></li><li><a href="servicios.html">Locales y oficinas</a></li><li><a href="servicios.html">Decoración</a></li></ul></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="#">Barcelona, España</a></li><li><a href="tel:+34">+34 XXX XXX XXX</a></li><li><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></li><li><a href="#">Lun–Vie · 9:00–19:00</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Estudio Reformas BCN, SLU. Todos los derechos reservados.</div>
+    <div><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/34000000000" class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm5.9 15.9a8.3 8.3 0 0 1-12.6 1l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 17.9 17.9z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>{if(window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled')});
+  const observer = new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));
+
+  // Filtros
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      filterBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c=>{
+        if(f === 'all' || c.dataset.cat === f) c.classList.remove('hidden');
+        else c.classList.add('hidden');
+      });
+    });
+  });
+
+  function toggleMenu(){const links = document.querySelector('.nav-links');if(links.style.display === 'flex'){links.style.display='none'}else{links.style.display='flex';links.style.position='absolute';links.style.top='100%';links.style.left='0';links.style.right='0';links.style.background='var(--cream)';links.style.flexDirection='column';links.style.padding='30px';links.style.gap='20px'}}
+</script>
+
+
+<div style="background:#111;color:rgba(255,255,255,.5);text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;padding:14px 16px;letter-spacing:.05em;">
+  Web por <a href="/" style="color:#fff;text-decoration:none;font-weight:600;">Sitalia</a>
+  <span style="margin:0 10px;opacity:.4;">·</span>
+  <a href="/privacidad.html" style="color:rgba(255,255,255,.7);">Privacidad</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/aviso-legal.html" style="color:rgba(255,255,255,.7);">Aviso legal</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/cookies.html" style="color:rgba(255,255,255,.7);">Cookies</a>
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

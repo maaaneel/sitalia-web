@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios · Estudio Reformas BCN</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Reformas integrales, cocinas, baños, locales, oficinas y decoración en Barcelona. Un equipo llave en mano con gremios propios y acabados cuidados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="adm-styles.css">
+<style>
+  .page-hero{
+    padding:180px 40px 80px;
+    max-width:1400px;margin:0 auto;
+    text-align:center;position:relative;
+  }
+  .page-hero::before{
+    content:"";position:absolute;top:120px;right:10%;
+    width:400px;height:400px;
+    background:radial-gradient(circle,var(--clay) 0%,transparent 70%);
+    opacity:.12;border-radius:50%;filter:blur(40px);z-index:-1;
+  }
+  .page-hero h1{font-size:clamp(48px,7vw,88px);font-weight:400;margin:20px 0 28px}
+  .page-hero h1 .accent{font-style:italic;color:var(--clay);font-weight:300}
+  .page-hero p{font-size:18px;line-height:1.7;color:var(--ink-soft);max-width:640px;margin:0 auto}
+  .page-hero .eyebrow{justify-content:center}
+
+  /* ============ SERVICIOS DESTACADOS ============ */
+  .featured-services{padding:80px 40px 40px;max-width:1400px;margin:0 auto}
+  .featured-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
+  }
+  .featured-card{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:var(--radius);overflow:hidden;
+    box-shadow:var(--shadow);
+    transition:transform .6s ease;
+  }
+  .featured-card:hover{transform:translateY(-8px)}
+  .featured-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+  .featured-card:hover img{transform:scale(1.05)}
+  .featured-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 40%,rgba(42,36,30,.85) 100%);
+    padding:36px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    color:var(--cream);
+  }
+  .featured-overlay .eyebrow{color:var(--clay);margin-bottom:14px}
+  .featured-overlay h3{
+    font-size:32px;font-weight:400;
+    margin-bottom:10px;color:var(--cream);
+  }
+  .featured-overlay p{font-size:14px;color:rgba(250,246,239,.85);line-height:1.6}
+
+  /* ============ CATÁLOGO COMPLETO ============ */
+  .catalog{padding:100px 40px;max-width:1400px;margin:0 auto}
+  .catalog-header{text-align:center;margin-bottom:80px}
+  .catalog-header h2{font-size:clamp(36px,4.5vw,56px);margin:20px 0 24px}
+  .catalog-header h2 .italic{color:var(--clay)}
+  .catalog-header p{max-width:600px;margin:0 auto;color:var(--ink-soft);font-size:17px}
+  .catalog-header .eyebrow{justify-content:center}
+
+  .services-list{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+  }
+  .service-item{
+    background:var(--cream);
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    padding:38px 36px;
+    transition:all .4s ease;
+    display:flex;flex-direction:column;
+  }
+  .service-item:hover{
+    transform:translateY(-4px);
+    border-color:var(--clay);
+    box-shadow:0 20px 50px -25px rgba(201,123,91,.3);
+  }
+  .service-num{
+    font-family:'Fraunces',serif;
+    font-size:40px;font-style:italic;color:var(--clay);
+    line-height:1;margin-bottom:20px;font-weight:300;
+  }
+  .service-item h3{
+    font-size:24px;font-weight:500;
+    margin-bottom:14px;
+  }
+  .service-item p{
+    font-size:15px;color:var(--ink-soft);
+    line-height:1.7;margin-bottom:22px;flex:1;
+  }
+  .service-details{
+    border-top:1px solid var(--line);
+    padding-top:20px;margin-top:auto;
+    display:flex;flex-wrap:wrap;gap:8px;
+  }
+  .detail-pill{
+    font-size:12px;letter-spacing:.05em;
+    padding:6px 12px;
+    background:var(--bg);
+    border-radius:999px;color:var(--ink-soft);
+  }
+
+  /* ============ INCLUYE ============ */
+  .includes-section{
+    background:var(--bg-warm);
+    padding:120px 40px;
+  }
+  .includes-inner{max-width:1200px;margin:0 auto}
+  .includes-header{text-align:center;margin-bottom:80px}
+  .includes-header h2{font-size:clamp(36px,4.5vw,56px);margin:20px 0}
+  .includes-header .eyebrow{justify-content:center}
+  .includes-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
+  }
+  .include-card{
+    background:var(--cream);
+    padding:36px 32px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+  }
+  .include-check{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--clay);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;font-size:18px;
+  }
+  .include-card h3{font-size:20px;font-weight:500;margin-bottom:10px}
+  .include-card p{font-size:14px;color:var(--ink-soft);line-height:1.7}
+
+  /* ============ CTA ============ */
+  .cta-final{
+    padding:140px 40px;text-align:center;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg-warm) 100%);
+  }
+  .cta-final-inner{max-width:720px;margin:0 auto}
+  .cta-final h2{font-size:clamp(40px,5vw,72px);font-weight:400;margin:24px 0 28px}
+  .cta-final h2 .italic{color:var(--clay)}
+  .cta-final p{font-size:18px;color:var(--ink-soft);line-height:1.7;max-width:540px;margin:0 auto 44px}
+  .cta-big{
+    display:inline-flex;align-items:center;gap:16px;
+    padding:22px 44px;background:var(--ink);color:var(--cream);
+    border-radius:999px;font-size:16px;font-weight:500;
+    transition:all .4s ease;
+  }
+  .cta-big:hover{background:var(--clay);transform:translateY(-3px);box-shadow:0 20px 50px -15px rgba(201,123,91,.5)}
+  .cta-big span{transition:transform .4s}
+  .cta-big:hover span{transform:translateX(6px)}
+
+  @media (max-width:900px){
+    .featured-grid{grid-template-columns:1fr;gap:20px}
+    .services-list{grid-template-columns:1fr}
+    .includes-grid{grid-template-columns:1fr;gap:20px}
+  }
+</style>
+</head>
+<body>
+<style>
+/* Sitalia overlay (banner + back) - no toca estilos de EST */
+.s-demo-banner{background:#111;color:#fff;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;font-weight:600;}
+.s-demo-banner a{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+.s-back{position:fixed;top:42px;left:14px;z-index:9999;background:rgba(255,255,255,.96);color:#111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:600;padding:7px 13px 7px 11px;border-radius:100px;border:1px solid rgba(0,0,0,.1);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s;}
+.s-back:hover{transform:translateX(-2px);}
+@media(max-width:520px){.s-back .s-back-txt{display:none;}.s-back{padding:7px 10px;}}
+</style>
+<div class="s-demo-banner">DEMO — Estudio Reformas BCN · Sitalia.es · <a href="/">Ver otros sectores</a></div>
+<a href="/" class="s-back" aria-label="Volver a Sitalia"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 1L3 6l5 5"/></svg><span class="s-back-txt">Sitalia</span></a>
+
+
+<nav class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Estudio Reformas BCN">
+    <img src="logo-adm-bcn-v2.svg" alt="Estudio Reformas BCN" style="height:50px;width:auto;display:block">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Sobre nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="contacto.html" class="btn btn-primary">Presupuesto <span class="arrow">→</span></a>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="eyebrow reveal">Qué hacemos</div>
+  <h1 class="reveal delay-1">
+    Un equipo, <span class="accent">todos los oficios</span>.<br>
+    Tu proyecto, <span class="accent">llave en mano</span>.
+  </h1>
+  <p class="reveal delay-2">
+    Reformas integrales, cocinas, baños, locales, oficinas y decoración. Coordinamos cada gremio para que tú hables con una sola persona de principio a fin.
+  </p>
+</section>
+
+<!-- ============ SERVICIOS DESTACADOS ============ -->
+<section class="featured-services">
+  <div class="featured-grid">
+    <div class="featured-card reveal-scale">
+      <img src="imagenes/reforma-integral.jpg" alt="Reforma integral en Barcelona">
+      <div class="featured-overlay">
+        <div class="eyebrow">Nuestro servicio estrella</div>
+        <h3>Reformas integrales</h3>
+        <p>Rehabilitamos tu vivienda completa: distribución, estructura, instalaciones y acabados.</p>
+      </div>
+    </div>
+    <div class="featured-card reveal-scale delay-1">
+      <img src="imagenes/cocina-destacada.jpg" alt="Cocina reformada a medida">
+      <div class="featured-overlay">
+        <div class="eyebrow">A medida</div>
+        <h3>Cocinas</h3>
+        <p>Diseño, fabricación e instalación de cocinas pensadas para cómo cocinas tú.</p>
+      </div>
+    </div>
+    <div class="featured-card reveal-scale delay-2">
+      <img src="imagenes/bano-destacado.jpg" alt="Baño reformado con ducha a ras de suelo">
+      <div class="featured-overlay">
+        <div class="eyebrow">Confort diario</div>
+        <h3>Baños</h3>
+        <p>Duchas a ras de suelo, revestimientos cálidos y sanitarios que duran años sin dar problemas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO COMPLETO ============ -->
+<section class="catalog">
+  <div class="catalog-header">
+    <div class="eyebrow reveal">Catálogo completo</div>
+    <h2 class="reveal delay-1">Todo lo que podemos <span class="italic">hacer por ti</span>.</h2>
+    <p class="reveal delay-2">
+      Trabajamos todo tipo de proyectos en Barcelona y área metropolitana. Si no ves tu caso, pregúntanos: hemos reformado desde pisos antiguos del Raval hasta oficinas en 22@.
+    </p>
+  </div>
+
+  <div class="services-list">
+    <div class="service-item reveal">
+      <div class="service-num">01</div>
+      <h3>Reformas integrales de pisos</h3>
+      <p>Rehabilitación completa: tiramos tabiques, movemos instalaciones eléctricas, fontanería, climatización y dejamos acabados nuevos. Ideal para pisos del Eixample, Gràcia o Sant Gervasi.</p>
+      <div class="service-details">
+        <span class="detail-pill">Obra mayor</span>
+        <span class="detail-pill">Proyecto + licencia</span>
+        <span class="detail-pill">8-16 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-1">
+      <div class="service-num">02</div>
+      <h3>Cocinas a medida</h3>
+      <p>Muebles fabricados aquí, encimeras de cuarzo, granito o dekton, electrodomésticos integrados y la campana extractora bien dimensionada. Planificamos en 3D antes de empezar.</p>
+      <div class="service-details">
+        <span class="detail-pill">Diseño 3D</span>
+        <span class="detail-pill">Fabricación propia</span>
+        <span class="detail-pill">3-5 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-2">
+      <div class="service-num">03</div>
+      <h3>Baños completos</h3>
+      <p>Cambio total: plato de ducha a ras de suelo, mueble flotante, griferías empotradas y pavimento técnico. Impermeabilización reforzada para no tener sustos en 10 años.</p>
+      <div class="service-details">
+        <span class="detail-pill">Llave en mano</span>
+        <span class="detail-pill">Impermeabilización</span>
+        <span class="detail-pill">2-4 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal">
+      <div class="service-num">04</div>
+      <h3>Locales comerciales</h3>
+      <p>Reforma y adaptación de locales: tiendas, cafeterías, estudios, clínicas dentales, gimnasios pequeños. Tramitamos licencia de actividad y certificado final.</p>
+      <div class="service-details">
+        <span class="detail-pill">Licencia de actividad</span>
+        <span class="detail-pill">Cert. final de obra</span>
+        <span class="detail-pill">4-10 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-1">
+      <div class="service-num">05</div>
+      <h3>Oficinas y espacios de trabajo</h3>
+      <p>Tabiquería, mamparas de vidrio, redes de datos, iluminación de trabajo, zonas comunes. Hacemos sedes de 80 a 500 m² en Poblenou, 22@ y Diagonal.</p>
+      <div class="service-details">
+        <span class="detail-pill">Instalaciones tech</span>
+        <span class="detail-pill">Fuera de horas</span>
+        <span class="detail-pill">6-12 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-2">
+      <div class="service-num">06</div>
+      <h3>Decoración e interiorismo</h3>
+      <p>Vestimos el espacio una vez terminada la obra: paleta, mobiliario, iluminación, textiles y detalles. También lo ofrecemos para espacios que no vamos a reformar.</p>
+      <div class="service-details">
+        <span class="detail-pill">Home staging</span>
+        <span class="detail-pill">Proyecto integral</span>
+        <span class="detail-pill">2-6 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal">
+      <div class="service-num">07</div>
+      <h3>Pintura y acabados</h3>
+      <p>Pintura plástica y al agua, estucos venecianos, microcementos, papeles pintados. Preparación previa de paredes para que el resultado dure años sin descascarillarse.</p>
+      <div class="service-details">
+        <span class="detail-pill">Microcemento</span>
+        <span class="detail-pill">Estuco veneciano</span>
+        <span class="detail-pill">1-2 semanas</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-1">
+      <div class="service-num">08</div>
+      <h3>Pavimentos y revestimientos</h3>
+      <p>Parquet de madera natural, laminado de alta gama, gres porcelánico, mosaicos hidráulicos, microcemento continuo. Asesoramiento de qué funciona en cada espacio.</p>
+      <div class="service-details">
+        <span class="detail-pill">Parquet natural</span>
+        <span class="detail-pill">Gres porcelánico</span>
+        <span class="detail-pill">Mosaico hidráulico</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal delay-2">
+      <div class="service-num">09</div>
+      <h3>Carpintería a medida</h3>
+      <p>Armarios empotrados, vestidores, puertas correderas, librerías a suelo. Fabricamos en DM lacado, roble macizo, nogal, laminado. Herrajes Blum.</p>
+      <div class="service-details">
+        <span class="detail-pill">Roble macizo</span>
+        <span class="detail-pill">Herrajes Blum</span>
+        <span class="detail-pill">A medida</span>
+      </div>
+    </div>
+
+    <div class="service-item reveal">
+      <div class="service-num">10</div>
+      <h3>Instalaciones</h3>
+      <p>Electricidad certificada (boletín nuevo), fontanería, aire acondicionado por conductos, aerotermia, domótica, videoportero. Todo con boletines oficiales firmados.</p>
+      <div class="service-details">
+        <span class="detail-pill">Boletín eléctrico</span>
+        <span class="detail-pill">Aerotermia</span>
+        <span class="detail-pill">Domótica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUÉ INCLUYE SIEMPRE ============ -->
+<section class="includes-section">
+  <div class="includes-inner">
+    <div class="includes-header">
+      <div class="eyebrow reveal">Incluido sin coste extra</div>
+      <h2 class="reveal delay-1">Todos nuestros proyectos <span class="italic" style="color:var(--clay)">incluyen</span>.</h2>
+    </div>
+    <div class="includes-grid">
+      <div class="include-card reveal">
+        <div class="include-check">✓</div>
+        <h3>Visita técnica</h3>
+        <p>Gratuita y sin compromiso. Vamos a tu casa, medimos y escuchamos.</p>
+      </div>
+      <div class="include-card reveal delay-1">
+        <div class="include-check">✓</div>
+        <h3>Diseño y planos</h3>
+        <p>Distribución, alzados y renders 3D cuando hace falta visualizar.</p>
+      </div>
+      <div class="include-card reveal delay-2">
+        <div class="include-check">✓</div>
+        <h3>Presupuesto desglosado</h3>
+        <p>Partida por partida. Sabes exactamente qué pagas y cuánto cuesta cada cosa.</p>
+      </div>
+      <div class="include-card reveal">
+        <div class="include-check">✓</div>
+        <h3>Gestión de licencias</h3>
+        <p>Nos ocupamos de las comunicaciones previas y licencias de obra con el ayuntamiento.</p>
+      </div>
+      <div class="include-card reveal delay-1">
+        <div class="include-check">✓</div>
+        <h3>Un único interlocutor</h3>
+        <p>Hablas siempre con la misma persona desde la visita inicial hasta el último repaso.</p>
+      </div>
+      <div class="include-card reveal delay-2">
+        <div class="include-check">✓</div>
+        <h3>Garantía por escrito</h3>
+        <p>Garantía de 2 años en acabados y 10 años en elementos estructurales. Documentada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <div class="eyebrow reveal" style="justify-content:center">Empecemos</div>
+    <h2 class="reveal delay-1">¿Qué necesita <span class="italic">tu espacio</span>?</h2>
+    <p class="reveal delay-2">
+      Cuéntanos tu proyecto y te diremos cómo lo abordaríamos, con qué calendario y a qué precio. Respuesta en menos de 24 horas.
+    </p>
+    <a href="contacto.html" class="cta-big reveal delay-3">
+      Pedir presupuesto gratuito
+      <span>→</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Estudio Reformas<span style="color:var(--clay);font-family:'Manrope';font-size:10px;letter-spacing:.3em;margin-top:4px">REFORMAS</span></div>
+      <p>Empresa de reformas integrales y decoración en Barcelona. Llave en mano, con trato cercano y acabados de calidad.</p>
+      <div class="socials">
+        <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+        <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5.02 2.5 2.5 0 0 1 .02-5.02zM3 8.98h4v12H3zM9 8.98h3.8v1.6h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6v6.5h-4v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Navega</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="sobre-nosotros.html">Sobre nosotros</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div class="footer-col"><h4>Servicios</h4><ul><li><a href="servicios.html">Reformas integrales</a></li><li><a href="servicios.html">Cocinas</a></li><li><a href="servicios.html">Baños</a></li><li><a href="servicios.html">Locales y oficinas</a></li><li><a href="servicios.html">Decoración</a></li></ul></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="#">Barcelona, España</a></li><li><a href="tel:+34">+34 XXX XXX XXX</a></li><li><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></li><li><a href="#">Lun–Vie · 9:00–19:00</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Estudio Reformas BCN, SLU. Todos los derechos reservados.</div>
+    <div><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/34000000000" class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm5.9 15.9a8.3 8.3 0 0 1-12.6 1l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 17.9 17.9z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>{if(window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled')});
+  const observer = new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));
+  function toggleMenu(){const links = document.querySelector('.nav-links');if(links.style.display === 'flex'){links.style.display='none'}else{links.style.display='flex';links.style.position='absolute';links.style.top='100%';links.style.left='0';links.style.right='0';links.style.background='var(--cream)';links.style.flexDirection='column';links.style.padding='30px';links.style.gap='20px'}}
+</script>
+
+
+<div style="background:#111;color:rgba(255,255,255,.5);text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;padding:14px 16px;letter-spacing:.05em;">
+  Web por <a href="/" style="color:#fff;text-decoration:none;font-weight:600;">Sitalia</a>
+  <span style="margin:0 10px;opacity:.4;">·</span>
+  <a href="/privacidad.html" style="color:rgba(255,255,255,.7);">Privacidad</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/aviso-legal.html" style="color:rgba(255,255,255,.7);">Aviso legal</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/cookies.html" style="color:rgba(255,255,255,.7);">Cookies</a>
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

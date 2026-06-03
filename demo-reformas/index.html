@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Reformas BCN · Luxury · Reformas integrales en Barcelona</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Empresa de reformas integrales en Barcelona. Reformamos pisos, locales y oficinas llave en mano con trato cercano y acabados de calidad. Pide presupuesto sin compromiso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5EFE6;
+    --bg-warm:#EFE7D9;
+    --cream:#FAF6EF;
+    --clay:#C97B5B;
+    --clay-dark:#A6583C;
+    --terra:#B85C3B;
+    --olive:#6B7A4F;
+    --wood:#8B6F4E;
+    --ink:#2A241E;
+    --ink-soft:#5A4F43;
+    --gold:#B89968;
+    --line:rgba(42,36,30,.12);
+    --line-strong:rgba(42,36,30,.25);
+    --shadow:0 30px 80px -40px rgba(42,36,30,.35);
+    --radius:28px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+    font-weight:400;
+  }
+
+  h1,h2,h3,h4,.serif{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-.02em;line-height:1.05}
+  .italic{font-style:italic}
+
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ============ GRAIN OVERLAY ============ */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1000;
+    opacity:.35;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0 0.1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============ NAVEGACIÓN ============ */
+  .nav{
+    position:fixed;top:0;left:0;right:0;
+    z-index:100;
+    padding:22px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:all .4s ease;
+    backdrop-filter:blur(0px);
+  }
+  .nav.scrolled{
+    background:rgba(245,239,230,.88);
+    backdrop-filter:blur(20px);
+    padding:14px 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    font-weight:500;
+    letter-spacing:.02em;
+    line-height:1;
+  }
+  .logo span{
+    display:block;
+    font-size:10px;
+    letter-spacing:.3em;
+    color:var(--clay);
+    margin-top:3px;
+    font-family:'Manrope',sans-serif;
+    font-weight:500;
+  }
+  .nav-links{
+    display:flex;gap:36px;align-items:center;
+    font-size:14px;
+    font-weight:500;
+  }
+  .nav-links a{position:relative;transition:color .3s}
+  .nav-links a::after{
+    content:"";position:absolute;bottom:-6px;left:0;width:0;height:1px;
+    background:var(--clay);transition:width .4s ease;
+  }
+  .nav-links a:hover{color:var(--clay)}
+  .nav-links a:hover::after{width:100%}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-weight:500;font-size:14px;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+    cursor:pointer;border:none;
+    font-family:'Manrope',sans-serif;
+    letter-spacing:.02em;
+  }
+  .btn-primary{
+    background:var(--ink);color:var(--cream);
+  }
+  .btn-primary:hover{
+    background:var(--clay);
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px -10px rgba(201,123,91,.5);
+  }
+  .btn-primary .arrow{transition:transform .4s}
+  .btn-primary:hover .arrow{transform:translateX(4px)}
+
+  .btn-outline{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--line-strong);
+  }
+  .btn-outline:hover{
+    background:var(--ink);color:var(--cream);border-color:var(--ink);
+  }
+
+  .menu-toggle{display:none}
+
+  /* ============ HERO ============ */
+  .hero{
+    min-height:100vh;
+    padding:140px 40px 80px;
+    position:relative;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:80px;
+    align-items:center;
+    overflow:hidden;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-100px;right:-100px;
+    width:500px;height:500px;
+    background:radial-gradient(circle,var(--clay) 0%,transparent 70%);
+    opacity:.15;
+    border-radius:50%;
+    filter:blur(40px);
+  }
+
+  .hero-content{position:relative;z-index:2}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:12px;letter-spacing:.25em;
+    color:var(--clay);
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{
+    content:"";width:32px;height:1px;background:var(--clay);
+  }
+
+  .hero h1{
+    font-size:clamp(48px,7vw,92px);
+    font-weight:400;
+    margin-bottom:32px;
+    color:var(--ink);
+  }
+  .hero h1 .accent{
+    font-style:italic;
+    color:var(--clay);
+    font-weight:300;
+  }
+
+  .hero-lead{
+    font-size:18px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin-bottom:44px;
+  }
+
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:60px}
+
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:32px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+    max-width:520px;
+  }
+  .stat-num{
+    font-family:'Fraunces',serif;
+    font-size:40px;font-weight:400;
+    color:var(--ink);
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .stat-num .italic{color:var(--clay)}
+  .stat-label{
+    font-size:12px;color:var(--ink-soft);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* HERO VISUAL - compuesto */
+  .hero-visual{
+    position:relative;
+    height:700px;
+  }
+  .hero-img-main{
+    position:absolute;
+    top:0;right:0;
+    width:80%;height:85%;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .hero-img-main img{width:100%;height:100%;object-fit:cover}
+
+  .hero-img-small{
+    position:absolute;
+    bottom:0;left:0;
+    width:55%;height:45%;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:8px solid var(--bg);
+  }
+  .hero-img-small img{width:100%;height:100%;object-fit:cover}
+
+  .hero-tag{
+    position:absolute;
+    bottom:40px;right:-20px;
+    background:var(--cream);
+    padding:18px 24px;
+    border-radius:16px;
+    box-shadow:0 20px 50px -20px rgba(42,36,30,.3);
+    display:flex;align-items:center;gap:14px;
+    font-size:13px;
+    z-index:3;
+  }
+  .hero-tag .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--olive);
+    box-shadow:0 0 0 4px rgba(107,122,79,.2);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(107,122,79,.2)}
+    50%{box-shadow:0 0 0 8px rgba(107,122,79,.1)}
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee{
+    overflow:hidden;
+    padding:30px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--bg-warm);
+    position:relative;
+  }
+  .marquee-track{
+    display:flex;gap:80px;
+    animation:scroll 40s linear infinite;
+    white-space:nowrap;
+    font-family:'Fraunces',serif;
+    font-size:32px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  .marquee-item{display:flex;align-items:center;gap:80px}
+  .marquee-item::after{
+    content:"✦";
+    color:var(--clay);
+    font-size:20px;
+    font-style:normal;
+  }
+  @keyframes scroll{
+    to{transform:translateX(-50%)}
+  }
+
+  /* ============ SECCIONES GENERALES ============ */
+  section{padding:120px 40px;position:relative}
+
+  .container{max-width:1280px;margin:0 auto}
+
+  .section-header{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:80px;
+    margin-bottom:80px;
+    align-items:end;
+  }
+
+  .section-title{
+    font-size:clamp(40px,5vw,72px);
+    font-weight:400;
+    margin-bottom:0;
+  }
+  .section-title .italic{color:var(--clay)}
+
+  .section-desc{
+    font-size:17px;line-height:1.7;
+    color:var(--ink-soft);
+    max-width:520px;
+  }
+
+  /* ============ SOBRE NOSOTROS (intro) ============ */
+  .about-preview{
+    background:var(--bg-warm);
+    position:relative;
+    overflow:hidden;
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+  }
+  .about-visual{position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden}
+  .about-visual img{width:100%;height:100%;object-fit:cover}
+  .about-visual::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 60%,rgba(42,36,30,.3));
+  }
+  .about-badge{
+    position:absolute;top:24px;left:24px;
+    background:var(--cream);
+    padding:10px 18px;border-radius:999px;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:600;color:var(--clay);
+    z-index:2;
+  }
+
+  .about-text h2{
+    font-size:clamp(36px,4.5vw,56px);
+    margin-bottom:28px;
+  }
+  .about-text p{
+    font-size:17px;line-height:1.8;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+  }
+  .about-features{
+    display:grid;gap:20px;
+    margin:40px 0;
+  }
+  .about-feature{
+    display:flex;gap:18px;align-items:start;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .about-feature:last-child{border:none}
+  .about-feature-num{
+    font-family:'Fraunces',serif;
+    font-size:24px;
+    font-style:italic;
+    color:var(--clay);
+    min-width:30px;
+  }
+  .about-feature-text strong{
+    display:block;
+    font-weight:600;
+    margin-bottom:4px;
+    font-size:16px;
+  }
+  .about-feature-text span{
+    color:var(--ink-soft);font-size:14px;
+  }
+
+  /* ============ SERVICIOS ============ */
+  .services{padding-top:140px}
+
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .service-card{
+    background:var(--cream);
+    padding:48px 36px;
+    transition:all .5s cubic-bezier(.2,.8,.2,1);
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    min-height:340px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .service-card::before{
+    content:"";
+    position:absolute;inset:0;
+    background:var(--ink);
+    transform:translateY(100%);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+    z-index:0;
+  }
+  .service-card:hover::before{transform:translateY(0)}
+  .service-card:hover *{color:var(--cream)}
+  .service-card:hover .service-num{color:var(--clay)}
+  .service-card:hover .service-arrow{
+    background:var(--clay);
+    transform:translate(4px,-4px) rotate(-45deg);
+  }
+
+  .service-content{position:relative;z-index:1}
+
+  .service-num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--clay);
+    margin-bottom:30px;
+    display:block;
+    transition:color .5s;
+  }
+
+  .service-title{
+    font-size:28px;
+    margin-bottom:16px;
+    transition:color .5s;
+  }
+
+  .service-desc{
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.7;
+    transition:color .5s;
+  }
+
+  .service-arrow{
+    position:relative;z-index:1;
+    width:48px;height:48px;
+    border-radius:50%;
+    background:var(--bg-warm);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:30px;
+    transition:all .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .service-arrow svg{width:18px;height:18px}
+
+  /* ============ PROCESO ============ */
+  .process{
+    background:var(--ink);
+    color:var(--cream);
+    overflow:hidden;
+  }
+  .process .section-title{color:var(--cream)}
+  .process .section-title .italic{color:var(--clay)}
+  .process .section-desc{color:rgba(250,246,239,.7)}
+
+  .process-steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    margin-top:40px;
+  }
+  .process-step{
+    padding:40px 30px;
+    border-left:1px solid rgba(250,246,239,.15);
+    position:relative;
+    transition:all .5s;
+  }
+  .process-step:first-child{border-left:none}
+  .process-step:hover{background:rgba(250,246,239,.05)}
+
+  .step-number{
+    font-family:'Fraunces',serif;
+    font-size:80px;
+    font-style:italic;
+    color:var(--clay);
+    line-height:1;
+    margin-bottom:30px;
+    display:block;
+  }
+  .step-title{
+    font-size:22px;
+    margin-bottom:14px;
+    color:var(--cream);
+  }
+  .step-desc{
+    font-size:14px;
+    color:rgba(250,246,239,.6);
+    line-height:1.7;
+  }
+
+  /* ============ PROYECTOS ============ */
+  .projects-gallery{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    grid-template-rows:repeat(2,400px);
+    gap:16px;
+  }
+  .project-item{
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .project-item:nth-child(1){grid-row:span 2}
+  .project-item:nth-child(4){grid-column:span 2}
+
+  .project-item img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .project-item:hover img{transform:scale(1.05)}
+
+  .project-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 40%,rgba(42,36,30,.85));
+    padding:32px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    color:var(--cream);
+    transition:all .5s;
+  }
+  .project-overlay .tag{
+    display:inline-block;
+    background:rgba(250,246,239,.15);
+    backdrop-filter:blur(10px);
+    padding:6px 14px;border-radius:999px;
+    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    width:fit-content;
+    margin-bottom:12px;
+  }
+  .project-overlay h3{
+    font-size:26px;
+    margin-bottom:6px;
+  }
+  .project-overlay .location{
+    font-size:13px;opacity:.8;
+  }
+
+  /* ============ TESTIMONIOS ============ */
+  .testimonials{
+    background:var(--bg-warm);
+  }
+  .testimonials-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .testimonial{
+    background:var(--cream);
+    padding:40px 32px;
+    border-radius:var(--radius);
+    position:relative;
+    transition:transform .4s;
+  }
+  .testimonial:hover{transform:translateY(-6px)}
+  .testimonial .stars{
+    color:var(--clay);
+    font-size:18px;
+    letter-spacing:4px;
+    margin-bottom:20px;
+  }
+  .testimonial blockquote{
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    line-height:1.5;
+    margin-bottom:28px;
+    color:var(--ink);
+    font-weight:400;
+  }
+  .testimonial cite{
+    display:flex;align-items:center;gap:14px;
+    font-style:normal;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  .avatar{
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--clay);
+    color:var(--cream);
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:500;
+  }
+  .testimonial cite strong{
+    display:block;font-size:14px;font-weight:600;
+  }
+  .testimonial cite span{
+    font-size:12px;color:var(--ink-soft);
+  }
+
+  /* ============ CTA FINAL ============ */
+  .cta-final{
+    position:relative;
+    text-align:center;
+    padding:160px 40px;
+    overflow:hidden;
+  }
+  .cta-final::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(201,123,91,.15),transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(107,122,79,.12),transparent 50%);
+  }
+  .cta-final-inner{position:relative;z-index:1;max-width:800px;margin:0 auto}
+
+  .cta-final h2{
+    font-size:clamp(48px,7vw,96px);
+    line-height:.95;
+    margin-bottom:32px;
+  }
+  .cta-final h2 .italic{color:var(--clay)}
+
+  .cta-final p{
+    font-size:19px;line-height:1.6;
+    color:var(--ink-soft);
+    max-width:580px;margin:0 auto 48px;
+  }
+
+  .cta-big{
+    display:inline-flex;align-items:center;gap:16px;
+    padding:22px 44px;
+    background:var(--ink);
+    color:var(--cream);
+    border-radius:999px;
+    font-size:16px;font-weight:500;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .cta-big:hover{
+    background:var(--clay);
+    transform:translateY(-3px);
+    box-shadow:0 20px 40px -15px rgba(201,123,91,.5);
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--ink);
+    color:var(--cream);
+    padding:80px 40px 40px;
+  }
+  .footer-grid{
+    max-width:1280px;margin:0 auto;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:60px;
+    border-bottom:1px solid rgba(250,246,239,.1);
+  }
+  .footer-brand .logo{color:var(--cream);font-size:24px;margin-bottom:20px}
+  .footer-brand p{
+    font-size:14px;
+    color:rgba(250,246,239,.6);
+    line-height:1.7;
+    margin-bottom:24px;
+    max-width:300px;
+  }
+  .socials{display:flex;gap:12px}
+  .social-btn{
+    width:40px;height:40px;
+    border:1px solid rgba(250,246,239,.2);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .3s;
+  }
+  .social-btn:hover{
+    background:var(--clay);border-color:var(--clay);
+  }
+  .social-btn svg{width:16px;height:16px}
+
+  .footer-col h4{
+    font-size:12px;
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--clay);
+    margin-bottom:20px;
+  }
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:10px}
+  .footer-col ul a{
+    font-size:14px;
+    color:rgba(250,246,239,.7);
+    transition:color .3s;
+  }
+  .footer-col ul a:hover{color:var(--cream)}
+
+  .footer-bottom{
+    max-width:1280px;margin:40px auto 0;
+    display:flex;justify-content:space-between;
+    font-size:12px;
+    color:rgba(250,246,239,.4);
+  }
+
+  /* ============ WHATSAPP FLOTANTE ============ */
+  .whatsapp-float{
+    position:fixed;
+    bottom:30px;right:30px;
+    width:60px;height:60px;
+    background:#25D366;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px -5px rgba(37,211,102,.5);
+    z-index:99;
+    transition:transform .3s;
+  }
+  .whatsapp-float:hover{transform:scale(1.1)}
+  .whatsapp-float svg{width:30px;height:30px;fill:white}
+
+  /* ============ ANIMACIONES SCROLL ============ */
+  .reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal.delay-1{transition-delay:.1s}
+  .reveal.delay-2{transition-delay:.2s}
+  .reveal.delay-3{transition-delay:.3s}
+  .reveal.delay-4{transition-delay:.4s}
+
+  .reveal-scale{
+    opacity:0;
+    transform:scale(.95);
+    transition:opacity 1.2s ease,transform 1.2s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:1024px){
+    .hero{grid-template-columns:1fr;gap:60px;padding:120px 24px 60px}
+    .hero-visual{height:500px}
+    .section-header{grid-template-columns:1fr;gap:30px}
+    .services-grid{grid-template-columns:repeat(2,1fr)}
+    .process-steps{grid-template-columns:repeat(2,1fr)}
+    .process-step{border-left:none;border-top:1px solid rgba(250,246,239,.15);padding:30px}
+    .process-step:nth-child(odd){border-left:none}
+    .projects-gallery{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,300px)}
+    .project-item:nth-child(1){grid-row:span 1}
+    .project-item:nth-child(4){grid-column:span 1}
+    .testimonials-grid{grid-template-columns:1fr}
+    .about-grid{grid-template-columns:1fr;gap:50px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+  }
+  @media (max-width:640px){
+    section{padding:80px 24px}
+    .nav{padding:18px 24px}
+    .nav-links{display:none}
+    .menu-toggle{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px}
+    .menu-toggle span{width:24px;height:1.5px;background:var(--ink)}
+    .services-grid{grid-template-columns:1fr}
+    .process-steps{grid-template-columns:1fr}
+    .projects-gallery{grid-template-columns:1fr;grid-template-rows:repeat(5,280px)}
+    .hero-stats{grid-template-columns:1fr 1fr;gap:20px}
+    .footer-grid{grid-template-columns:1fr;gap:30px}
+    .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+    .hero-tag{right:0}
+  }
+</style>
+</head>
+<body>
+<style>
+/* Sitalia overlay (banner + back) - no toca estilos de EST */
+.s-demo-banner{background:#111;color:#fff;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;font-weight:600;}
+.s-demo-banner a{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+.s-back{position:fixed;top:42px;left:14px;z-index:9999;background:rgba(255,255,255,.96);color:#111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:600;padding:7px 13px 7px 11px;border-radius:100px;border:1px solid rgba(0,0,0,.1);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s;}
+.s-back:hover{transform:translateX(-2px);}
+@media(max-width:520px){.s-back .s-back-txt{display:none;}.s-back{padding:7px 10px;}}
+</style>
+<div class="s-demo-banner">DEMO — Estudio Reformas BCN · Sitalia.es · <a href="/">Ver otros sectores</a></div>
+<a href="/" class="s-back" aria-label="Volver a Sitalia"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 1L3 6l5 5"/></svg><span class="s-back-txt">Sitalia</span></a>
+
+
+<!-- ============ NAVEGACIÓN ============ -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Estudio Reformas BCN">
+    <img src="logo-adm-bcn-v2.svg" alt="Estudio Reformas BCN" style="height:50px;width:auto;display:block">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Sobre nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="contacto.html" class="btn btn-primary">
+      Presupuesto
+      <span class="arrow">→</span>
+    </a>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow reveal">Reformas integrales · Barcelona</div>
+    <h1 class="reveal delay-1">
+      Transformamos <span class="accent">tu espacio</span>,<br>
+      cuidamos cada <span class="accent">detalle</span>.
+    </h1>
+    <p class="hero-lead reveal delay-2">
+      Desde la primera visita hasta la entrega de llaves: nos encargamos de todo. Coordinamos los mejores gremios, controlamos la calidad y convertimos tu proyecto en un espacio a la altura de cómo quieres vivir.
+    </p>
+    <div class="hero-cta reveal delay-3">
+      <a href="contacto.html" class="btn btn-primary">
+        Pedir presupuesto gratuito
+        <span class="arrow">→</span>
+      </a>
+      <a href="proyectos.html" class="btn btn-outline">Ver proyectos</a>
+    </div>
+    <div class="hero-stats reveal delay-4">
+      <div>
+        <div class="stat-num">+10<span class="italic">años</span></div>
+        <div class="stat-label">de experiencia</div>
+      </div>
+      <div>
+        <div class="stat-num">+150</div>
+        <div class="stat-label">proyectos entregados</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">llave en mano</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual reveal-scale">
+    <div class="hero-img-main">
+      <img src="imagenes/hero-main.jpg" alt="Salón reformado en Barcelona">
+    </div>
+    <div class="hero-img-small">
+      <img src="imagenes/hero-small.jpg" alt="Detalle de cocina reformada">
+    </div>
+    <div class="hero-tag">
+      <div class="dot"></div>
+      <div>
+        <strong>Disponibles ahora</strong><br>
+        <span style="color:var(--ink-soft);font-size:12px">Consulta sin compromiso</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">Reformas integrales</div>
+    <div class="marquee-item">Cocinas a medida</div>
+    <div class="marquee-item">Baños de diseño</div>
+    <div class="marquee-item">Decoración</div>
+    <div class="marquee-item">Llave en mano</div>
+    <div class="marquee-item">Reformas integrales</div>
+    <div class="marquee-item">Cocinas a medida</div>
+    <div class="marquee-item">Baños de diseño</div>
+    <div class="marquee-item">Decoración</div>
+    <div class="marquee-item">Llave en mano</div>
+  </div>
+</div>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<section class="about-preview">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal-scale">
+        <div class="about-badge">Desde 2014</div>
+        <img src="imagenes/equipo.jpg" alt="Equipo de Estudio Reformas BCN en proyecto">
+      </div>
+      <div class="about-text">
+        <div class="eyebrow reveal">Quiénes somos</div>
+        <h2 class="reveal delay-1">Reformamos como nos gustaría que <span class="italic" style="color:var(--clay)">reformaran nuestra casa</span>.</h2>
+        <p class="reveal delay-2">
+          Estudio Reformas BCN es una empresa de reformas integrales con sede en Barcelona que gestiona cada proyecto de principio a fin. Coordinamos gremios, controlamos plazos y cuidamos acabados.
+        </p>
+        <p class="reveal delay-2">
+          No somos solo una constructora: somos también el equipo que piensa la distribución, elige los materiales y cuida los detalles que convierten una obra en un hogar.
+        </p>
+        <div class="about-features reveal delay-3">
+          <div class="about-feature">
+            <span class="about-feature-num">01</span>
+            <div class="about-feature-text">
+              <strong>Un único interlocutor</strong>
+              <span>Tú nos cuentas qué necesitas. Nosotros nos ocupamos de todo lo demás.</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-num">02</span>
+            <div class="about-feature-text">
+              <strong>Gremios de confianza</strong>
+              <span>Profesionales con años de oficio que conocemos, probamos y volvemos a llamar.</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-num">03</span>
+            <div class="about-feature-text">
+              <strong>Supervisión constante</strong>
+              <span>Revisamos la obra cada día. La calidad no se improvisa.</span>
+            </div>
+          </div>
+        </div>
+        <a href="sobre-nosotros.html" class="btn btn-outline reveal delay-4">
+          Conócenos mejor <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="services">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow reveal">Servicios</div>
+        <h2 class="section-title reveal delay-1">Todo lo que hacemos <span class="italic">por ti</span>.</h2>
+      </div>
+      <p class="section-desc reveal delay-2">
+        Un único equipo para toda tu reforma. Ni subcontratas sueltas ni responsabilidades divididas: contratas un proyecto completo, no diez profesionales distintos.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-content">
+          <span class="service-num">01 / Integral</span>
+          <h3 class="service-title">Reformas integrales</h3>
+          <p class="service-desc">Viviendas, locales y oficinas reformadas llave en mano. Del proyecto a la entrega final.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="service-card reveal delay-1">
+        <div class="service-content">
+          <span class="service-num">02 / Cocinas</span>
+          <h3 class="service-title">Reformas de cocinas</h3>
+          <p class="service-desc">Cocinas funcionales y a medida. Abiertas, con isla o compactas — a tu estilo de vida.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="service-card reveal delay-2">
+        <div class="service-content">
+          <span class="service-num">03 / Baños</span>
+          <h3 class="service-title">Reformas de baños</h3>
+          <p class="service-desc">Diseño, obra y acabados. Espacios donde empieza y termina el día con calma.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-content">
+          <span class="service-num">04 / Suelos</span>
+          <h3 class="service-title">Instalación de suelos</h3>
+          <p class="service-desc">Parquet, porcelánico, microcemento, vinílico. Y restauración de suelo hidráulico.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="service-card reveal delay-1">
+        <div class="service-content">
+          <span class="service-num">05 / Gremios</span>
+          <h3 class="service-title">Fontanería y electricidad</h3>
+          <p class="service-desc">Instalaciones completas y certificadas por profesionales con los que trabajamos desde hace años.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="service-card reveal delay-2">
+        <div class="service-content">
+          <span class="service-num">06 / Detalles</span>
+          <h3 class="service-title">Decoración y mobiliario</h3>
+          <p class="service-desc">Montaje, interiorismo y los últimos detalles que convierten una casa en un hogar.</p>
+        </div>
+        <div class="service-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:60px" class="reveal">
+      <a href="servicios.html" class="btn btn-outline">
+        Ver todos los servicios <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section class="process">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow reveal" style="color:var(--clay)">Cómo trabajamos</div>
+        <h2 class="section-title reveal delay-1">Tu reforma, <span class="italic">paso a paso</span>.</h2>
+      </div>
+      <p class="section-desc reveal delay-2">
+        Un proceso claro, sin sorpresas y pensado para que tú tengas que preocuparte de lo mínimo posible.
+      </p>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <span class="step-number">01</span>
+        <h3 class="step-title">Hablamos</h3>
+        <p class="step-desc">Nos cuentas qué quieres reformar y qué esperas del proyecto. Escuchamos y proponemos.</p>
+      </div>
+      <div class="process-step reveal delay-1">
+        <span class="step-number">02</span>
+        <h3 class="step-title">Visitamos</h3>
+        <p class="step-desc">Vamos al espacio, tomamos medidas y te entregamos una propuesta clara, sin letra pequeña.</p>
+      </div>
+      <div class="process-step reveal delay-2">
+        <span class="step-number">03</span>
+        <h3 class="step-title">Ejecutamos</h3>
+        <p class="step-desc">Definimos materiales y ponemos a los gremios en marcha bajo nuestra supervisión constante.</p>
+      </div>
+      <div class="process-step reveal delay-3">
+        <span class="step-number">04</span>
+        <h3 class="step-title">Entregamos</h3>
+        <p class="step-desc">Limpieza final, revisión y entrega llave en mano. Tú entras y disfrutas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROYECTOS ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow reveal">Proyectos</div>
+        <h2 class="section-title reveal delay-1">Espacios que <span class="italic">han encontrado</span> su forma.</h2>
+      </div>
+      <p class="section-desc reveal delay-2">
+        Cada proyecto es distinto, pero todos comparten algo: la misma forma de trabajar. Aquí tienes algunos de los últimos.
+      </p>
+    </div>
+
+    <div class="projects-gallery">
+      <a href="proyectos.html" class="project-item reveal">
+        <img src="imagenes/proyecto-eixample.jpg" alt="Piso en el Eixample">
+        <div class="project-overlay">
+          <span class="tag">Vivienda · 110 m²</span>
+          <h3>Piso señorial en el Eixample</h3>
+          <span class="location">Barcelona — Reforma integral</span>
+        </div>
+      </a>
+      <a href="proyectos.html" class="project-item reveal delay-1">
+        <img src="imagenes/local-gracia.jpg" alt="Local en Gràcia">
+        <div class="project-overlay">
+          <span class="tag">Local · 65 m²</span>
+          <h3>Local en Gràcia</h3>
+          <span class="location">Comercial</span>
+        </div>
+      </a>
+      <a href="proyectos.html" class="project-item reveal delay-2">
+        <img src="imagenes/cocina-sarria.jpg" alt="Cocina Sarrià">
+        <div class="project-overlay">
+          <span class="tag">Cocina</span>
+          <h3>Sarrià</h3>
+          <span class="location">Barcelona</span>
+        </div>
+      </a>
+      <a href="proyectos.html" class="project-item reveal delay-1">
+        <img src="imagenes/oficinas-poblenou.jpg" alt="Oficinas Poblenou">
+        <div class="project-overlay">
+          <span class="tag">Oficinas · 180 m²</span>
+          <h3>Oficinas en Poblenou</h3>
+          <span class="location">Barcelona — Reforma integral</span>
+        </div>
+      </a>
+      <a href="proyectos.html" class="project-item reveal delay-2">
+        <img src="imagenes/bano-lescorts.jpg" alt="Baño Les Corts">
+        <div class="project-overlay">
+          <span class="tag">Baño</span>
+          <h3>Les Corts</h3>
+          <span class="location">Reforma de baño</span>
+        </div>
+      </a>
+    </div>
+
+    <div style="text-align:center;margin-top:60px" class="reveal">
+      <a href="proyectos.html" class="btn btn-outline">
+        Ver todos los proyectos <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow reveal">Testimonios</div>
+        <h2 class="section-title reveal delay-1">Historias de quienes <span class="italic">ya reformaron</span>.</h2>
+      </div>
+      <p class="section-desc reveal delay-2">
+        No hay mejor aval que la palabra de quien ya ha pasado por el proceso. Estas son algunas de sus reseñas.
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Reformaron nuestro piso del Eixample y el resultado superó lo que teníamos en mente. Llevaron todo con un orden y una tranquilidad que me dejaron sin palabras."</blockquote>
+        <cite>
+          <div class="avatar">M</div>
+          <div>
+            <strong>Marta R.</strong>
+            <span>Eixample · Reforma integral</span>
+          </div>
+        </cite>
+      </div>
+
+      <div class="testimonial reveal delay-1">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Abrimos un local en Gràcia y necesitábamos hacerlo rápido. Cumplieron plazos, cuidaron cada detalle y volveríamos a contar con ellos sin dudarlo."</blockquote>
+        <cite>
+          <div class="avatar" style="background:var(--olive)">J</div>
+          <div>
+            <strong>Jordi M.</strong>
+            <span>Gràcia · Local comercial</span>
+          </div>
+        </cite>
+      </div>
+
+      <div class="testimonial reveal delay-2">
+        <div class="stars">★★★★★</div>
+        <blockquote>"El trato fue cercano desde el primer día. Nos explicaron todo, nos guiaron en las decisiones y entregaron la casa impecable."</blockquote>
+        <cite>
+          <div class="avatar" style="background:var(--wood)">L</div>
+          <div>
+            <strong>Laura y David</strong>
+            <span>Sarrià · Reforma de cocina</span>
+          </div>
+        </cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <div class="eyebrow reveal" style="justify-content:center">Empecemos</div>
+    <h2 class="reveal delay-1">¿Listo para reformar <span class="italic">tu espacio</span>?</h2>
+    <p class="reveal delay-2">
+      Pide tu presupuesto sin compromiso. Te responderemos en menos de 24 horas con una propuesta clara, adaptada a tu proyecto.
+    </p>
+    <a href="contacto.html" class="cta-big reveal delay-3">
+      Pedir presupuesto gratuito
+      <span>→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Estudio Reformas<span style="color:var(--clay);font-family:'Manrope';font-size:10px;letter-spacing:.3em;margin-top:4px">REFORMAS</span></div>
+      <p>Empresa de reformas integrales y decoración en Barcelona. Llave en mano, con trato cercano y acabados de calidad.</p>
+      <div class="socials">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5.02 2.5 2.5 0 0 1 .02-5.02zM3 8.98h4v12H3zM9 8.98h3.8v1.6h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6v6.5h-4v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navega</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="servicios.html">Reformas integrales</a></li>
+        <li><a href="servicios.html">Cocinas</a></li>
+        <li><a href="servicios.html">Baños</a></li>
+        <li><a href="servicios.html">Locales y oficinas</a></li>
+        <li><a href="servicios.html">Decoración</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#">Barcelona, España</a></li>
+        <li><a href="tel:+34">+34 XXX XXX XXX</a></li>
+        <li><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></li>
+        <li><a href="#">Lun–Vie · 9:00–19:00</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2026 Estudio Reformas BCN, SLU. Todos los derechos reservados.</div>
+    <div><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP FLOTANTE ============ -->
+<a href="https://wa.me/34000000000" class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm5.9 15.9a8.3 8.3 0 0 1-12.6 1l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 17.9 17.9z"/></svg>
+</a>
+
+<script>
+  // Scroll effect en nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));
+
+  // Menu móvil simple
+  function toggleMenu(){
+    const links = document.querySelector('.nav-links');
+    if(links.style.display === 'flex'){
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.position = 'absolute';
+      links.style.top = '100%';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--cream)';
+      links.style.flexDirection = 'column';
+      links.style.padding = '30px';
+      links.style.gap = '20px';
+      links.style.borderBottom = '1px solid var(--line)';
+    }
+  }
+</script>
+
+
+<div style="background:#111;color:rgba(255,255,255,.5);text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;padding:14px 16px;letter-spacing:.05em;">
+  Web por <a href="/" style="color:#fff;text-decoration:none;font-weight:600;">Sitalia</a>
+  <span style="margin:0 10px;opacity:.4;">·</span>
+  <a href="/privacidad.html" style="color:rgba(255,255,255,.7);">Privacidad</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/aviso-legal.html" style="color:rgba(255,255,255,.7);">Aviso legal</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/cookies.html" style="color:rgba(255,255,255,.7);">Cookies</a>
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre nosotros · Estudio Reformas BCN</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Quiénes somos en Estudio Reformas BCN: un equipo de reformas integrales en Barcelona con más de 10 años de experiencia, trato cercano y acabados cuidados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="adm-styles.css">
+<style>
+  /* ============ PAGE HERO (subpáginas) ============ */
+  .page-hero{
+    padding:180px 40px 80px;
+    max-width:1400px;margin:0 auto;
+    text-align:center;
+    position:relative;
+  }
+  .page-hero::before{
+    content:"";
+    position:absolute;
+    top:120px;right:10%;
+    width:400px;height:400px;
+    background:radial-gradient(circle,var(--clay) 0%,transparent 70%);
+    opacity:.12;
+    border-radius:50%;
+    filter:blur(40px);
+    z-index:-1;
+  }
+  .page-hero h1{
+    font-size:clamp(48px,7vw,88px);
+    font-weight:400;
+    margin:20px 0 28px;
+  }
+  .page-hero h1 .accent{font-style:italic;color:var(--clay);font-weight:300}
+  .page-hero p{
+    font-size:18px;line-height:1.7;
+    color:var(--ink-soft);
+    max-width:640px;margin:0 auto;
+  }
+  .page-hero .eyebrow{justify-content:center}
+
+  /* ============ HISTORIA ============ */
+  .story-section{padding:100px 40px;max-width:1200px;margin:0 auto}
+  .story-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  .story-visual{
+    position:relative;aspect-ratio:3/4;
+    border-radius:var(--radius);overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .story-visual img{width:100%;height:100%;object-fit:cover}
+  .story-text h2{font-size:clamp(36px,4.5vw,56px);margin-bottom:28px}
+  .story-text p{margin-bottom:20px;color:var(--ink-soft);font-size:16px;line-height:1.8}
+  .story-text p strong{color:var(--ink);font-weight:600}
+
+  /* ============ VALORES ============ */
+  .values-section{
+    background:var(--bg-warm);
+    padding:120px 40px;
+  }
+  .values-inner{max-width:1200px;margin:0 auto}
+  .values-header{text-align:center;margin-bottom:80px}
+  .values-header h2{font-size:clamp(36px,4.5vw,56px);margin:20px 0}
+  .values-header p{max-width:540px;margin:0 auto;color:var(--ink-soft);font-size:17px}
+  .values-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
+  }
+  .value-card{
+    background:var(--cream);
+    padding:44px 32px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    transition:all .4s ease;
+  }
+  .value-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow);
+    border-color:var(--clay);
+  }
+  .value-icon{
+    width:56px;height:56px;
+    border-radius:16px;
+    background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--clay);
+    margin-bottom:24px;
+    font-family:'Fraunces',serif;
+    font-size:26px;font-style:italic;
+  }
+  .value-card h3{font-size:22px;margin-bottom:14px;font-weight:500}
+  .value-card p{font-size:14px;color:var(--ink-soft);line-height:1.7}
+
+  /* ============ NUMEROS ============ */
+  .numbers-section{padding:100px 40px;max-width:1200px;margin:0 auto}
+  .numbers-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:40px;
+    padding:60px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .number-item{text-align:center}
+  .number-item .num{
+    font-family:'Fraunces',serif;
+    font-size:clamp(44px,5vw,72px);font-weight:400;
+    color:var(--ink);line-height:1;margin-bottom:10px;
+  }
+  .number-item .num .italic{color:var(--clay)}
+  .number-item .label{
+    font-size:13px;color:var(--ink-soft);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* ============ PROCESO ============ */
+  .process-section{
+    background:var(--ink);color:var(--cream);
+    padding:120px 40px;
+  }
+  .process-inner{max-width:1200px;margin:0 auto}
+  .process-header{text-align:center;margin-bottom:80px}
+  .process-header .eyebrow{justify-content:center;color:var(--clay)}
+  .process-header h2{font-size:clamp(36px,4.5vw,56px);margin:20px 0;color:var(--cream)}
+  .process-header p{max-width:540px;margin:0 auto;color:rgba(250,246,239,.7);font-size:17px}
+  .process-steps{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:40px;
+    counter-reset:step;
+  }
+  .step{position:relative;padding-top:40px}
+  .step::before{
+    counter-increment:step;
+    content:"0" counter(step);
+    position:absolute;top:-10px;left:0;
+    font-family:'Fraunces',serif;
+    font-size:56px;font-style:italic;
+    color:var(--clay);opacity:.4;
+    line-height:1;
+  }
+  .step h3{
+    font-size:22px;font-weight:500;
+    margin-bottom:14px;color:var(--cream);
+  }
+  .step p{font-size:14px;color:rgba(250,246,239,.65);line-height:1.7}
+
+  /* ============ CTA ============ */
+  .cta-final{
+    padding:140px 40px;text-align:center;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg-warm) 100%);
+  }
+  .cta-final-inner{max-width:720px;margin:0 auto}
+  .cta-final h2{
+    font-size:clamp(40px,5vw,72px);font-weight:400;
+    margin:24px 0 28px;
+  }
+  .cta-final h2 .italic{color:var(--clay)}
+  .cta-final p{
+    font-size:18px;color:var(--ink-soft);line-height:1.7;
+    max-width:540px;margin:0 auto 44px;
+  }
+  .cta-big{
+    display:inline-flex;align-items:center;gap:16px;
+    padding:22px 44px;
+    background:var(--ink);color:var(--cream);
+    border-radius:999px;
+    font-size:16px;font-weight:500;
+    transition:all .4s ease;
+  }
+  .cta-big:hover{
+    background:var(--clay);
+    transform:translateY(-3px);
+    box-shadow:0 20px 50px -15px rgba(201,123,91,.5);
+  }
+  .cta-big span{transition:transform .4s}
+  .cta-big:hover span{transform:translateX(6px)}
+
+  @media (max-width:900px){
+    .story-grid{grid-template-columns:1fr;gap:50px}
+    .values-grid{grid-template-columns:1fr 1fr;gap:20px}
+    .numbers-grid{grid-template-columns:1fr 1fr;gap:30px}
+    .process-steps{grid-template-columns:1fr 1fr;gap:40px}
+  }
+  @media (max-width:600px){
+    .values-grid,.numbers-grid,.process-steps{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<style>
+/* Sitalia overlay (banner + back) - no toca estilos de EST */
+.s-demo-banner{background:#111;color:#fff;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;font-weight:600;}
+.s-demo-banner a{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+.s-back{position:fixed;top:42px;left:14px;z-index:9999;background:rgba(255,255,255,.96);color:#111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:600;padding:7px 13px 7px 11px;border-radius:100px;border:1px solid rgba(0,0,0,.1);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s;}
+.s-back:hover{transform:translateX(-2px);}
+@media(max-width:520px){.s-back .s-back-txt{display:none;}.s-back{padding:7px 10px;}}
+</style>
+<div class="s-demo-banner">DEMO — Estudio Reformas BCN · Sitalia.es · <a href="/">Ver otros sectores</a></div>
+<a href="/" class="s-back" aria-label="Volver a Sitalia"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 1L3 6l5 5"/></svg><span class="s-back-txt">Sitalia</span></a>
+
+
+<!-- ============ NAVEGACIÓN ============ -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Estudio Reformas BCN">
+    <img src="logo-adm-bcn-v2.svg" alt="Estudio Reformas BCN" style="height:50px;width:auto;display:block">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Sobre nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="contacto.html" class="btn btn-primary">
+      Presupuesto
+      <span class="arrow">→</span>
+    </a>
+  </div>
+  <button class="menu-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="eyebrow reveal">Quiénes somos</div>
+  <h1 class="reveal delay-1">
+    Un equipo que cuida <span class="accent">cada detalle</span>,<br>
+    como si fuera <span class="accent">nuestra casa</span>.
+  </h1>
+  <p class="reveal delay-2">
+    Más de 10 años reformando pisos, locales y oficinas en Barcelona. Gestionamos el proyecto de principio a fin con la tranquilidad de un solo interlocutor y la calidad de los mejores gremios.
+  </p>
+</section>
+
+<!-- ============ HISTORIA ============ -->
+<section class="story-section">
+  <div class="story-grid">
+    <div class="story-visual reveal-scale">
+      <img src="imagenes/sobre-hero.jpg" alt="Materiales de una reforma Estudio Reformas">
+    </div>
+    <div class="story-text">
+      <div class="eyebrow reveal">Nuestra historia</div>
+      <h2 class="reveal delay-1">De una primera obra a más de <span class="italic" style="color:var(--clay)">150 proyectos</span> entregados.</h2>
+      <p class="reveal delay-2">
+        Estudio Reformas BCN nació en 2014 con una idea muy sencilla: reformar como nos gustaría que reformaran nuestra propia casa. Desde entonces hemos entregado más de 150 proyectos en toda Barcelona, desde reformas integrales en el Eixample hasta locales comerciales en Gràcia y oficinas en Poblenou.
+      </p>
+      <p class="reveal delay-3">
+        <strong>Somos un equipo propio</strong> de gremios coordinados por una misma persona de contacto, para que nunca te pierdas entre albañiles, fontaneros y decoradores. Un solo presupuesto, un solo calendario y la misma persona pendiente de tu obra hasta el último día.
+      </p>
+      <p class="reveal delay-3">
+        Trabajamos con materiales cuidados y marcas que conocemos de primera mano. Nuestro objetivo no es entregar la obra más barata sino la más honesta: que lo que pagues esté en la pared, en el suelo y en los acabados.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALORES ============ -->
+<section class="values-section">
+  <div class="values-inner">
+    <div class="values-header">
+      <div class="eyebrow reveal" style="justify-content:center">Cómo trabajamos</div>
+      <h2 class="reveal delay-1">Cuatro valores que <span class="italic" style="color:var(--clay)">no negociamos</span>.</h2>
+      <p class="reveal delay-2">
+        Todo lo que hacemos pasa por este filtro. Si un proyecto no lo cumple, no lo aceptamos.
+      </p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-icon">C</div>
+        <h3>Cercanía</h3>
+        <p>Hablas con la misma persona desde la primera visita hasta la entrega. Sin intermediarios, sin call centers, sin derivar a terceros.</p>
+      </div>
+      <div class="value-card reveal delay-1">
+        <div class="value-icon">T</div>
+        <h3>Transparencia</h3>
+        <p>Presupuestos desglosados por partidas. Si aparece un extra durante la obra te lo contamos antes, con su motivo y su coste. Nunca una sorpresa al final.</p>
+      </div>
+      <div class="value-card reveal delay-2">
+        <div class="value-icon">Q</div>
+        <h3>Calidad</h3>
+        <p>Gremios propios y materiales contrastados. Revisamos cada partida antes de cerrar y repasamos los detalles hasta que quedan perfectos.</p>
+      </div>
+      <div class="value-card reveal delay-3">
+        <div class="value-icon">R</div>
+        <h3>Responsabilidad</h3>
+        <p>Cumplimos plazos y, si algo se complica, lo comunicamos y lo resolvemos. Garantía por escrito en todos nuestros trabajos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NÚMEROS ============ -->
+<section class="numbers-section">
+  <div class="numbers-grid">
+    <div class="number-item reveal">
+      <div class="num">+10<span class="italic">años</span></div>
+      <div class="label">De experiencia</div>
+    </div>
+    <div class="number-item reveal delay-1">
+      <div class="num">+150</div>
+      <div class="label">Proyectos entregados</div>
+    </div>
+    <div class="number-item reveal delay-2">
+      <div class="num">98<span class="italic">%</span></div>
+      <div class="label">Clientes recomiendan</div>
+    </div>
+    <div class="number-item reveal delay-3">
+      <div class="num">24<span class="italic">h</span></div>
+      <div class="label">Respuesta a consultas</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="process-header">
+      <div class="eyebrow reveal">Nuestro proceso</div>
+      <h2 class="reveal delay-1">De la primera llamada a las <span class="italic" style="color:var(--clay)">llaves en la mano</span>.</h2>
+      <p class="reveal delay-2">
+        Un método probado en más de 150 reformas. Sin sorpresas, sin dobles presupuestos y con un calendario que cumplimos.
+      </p>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal">
+        <h3>Visita técnica</h3>
+        <p>Vamos a tu espacio, medimos, escuchamos lo que buscas y analizamos qué podemos hacer. Sin coste y sin compromiso.</p>
+      </div>
+      <div class="step reveal delay-1">
+        <h3>Propuesta y presupuesto</h3>
+        <p>Recibes una propuesta con planos, materiales sugeridos, calendario y presupuesto desglosado por partidas. Claro y editable.</p>
+      </div>
+      <div class="step reveal delay-2">
+        <h3>Ejecución de obra</h3>
+        <p>Empezamos en la fecha acordada. Coordinamos todos los gremios, controlamos calidad y te informamos del avance cada semana.</p>
+      </div>
+      <div class="step reveal delay-3">
+        <h3>Entrega y garantía</h3>
+        <p>Te entregamos todo limpio y repasado. Firmas el acta final y te quedas con la garantía por escrito de cada trabajo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <div class="eyebrow reveal" style="justify-content:center">Empecemos</div>
+    <h2 class="reveal delay-1">Cuéntanos <span class="italic">tu proyecto</span>.</h2>
+    <p class="reveal delay-2">
+      Pide tu presupuesto sin compromiso. Te responderemos en menos de 24 horas con una propuesta clara, adaptada a tu espacio.
+    </p>
+    <a href="contacto.html" class="cta-big reveal delay-3">
+      Pedir presupuesto gratuito
+      <span>→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Estudio Reformas<span style="color:var(--clay);font-family:'Manrope';font-size:10px;letter-spacing:.3em;margin-top:4px">REFORMAS</span></div>
+      <p>Empresa de reformas integrales y decoración en Barcelona. Llave en mano, con trato cercano y acabados de calidad.</p>
+      <div class="socials">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5.02 2.5 2.5 0 0 1 .02-5.02zM3 8.98h4v12H3zM9 8.98h3.8v1.6h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6v6.5h-4v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navega</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="servicios.html">Reformas integrales</a></li>
+        <li><a href="servicios.html">Cocinas</a></li>
+        <li><a href="servicios.html">Baños</a></li>
+        <li><a href="servicios.html">Locales y oficinas</a></li>
+        <li><a href="servicios.html">Decoración</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#">Barcelona, España</a></li>
+        <li><a href="tel:+34">+34 XXX XXX XXX</a></li>
+        <li><a href="mailto:info@estudioreformas.com">info@estudioreformas.com</a></li>
+        <li><a href="#">Lun–Vie · 9:00–19:00</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Estudio Reformas BCN, SLU. Todos los derechos reservados.</div>
+    <div><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP FLOTANTE ============ -->
+<a href="https://wa.me/34000000000" class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1s-.7.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm5.9 15.9a8.3 8.3 0 0 1-12.6 1l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 17.9 17.9z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));
+  function toggleMenu(){
+    const links = document.querySelector('.nav-links');
+    if(links.style.display === 'flex'){
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.position = 'absolute';
+      links.style.top = '100%';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--cream)';
+      links.style.flexDirection = 'column';
+      links.style.padding = '30px';
+      links.style.gap = '20px';
+    }
+  }
+</script>
+
+
+<div style="background:#111;color:rgba(255,255,255,.5);text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;padding:14px 16px;letter-spacing:.05em;">
+  Web por <a href="/" style="color:#fff;text-decoration:none;font-weight:600;">Sitalia</a>
+  <span style="margin:0 10px;opacity:.4;">·</span>
+  <a href="/privacidad.html" style="color:rgba(255,255,255,.7);">Privacidad</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/aviso-legal.html" style="color:rgba(255,255,255,.7);">Aviso legal</a>
+  <span style="margin:0 8px;opacity:.4;">·</span>
+  <a href="/cookies.html" style="color:rgba(255,255,255,.7);">Cookies</a>
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>
