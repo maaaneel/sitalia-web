@@ -155,8 +155,9 @@ nav{
 .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
 .about-photo{
   aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
 .ph-tag{font-size:11px;letter-spacing:.08em;color:var(--text3);text-align:center;padding:0 20px}
 .about-cred{
   margin-top:16px;background:#fff;border:1px solid var(--border);border-radius:10px;
