@@ -1,26 +1,26 @@
 /* ============================================================
    Anna Acosta Psicología — hoja de estilos
    Sistema visual basado en sitalia.es, paleta adaptada a tonos
-   cálidos/calma (salvia + neutros cálidos).
+   cálidos (marrones + neutros cálidos), logo tipo wordmark serif.
    ============================================================ */
 
 :root{
   --bg:#ffffff;
-  --bg2:#faf8f4;
-  --bg3:#f1ede5;
-  --text:#2b2723;
-  --text2:#5f5951;
-  --text3:#a09990;
-  --accent:#7c9473;          /* salvia */
-  --accent-dark:#65795d;
-  --accent-pale:#eef3ec;
-  --accent-2:#c08552;        /* terracota, acentos secundarios */
-  --border:#e8e3db;
+  --bg2:#faf7f2;
+  --bg3:#efe7dc;
+  --text:#2c2521;
+  --text2:#61574d;
+  --text3:#a3978a;
+  --accent:#8c6b4d;          /* marrón cálido */
+  --accent-dark:#6f5440;
+  --accent-pale:#f4ece2;
+  --accent-2:#b5744a;        /* terracota, acentos secundarios */
+  --border:#e9e1d6;
   --card:#ffffff;
-  --dark:#2f3630;
+  --dark:#332a24;
   --radius:12px;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  --serif:'Lora',Georgia,'Times New Roman',serif;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -56,7 +56,7 @@ section{padding:80px 0}
   padding:14px 28px;border-radius:8px;border:none;cursor:pointer;
   font-family:var(--sans);transition:.2s;display:inline-flex;align-items:center;gap:8px;
 }
-.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(124,148,115,.35)}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(140,107,77,.32)}
 .btn-ghost{
   font-size:14px;color:var(--text2);border:1.5px solid var(--border);
   padding:13px 24px;border-radius:8px;background:none;cursor:pointer;
@@ -74,12 +74,18 @@ nav{
   max-width:1100px;margin:0 auto;padding:0 32px;height:64px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.logo{display:flex;align-items:center;gap:10px;color:var(--text)}
-.logo-mark{width:32px;height:32px;flex-shrink:0;color:var(--accent);display:block}
-.logo-text{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:-.01em;line-height:1.1;display:flex;flex-direction:column}
-.logo-text em{
-  font-family:var(--sans);font-style:normal;font-size:10px;font-weight:600;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-top:2px;
+.logo{display:flex;flex-direction:column;align-items:flex-start;gap:1px;color:var(--text);line-height:1}
+.logo-name{
+  font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.005em;
+  display:flex;align-items:center;white-space:nowrap;
+}
+.logo-name::after{
+  content:"";display:inline-block;width:20px;height:1px;background:currentColor;
+  opacity:.7;margin-left:7px;
+}
+.logo-sub{
+  font-family:var(--serif);font-size:9.5px;font-weight:400;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--text2);padding-left:2px;
 }
 .nav-links{display:flex;gap:30px;align-items:center}
 .nav-links a{font-size:14px;color:var(--text2);transition:color .2s}
@@ -119,7 +125,7 @@ nav{
 /* tarjeta de recorrido */
 .path-card{
   background:var(--bg2);border:1px solid var(--border);border-radius:16px;
-  padding:28px;box-shadow:0 20px 60px rgba(43,39,35,.07);
+  padding:28px;box-shadow:0 20px 60px rgba(44,37,33,.07);
 }
 .path-card-head{margin-bottom:22px}
 .path-card-kicker{
@@ -189,7 +195,7 @@ nav{
   background:var(--serv-color,var(--accent));transform:scaleX(0);transform-origin:left center;
   transition:transform .3s;
 }
-.serv-card:hover{border-color:var(--serv-color,var(--accent));box-shadow:0 8px 32px rgba(43,39,35,.08);transform:translateY(-2px)}
+.serv-card:hover{border-color:var(--serv-color,var(--accent));box-shadow:0 8px 32px rgba(44,37,33,.08);transform:translateY(-2px)}
 .serv-card:hover::before{transform:scaleX(1)}
 .serv-card.featured{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
 .serv-card-wide{grid-column:1/-1}
@@ -244,13 +250,13 @@ nav{
 /* ============ BANDA OSCURA ============ */
 .dark-band{background:var(--dark);border:none}
 .dark-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.dark-band .section-eyebrow{color:#a8c09d}
+.dark-band .section-eyebrow{color:#d8bd9a}
 .dark-band .section-title{color:#fff}
-.dark-band .section-sub{color:#b5b0a8;max-width:100%}
+.dark-band .section-sub{color:#b6a696;max-width:100%}
 .dark-right{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .stat-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:24px 22px}
 .stat-box-num{font-family:var(--serif);font-size:24px;font-weight:600;color:#fff;letter-spacing:-.01em}
-.stat-box-label{font-size:12.5px;color:#a8a29a;margin-top:6px;line-height:1.5}
+.stat-box-label{font-size:12.5px;color:#ab9d8d;margin-top:6px;line-height:1.5}
 
 /* ============ RESERVAS ============ */
 .proceso-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
@@ -269,13 +275,13 @@ nav{
 .paso-arrow{display:none;position:absolute;right:-21px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--text3);z-index:1}
 
 .booking-cta{
-  margin-top:48px;background:var(--accent-pale);border:1px solid #d9e3d5;border-radius:var(--radius);
+  margin-top:48px;background:var(--accent-pale);border:1px solid #e6d8c6;border-radius:var(--radius);
   padding:32px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
 }
 .booking-cta h3{font-size:22px;color:var(--text);margin-bottom:6px}
 .booking-cta p{font-size:14px;color:var(--text2)}
 .booking-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
-.booking-cta .btn-ghost{background:#fff;border-color:#d9e3d5}
+.booking-cta .btn-ghost{background:#fff;border-color:#e6d8c6}
 
 /* ============ RECURSOS ============ */
 .filters{
@@ -300,7 +306,7 @@ nav{
   background:#fff;border:1px solid var(--border);border-radius:var(--radius);
   overflow:hidden;transition:.25s;cursor:pointer;
 }
-.res-card:hover{border-color:var(--accent);box-shadow:0 8px 32px rgba(43,39,35,.08);transform:translateY(-2px)}
+.res-card:hover{border-color:var(--accent);box-shadow:0 8px 32px rgba(44,37,33,.08);transform:translateY(-2px)}
 .res-card[hidden]{display:none}
 .res-thumb{
   aspect-ratio:16/10;background:linear-gradient(135deg,var(--bg3),var(--accent-pale));
@@ -309,7 +315,7 @@ nav{
 .res-play{
   width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.9);
   display:flex;align-items:center;justify-content:center;color:var(--accent-dark);font-size:14px;
-  box-shadow:0 4px 14px rgba(43,39,35,.12);
+  box-shadow:0 4px 14px rgba(44,37,33,.12);
 }
 .res-type{
   position:absolute;top:12px;left:12px;background:rgba(255,255,255,.92);
@@ -385,25 +391,24 @@ textarea.form-input{resize:vertical;min-height:100px}
 .form-submit{width:100%;justify-content:center}
 .form-status{font-size:13px;margin-top:12px;min-height:18px}
 .form-status.ok{color:var(--accent-dark)}
-.form-status.err{color:#b4544a}
+.form-status.err{color:#b04b3d}
 .form-note{font-size:11.5px;color:var(--text3);margin-top:12px;line-height:1.5}
 
 /* ============ FOOTER ============ */
-footer{background:var(--dark);padding:56px 0 24px;color:#b5b0a8}
+footer{background:var(--dark);padding:56px 0 24px;color:#b6a696}
 .footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
 .footer-logo{color:#fff}
-.footer-logo .logo-mark{color:#a8c09d}
-.footer-logo .logo-text em{color:#8a847c}
-.footer-tagline{font-size:13px;color:#8a847c;line-height:1.7;max-width:280px;margin-top:12px}
-.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8a847c;margin-bottom:14px}
+.footer-logo .logo-sub{color:#b6a696}
+.footer-tagline{font-size:13px;color:#8c7f70;line-height:1.7;max-width:280px;margin-top:12px}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8c7f70;margin-bottom:14px}
 .footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
-.footer-links a{font-size:13px;color:#a8a29a;transition:color .2s}
+.footer-links a{font-size:13px;color:#ab9d8d;transition:color .2s}
 .footer-links a:hover{color:#fff}
 .footer-bottom{
   border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
 }
-.footer-copy{font-size:12px;color:#8a847c}
+.footer-copy{font-size:12px;color:#8c7f70}
 .footer-copy a:hover{color:#fff}
 
 /* ============ WHATSAPP FLOTANTE ============ */

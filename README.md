@@ -3,8 +3,8 @@
 Web estática (one-page) para Anna Acosta, psicóloga general sanitaria: psicoterapia,
 psicoterapia para la ansiedad, yoga terapéutico y sesiones integrativas.
 
-Sistema visual basado en [sitalia.es](https://sitalia.es), con paleta adaptada a
-tonos cálidos (salvia + neutros) y titulares en serif.
+Sistema visual basado en [sitalia.es](https://sitalia.es), con paleta de marrones
+cálidos y wordmark serif (Playfair Display) a juego con el logo de Anna.
 
 ## Estructura
 
@@ -62,11 +62,13 @@ Las variables están en `:root` dentro de `styles.css`:
 
 | Variable        | Valor     | Uso                          |
 |-----------------|-----------|------------------------------|
-| `--accent`      | `#7c9473` | Salvia, color principal      |
-| `--accent-dark` | `#65795d` | Hover de botones             |
-| `--accent-pale` | `#eef3ec` | Fondos suaves, pills, badges |
-| `--accent-2`    | `#c08552` | Terracota, avisos            |
-| `--dark`        | `#2f3630` | Banda oscura y footer        |
-| `--serif`       | `'Lora'`  | Titulares                    |
+| `--accent`      | `#8c6b4d` | Marrón, color principal      |
+| `--accent-dark` | `#6f5440` | Hover de botones             |
+| `--accent-pale` | `#f4ece2` | Fondos suaves, pills, badges |
+| `--accent-2`    | `#b5744a` | Terracota, avisos            |
+| `--dark`        | `#332a24` | Banda oscura y footer        |
+| `--serif`       | `'Playfair Display'` | Logo y titulares  |
 
-Para dejarlo 100 % igual que sitalia.es: `--serif: var(--sans);`
+El logo es texto (`.logo-name` + `.logo-sub` en `index.html`), no una imagen:
+escala perfecto y pesa cero. Si Anna envía el logo en SVG/PNG con fondo
+transparente, se sustituye por `<img>` en dos minutos.
