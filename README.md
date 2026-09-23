@@ -30,7 +30,7 @@ Sin dependencias ni build. Se sube tal cual a cualquier hosting estático
 5. Reservas / Citas (3 pasos)
 6. Recursos (galería con doble filtro: tipo + tema)
 7. FAQ (acordeón, 2 columnas)
-8. Contacto (datos + formulario)
+8. Contacto (WhatsApp + formulario que compone el mensaje)
 
 ## Pendiente de rellenar
 
@@ -40,21 +40,22 @@ Busca los corchetes `[...]` en `index.html`:
 - [ ] `[@USUARIO]` — Instagram
 - [ ] `[DIRECCIÓN / ONLINE]` — ubicación
 - [ ] `Nº de colegiada: [PENDIENTE]`
-- [ ] `[ENLACE AGENDA ONLINE]` — Calendly / Doctoralia
 - [ ] Los 6 recursos de la galería (título, descripción, duración, enlace/embed)
 - [ ] 2 FAQ marcadas en ámbar: modalidad (online/presencial) y política de cancelación
 - [ ] Aviso legal, política de privacidad y cookies (obligatorio en España, más
       tratándose de datos de salud)
 
-## Formulario de contacto
+## Contacto por WhatsApp
 
-Ahora mismo solo valida en cliente, no envía. Para conectarlo con Formspree:
+Todas las llamadas a la acción llevan a WhatsApp (663 26 06 01) con el mensaje
+ya redactado según el servicio. El formulario no envía nada a ningún servidor:
+compone el texto y abre WhatsApp (app en móvil, WhatsApp Web en escritorio).
 
-```html
-<form id="contactForm" action="https://formspree.io/f/TU_ID" method="POST">
-```
+Sin backend, sin base de datos y sin datos personales almacenados —
+lo que simplifica bastante la parte de RGPD.
 
-…y elimina el bloque 5 de `script.js` (validación/simulación).
+Para cambiar el número: `WA_NUMERO` en `script.js` y los `wa.me/` de
+`index.html` (9 enlaces).
 
 ## Personalización rápida
 

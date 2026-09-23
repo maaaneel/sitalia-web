@@ -108,43 +108,48 @@
     });
   });
 
-  /* ---------- 5. Formulario de contacto ----------
-     PENDIENTE: conectar a un servicio real de envío.
-     Opción rápida (Formspree):
-        <form action="https://formspree.io/f/TU_ID" method="POST">
-     y elimina este bloque JS de validación/simulación.
+  /* ---------- 5. Formulario -> WhatsApp ----------
+     No hay backend: el formulario compone el mensaje y abre WhatsApp
+     (app en móvil, WhatsApp Web en escritorio). Para cambiar el número,
+     edita WA_NUMERO aquí abajo y los enlaces wa.me del HTML.
   ------------------------------------------------- */
+  var WA_NUMERO = '34663260601';
+
   var form = document.getElementById('contactForm');
   var status = document.getElementById('formStatus');
 
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (!status) return;
 
       var nombre = form.nombre.value.trim();
-      var email = form.email.value.trim();
-      var rgpd = form.rgpd.checked;
+      var servicio = form.servicio.value;
+      var mensaje = form.mensaje.value.trim();
 
-      if (!nombre || !email) {
-        status.textContent = 'Por favor, completa tu nombre y tu email.';
-        status.className = 'form-status err';
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        status.textContent = 'Revisa el formato del email.';
-        status.className = 'form-status err';
-        return;
-      }
-      if (!rgpd) {
-        status.textContent = 'Necesito que aceptes la política de privacidad.';
-        status.className = 'form-status err';
+      if (!nombre) {
+        if (status) {
+          status.textContent = 'Escribe tu nombre para poder saludarte.';
+          status.className = 'form-status err';
+        }
+        form.nombre.focus();
         return;
       }
 
-      status.textContent =
-        'Formulario validado correctamente (envío aún no conectado).';
-      status.className = 'form-status ok';
+      var texto =
+        'Hola Anna, soy ' + nombre + '.\n' +
+        'Me interesa: ' + servicio + '.';
+      if (mensaje) texto += '\n\n' + mensaje;
+
+      if (status) {
+        status.textContent = 'Abriendo WhatsApp…';
+        status.className = 'form-status ok';
+      }
+
+      window.open(
+        'https://wa.me/' + WA_NUMERO + '?text=' + encodeURIComponent(texto),
+        '_blank',
+        'noopener'
+      );
     });
   }
 
