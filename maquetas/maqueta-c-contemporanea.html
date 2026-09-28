@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maqueta C — Contemporánea · Anna Acosta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f4f2ee; --night:#1b1815; --ink:#1b1815; --ink2:#6b635a; --ink3:#9d948a;
+  --line:#e2ddd5; --accent:#8c6b4d;
+  --serif:'Instrument Serif',Georgia,serif; --sans:'DM Sans',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.mono{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--ink3)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:40;mix-blend-mode:difference}
+.nav-in{max-width:1240px;margin:0 auto;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+.brand{font-family:var(--serif);font-size:22px;letter-spacing:.01em}
+.nav-in ul{display:flex;gap:28px;list-style:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+
+/* hero oscuro a sangre */
+.hero{background:var(--night);color:#fff;min-height:96vh;display:flex;align-items:flex-end;padding:120px 0 0;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:0;align-items:end;width:100%}
+.hero-copy{padding-bottom:70px;padding-right:50px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,7vw,104px);line-height:.94;letter-spacing:-.02em}
+h1 i{color:#c9a884}
+.hero-copy p{color:#a89e93;font-size:16px;max-width:400px;margin:28px 0 34px}
+.cta{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--night);padding:16px 26px;font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;transition:.25s}
+.cta:hover{background:#c9a884}
+.hero-img{align-self:end}
+.hero-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 18%;filter:grayscale(1) contrast(1.08)}
+.ticker{position:absolute;top:0;left:0;right:0;border-bottom:1px solid rgba(255,255,255,.14);padding:84px 0 0}
+
+/* franja de datos */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.strip div{padding:34px 28px;border-right:1px solid var(--line)}
+.strip div:last-child{border-right:none}
+.strip b{font-family:var(--serif);font-size:44px;font-weight:400;display:block;line-height:1}
+.strip span{font-size:12px;color:var(--ink3);margin-top:6px;display:block}
+
+section{padding:110px 0}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.6vw,60px);line-height:1.06;letter-spacing:-.02em}
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.split p{color:var(--ink2);font-size:16px;margin-bottom:18px;max-width:560px}
+.pullquote{font-family:var(--serif);font-size:26px;line-height:1.3;color:var(--ink);margin:30px 0;padding-left:22px;border-left:2px solid var(--accent)}
+
+/* servicios: rejilla con hairlines */
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 40px;position:relative;transition:.3s}
+.cell:hover{background:var(--bg2)}
+.cell .mono{position:absolute;top:22px;right:30px}
+.cell h3{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.1;margin:0 0 14px;max-width:340px}
+.cell p{font-size:14.5px;color:var(--ink2);max-width:420px;margin-bottom:26px}
+.cell .num{font-family:var(--serif);font-size:38px;line-height:1}
+.cell .num small{font-family:var(--sans);font-size:12px;color:var(--ink3);margin-left:10px;letter-spacing:.04em}
+.cell ul{list-style:none;font-size:13.5px;color:var(--ink2);border-top:1px solid var(--line);padding-top:14px;max-width:340px}
+.cell ul li{display:flex;justify-content:space-between;padding:4px 0}
+.cell ul strong{font-weight:700;color:var(--ink)}
+
+/* pasos en línea */
+.line-steps{border-top:1px solid var(--line)}
+.ls{display:grid;grid-template-columns:90px 1fr 190px;gap:24px;padding:32px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.ls h3{font-family:var(--serif);font-size:26px;font-weight:400}
+.ls p{font-size:14px;color:var(--ink2);margin-top:6px;max-width:520px}
+.ls .val{text-align:right;font-size:13px;letter-spacing:.06em;color:var(--ink3);text-transform:uppercase}
+.ls .val b{display:block;font-family:var(--serif);font-size:26px;color:var(--ink);text-transform:none;letter-spacing:0}
+
+.end{background:var(--night);color:#fff;padding:130px 0}
+.end h2{max-width:760px}
+.end p{color:#a89e93;max-width:430px;margin:22px 0 36px}
+.tag{position:fixed;left:16px;bottom:16px;background:#fff;color:var(--night);border:1px solid var(--night);font-size:10px;letter-spacing:.2em;padding:8px 14px;text-transform:uppercase;z-index:50}
+
+@media(max-width:900px){
+  .nav-in ul{display:none}
+  .hero{min-height:auto;padding-top:96px}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-copy{padding:0 0 44px}
+  .hero-img img{aspect-ratio:4/3;object-position:center 15%}
+  .strip{grid-template-columns:1fr}
+  .strip div{border-right:none;border-bottom:1px solid var(--line);padding:22px 28px}
+  section{padding:64px 0}
+  .split{grid-template-columns:1fr;gap:28px}
+  .grid4{grid-template-columns:1fr}
+  .cell{padding:32px 24px}
+  .ls{grid-template-columns:1fr;gap:6px;padding:24px 0}
+  .ls .val{text-align:left}
+  .ls .val b{display:inline;font-size:20px;margin-right:8px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">Anna Acosta</span>
+    <ul>
+      <li><a href="#">Sobre mí</a></li>
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Recursos</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap" style="width:100%">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="mono" style="color:#8a8177">Terapia integrativa · Ansiedad · Yoga</span>
+        <h1 style="margin-top:22px">Mente y cuerpo,<br><i>de la mano</i></h1>
+        <p>
+          Psicóloga general sanitaria especializada en ansiedad, con formación en yoga inclusivo
+          y mindfulness. El trabajo corporal no es un añadido: es parte del proceso.
+        </p>
+        <a href="#" class="cta">Sesión gratuita — 20 min <span>→</span></a>
+      </div>
+      <div class="hero-img"><img src="../assets/anna-acosta.jpg" alt="Anna Acosta"></div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div><b>04</b><span>Formas de acompañamiento</span></div>
+  <div><b>08</b><span>Personas máximo por grupo</span></div>
+  <div><b>20'</b><span>Primera sesión, gratuita</span></div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <span class="mono">01 — Sobre mí</span>
+        <h2 style="margin-top:18px">Cada proceso es individualizado</h2>
+      </div>
+      <div>
+        <p>Soy Anna, psicóloga general sanitaria especializada en ansiedad, con formación en yoga inclusivo y mindfulness.</p>
+        <p>Trabajo desde la convicción de que mente y cuerpo van siempre de la mano. Por eso, en mi forma de acompañar, el trabajo corporal — a través del yoga terapéutico — no es un añadido opcional, sino parte integral de cómo entiendo el proceso terapéutico.</p>
+        <div class="pullquote">No hace falta tener un diagnóstico ni saber exactamente qué quieres trabajar para empezar.</div>
+        <p>Si sientes que hay algún área de tu vida que necesita atención, o algo te incomoda y no consigues identificar qué es, este es tu lugar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:54px">
+      <div><span class="mono">02 — Servicios</span></div>
+      <div><h2>Cuatro formas de acompañamiento, un mismo enfoque</h2></div>
+    </div>
+
+    <div class="grid4">
+      <article class="cell">
+        <span class="mono">01</span>
+        <h3>Terapia integrativa</h3>
+        <p>Psicoterapia individual donde el trabajo psicológico y el yoga terapéutico van de la mano, como parte de un mismo proceso.</p>
+        <div class="num">80€<small>60–75 MIN</small></div>
+      </article>
+      <article class="cell">
+        <span class="mono">02</span>
+        <h3>Terapia integrativa para la ansiedad</h3>
+        <p>La misma metodología, centrada en la ansiedad: sus desencadenantes, cómo se manifiesta en el cuerpo y herramientas sostenibles en el tiempo.</p>
+        <div class="num">80€<small>60–75 MIN</small></div>
+      </article>
+      <article class="cell">
+        <span class="mono">03</span>
+        <h3>Yoga terapéutico individual</h3>
+        <p>Sesión personalizada con técnicas de meditación integradas y espacio de feedback al final.</p>
+        <ul>
+          <li><span>Sesión suelta · 1 h</span><strong>40€</strong></li>
+          <li><span>1 sesión / semana</span><strong>150€/mes</strong></li>
+          <li><span>2 sesiones / semana</span><strong>300€/mes</strong></li>
+        </ul>
+      </article>
+      <article class="cell">
+        <span class="mono">04</span>
+        <h3>Yoga terapéutico en grupo</h3>
+        <p>Grupos de máximo 8 personas, con continuidad, online o presencial. Dirigido por una psicóloga, no solo por una instructora.</p>
+        <ul>
+          <li><span>1 sesión / semana</span><strong>desde 60€/mes</strong></li>
+          <li><span>2 sesiones / semana</span><strong>desde 100€/mes</strong></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:40px">
+      <div><span class="mono">03 — Cómo empezamos</span></div>
+      <div><h2>Tu punto de entrada</h2></div>
+    </div>
+    <div class="line-steps">
+      <div class="ls">
+        <span class="mono">Paso 01</span>
+        <div><h3>Sesión gratuita</h3><p>Un primer contacto sin compromiso para conocernos. Escucho qué te trae hasta aquí y te cuento cómo trabajo.</p></div>
+        <div class="val"><b>Gratis</b>20 minutos</div>
+      </div>
+      <div class="ls">
+        <span class="mono">Paso 02</span>
+        <div><h3>Primera sesión</h3><p>Estudio individualizado: recojo tu historia y, junto a ti, identificamos qué forma de trabajo encaja mejor.</p></div>
+        <div class="val"><b>70€</b>60–75 minutos</div>
+      </div>
+      <div class="ls">
+        <span class="mono">Paso 03</span>
+        <div><h3>Continuidad</h3><p>A partir de aquí eliges el servicio con el que continuar el trabajo.</p></div>
+        <div class="val"><b>Desde 40€</b>por sesión</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap">
+    <span class="mono" style="color:#8a8177">04 — Primer paso</span>
+    <h2 style="margin-top:18px">Empecemos por conocernos</h2>
+    <p>Veinte minutos, sin compromiso. Escucho qué te trae hasta aquí y te cuento cómo trabajo.</p>
+    <a href="#" class="cta">Escribir por WhatsApp <span>→</span></a>
+  </div>
+</section>
+
+<span class="tag">Maqueta C · Contemporánea</span>
+</body>
+</html>

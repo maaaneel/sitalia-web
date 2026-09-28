@@ -1,10 +1,13 @@
 # Anna Acosta — Psicología
 
-Web estática (one-page) para Anna Acosta, psicóloga general sanitaria: psicoterapia,
-psicoterapia para la ansiedad, yoga terapéutico y sesiones integrativas.
+Web estática (one-page) para Anna Acosta, psicóloga general sanitaria:
+terapia integrativa, terapia integrativa para la ansiedad y yoga terapéutico
+individual y en grupo.
 
-Sistema visual basado en [sitalia.es](https://sitalia.es), con paleta de marrones
-cálidos y wordmark serif (Playfair Display) a juego con el logo de Anna.
+Dirección visual: **orgánica minimalista**. Blancos cálidos, marrón y verde salvia.
+Formas muy redondeadas (foto en arco, botones pastilla), sin sombras duras ni marcos
+innecesarios: la jerarquía la marcan el espacio y el color de fondo, no los bordes.
+Tipografías Fraunces (titulares) e Inter (texto).
 
 ## Estructura
 
@@ -25,7 +28,7 @@ Sin dependencias ni build. Se sube tal cual a cualquier hosting estático
 
 1. Inicio (hero + recorrido de entrada + stats)
 2. Sobre mí
-3. Servicios (5 servicios + tablas de precios)
+3. Servicios (4 servicios + tabla resumen de precios)
 4. El enfoque (banda oscura)
 5. Reservas / Citas (3 pasos)
 6. Recursos (galería con doble filtro: tipo + tema)
@@ -63,12 +66,19 @@ Las variables están en `:root` dentro de `styles.css`:
 
 | Variable        | Valor     | Uso                          |
 |-----------------|-----------|------------------------------|
-| `--accent`      | `#8c6b4d` | Marrón, color principal      |
-| `--accent-dark` | `#6f5440` | Hover de botones             |
-| `--accent-pale` | `#f4ece2` | Fondos suaves, pills, badges |
-| `--accent-2`    | `#b5744a` | Terracota, avisos            |
-| `--dark`        | `#332a24` | Banda oscura y footer        |
-| `--serif`       | `'Playfair Display'` | Logo y titulares  |
+| `--brown`       | `#8a6f52` | Marrón: botones y acciones   |
+| `--brown-d`     | `#6e5740` | Hover de botones             |
+| `--green`       | `#7e8d6c` | Verde salvia: iconos, etiquetas, filtros |
+| `--green-pale`  | `#eef1e9` | Fondos verdes suaves         |
+| `--bg2`         | `#f8f6f2` | Blanco cálido de las tarjetas|
+| `--dark`        | `#343b31` | Verde profundo: banda y footer |
+| `--serif`       | `'Fraunces'` | Logo y titulares          |
+
+`--accent`, `--accent-dark` y `--accent-pale` se mantienen como alias del marrón
+para no romper nada.
+
+La carpeta `maquetas/` guarda las tres propuestas visuales iniciales. Se puede
+borrar antes de publicar.
 
 El logo es texto (`.logo-name` + `.logo-sub` en `index.html`), no una imagen:
 escala perfecto y pesa cero. Si Anna envía el logo en SVG/PNG con fondo
