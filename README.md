@@ -1,39 +1,55 @@
 # Anna Acosta — Psicología
 
-Web estática (one-page) para Anna Acosta, psicóloga general sanitaria:
+Web estática **multipágina** para Anna Acosta, psicóloga general sanitaria:
 terapia integrativa, terapia integrativa para la ansiedad y yoga terapéutico
 individual y en grupo.
 
-Dirección visual: **orgánica minimalista**. Blancos cálidos, marrón y verde salvia.
-Formas muy redondeadas (foto en arco, botones pastilla), sin sombras duras ni marcos
-innecesarios: la jerarquía la marcan el espacio y el color de fondo, no los bordes.
-Tipografías Fraunces (titulares) e Inter (texto).
+Dirección visual: **minimalista, inspirada en ffitcocohouse.com**. Una sola familia
+tipográfica (Instrument Sans) en pesos ligeros, titulares de sección en minúscula y
+tamaño contenido, botones pastilla en mayúscula pequeña. Blancos cálidos, marrón para
+la acción, verde salvia para la información y taupe como neutro. Foto en arco, sin
+sombras duras ni marcos: la jerarquía la marcan el espacio y el fondo.
+
+Para volver a titulares con capitalización normal, quita `text-transform:lowercase`
+de la regla `h2` en `styles.css`.
 
 ## Estructura
 
 ```
 .
-├── index.html    # Todo el contenido y la estructura
-├── styles.css    # Estilos (variables CSS en :root)
-├── script.js     # Menú móvil, filtros de recursos, FAQ, formulario, reveal on scroll
+├── index.html       # Portada
+├── sobre-mi.html
+├── servicios.html   # 4 servicios + precios + pasos
+├── recursos.html    # Galería con doble filtro
+├── preguntas.html   # FAQ
+├── contacto.html
+├── styles.css       # Estilos comunes (variables CSS en :root)
+├── script.js        # Menú móvil, filtros, FAQ, formulario, reveal
 └── assets/
     ├── anna-acosta.jpg      # Foto de Anna (900×1200)
     └── anna-acosta@600.jpg  # Versión ligera para móvil (600×800)
 ```
 
+La cabecera y el pie están duplicados en cada página (no hay build). Si cambias
+un enlace del menú, cámbialo en los seis archivos.
+
 Sin dependencias ni build. Se sube tal cual a cualquier hosting estático
 (Netlify, Vercel, GitHub Pages, hosting clásico por FTP).
 
-## Secciones
+## Portada
 
-1. Inicio (hero + recorrido de entrada + stats)
-2. Sobre mí
-3. Servicios (4 servicios + tabla resumen de precios)
-4. El enfoque (banda oscura)
-5. Reservas / Citas (3 pasos)
-6. Recursos (galería con doble filtro: tipo + tema)
-7. FAQ (acordeón, 2 columnas)
-8. Contacto (WhatsApp + formulario que compone el mensaje)
+La portada está construida para que alguien que no conoce a Anna entienda en
+treinta segundos qué es esto y por qué es distinto:
+
+1. **Hero** — "Hay cosas que no se resuelven solo hablando"
+2. **¿Te suena esto?** — cinco frases con las que identificarse
+3. **Terapia que sale de las cuatro paredes** — tres diferencias + comparativa
+   entre la terapia convencional y la integrativa
+4. **En qué puede ayudarte** — cuatro resultados concretos
+5. **Servicios** en resumen, con enlace al detalle
+6. **Cómo empezamos** — tres pasos
+
+## Variables de color
 
 ## Pendiente de rellenar
 
@@ -62,8 +78,6 @@ Para cambiar el número: `WA_NUMERO` en `script.js` y los `wa.me/` de
 
 ## Personalización rápida
 
-Las variables están en `:root` dentro de `styles.css`:
-
 | Variable        | Valor     | Uso                          |
 |-----------------|-----------|------------------------------|
 | `--brown`       | `#8a6f52` | Marrón: botones y acciones   |
@@ -72,10 +86,9 @@ Las variables están en `:root` dentro de `styles.css`:
 | `--green-pale`  | `#eef1e9` | Fondos verdes suaves         |
 | `--bg2`         | `#f8f6f2` | Blanco cálido de las tarjetas|
 | `--dark`        | `#343b31` | Verde profundo: banda y footer |
-| `--serif`       | `'Fraunces'` | Logo y titulares          |
-
-`--accent`, `--accent-dark` y `--accent-pale` se mantienen como alias del marrón
-para no romper nada.
+| `--taupe`       | `#b9afa1` | Neutro: botón secundario     |
+| `--sans`        | `'Instrument Sans'` | Todo el texto      |
+| `--logo`        | `'Playfair Display'` | Solo el logo      |
 
 La carpeta `maquetas/` guarda las tres propuestas visuales iniciales. Se puede
 borrar antes de publicar.
